@@ -10,6 +10,30 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require _alerts
+ *= require _animations
+ *= require _buttons
+ *= require _cards
+ *= require _checkboxes
+ *= require _icons-material-design
+ *= require _icons
+ *= require _inputs
+ *= require _lists
+ *= require _mixins
+ *= require _navbar
+ *= require _plugin-nouislider
+ *= require _plugin-snackbarjs
+ *= require _popups
+ *= require _progress
+ *= require _radios
+ *= require _shadows
+ *= require _tabs
+ *= require _variables
+ *= require _welljumbo
+ *= require material-wfont
+ *= require material
+ *= require ripples
  *= require_tree .
  *= require_self
  */
+
