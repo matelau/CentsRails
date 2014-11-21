@@ -1,4 +1,11 @@
 @font-face {
+  font-family: 'RobotoDraft';
+  font-style: normal;
+  font-weight: 100;
+  src: local('RobotoDraft Thin'), local('RobotoDraft-Thin'), url(https://fonts.gstatic.com/s/robotodraft/v2/hope9NW9iJ5hh8P5PM_EA2zZpt1Zv2lgqhgSPQ2HnUo.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+@font-face {
   font-family: "Material-Design-Icons";
   src: url("../fonts/Material-Design-Icons.eot?-g7cqhn");
   src: url("../fonts/Material-Design-Icons.eot?#iefix-g7cqhn") format("embedded-opentype"), url("../fonts/Material-Design-Icons.woff?-g7cqhn") format("woff"), url("../fonts/Material-Design-Icons.ttf?-g7cqhn") format("truetype"), url("../fonts/Material-Design-Icons.svg?-g7cqhn#Material-Design-Icons") format("svg");
@@ -17,6 +24,56 @@
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.blank-search {
+    margin-left: 27px;
+    margin-top: 4px;
+    border: none;
+    width: 450px;
+    height: 30px;
+}
+input, textarea, button {
+  outline: none;
+}
+a:link, a:visited, a:hover, a:active {
+  color: #884412;
+}
+.arrow-button {
+  background: none;
+  border: none;
+  padding-left: 15px;
+}
+.search-bar {
+  width: 500px;
+  padding-top: 135px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.circle-arrow {
+  background: none;
+  border: none;
+  height: 50px;
+  width: 50px;
+  margin-left: 225px;
+  margin-right: 225px;
+}
+.main-search {
+  width: 430px;
+  height: 40px;
+  margin-right: 35px;
+  margin-left: 35px;
+  margin-bottom: 15px;
+  border-color: #884412;
+  border-style: solid;
+  border-radius: 10px;
+  border-width: 5px;
+}
+.help-text {
+  text-align: center;
+  font-size: 17px;
+}
+.question-text {
+  text-align: center;
 }
 .mdi-action-3d-rotation:before {
   content: "\e600";
@@ -3772,7 +3829,7 @@ fieldset[disabled] .form-control.focus,
   border: 0;
   box-shadow: none;
   border-radius: 0;
-  background: transparent;
+  background: white;
   border-bottom: 1px solid #757575;
 }
 fieldset[disabled] .form-control:not(textarea):not(select),
@@ -3807,6 +3864,9 @@ select[multiple].form-control.focus {
 }
 .form-control-wrapper {
   position: relative;
+  background-color: #884412;
+  width: 500px;
+  height: 35px;
 }
 .form-control-wrapper .form-control:focus,
 .form-control-wrapper .form-control.focus {
@@ -4611,7 +4671,7 @@ fieldset[disabled] .navbar .btn-link:focus {
 }
 .navbar,
 .navbar-default {
-  background-color: #4285f4;
+  background-color: #884412;
 }
 .navbar-primary {
   background-color: #4285f4;
@@ -4731,7 +4791,10 @@ fieldset[disabled] .navbar .btn-link:focus {
 }
 .dropdown-menu {
   border: 0;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.26);
+  width: 535px;
+  height: 55px;
+  background-color: #884412;
 }
 .dropdown-menu .divider {
   background-color: rgba(229, 229, 229, 0.12);

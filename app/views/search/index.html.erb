@@ -1,16 +1,44 @@
-<h1>You can add your site here.</h1>
+<!--Navigation Bar -->
 
-<h2>To ensure that material-design theme is working, check out the buttons below.</h2>
+<div class="navbar navbar-cents">
+    <div class="navbar-header">
+    	<a href="/"><img class="cents-logo" src="assets/logo trans white.png" height="109" width="239"></a>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+    </div>
+    <div class="navbar-collapse collapse navbar-responsive-collapse">
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="javascript:void(0)">LOGIN</a></li>
+            <li><a href="javascript:void(0)">EXAMPLES</a></li>
+            <li><a href="javascript:void(0)">HELP</a></li>
+            <li><a href="javascript:void(0)">ABOUT</a></li>
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" ><img src="assets/search white.png" height="15" width="15"></b></a>
+                <ul class="dropdown-menu">
+                    <form>
+            			<input type="text" class="blank-search" placeholder="Will contain the last query or something generic">
+            			<button class="arrow-button" type="submit"><img src="assets/arrow white.png" height="15" width="15"></button>
+        			</form>
+                </ul>
+            </li>
+            
+        </ul>
+    </div>
+</div>
 
-<h3 class="text-muted">If you can see the ripple effect on clicking them, then you are good to go!</h3>
 
 
-<p class="bs-component">
-    <a href="javascript:void(0)" class="btn btn-default">Default</a>
-    <a href="javascript:void(0)" class="btn btn-primary">Primary</a>
-    <a href="javascript:void(0)" class="btn btn-success">Success</a>
-    <a href="javascript:void(0)" class="btn btn-info">Info</a>
-    <a href="javascript:void(0)" class="btn btn-warning">Warning</a>
-    <a href="javascript:void(0)" class="btn btn-danger">Danger</a>
-    <a href="javascript:void(0)" class="btn btn-link">Link</a>
-</p>
+<!-- Search Field -->
+
+
+<div class="search-bar">
+	<p class="question-text">WHAT WOULD YOU LIKE TO KNOW?</p>
+	<form>
+		<input class="main-search" type="text">
+	</form>
+	<p class="help-text">NEW HERE? CHECK OUT OUR <a href="javascript:void(0)">WIZARD</a> OR SOME <a href="javascript:void(0)">EXAMPLES</a>?</p>
+	<button class="circle-arrow" type="submit"><img src="assets/circle arrow.png" height="38" width="38"></button>
+</div>
