@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   get 'search/index'
+  get 'info/examples'
+  get 'info/help'
+  get 'info/about'
+  get 'wizard/start'
   root 'search#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
