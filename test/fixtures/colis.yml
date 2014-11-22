@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  city: MyString
+  transportation: MyString
+  housing: MyString
+  food: MyString
+  overall: MyString
+  state: MyString
+
+two:
+  city: MyString
+  transportation: MyString
+  housing: MyString
+  food: MyString
+  overall: MyString
+  state: MyString
