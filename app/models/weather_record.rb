@@ -1,3 +1,3 @@
 class WeatherRecord < ActiveRecord::Base
-  belongs to :location
+  belongs_to :coli
 end

@@ -1,5 +1,5 @@
 class AddLocationToColi < ActiveRecord::Migration
   def change
-    add_reference :colis, :location, index: true
+    add_column :colis, :location, :string
   end
 end

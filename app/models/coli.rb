@@ -1,3 +1,3 @@
 class Coli < ActiveRecord::Base
-  belongs_to :location
+  has_many :weather_records
 end

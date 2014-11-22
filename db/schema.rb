@@ -11,37 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141122012158) do
+ActiveRecord::Schema.define(version: 20141122041631) do
 
   create_table "colis", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.float    "cost_of_living", limit: 24
-    t.float    "transportation", limit: 24
-    t.float    "groceries",      limit: 24
-    t.float    "goods",          limit: 24
-    t.float    "health_care",    limit: 24
-    t.float    "utilities",      limit: 24
-    t.integer  "location_id"
-  end
-
-  add_index "colis", ["location_id"], name: "index_colis_on_location_id", using: :btree
-
-  create_table "locations", force: true do |t|
-    t.string   "city_state"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.float  "cost_of_living", limit: 24
+    t.float  "transportation", limit: 24
+    t.float  "groceries",      limit: 24
+    t.float  "goods",          limit: 24
+    t.float  "health_care",    limit: 24
+    t.float  "utilities",      limit: 24
+    t.string "location"
   end
 
   create_table "weather_records", force: true do |t|
-    t.float    "high",        limit: 24
-    t.float    "low",         limit: 24
-    t.float    "average",     limit: 24
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "location_id"
+    t.float   "high",    limit: 24
+    t.float   "low",     limit: 24
+    t.float   "average", limit: 24
+    t.integer "coli_id"
   end
 
-  add_index "weather_records", ["location_id"], name: "index_weather_records_on_location_id", using: :btree
+  add_index "weather_records", ["coli_id"], name: "index_weather_records_on_coli_id", using: :btree
 
 end
