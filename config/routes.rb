@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   get 'wizard/education'
   get 'wizard/career'
   get 'wizard/city'
+  get 'wizard/major'
+  get 'wizard/school'
+  get 'wizard/spending'
   root 'search#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
