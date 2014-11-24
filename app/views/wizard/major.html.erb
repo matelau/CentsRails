@@ -1,3 +1,3 @@
-<a href="/wizard/start">PREV (start)</a><br>
+<a href=<%= request.referer %> >BACK</a>
 <p>show how majors can be compared and how a search should be entered</p><br>
-<a href="/wizard/school">NEXT (college or career)</a>
+<a href=<%= @next_link %> >NEXT <%= @next_name %></a>
