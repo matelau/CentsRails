@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get 'wizard/major'
   get 'wizard/school'
   get 'wizard/spending'
+  get 'user/profile'
+  get 'user/register'
   root 'search#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
