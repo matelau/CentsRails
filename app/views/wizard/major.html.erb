@@ -1,3 +1,13 @@
-<a href=<%= request.referer %> >BACK</a>
+<div class="wizard-div">
+<img src="/assets/progress 1.png" height="77" width="715" usemap="#progress-map">
+<map name="progress-map">
+	<area onfocus="blur()" shape="rect" coords="590, 20, 619, 60" href="/wizard/school">
+	<area onfocus="blur()" shape="rect" coords="621, 20, 649, 60" href="/wizard/career">
+	<area onfocus="blur()" shape="rect" coords="651, 20, 679, 60" href="/wizard/spending">
+	<area onfocus="blur()" shape="rect" coords="681, 20, 715, 60" href="/wizard/city">
+</map>
+<br>
 <p>show how majors can be compared and how a search should be entered</p><br>
 <a href=<%= @next_link %> >NEXT <%= @next_name %></a>
+
+</div>

@@ -49,6 +49,18 @@ a:link, a:visited, a:hover, a:active {
   margin-left: auto;
   margin-right: auto;
 }
+.wizard-div {
+  width: 715px;
+  padding-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.center{
+  width: 715px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
 .circle-arrow {
   background: none;
   border: none;
