@@ -40,3 +40,5 @@ gem 'travis'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+gem 'mysql'
+gem 'mysql2'

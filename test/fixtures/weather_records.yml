@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  high: 1.5
+  low: 1.5
+  average: 1.5
+
+two:
+  high: 1.5
+  low: 1.5
+  average: 1.5
