@@ -1,3 +1,4 @@
 #!/bin/bash
 
+chmod 400 bitnami-hosting.cer
 ssh -N -L 3307:127.0.0.1:3306 -i ./bitnami-hosting.cer -o "StrictHostKeyChecking no" ubuntu@54.148.183.206
