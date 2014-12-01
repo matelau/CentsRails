@@ -11,17 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141125004156) do
+ActiveRecord::Schema.define(version: 20141126180242) do
 
   create_table "colis", force: true do |t|
-    t.float  "cost_of_living", limit: 24
-    t.float  "transportation", limit: 24
-    t.float  "groceries",      limit: 24
-    t.float  "goods",          limit: 24
-    t.float  "health_care",    limit: 24
-    t.float  "utilities",      limit: 24
-    t.float  "housing",        limit: 24
-    t.string "location"
+    t.float    "cost_of_living", limit: 24
+    t.float    "transportation", limit: 24
+    t.float    "groceries",      limit: 24
+    t.float    "goods",          limit: 24
+    t.float    "health_care",    limit: 24
+    t.float    "utilities",      limit: 24
+    t.float    "housing",        limit: 24
+    t.string   "location"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "colis", ["location"], name: "location_UNIQUE", unique: true, using: :btree
@@ -72,11 +74,13 @@ ActiveRecord::Schema.define(version: 20141125004156) do
   end
 
   create_table "weather_records", force: true do |t|
-    t.float   "high",    limit: 24
-    t.float   "low",     limit: 24
-    t.float   "average", limit: 24
-    t.integer "coli_id"
-    t.string  "month",   limit: 10, null: false
+    t.float    "high",       limit: 24
+    t.float    "low",        limit: 24
+    t.float    "average",    limit: 24
+    t.integer  "coli_id"
+    t.string   "month",      limit: 10, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "weather_records", ["coli_id"], name: "index_weather_records_on_coli_id", using: :btree
