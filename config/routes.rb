@@ -55,7 +55,8 @@ Rails.application.routes.draw do
   #   end
   namespace :api do
     namespace :v1 do
-      resources :coli
+			get  'coli/' => 'coli#index'
+      post 'coli/' => 'coli#show'
     end
   end
 end
