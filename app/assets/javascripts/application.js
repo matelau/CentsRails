@@ -46,6 +46,7 @@ function sketchProc(processing) {
 		//var to hold all data relevant to a given category
 		data = new Array();
 		//create dummy data
+
 		//weather
 		data["weather_1_1"] = 38.0;
 		data["weather_2_1"] = 67.0;
@@ -77,8 +78,23 @@ function sketchProc(processing) {
 		data["name1"] = "Salt Lake City, UT";
 		data["name2"] = "Phoenix, AZ";
 
+		//labor statstics
+		data["unemploy_1"] = 3.4;
+		data["unemploy_2"] = 6.4;
+		data["avgsal_1"] = 48000;
+		data["avgsal_2"] = 51000;
+		data["econgrow_1"] = 4.4;
+		data["econgrow_2"] = 3.3;
+
+
+
+
+
+
 		document.getElementById("search_1_name").value = data["name1"];
 		document.getElementById("search_2_name").value = data["name2"];
+
+
 
 
 
@@ -122,8 +138,45 @@ function sketchProc(processing) {
 	};
 
 	function labor_stats() {
+		//draw axis
+		processing.fill(0);
+		processing.stroke(0);
+		processing.strokeWeight(2);
+		processing.line(100, 300, 225, 300);
+		processing.line(265, 300, 390, 300);
+		processing.line(430, 300, 555, 300);
 		
-		
+		//draw labels
+		processing.text("UNEMPLOYMENT RATE", 94, 325);
+		processing.text("AVERAGE SALARY", 278, 325);
+		processing.text("ECONOMIC GROWTH", 432, 325);
+		processing.fill(gray);
+		processing.text("(%)", 143, 340);
+		processing.text("($)", 319, 340);
+		processing.text("(%)", 480, 340);
+
+		//draw data
+		var max_unemploy = processing.max(data["unemploy_1"], data["unemploy_2"]);
+		var max_salary = processing.max(data["avgsal_1"], data["avgsal_2"]);
+		var max_econ = processing.max(data["econgrow_1"], data["econgrow_2"]);
+
+		processing.noStroke();
+
+		if (!hide_1)
+		{
+			processing.fill(main);
+			processing.rect(121, 299 - 200 * (data["unemploy_1"]/max_unemploy), 42, 200 * (data["unemploy_1"]/max_unemploy));
+			processing.rect(286, 299 - 200 * (data["avgsal_1"]/max_salary), 42, 200 * (data["avgsal_1"]/max_salary));
+			processing.rect(451, 299 - 200 * (data["econgrow_1"]/max_econ), 42, 200 * (data["econgrow_1"]/max_econ));
+		}
+		if (!hide_2)
+		{
+			processing.fill(gray);
+			processing.rect(163, 299 - 200 * (data["unemploy_2"]/max_unemploy), 42, 200 * (data["unemploy_2"]/max_unemploy));
+			processing.rect(328, 299 - 200 * (data["avgsal_2"]/max_salary), 42, 200 * (data["avgsal_2"]/max_salary));
+			processing.rect(493, 299 - 200 * (data["econgrow_2"]/max_econ), 42, 200 * (data["econgrow_2"]/max_econ));
+		}
+
 	};
 
 	function taxes() {
@@ -215,6 +268,10 @@ var processingInstance = new Processing(canvas, sketchProc);
 
 function update_tab(name) {
 	active_tab = name;
+	hide_1 = false;
+	hide_2 = false;
+	document.getElementById("search_1_button").value = "HIDE";
+	document.getElementById("search_2_button").value = "HIDE";
 };
 
 var hide_show_1 = "HIDE";
