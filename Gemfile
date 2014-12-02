@@ -43,3 +43,6 @@ gem 'unicorn'
 
 gem 'mysql'
 gem 'mysql2'
+
+# aws requires execjs
+gem 'execjs'
