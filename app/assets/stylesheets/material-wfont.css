@@ -65,7 +65,7 @@ a:link, a:visited, a:hover, a:active {
   list-style-type: none;
   padding-top: 25px;
   padding-left: 0px;
-  width: 650px;
+  width: 850px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -98,6 +98,8 @@ a:link, a:visited, a:hover, a:active {
 }
 .versus {
   vertical-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 .circle-arrow {
   background: none;
@@ -112,8 +114,7 @@ a:link, a:visited, a:hover, a:active {
   border: none;
   height: 50px;
   width: 50px;
-  margin-left: 55px;
-  margin-right: 55px;
+  margin-left: 255px;
 }
 
 .main-search {
@@ -136,7 +137,7 @@ a:link, a:visited, a:hover, a:active {
   border-style: solid;
   border-radius: 10px;
   border-width: 5px;
-  margin-right: 15px;
+  margin-left: 5px;
   padding-left: 5px;
   padding-right: 5px;
 }
@@ -147,7 +148,7 @@ a:link, a:visited, a:hover, a:active {
   border-style: solid;
   border-radius: 10px;
   border-width: 5px;
-  margin-left: 15px;
+  margin-right: 5px;
   padding-left: 5px;
   padding-right: 5px;
 }
@@ -2752,7 +2753,7 @@ body .jumbotron-material-lightgrey,
   position: relative;
   padding: 8px 30px;
   border: 0;
-  margin: 10px 1px;
+  margin: 0px 1px;
   cursor: pointer;
   border-radius: 2px;
   text-transform: uppercase;
@@ -3046,7 +3047,7 @@ body .jumbotron-material-lightgrey,
 .btn-link,
 .btn:not([class^="btn btn-"]),
 .btn-default {
-  color: rgba(0, 0, 0, 0.84);
+  color: #884412;
 }
 .btn-link:hover,
 .btn:not([class^="btn btn-"]):hover,
