@@ -72,9 +72,37 @@ function sketchProc(processing) {
 		data["weather_2_11"] = 76.5;
 		data["weather_1_12"] = 40.0;
 		data["weather_2_12"] = 66.5;
-		//this should be scaled up and down a little
-		data["max_weather"] = 110.5;
-		data["min_weather"] = 34.0;
+
+		data["weatherlow_1_1"] = 26.0;
+		data["weatherlow_2_1"] = 46.0;
+		data["weatherlow_1_2"] = 31.0;
+		data["weatherlow_2_2"] = 49.5;
+		data["weatherlow_1_3"] = 38.0;
+		data["weatherlow_2_3"] = 53.5;
+		data["weatherlow_1_4"] = 43.0;
+		data["weatherlow_2_4"] = 60.5;
+		data["weatherlow_1_5"] = 52.0;
+		data["weatherlow_2_5"] = 69.5;
+		data["weatherlow_1_6"] = 61.0;
+		data["weatherlow_2_6"] = 78.5;
+		data["weatherlow_1_7"] = 69.0;
+		data["weatherlow_2_7"] = 83.5;
+		data["weatherlow_1_8"] = 67.0;
+		data["weatherlow_2_8"] = 83.5;
+		data["weatherlow_1_9"] = 58.0;
+		data["weatherlow_2_9"] = 77.5;
+		data["weatherlow_1_10"] = 46.0;
+		data["weatherlow_2_10"] = 65.5;
+		data["weatherlow_1_11"] = 36.0;
+		data["weatherlow_2_11"] = 53.5;
+		data["weatherlow_1_12"] = 27.0;
+		data["weatherlow_2_12"] = 45.5;
+		//this should be scaled up and down a little, +- 10% of range
+		data["max_weather_1"] = 95.5;
+		data["min_weather_1"] = 26.0;
+		data["max_weather_2"] = 106.5;
+		data["min_weather_2"] = 45.5;
+
 		data["name1"] = "Salt Lake City, UT";
 		data["name2"] = "Phoenix, AZ";
 
@@ -191,8 +219,26 @@ function sketchProc(processing) {
 		processing.line(60, 50, 60, 324);
 		processing.line(60, 325, 605, 325);
 		//add scale, will be dynamic, pulling mins and max for the two cities
-		var min = data["min_weather"];
-		var max = data["max_weather"];
+
+		var min, max;
+		if (!hide_2 && hide_1)
+		{
+			min = data["min_weather_2"] - ((data["max_weather_2"]-data["min_weather_2"]) / 18);
+			max = data["max_weather_2"] + ((data["max_weather_2"]-data["min_weather_2"]) / 18);
+
+		}
+		else if (hide_2 && !hide_1)
+		{
+			min = data["min_weather_1"] - ((data["max_weather_1"]-data["min_weather_1"]) / 18);
+			max = data["max_weather_1"] + ((data["max_weather_1"]-data["min_weather_1"]) / 18);
+		}
+		else
+		{
+			min = processing.min(data["min_weather_1"], data["min_weather_2"]);
+			max = processing.max(data["max_weather_1"], data["max_weather_2"]);
+			min = min - ((max-min) / 10);
+			max = max + ((max-min) / 10);
+		}
 		var range = max - min;
 		var scale = (max - min) / 10;
 		for (var i=0; i<=10; i++)
@@ -220,24 +266,38 @@ function sketchProc(processing) {
 		processing.text("NOV", 520, 345);
 		processing.text("DEC", 565, 345);
 		processing.fill(0);
-		processing.text("AVERAGE MONTHLY TEMPERATURE", 230, 35);
+		processing.text("AVERAGE MONTHLY TEMPERATURE (°F) RANGE", 195, 35);
 
-		processing.noStroke();
+		//processing.noStroke();
 		//draw data
+
+		processing.strokeWeight(3);
 		for (var i=1; i<13; i++)
 		{
 			if (!hide_1)
 			{
-				var percent_1 = (data["weather_1_"+i] -  min) / range;
+				processing.stroke(main);
 				processing.fill(main);
-				processing.rect(27+45*i, (1-percent_1) * 275 + 49, 10, percent_1 * 275);
+				//processing.strokeWeight(10);
+				var percent_1 = (data["weather_1_"+i] -  min) / range;
+				var percent_2 = (data["weatherlow_1_"+i] -  min) / range;
+				//processing.rect(27+45*i, (1-percent_1) * 275 + 49, 10, percent_1 * 275);
+				processing.ellipse(27+45*i, (1-percent_1) * 275 + 49, 4, 4);
+				processing.ellipse(27+45*i, (1-percent_2) * 275 + 49, 4, 4);
+				processing.line(26+45*i, (1-percent_1) * 275 + 49, 26+45*i, (1-percent_2) * 275 + 49);
 			}
 
 			if (!hide_2)
 			{
-				var percent_2 = (data["weather_2_"+i] -  min) / range;
+				processing.stroke(gray);
 				processing.fill(gray);
-				processing.rect(37+45*i, (1-percent_2) * 275 + 49, 10, percent_2 * 275);
+				//processing.strokeWeight(10);
+				var percent_1 = (data["weather_2_"+i] -  min) / range;
+				var percent_2 = (data["weatherlow_2_"+i] -  min) / range;
+				//processing.rect(27+45*i, (1-percent_1) * 275 + 49, 10, percent_1 * 275);
+				processing.ellipse(42+45*i, (1-percent_1) * 275 + 49, 4, 4);
+				processing.ellipse(42+45*i, (1-percent_2) * 275 + 49, 4, 4);
+				processing.line(41+45*i, (1-percent_1) * 275 + 49, 41+45*i, (1-percent_2) * 275 + 49);
 			}
 		}
 		
@@ -263,7 +323,8 @@ function sketchProc(processing) {
 };
 
 var canvas = document.getElementById("main_viz");
-var processingInstance = new Processing(canvas, sketchProc);
+if (canvas != null)
+	var processingInstance = new Processing(canvas, sketchProc);
 
 
 function update_tab(name) {
