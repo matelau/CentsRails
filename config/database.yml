@@ -32,11 +32,5 @@ test:
   database: "test"
 
 production:
-  adapter: "mysql"
-  database: "cents_dev"
-  encoding: "utf8"
-  host: "127.0.0.1"
-  username: "cents"
-  password: "Engineering!"
-  reconnect: true
-  port: 3307
+  <<: *default
+  database: "test"

@@ -46,3 +46,4 @@ gem 'mysql2'
 
 # aws requires execjs
 gem 'execjs'
+gem "puma" 
