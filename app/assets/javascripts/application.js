@@ -239,18 +239,37 @@ function sketchProc(processing) {
 			min = min - ((max-min) / 10);
 			max = max + ((max-min) / 10);
 		}
+
+		//background separation
+		processing.fill(250);
+		processing.noStroke();
+		processing.rect(100, 55, 48, 268);
+		processing.rect(190, 55, 48, 268);
+		processing.rect(280, 55, 48, 268);
+		processing.rect(370, 55, 48, 268);
+		processing.rect(460, 55, 48, 268);
+		processing.rect(550, 55, 48, 268);
+
+
+		processing.stroke(0);
+		processing.fill(0);
+		processing.strokeWeight(2);
 		var range = max - min;
 		var scale = (max - min) / 10;
 		for (var i=0; i<=10; i++)
 		{
-			processing.line(62, 325-27*i, 605, 325-27*i);
+			processing.strokeWeight(1);
+			processing.line(62, 325-27*i, 597, 325-27*i);
 			processing.textAlign(processing.RIGHT);
 			processing.stroke(235);
-			processing.text(processing.round(min+i*scale), 50, 325-27*i);
+			processing.text(processing.round(min+i*scale)+"°", 50, 325-27*i);
 			
 		}
 
+		
 
+
+		processing.fill(0);
 		processing.textAlign(processing.LEFT);
 		//add labels
 		processing.text("JAN", 70, 345);
@@ -266,12 +285,12 @@ function sketchProc(processing) {
 		processing.text("NOV", 520, 345);
 		processing.text("DEC", 565, 345);
 		processing.fill(0);
-		processing.text("AVERAGE MONTHLY TEMPERATURE (°F) RANGE", 195, 35);
+		processing.text("AVERAGE MONTHLY TEMPERATURE (°F) RANGE", 175, 40);
 
 		//processing.noStroke();
 		//draw data
 
-		processing.strokeWeight(3);
+		processing.strokeWeight(4);
 		for (var i=1; i<13; i++)
 		{
 			if (!hide_1)
@@ -282,9 +301,9 @@ function sketchProc(processing) {
 				var percent_1 = (data["weather_1_"+i] -  min) / range;
 				var percent_2 = (data["weatherlow_1_"+i] -  min) / range;
 				//processing.rect(27+45*i, (1-percent_1) * 275 + 49, 10, percent_1 * 275);
-				processing.ellipse(27+45*i, (1-percent_1) * 275 + 49, 4, 4);
-				processing.ellipse(27+45*i, (1-percent_2) * 275 + 49, 4, 4);
-				processing.line(26+45*i, (1-percent_1) * 275 + 49, 26+45*i, (1-percent_2) * 275 + 49);
+				processing.ellipse(28+45*i, (1-percent_1) * 275 + 49, 3, 3);
+				processing.ellipse(28+45*i, (1-percent_2) * 275 + 49, 3, 3);
+				processing.line(28+45*i, (1-percent_1) * 275 + 49, 28+45*i, (1-percent_2) * 275 + 49);
 			}
 
 			if (!hide_2)
@@ -295,11 +314,35 @@ function sketchProc(processing) {
 				var percent_1 = (data["weather_2_"+i] -  min) / range;
 				var percent_2 = (data["weatherlow_2_"+i] -  min) / range;
 				//processing.rect(27+45*i, (1-percent_1) * 275 + 49, 10, percent_1 * 275);
-				processing.ellipse(42+45*i, (1-percent_1) * 275 + 49, 4, 4);
-				processing.ellipse(42+45*i, (1-percent_2) * 275 + 49, 4, 4);
+				processing.ellipse(41+45*i, (1-percent_1) * 275 + 49, 3, 3);
+				processing.ellipse(41+45*i, (1-percent_2) * 275 + 49, 3, 3);
 				processing.line(41+45*i, (1-percent_1) * 275 + 49, 41+45*i, (1-percent_2) * 275 + 49);
 			}
 		}
+
+		//draw legend
+		processing.strokeWeight(2);
+		processing.fill(255);
+		processing.stroke(235);
+		processing.rect(525, 25, 100, 68);
+		//processing.strokeWeight(2);
+		processing.fill(main);
+		processing.stroke(main);
+		processing.ellipse(545, 59, 3, 3);
+		processing.ellipse(545, 80, 3, 3);
+		processing.line(545, 60, 545, 80);
+		processing.fill(gray);
+		processing.stroke(gray);
+		processing.ellipse(605, 59, 3, 3);
+		processing.ellipse(605, 80, 3, 3);
+		processing.line(605, 60, 605, 80);
+
+		processing.fill(0);
+		processing.text("AVG TEMP", 545, 43);
+		processing.text("HIGHS", 557, 62);
+		processing.text("LOWS", 558, 83);
+
+
 		
 	};
 
