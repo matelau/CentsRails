@@ -34,7 +34,7 @@ gem 'bootstrap-material-design'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use unicorn as the app server
-gem 'unicorn'
+#gem 'unicorn'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -44,6 +44,7 @@ gem 'unicorn'
 gem 'mysql'
 gem 'mysql2'
 
-# aws requires execjs
+# aws gems
 gem 'execjs'
-gem "puma" 
+gem "puma"
+gem 'passenger' 
