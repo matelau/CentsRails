@@ -14,6 +14,6 @@ class Api::V1::ColiController < ApplicationController
 	# 			(2) Retrieve weather data also.
 	#				(3) Error checking, including reasonable status codes for bad input.
 	def show
-		render json: Coli.find(params[:id]), status: 200
+		render json: Coli.where(location: params[:location]), status: 200
 	end
 end
