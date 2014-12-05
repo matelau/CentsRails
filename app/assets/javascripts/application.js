@@ -17,6 +17,8 @@
 //= require ripples
 //= require_tree .
 
+
+
 var active_tab, type, data, hide_1, hide_2, axis_location, horz_locs, min, max, above_1, above_2, below_1, below_2;
 
 
@@ -133,6 +135,10 @@ function sketchProc(processing) {
 		// data["cli_6_2"] = 93;
 		// data["cli_7_1"] = 120;
 		// data["cli_7_2"] = 92;
+		// data["max_cli_1"] = 120;
+		// data["min_cli_1"] = 101;
+		// data["max_cli_2"] = 99;
+		// data["min_cli_2"] = 92;
 		data["cli_1_1"] = 102;
 		data["cli_1_2"] = 96;
 		data["cli_2_1"] = 94;
@@ -331,14 +337,14 @@ function sketchProc(processing) {
 			if (processing.round(i) > 100)
 			{
 				processing.line(60, 45 + (axis_location-15-45)*(1-(i-100)/(max-100)), 605, 45 + (axis_location-15-45)*(1-(i-100)/(max-100)));
-				processing.text(processing.round(i) + "%", 55, 50 + (axis_location-15-45)*(1-(i-100)/(max-100)));
+				processing.text(processing.round(i-100) + "%", 55, 50 + (axis_location-15-45)*(1-(i-100)/(max-100)));
 			}
 		}
 		var step = (max-min)/10;
 		for (var i=min; i<100; i+=step)
 		{
 			processing.line(60, 330 - (330-(axis_location+15))*(1-(100-i)/(100-min)), 605, 330 - (330-(axis_location+15))*(1-(100-i)/(100-min)));
-			processing.text(processing.round(i) + "%", 55, 335 - (330-(axis_location+15))*(1-(100-i)/(100-min)));
+			processing.text("-" + processing.round(100-i) + "%", 55, 335 - (330-(axis_location+15))*(1-(100-i)/(100-min)));
 		}
 
 		// var max_percent = (max-100)/(max-min)+0.049;
@@ -487,9 +493,6 @@ function sketchProc(processing) {
 			processing.rect(328, 299 - 200 * (data["avgsal_2"]/max_salary), 42, 200 * (data["avgsal_2"]/max_salary));
 			processing.rect(493, 299 - 200 * (data["econgrow_2"]/max_econ), 42, 200 * (data["econgrow_2"]/max_econ));
 		}
-
-		
-
 	};
 
 	function taxes() {
@@ -661,6 +664,10 @@ function update_tab(name) {
 	hide_2 = false;
 	document.getElementById("search_1_button").value = "HIDE";
 	document.getElementById("search_2_button").value = "HIDE";
+};
+
+function api_request() {
+    window.alert("api_request");
 };
 
 var hide_show_1 = "HIDE";
