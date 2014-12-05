@@ -31,12 +31,17 @@
     border: none;
     width: 450px;
     height: 30px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 input, textarea, button {
   outline: none;
 }
 a:link, a:visited, a:hover, a:active {
   color: #884412;
+}
+canvas {
+  outline: none;
 }
 .arrow-button {
   background: none;
@@ -49,6 +54,58 @@ a:link, a:visited, a:hover, a:active {
   margin-left: auto;
   margin-right: auto;
 }
+.viz_objects {
+  display: -webkit-flex;
+  display: flex;
+  list-style-type: none;
+  padding-top: 25px;
+  padding-left: 0px;
+  height: 430px;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.search_objects {
+  display: -webkit-flex;
+  display: flex;
+  list-style-type: none;
+  padding-top: 25px;
+  padding-left: 0px;
+  width: 850px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.toggle_objects {
+  display: -webkit-flex;
+  display: flex;
+  list-style-type: none;
+  padding-top: 5px;
+  padding-left: 45px;
+  width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.wizard-div {
+  width: 850px;
+  padding-top: 41px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.center{
+  width: 850px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+.process_viz {
+  margin-top: 10px;
+  margin-right: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.23), 0 3px 10px rgba(0, 0, 0, 0.16);
+}
+.versus {
+  vertical-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+}
 .circle-arrow {
   background: none;
   border: none;
@@ -57,6 +114,14 @@ a:link, a:visited, a:hover, a:active {
   margin-left: 225px;
   margin-right: 225px;
 }
+.circle-arrow-update {
+  background: none;
+  border: none;
+  height: 50px;
+  width: 50px;
+  margin-left: 255px;
+}
+
 .main-search {
   width: 430px;
   height: 40px;
@@ -67,6 +132,30 @@ a:link, a:visited, a:hover, a:active {
   border-style: solid;
   border-radius: 10px;
   border-width: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.search_1 {
+  width: 300px;
+  height: 40px;
+  border-color: #884412;
+  border-style: solid;
+  border-radius: 10px;
+  border-width: 5px;
+  margin-left: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.search_2 {
+  width: 300px;
+  height: 40px;
+  border-color: #8A8889;
+  border-style: solid;
+  border-radius: 10px;
+  border-width: 5px;
+  margin-right: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 .help-text {
   text-align: center;
@@ -2669,7 +2758,7 @@ body .jumbotron-material-lightgrey,
   position: relative;
   padding: 8px 30px;
   border: 0;
-  margin: 10px 1px;
+  margin: 0px 1px;
   cursor: pointer;
   border-radius: 2px;
   text-transform: uppercase;
@@ -2963,7 +3052,7 @@ body .jumbotron-material-lightgrey,
 .btn-link,
 .btn:not([class^="btn btn-"]),
 .btn-default {
-  color: rgba(0, 0, 0, 0.84);
+  color: #884412;
 }
 .btn-link:hover,
 .btn:not([class^="btn btn-"]):hover,

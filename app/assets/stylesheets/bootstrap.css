@@ -928,7 +928,7 @@ figure {
 }
 .cents-logo {
   vertical-align: middle;
-  padding-left: 50px;
+  padding-left: 70px;
   padding-top: 40px;
 }
 .img-responsive,
@@ -1102,7 +1102,7 @@ h6,
   font-size: 12px;
 }
 p {
-  margin: 0 0 10px;
+  margin: 10px 0 10px;
 }
 .lead {
   margin-bottom: 20px;
