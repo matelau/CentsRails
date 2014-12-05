@@ -174,7 +174,7 @@ function sketchProc(processing) {
 		//show cli details
 		if (type == "city" && active_tab == 1)
 		{
-			var category = ["Overall costs in", "Goods in", "Groceries in", "Health care costs in", "Housing costs in", "Transportation costs in", "Utilities in"];
+			var category = ["Overall, costs in", "Goods in", "Groceries in", "Health care costs in", "Housing costs in", "Transportation costs in", "Utilities in"];
 			for (var i=0; i<horz_locs.length; i++)
 			{
 				//aligned horizontally
@@ -324,12 +324,15 @@ function sketchProc(processing) {
 		processing.stroke(235);
 		processing.fill(0);
 		processing.textAlign(processing.RIGHT);
-		var step = (max-min)/11;
+		var step = (max-min)/10;
 		//var range = max-min;
 		for (var i=max; i>100; i-=step)
 		{
+			if (processing.round(i) > 100)
+			{
 				processing.line(60, 45 + (axis_location-15-45)*(1-(i-100)/(max-100)), 605, 45 + (axis_location-15-45)*(1-(i-100)/(max-100)));
 				processing.text(processing.round(i) + "%", 55, 50 + (axis_location-15-45)*(1-(i-100)/(max-100)));
+			}
 		}
 		var step = (max-min)/10;
 		for (var i=min; i<100; i+=step)
