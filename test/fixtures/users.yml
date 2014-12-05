@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  debt: 1.5
+  books: 1.5
+  savings: 1.5
+  email: MyString
+  password: MyString
+
+two:
+  debt: 1.5
+  books: 1.5
+  savings: 1.5
+  email: MyString
+  password: MyString

@@ -1,0 +1,35 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  misc: 1.5
+  housing: 1.5
+  books: 1.5
+  insurance: 1.5
+  utilities: 1.5
+  type: 
+  name: MyString
+  food: 1.5
+  savings: 1.5
+  loans: 1.5
+  tuition: 1.5
+  healthcare: 1.5
+  debt: 1.5
+  transportation: 1.5
+  public: false
+
+two:
+  misc: 1.5
+  housing: 1.5
+  books: 1.5
+  insurance: 1.5
+  utilities: 1.5
+  type: 
+  name: MyString
+  food: 1.5
+  savings: 1.5
+  loans: 1.5
+  tuition: 1.5
+  healthcare: 1.5
+  debt: 1.5
+  transportation: 1.5
+  public: false
