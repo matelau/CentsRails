@@ -21,13 +21,6 @@ class Api::V1::ColiController < ApplicationController
 			return
 		end
 
-		unless params[:operation]
-			message = {'error' => 
-				"The operation field was empty. It should be something like 'get.'"}
-			render json: message, status: 400
-			return
-		end
-	
 		unless params[:objects]
 			message = {'error' => 
 				"The objects field was empty. It should be an array."}
@@ -35,9 +28,49 @@ class Api::V1::ColiController < ApplicationController
 			return
 		end
 
-#		render json: Coli.where(location: params['search_by']), status: 200
-		render json: Coli.where(["? = ?", 
-														params[:search_by], 
-														params[:objects][0]["base city"]]) # TODO: iterate
+		# Start querying the database.
+		column = params[:search_by]
+	  objects = params[:objects]
+		result = Array.new
+
+		# Pull all columns in both the colis and weather_records tabls for each
+		# object.
+		objects.each do |o|
+			result << Coli.joins(:weather_records).where(['? = ?', column, o])
+			result << WeatherRecord.maximum(high)
+		end
+
+		# Whole thing is an array.
+		# location_[#] (i.e. the city number and each name)
+	
+		# Large array of:
+		# weather_[city]_[month#] (high)
+		# weatherlow_[city]_[month#]
+		# Followed by:
+		# max_weather_[city]
+		# min_weather_[city]
+		
+		# Large array of:
+		# labor_[city]_[category#] (unemploy, avgsalary, econgrowth)
+		# Followed by:
+		# labor_max
+		# labor_min
+		
+		# Large array of:
+		# cli_[city]_[category] 
+		# (overall, city, goods, groceries, healthcare, housing, trans, utilities)
+		# Followed by:
+		# cli_max
+		# cli_min
+
+		# Large array of:
+		# taxes_city_[1, 2, 3]
+		# Followed by:
+		# taxes_max
+		# taxes_min
+
+		# Return the result.
+		render json: result, status: 200
+		# End querying the database.
 	end
 end
