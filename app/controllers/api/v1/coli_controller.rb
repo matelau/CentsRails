@@ -33,14 +33,19 @@ class Api::V1::ColiController < ApplicationController
 	  objects = params[:objects]
 		result = Array.new
 
-		# Pull all columns in both the colis and weather_records tabls for each
-		# object.
-		objects.each do |o|
-			result << Coli.joins(:weather_records).where(['? = ?', column, o])
-			result << WeatherRecord.maximum(high)
-		end
+		## Pull all columns in both the colis and weather_records tabls for each
+		## object.
+		#objects.each do |o|
+		#	result << Coli.joins(:weather_records).where(['? = ?', column, o])
+		#	result << WeatherRecord.maximum('high')
+		#end
 
 		# Whole thing is an array.
+		objects.each do |object|
+			i = 1
+			city_name = JSON.parse(object=> city_name.to_s)
+			result << {"location_#{i}" => city_name} 
+		end
 		# location_[#] (i.e. the city number and each name)
 	
 		# Large array of:
