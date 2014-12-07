@@ -4,8 +4,10 @@ one:
   high: 1.5
   low: 1.5
   average: 1.5
+  month: 'January'
 
 two:
   high: 1.5
   low: 1.5
   average: 1.5
+  month: 'January'
