@@ -1,17 +1,33 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  city: MyString
-  transportation: MyString
-  housing: MyString
-  food: MyString
-  overall: MyString
-  state: MyString
+  cost_of_living: 1.5
+  transportation: 1.5
+  groceries: 1.5
+  goods: 1.5
+  health_care: 1.5
+  utilities: 1.5
+  housing: 1.5
+  location: 'Salt Lake City'
+  unemp_rate: 1.5
+  unemp_trend: 1.5
+  income: 1.5
+  income_tax: 1.5
+  sales_tax: 1.5
+  property_tax: 1.5
 
-two:
-  city: MyString
-  transportation: MyString
-  housing: MyString
-  food: MyString
-  overall: MyString
-  state: MyString
+two:  
+  cost_of_living: 1.5
+  transportation: 1.5
+  groceries: 1.5
+  goods: 1.5
+  health_care: 1.5
+  utilities: 1.5
+  housing: 3.0
+  location: 'San Francisco'
+  unemp_rate: 1.5
+  unemp_trend: 1.5
+  income: 1.5
+  income_tax: 1.5
+  sales_tax: 1.5
+  property_tax: 1.5
