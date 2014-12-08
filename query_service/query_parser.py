@@ -66,7 +66,7 @@ def query(query):
 	if command == "" and len(locations) > 1:
 		command = "compare"
 	if command == "" and len(locations) == 0:
-		package = {
+		resp = {
 			"operation":"not found",
 			"query":query
 		}
@@ -79,8 +79,11 @@ def query(query):
 		}
 		for l in locations:
 			package["objects"].append({"city":l})
-	payload = json.dumps(package)
-	return payload
+		url = "http://localhost:3000/api/v1/coli"
+		payload = json.dumps(package)
+		r = requests.post(url,payload)
+		resp = r.json
+	return resp
 
 if __name__ == '__main__':
 	app.run(debug=True)
