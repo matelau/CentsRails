@@ -65,14 +65,20 @@ def query(query):
 		command = "get"
 	if command == "" and len(locations) > 1:
 		command = "compare"
-	package = {
-		"operation":command,
-		"search by":"location",
-		"objects":[],
-		"query":query
-	}
-	for l in locations:
-		package["objects"].append({"city":l})
+	if command == "" and len(locations) == 0:
+		package = {
+			"operation":"not found",
+			"query":query
+		}
+	else:
+		package = {
+			"operation":command,
+			"search by":"location",
+			"objects":[],
+			"query":query
+		}
+		for l in locations:
+			package["objects"].append({"city":l})
 	payload = json.dumps(package)
 	return payload
 
