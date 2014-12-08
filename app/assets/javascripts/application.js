@@ -113,12 +113,15 @@ function sketchProc(processing) {
 		data["location_2"] = "Phoenix, AZ";
 
 		//labor statstics
-		data["unemploy_1"] = 3.4;
-		data["unemploy_2"] = 6.4;
-		data["avgsal_1"] = 48000;
-		data["avgsal_2"] = 51000;
-		data["econgrow_1"] = 4.4;
-		data["econgrow_2"] = 3.3;
+		data["labor_1_1"] = 3.4;
+		data["labor_2_1"] = 6.4;
+		data["labor_3_1"] = 5.8;
+		data["labor_1_2"] = 48000;
+		data["labor_2_2"] = 51000;
+		data["labor_3_2"] = 44800;
+		data["labor_1_3"] = 4.4;
+		data["labor_2_3"] = 3.3;
+		data["labor_3_3"] = 4.6;
 
 		//cost of living dummy data
 		// data["cli_1_1"] = 101;
@@ -450,21 +453,61 @@ function sketchProc(processing) {
 
 	function labor_stats() {
 		//draw axis
-		// processing.fill(0);
-		// processing.stroke(0);
-		// processing.strokeWeight(2);
-		// processing.line(100, 300, 225, 300);
-		// processing.line(265, 300, 390, 300);
-		// processing.line(430, 300, 555, 300);
+		processing.fill(0);
+		processing.stroke(0);
+		processing.strokeWeight(2);
+		processing.line(60, 300, 605, 300);
+		processing.line(60, 330, 605, 330);
 		
-		// //draw labels
-		// processing.text("UNEMPLOYMENT RATE", 94, 325);
-		// processing.text("AVERAGE SALARY", 278, 325);
-		// processing.text("ECONOMIC GROWTH", 432, 325);
+		processing.textAlign(processing.CENTER);
+		axis_location = [145, 335, 525];
+
+		//draw labels
+		processing.text("UNEMPLOYMENT RATE", axis_location[0], 320);
+		processing.text("AVERAGE SALARY", axis_location[1], 320);
+		processing.text("ECONOMIC GROWTH", axis_location[2], 320);
+		processing.text("LABOR STATSTICS COMPARED TO NATIONAL AVERAGES", 325, 35);
 		// processing.fill(gray);
 		// processing.text("(%)", 143, 340);
 		// processing.text("($)", 319, 340);
 		// processing.text("(%)", 480, 340);
+
+
+		data["labor_1_1"] = 3.4;
+		data["labor_2_1"] = 6.4;
+
+		//get min and max, based upon data, national averages and what is being shown
+		var min_1, max_1, min_2, max_2, min_3, max_3;
+		if (!hide_1)
+		{
+			min_1 = processing.min(data["labor_1_1"], data["labor_3_1"]);
+			max_1 = processing.max(data["labor_1_1"], data["labor_3_1"]);
+			min_2 = processing.min(data["labor_1_2"], data["labor_3_2"]);
+			max_2 = processing.max(data["labor_1_2"], data["labor_3_2"]);
+			min_3 = processing.min(data["labor_1_3"], data["labor_3_3"]);
+			max_3 = processing.max(data["labor_1_3"], data["labor_3_3"]);
+		}
+		else if (!hide_2)
+		{
+			min_1 = processing.min(data["labor_2_1"], data["labor_3_1"]);
+			max_1 = processing.max(data["labor_2_1"], data["labor_3_1"]);
+			min_2 = processing.min(data["labor_2_2"], data["labor_3_2"]);
+			max_2 = processing.max(data["labor_2_2"], data["labor_3_2"]);
+			min_3 = processing.min(data["labor_2_3"], data["labor_3_3"]);
+			max_3 = processing.max(data["labor_2_3"], data["labor_3_3"]);
+		}
+		else
+		{
+			min_1 = processing.min(data["labor_1_1"], data["labor_3_1"], data["labor_2_1"]);
+			max_1 = processing.max(data["labor_1_1"], data["labor_3_1"], data["labor_2_1"]);
+			min_2 = processing.min(data["labor_1_2"], data["labor_3_2"], data["labor_2_2"]);
+			max_2 = processing.max(data["labor_1_2"], data["labor_3_2"], data["labor_2_2"]);
+			min_3 = processing.min(data["labor_1_3"], data["labor_3_3"], data["labor_2_3"]);
+			max_3 = processing.max(data["labor_1_3"], data["labor_3_3"], data["labor_2_3"]);
+
+		}
+
+		
 
 		// //draw data
 		// var max_unemploy = processing.max(data["unemploy_1"], data["unemploy_2"]);
