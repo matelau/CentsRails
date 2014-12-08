@@ -48,26 +48,38 @@ class Api::V1::ColiController < ApplicationController
 			# Name each location.
 			result["location_#{i}".to_sym] = location
 
+			###### ---------------- WEATHER --------------- #####
 			# Add weather data for high temperature records.
+			j = 1
 			records = Coli.joins(:weather_records)
 										.select(:high)
-										.where(['? = ?', column, object])
-			j = 1
+										.where(['location = ?', location])
+										.order('month ASC')
+			
 			records.each do |record|
-				result["weather_#{i}_#{j}"] = record
+				result["weather_#{i}_#{j}"] = record[:high]
 				j += 1
 			end
 
+			# Add weather data for low temperature records.
+			j = 1
+			records = Coli.joins(:weather_records)
+										.select(:low)
+										.where(['location = ?', location])
+										.order('month ASC')
+			
+			records.each do |record|
+				result["weatherlow_#{i}_#{j}"] = record[:low]
+				j += 1
+			end
+
+			# Send min and max weather values.
+			result["max_weather_#{i}"] = WeatherRecord.maximum(:high)
+			result["min_weather_#{i}"] = WeatherRecord.minimum(:low)
+			##### -------------------- END WEATHER -------------------- #####
+			
 			i += 1
 		end
-		# location_[#] (i.e. the city number and each name)
-	
-		# Large array of:
-		# weather_[city]_[month#] (high)
-		# weatherlow_[city]_[month#]
-		# Followed by:
-		# max_weather_[city]
-		# min_weather_[city]
 		
 		# Large array of:
 		# labor_[city]_[category#] (unemploy, avgsalary, econgrowth)
