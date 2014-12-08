@@ -34,7 +34,7 @@ function sketchProc(processing) {
 
 	processing.setup = function() {
 		//this will be retrieved from json object
-		type = "city";
+		//type = "city";
 		processing.size(655,375);
 		//always set the initial tab to the first one
 		active_tab = 1;
@@ -158,15 +158,6 @@ function sketchProc(processing) {
 		data["max_cli_2"] = 106;
 		data["min_cli_2"] = 92;
 
-
-
-		document.getElementById("search_1_name").value = data["location_1"];
-		document.getElementById("search_2_name").value = data["location_2"];
-
-
-
-
-
 		//set up min and max and any other design variables for each tab here 
 
 	};
@@ -174,8 +165,25 @@ function sketchProc(processing) {
 	processing.draw = function() {
 		processing.background(255);
 
+		var pathArray = window.location.pathname.split('/');
+		type = pathArray[2];
+
 		if (type == "city")
 			draw_city();
+
+		else if (type == "spending")
+			draw_spend();
+
+		else if (type == "career")
+			draw_career();
+
+		else if (type == "school")
+			draw_college();
+
+		else if (type == "major")
+			draw_major();
+
+		else;
 
 		//show cli details
 		if (type == "city" && active_tab == 1)
@@ -277,6 +285,8 @@ function sketchProc(processing) {
 
 	function draw_city() {
 		//tab helper 1-cost of living, 2-labor stats, 3-taxes, 4-weather
+		document.getElementById("search_1_name").value = data["location_1"];
+		document.getElementById("search_2_name").value = data["location_2"];
 		if (active_tab == 1)
 			cost_of_living();
 		else if (active_tab == 2)
@@ -346,22 +356,6 @@ function sketchProc(processing) {
 			processing.line(60, 330 - (330-(axis_location+15))*(1-(100-i)/(100-min)), 605, 330 - (330-(axis_location+15))*(1-(100-i)/(100-min)));
 			processing.text("-" + processing.round(100-i) + "%", 55, 335 - (330-(axis_location+15))*(1-(100-i)/(100-min)));
 		}
-
-		// var max_percent = (max-100)/(max-min)+0.049;
-		// var min_percent = (100-min)/(max-min)+0.049;
-		// for (var i=0.1; i<max_percent-0.1; i+=0.1)
-		// {
-		// 	processing.text(processing.round(i*(max-min)) + "%", 55, (axis_location-15) - (axis_location-15+60)*i+5);
-		// 	processing.line(60, (axis_location-15) - (axis_location-15+60)*i, 605, (axis_location-15) - (axis_location-15+60)*i);
-
-		// }
-		// for (var i=0.1; i<min_percent-0.1; i+=0.1)
-		// {
-		// 	processing.text(processing.round("-" + i*(max-min)) + "%", 55, (axis_location+15) + (axis_location+15+60)*i+5);
-		// 	processing.line(60, (axis_location+15) + (axis_location+15+60)*i, 605, (axis_location+15) + (axis_location+15+60)*i);
-		// }
-
-		
 
 		//draw a rectangle to highlight better or worse than national average 
 		processing.fill(245);
@@ -456,43 +450,43 @@ function sketchProc(processing) {
 
 	function labor_stats() {
 		//draw axis
-		processing.fill(0);
-		processing.stroke(0);
-		processing.strokeWeight(2);
-		processing.line(100, 300, 225, 300);
-		processing.line(265, 300, 390, 300);
-		processing.line(430, 300, 555, 300);
+		// processing.fill(0);
+		// processing.stroke(0);
+		// processing.strokeWeight(2);
+		// processing.line(100, 300, 225, 300);
+		// processing.line(265, 300, 390, 300);
+		// processing.line(430, 300, 555, 300);
 		
-		//draw labels
-		processing.text("UNEMPLOYMENT RATE", 94, 325);
-		processing.text("AVERAGE SALARY", 278, 325);
-		processing.text("ECONOMIC GROWTH", 432, 325);
-		processing.fill(gray);
-		processing.text("(%)", 143, 340);
-		processing.text("($)", 319, 340);
-		processing.text("(%)", 480, 340);
+		// //draw labels
+		// processing.text("UNEMPLOYMENT RATE", 94, 325);
+		// processing.text("AVERAGE SALARY", 278, 325);
+		// processing.text("ECONOMIC GROWTH", 432, 325);
+		// processing.fill(gray);
+		// processing.text("(%)", 143, 340);
+		// processing.text("($)", 319, 340);
+		// processing.text("(%)", 480, 340);
 
-		//draw data
-		var max_unemploy = processing.max(data["unemploy_1"], data["unemploy_2"]);
-		var max_salary = processing.max(data["avgsal_1"], data["avgsal_2"]);
-		var max_econ = processing.max(data["econgrow_1"], data["econgrow_2"]);
+		// //draw data
+		// var max_unemploy = processing.max(data["unemploy_1"], data["unemploy_2"]);
+		// var max_salary = processing.max(data["avgsal_1"], data["avgsal_2"]);
+		// var max_econ = processing.max(data["econgrow_1"], data["econgrow_2"]);
 
-		processing.noStroke();
+		// processing.noStroke();
 
-		if (!hide_1)
-		{
-			processing.fill(main);
-			processing.rect(121, 299 - 200 * (data["unemploy_1"]/max_unemploy), 42, 200 * (data["unemploy_1"]/max_unemploy));
-			processing.rect(286, 299 - 200 * (data["avgsal_1"]/max_salary), 42, 200 * (data["avgsal_1"]/max_salary));
-			processing.rect(451, 299 - 200 * (data["econgrow_1"]/max_econ), 42, 200 * (data["econgrow_1"]/max_econ));
-		}
-		if (!hide_2)
-		{
-			processing.fill(gray);
-			processing.rect(163, 299 - 200 * (data["unemploy_2"]/max_unemploy), 42, 200 * (data["unemploy_2"]/max_unemploy));
-			processing.rect(328, 299 - 200 * (data["avgsal_2"]/max_salary), 42, 200 * (data["avgsal_2"]/max_salary));
-			processing.rect(493, 299 - 200 * (data["econgrow_2"]/max_econ), 42, 200 * (data["econgrow_2"]/max_econ));
-		}
+		// if (!hide_1)
+		// {
+		// 	processing.fill(main);
+		// 	processing.rect(121, 299 - 200 * (data["unemploy_1"]/max_unemploy), 42, 200 * (data["unemploy_1"]/max_unemploy));
+		// 	processing.rect(286, 299 - 200 * (data["avgsal_1"]/max_salary), 42, 200 * (data["avgsal_1"]/max_salary));
+		// 	processing.rect(451, 299 - 200 * (data["econgrow_1"]/max_econ), 42, 200 * (data["econgrow_1"]/max_econ));
+		// }
+		// if (!hide_2)
+		// {
+		// 	processing.fill(gray);
+		// 	processing.rect(163, 299 - 200 * (data["unemploy_2"]/max_unemploy), 42, 200 * (data["unemploy_2"]/max_unemploy));
+		// 	processing.rect(328, 299 - 200 * (data["avgsal_2"]/max_salary), 42, 200 * (data["avgsal_2"]/max_salary));
+		// 	processing.rect(493, 299 - 200 * (data["econgrow_2"]/max_econ), 42, 200 * (data["econgrow_2"]/max_econ));
+		// }
 	};
 
 	function taxes() {
@@ -635,14 +629,20 @@ function sketchProc(processing) {
 	};
 
 	function draw_major() {
-		//tab helper
+		document.getElementById("search_1_name").value = "computer science";
+		document.getElementById("search_2_name").value = "english";
+		//tab helper 1-salary, 2-job satisfication, 3-grad rate, 4-demand, 5-unemploy, 6-top jobs
 	};
 
 	function draw_college() {
+		document.getElementById("search_1_name").value = "University of Utah";
+		document.getElementById("search_2_name").value = "BYU";
 		//tab helper
 	};
 
 	function draw_career() {
+		document.getElementById("search_1_name").value = "software engineer";
+		document.getElementById("search_2_name").value = "music teacher";
 		//tab helper
 	};
 
@@ -652,6 +652,7 @@ function sketchProc(processing) {
 
 
 };
+
 
 var canvas = document.getElementById("main_viz");
 if (canvas != null)
