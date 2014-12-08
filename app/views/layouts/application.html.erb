@@ -2,13 +2,74 @@
 <html>
 <head>
   <title>Cents</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
+    <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="/assets/bootstrap.css" rel="stylesheet">
+    <link href="/assets/ripples.min.css" rel="stylesheet">
+    <link href="/assets/material-wfont.css" rel="stylesheet">
 </head>
 <body>
 
+
+<!--Navigation Bar -->
+
+<div class="navbar navbar-cents">
+    <div class="navbar-header">
+        <a href="/"><img class="cents-logo" src="/assets/logo trans white.png" height="109" width="259"></a>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+    </div>
+    <div class="navbar-collapse collapse navbar-responsive-collapse">
+        <ul class="nav navbar-nav navbar-right">
+        <!--check session variables to see if logged in -->
+            <li><a href="/">HOME</a></li>
+            <li><a href="/user/register">LOGIN</a></li>
+            <li><a href="/user/profile">PROFILE</a></li>
+            <li><a href="/info/examples">EXAMPLES</a></li>
+            <li><a href="/wizard/start">WIZARD</a></li>
+            <li><a href="/info/help">HELP</a></li>
+            <li><a href="/info/about">ABOUT</a></li>
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" ><img src="/assets/search white.png" height="15" width="15"></b></a>
+                
+                <ul class="dropdown-menu">
+                    <form>
+                        <input type="text" class="blank-search" >
+                        <button class="arrow-button" onclick="api_request(); return false;"><img src="/assets/arrow white.png" height="15" width="15"></button>
+                    </form>
+                </ul>
+                
+            </li>
+        </ul>
+    </div>
+</div>
+
+
 <%= yield %>
+
+<!-- Your site ends -->
+
+    <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <script src="/assets/processing.js"></script>
+    <script src="/assets/application.js"></script>
+
+    <script src="/assets/ripples.min.js"></script>
+    <script src="/assets/material.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $.material.init();
+        });
+    </script>
+
+    <script type="text/javascript">
+        function api_request() {
+            window.alert("api_request");
+        };
+    </script>
 
 </body>
 </html>

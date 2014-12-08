@@ -1,4 +1,19 @@
 Rails.application.routes.draw do
+  get 'search/index'
+  get 'info/examples'
+  get 'info/help'
+  get 'info/about'
+  get 'wizard/start'
+  get 'wizard/education'
+  get 'wizard/career'
+  get 'wizard/city'
+  get 'wizard/major'
+  get 'wizard/school'
+  get 'wizard/spending'
+  get 'user/profile'
+  get 'user/register'
+  root 'search#index'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
