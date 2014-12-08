@@ -1,16 +1,5 @@
 class Api::V1::ColiController < ApplicationController
-### Just for testing
-#	def index
-#		if params[:id]  	
-#			render json: Coli.find(params[:id]), status: 200
-#		else
-#			render json: 'Enter an ID.'
-#		end
-#	end
-
 	# Retrieve all location data by location name.
-	# (Well, it SHOULD. Right now it looks up some location data by ID.)
-	# 			(2) Retrieve weather data also.
 	def show
 		# Check for the required fields, and return an appropriate message if
 		# they are not present.
@@ -33,13 +22,6 @@ class Api::V1::ColiController < ApplicationController
 	  objects = params[:objects]
 		result = Hash.new
 
-		## Pull all columns in both the colis and weather_records tabls for each
-		## object.
-		#objects.each do |o|
-		#	result << Coli.joins(:weather_records).where(['? = ?', column, o])
-		#	result << WeatherRecord.maximum('high')
-		#end
-
 		# Add data for each object.
 		# We'll need to both iterate over each location and keep track of their
 		# indices, because that's how the view tracks them.
@@ -50,12 +32,6 @@ class Api::V1::ColiController < ApplicationController
 			# Name each location.
 			result["location_#{i}".to_sym] = location
 	
-		# Large array of:
-		# cli_[city]_[category] 
-		# (overall, city, goods, groceries, healthcare, housing, trans, utilities)
-		# Followed by:
-		# cli_max
-		# cli_min
 			##### ---------------- COST OF LIVING ---------------- #####
 			# Get overall COLI data for this location.
 			records = Coli.select(:cost_of_living)
@@ -114,6 +90,24 @@ class Api::V1::ColiController < ApplicationController
 			result["labor_#{i}_1"] = records[0][:unemp_trend]
 			##### -------------------- END LABOR ----------------- #####
 
+			
+			##### -------------------- TAXES --------------------- #####
+			# Get income taxes for this location.
+			records = Coli.select(:income_tax)
+										.where(['location = ?', location])
+			result["taxes_#{i}_1"] = records[0][:income_tax]
+
+			# Get property taxes for this location.
+			records = Coli.select(:property_tax)
+										.where(['location = ?', location])
+			result["taxes_#{i}_2"] = records[0][:property_tax]
+
+			# Get sales taxes for this location.
+			records = Coli.select(:sales_tax)
+										.where(['location = ?', location])
+			result["taxes_#{i}_3"] = records[0][:sales_tax]
+			#### ------------------- END TAXES ------------------- #####
+
 
 			##### -------------------- WEATHER ------------------- #####
 			# Add weather data for high temperature records.
@@ -160,16 +154,22 @@ class Api::V1::ColiController < ApplicationController
 		result["labor_max_3"] = Coli.maximum(:unemp_trend)
 		result["labor_min_3"] = Coli.minimum(:unemp_trend)
 
+		# Get max and min of income tax data.
+		result["taxes_max_1"] = Coli.maximum(:income_tax)
+		result["taxes_min_1"] = Coli.minimum(:income_tax)
+
+		# Get max and min of property tax data.
+		result["taxes_max_2"] = Coli.maximum(:property_tax)
+		result["taxes_min_2"] = Coli.minimum(:property_tax)
+
+		# Get max and min of sales tax data.
+		result["taxes_max_3"] = Coli.maximum(:sales_tax)
+		result["taxes_min_3"] = Coli.minimum(:sales_tax)
+
 		# Send min and max weather values.
 		result["max_weather"] = WeatherRecord.maximum(:high)
 		result["min_weather"] = WeatherRecord.minimum(:low)
 	
-		# Large array of:
-		# taxes_city_[1, 2, 3]
-		# Followed by:
-		# taxes_max
-		# taxes_min
-
 		# Return the result, formatted as JSON, and with a 200 OK HTTP code.
 		render json: result, status: 200
 		# End querying the database.
