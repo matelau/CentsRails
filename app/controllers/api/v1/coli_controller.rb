@@ -47,8 +47,30 @@ class Api::V1::ColiController < ApplicationController
 
 			# Name each location.
 			result["location_#{i}".to_sym] = location
+	
+	
+			##### -------------------- LABOR --------------------- #####
+			# Get unemployment data for this location.
+			records = Coli.select(:unemp_rate)
+										.where(['location = ?', location])
+			
+			result["labor_#{i}_1"] = records[0][:unemp_rate]
 
-			###### ---------------- WEATHER --------------- #####
+			# Get income data for this location.
+			records = Coli.select(:income)
+										.where(['location = ?', location])
+			
+			result["labor_#{i}_2"] = records[0][:income]
+
+			# Get growth data for this location.
+			records = Coli.select(:unemp_trend)
+										.where(['location = ?', location])
+			
+			result["labor_#{i}_1"] = records[0][:unemp_trend]
+			##### -------------------- END LABOR ----------------- #####
+
+
+			##### -------------------- WEATHER ------------------- #####
 			# Add weather data for high temperature records.
 			j = 1
 			records = Coli.joins(:weather_records)
@@ -72,21 +94,27 @@ class Api::V1::ColiController < ApplicationController
 				result["weatherlow_#{i}_#{j}"] = record[:low]
 				j += 1
 			end
-
-			# Send min and max weather values.
-			result["max_weather_#{i}"] = WeatherRecord.maximum(:high)
-			result["min_weather_#{i}"] = WeatherRecord.minimum(:low)
-			##### -------------------- END WEATHER -------------------- #####
+			##### -------------------- END WEATHER --------------- #####
 			
 			i += 1
 		end
+
+		# Get max and min of unemployment data.
+		result["labor_max_1"] = Coli.maximum(:unemp_rate)
+		result["labor_min_1"] = Coli.minimum(:unemp_rate)
 		
-		# Large array of:
-		# labor_[city]_[category#] (unemploy, avgsalary, econgrowth)
-		# Followed by:
-		# labor_max
-		# labor_min
-		
+		# Get max and min of income data.
+		result["labor_max_2"] = Coli.maximum(:unemp_rate)
+		result["labor_min_2"] = Coli.minimum(:unemp_rate)
+
+		# Get max and min of growth data.
+		result["labor_max_3"] = Coli.maximum(:unemp_rate)
+		result["labor_min_3"] = Coli.minimum(:unemp_rate)
+
+		# Send min and max weather values.
+		result["max_weather"] = WeatherRecord.maximum(:high)
+		result["min_weather"] = WeatherRecord.minimum(:low)
+	
 		# Large array of:
 		# cli_[city]_[category] 
 		# (overall, city, goods, groceries, healthcare, housing, trans, utilities)
