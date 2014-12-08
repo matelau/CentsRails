@@ -31,7 +31,7 @@ class Api::V1::ColiController < ApplicationController
 		# Start querying the database.
 		column = params[:search_by]
 	  objects = params[:objects]
-		result = Array.new
+		result = Hash.new
 
 		## Pull all columns in both the colis and weather_records tabls for each
 		## object.
@@ -40,11 +40,25 @@ class Api::V1::ColiController < ApplicationController
 		#	result << WeatherRecord.maximum('high')
 		#end
 
-		# Whole thing is an array.
+		# Add data for each object.
+		i = 1
 		objects.each do |object|
-			i = 1
-			city_name = JSON.parse(object=> city_name.to_s)
-			result << {"location_#{i}" => city_name} 
+			location = object.values[0]
+
+			# Name each location.
+			result["location_#{i}".to_sym] = location
+
+			# Add weather data for high temperature records.
+			records = Coli.joins(:weather_records)
+										.select(:high)
+										.where(['? = ?', column, object])
+			j = 1
+			records.each do |record|
+				result["weather_#{i}_#{j}"] = record
+				j += 1
+			end
+
+			i += 1
 		end
 		# location_[#] (i.e. the city number and each name)
 	
