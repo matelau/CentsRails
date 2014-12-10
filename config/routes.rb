@@ -68,4 +68,10 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+  namespace :api do
+    namespace :v1 do
+			get  'coli/' => 'coli#index'
+      post 'coli/' => 'coli#show'
+    end
+  end
 end

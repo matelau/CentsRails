@@ -1,13 +1,23 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  high: 1.5
-  low: 1.5
-  average: 1.5
-  month: 'January'
+<% 36.times do |n| %>
+sf_weather_<%= n %>:
+  coli_id: 1
+  high: <%= 60 + n %>
+  low: <%= 40 - n %>
+  average: <%= 50 + n/2 %>
+  <% month_no = (((n + 1) % 12) + 1).to_s %>
+  <% year = (10 + (((n + 1)/12).floor)).to_s %>
+  month: <%= "#{month_no}/4/#{year}" %>
+<% end %>
 
-two:
-  high: 1.5
-  low: 1.5
-  average: 1.5
-  month: 'February'
+<% 36.times do |n| %>
+slc_weather_<%= n %>:
+  coli_id: 2
+  high: <%= 70 + n %>
+  low: <%= 30 - n %>
+  average: <%= 50 + n/2 %>
+  <% month_no = (((n + 1) % 12) + 1).to_s %>
+  <% year = (10 + (((n + 1)/12).floor)).to_s %>
+  month: <%= "#{month_no}/4/#{year}" %>
+<% end %>
