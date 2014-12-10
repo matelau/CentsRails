@@ -22,7 +22,7 @@ class Api::V1::ColiController < ApplicationController
 		column = params[:search_by]
 
 		# The objects whose data we're searching for. Currently these are cities.
-	  objects = params[:objects]
+		objects = params[:objects]
 
 		# A hash that stores the results. This will be converted into a JSON
 		# object.
@@ -35,23 +35,31 @@ class Api::V1::ColiController < ApplicationController
 		objects.each do |object|
 			location = object.values[0]
 
+			# Query the database.
+			records = Coli.select('*').where(['location = ?', location])
+			
+			# Check that we found something in the database.
+			unless records[0]
+				message = {'failure' => 
+					'Your query seems to be correct, but no data was found.'}
+				render json: message, status: 200
+				return
+			end
+
 			# Name each location.
 			result["location_#{i}".to_sym] = location
 	
-			# Query the database.
-			records = Coli.select('*').where(['location = ?', location])
-
 			##### ---------------- COST OF LIVING ---------------- #####
 			coli_stats = Array.new	# Used for formatting the eventual JSON object.
 
 			# Get overall COLI data for this location.
-			coli_stats << records[0][:cost_of_living]
-			coli_stats << records[0][:goods]
-			coli_stats << records[0][:groceries]
-			coli_stats << records[0][:health_care]
-			coli_stats << records[0][:housing]
-			coli_stats << records[0][:transportation]
-			coli_stats << records[0][:utilities]
+			coli_stats << records[0][:cost_of_living].to_f
+			coli_stats << records[0][:goods].to_f
+			coli_stats << records[0][:groceries].to_f
+			coli_stats << records[0][:health_care].to_f
+			coli_stats << records[0][:housing].to_f
+			coli_stats << records[0][:transportation].to_f
+			coli_stats << records[0][:utilities].to_f
 
 			# Add the mins and maxes.
 			coli_stats << coli_stats.max
@@ -65,9 +73,9 @@ class Api::V1::ColiController < ApplicationController
 			labor_stats = Array.new	# Used for formatting the eventual JSON object.
 
 			# Get unemployment data for this location.
-			labor_stats << records[0][:unemp_rate]
-			labor_stats << records[0][:income]
-			labor_stats << records[0][:unemp_trend]
+			labor_stats << records[0][:unemp_rate].to_f
+			labor_stats << records[0][:income].to_f
+			labor_stats << records[0][:unemp_trend].to_f
 
 			# Add max and min.
 			labor_stats << labor_stats.max
@@ -80,9 +88,9 @@ class Api::V1::ColiController < ApplicationController
 			tax_stats = Array.new	# Used for formatting the eventual JSON object.			
 
 			# Get income taxes for this location.
-			tax_stats << records[0][:income_tax]
-			tax_stats << records[0][:property_tax]
-			tax_stats << records[0][:sales_tax]
+			tax_stats << records[0][:income_tax].to_f
+			tax_stats << records[0][:property_tax].to_f
+			tax_stats << records[0][:sales_tax].to_f
 
 			# Add max and min.
 			tax_stats << labor_stats.max
@@ -102,8 +110,8 @@ class Api::V1::ColiController < ApplicationController
 										.order('colis.id ASC')	
 
 			records.each do |record|
-				weather_high_stats << record[:high]
-				weather_low_stats << record[:low]
+				weather_high_stats << record[:high].to_f
+				weather_low_stats << record[:low].to_f
 			end
 
 			# Add max and min for each list.
