@@ -17,12 +17,18 @@ class Api::V1::ColiController < ApplicationController
 			return
 		end
 
-		# Start querying the database.
+		# The column we're searching over. Currently this is always 'location',
+		# but it could change.
 		column = params[:search_by]
+
+		# The objects whose data we're searching for. Currently these are cities.
 	  objects = params[:objects]
+
+		# A hash that stores the results. This will be converted into a JSON
+		# object.
 		result = Hash.new
 
-		# Add data for each object.
+		# Store each object's data in result.
 		# We'll need to both iterate over each location and keep track of their
 		# indices, because that's how the view tracks them.
 		i = 1
@@ -32,146 +38,88 @@ class Api::V1::ColiController < ApplicationController
 			# Name each location.
 			result["location_#{i}".to_sym] = location
 	
+			# Query the database.
+			records = Coli.select('*').where(['location = ?', location])
+
 			##### ---------------- COST OF LIVING ---------------- #####
+			coli_stats = Array.new	# Used for formatting the eventual JSON object.
+
 			# Get overall COLI data for this location.
-			records = Coli.select(:cost_of_living)
-										.where(['location = ?', location])
-			result["cli_#{i}_1"] = records[0][:cost_of_living]
+			coli_stats << records[0][:cost_of_living]
+			coli_stats << records[0][:goods]
+			coli_stats << records[0][:groceries]
+			coli_stats << records[0][:health_care]
+			coli_stats << records[0][:housing]
+			coli_stats << records[0][:transportation]
+			coli_stats << records[0][:utilities]
 
-			# Re-send the location for the visualization.
-			result["cli_#{i}_2"] = location
+			# Add the mins and maxes.
+			coli_stats << coli_stats.max
+			coli_stats << coli_stats.min
 
-			# Get goods COLI data for this location.
-			records = Coli.select(:goods)
-										.where(['location = ?', location])
-			result["cli_#{i}_3"] = records[0][:goods]
+			# Add the data to the result.
+			result["cli_#{i}"] = coli_stats
 
-			# Get groceries COLI data for this location.
-			records = Coli.select(:groceries)
-										.where(['location = ?', location])
-			result["cli_#{i}_4"] = records[0][:groceries]
-
-			# Get healthcare COLI data for this location.
-			records = Coli.select(:health_care)
-										.where(['location = ?', location])
-			result["cli_#{i}_5"] = records[0][:health_care]
-
-			# Get housing COLI data for this location.
-			records = Coli.select(:housing)
-										.where(['location = ?', location])
-			result["cli_#{i}_6"] = records[0][:housing]
-
-			# Get transportation COLI data for this location.
-			records = Coli.select(:transportation)
-										.where(['location = ?', location])
-			result["cli_#{i}_7"] = records[0][:transportation]
-
-			# Get utilities COLI data for this location.
-			records = Coli.select(:utilities)
-										.where(['location = ?', location])
-			result["cli_#{i}_8"] = records[0][:utilities]
-			#### ---------------- END COST OF LIVING ------------- ####
-	
 
 			##### -------------------- LABOR --------------------- #####
+			labor_stats = Array.new	# Used for formatting the eventual JSON object.
+
 			# Get unemployment data for this location.
-			records = Coli.select(:unemp_rate)
-										.where(['location = ?', location])
-			result["labor_#{i}_1"] = records[0][:unemp_rate]
+			labor_stats << records[0][:unemp_rate]
+			labor_stats << records[0][:income]
+			labor_stats << records[0][:unemp_trend]
 
-			# Get income data for this location.
-			records = Coli.select(:income)
-										.where(['location = ?', location])
-			result["labor_#{i}_2"] = records[0][:income]
+			# Add max and min.
+			labor_stats << labor_stats.max
+			labor_stats << labor_stats.min
 
-			# Get growth data for this location.
-			records = Coli.select(:unemp_trend)
-										.where(['location = ?', location])
-			result["labor_#{i}_1"] = records[0][:unemp_trend]
-			##### -------------------- END LABOR ----------------- #####
+			result["labor_#{i}"] = labor_stats
 
 			
 			##### -------------------- TAXES --------------------- #####
+			tax_stats = Array.new	# Used for formatting the eventual JSON object.			
+
 			# Get income taxes for this location.
-			records = Coli.select(:income_tax)
-										.where(['location = ?', location])
-			result["taxes_#{i}_1"] = records[0][:income_tax]
+			tax_stats << records[0][:income_tax]
+			tax_stats << records[0][:property_tax]
+			tax_stats << records[0][:sales_tax]
 
-			# Get property taxes for this location.
-			records = Coli.select(:property_tax)
-										.where(['location = ?', location])
-			result["taxes_#{i}_2"] = records[0][:property_tax]
+			# Add max and min.
+			tax_stats << labor_stats.max
+			tax_stats << labor_stats.min
 
-			# Get sales taxes for this location.
-			records = Coli.select(:sales_tax)
-										.where(['location = ?', location])
-			result["taxes_#{i}_3"] = records[0][:sales_tax]
-			#### ------------------- END TAXES ------------------- #####
+			result["taxes_#{i}"] = tax_stats
 
 
 			##### -------------------- WEATHER ------------------- #####
+			weather_high_stats = Array.new
+			weather_low_stats = Array.new
+
 			# Add weather data for high temperature records.
-			j = 1
 			records = Coli.joins(:weather_records)
-										.select(:high)
+										.select(:month, :high, :low)
 										.where(['location = ?', location])
-										.order('month ASC')
-			
+										.order('colis.id ASC')	
+
 			records.each do |record|
-				result["weather_#{i}_#{j}"] = record[:high]
-				j += 1
+				weather_high_stats << record[:high]
+				weather_low_stats << record[:low]
 			end
 
-			# Add weather data for low temperature records.
-			j = 1
-			records = Coli.joins(:weather_records)
-										.select(:low)
-										.where(['location = ?', location])
-										.order('month ASC')
-			
-			records.each do |record|
-				result["weatherlow_#{i}_#{j}"] = record[:low]
-				j += 1
-			end
-			##### -------------------- END WEATHER --------------- #####
-			
+			# Add max and min for each list.
+			weather_high_stats << weather_high_stats.max
+			weather_high_stats << weather_high_stats.min
+			weather_low_stats << weather_low_stats.max
+			weather_low_stats << weather_low_stats.min
+
+			result["weather_#{i}"] = weather_high_stats
+			result["weatherlow_#{i}"] = weather_low_stats
+		
+			# Increment for next object.	
 			i += 1
 		end
 
-		# Get max and min of overall COLI data.
-		result["cli_max"] = Coli.maximum(:cost_of_living)
-		result["cli_min"] = Coli.minimum(:cost_of_living)	
-
-		# Get max and min of unemployment data.
-		result["labor_max_1"] = Coli.maximum(:unemp_rate)
-		result["labor_min_1"] = Coli.minimum(:unemp_rate)
-		
-		# Get max and min of income data.
-		result["labor_max_2"] = Coli.maximum(:income)
-		result["labor_min_2"] = Coli.minimum(:income)
-
-		# Get max and min of growth data.
-		result["labor_max_3"] = Coli.maximum(:unemp_trend)
-		result["labor_min_3"] = Coli.minimum(:unemp_trend)
-
-		# Get max and min of income tax data.
-		result["taxes_max_1"] = Coli.maximum(:income_tax)
-		result["taxes_min_1"] = Coli.minimum(:income_tax)
-
-		# Get max and min of property tax data.
-		result["taxes_max_2"] = Coli.maximum(:property_tax)
-		result["taxes_min_2"] = Coli.minimum(:property_tax)
-
-		# Get max and min of sales tax data.
-		result["taxes_max_3"] = Coli.maximum(:sales_tax)
-		result["taxes_min_3"] = Coli.minimum(:sales_tax)
-
-		# Send min and max weather values.
-		result["max_weather"] = WeatherRecord.maximum(:high)
-		result["min_weather"] = WeatherRecord.minimum(:low)
-	
 		# Return the result, formatted as JSON, and with a 200 OK HTTP code.
 		render json: result, status: 200
-		# End querying the database.
 	end
 end
