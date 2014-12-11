@@ -64,16 +64,20 @@ function sketchProc(processing) {
 		data["location_1"] = "Salt Lake City, UT";
 		data["location_2"] = "Phoenix, AZ";
 
+		data["labor_1"] = [3.4, 48000, 4.4];
+		data["labor_2"] = [6.4, 51000, 3.3];
+		data["labor_3"] = [5.8, 44800, 4.6];
+
 		//labor statstics
-		data["labor_1_1"] = 3.4;
-		data["labor_2_1"] = 6.4;
-		data["labor_3_1"] = 5.8;
-		data["labor_1_2"] = 48000;
-		data["labor_2_2"] = 51000;
-		data["labor_3_2"] = 44800;
-		data["labor_1_3"] = 4.4;
-		data["labor_2_3"] = 3.3;
-		data["labor_3_3"] = 4.6;
+		// data["labor_1_1"] = 3.4;
+		// data["labor_2_1"] = 6.4;
+		// data["labor_3_1"] = 5.8;
+		// data["labor_1_2"] = 48000;
+		// data["labor_2_2"] = 51000;
+		// data["labor_3_2"] = 44800;
+		// data["labor_1_3"] = 4.4;
+		// data["labor_2_3"] = 3.3;
+		// data["labor_3_3"] = 4.6;
 
 		//cost of living dummy data
 		// data["cli_1_1"] = 101;
@@ -404,149 +408,143 @@ function sketchProc(processing) {
 
 
 	function labor_stats() {
-		processing.textAlign(processing.CENTER);
-		//axis_location = [163, 355, 545];
-		axis_location = [152, 331, 511];
+		
+		axis_location = [135, 310, 535];
 		var graph_top = 50; 
-		var graph_bot = 295;
+		var graph_bot = 320;
+		var graph_left = 60;
+		var graph_right = 595;
 
 		//draw labels
+		processing.textAlign(processing.CENTER);
 		processing.stroke(0);
-		processing.text("UNEMPLOYMENT RATE", axis_location[0], 315);
-		processing.text("AVERAGE SALARY", axis_location[1], 315);
-		processing.text("ECONOMIC GROWTH", axis_location[2], 315);
-		processing.text("LABOR STATSTICS COMPARED TO NATIONAL AVERAGES", 327, 40);
-		processing.line(154, 47, 499, 47);
+		processing.fill(0);
+		processing.text("UNEMPLOYMENT RATE", axis_location[0], graph_bot+20);
+		processing.text("AVERAGE SALARY", axis_location[2], graph_bot+20);
+		processing.text("ECONOMIC GROWTH", axis_location[1], graph_bot+20);
+		processing.text("LABOR STATISTICS COMPARED TO NATIONAL AVERAGES", 327, 30);
+		//processing.line(154, 47, 499, 47);
 
-		//get min and max, based upon data, national averages and what is being shown
-		var min_1, max_1, min_2, max_2, min_3, max_3;
-		if (hide_2)
+		//left and right axis
+		processing.line(graph_left, graph_top, graph_left, graph_bot);
+		processing.line(graph_right, graph_top, graph_right, graph_bot);
+
+		//bottom lines around categories
+		processing.line(graph_left, graph_bot+1, graph_right-1, graph_bot+1);
+		processing.line(graph_left, graph_bot+31, graph_right-1, graph_bot+31);
+
+		//need max for percentages
+		var min_1, max_1, min_2, max_2;
+		if (hide_2 && !hide_1)
 		{
-			min_1 = processing.min(data["labor_1_1"], data["labor_3_1"]);
-			max_1 = processing.max(data["labor_1_1"], data["labor_3_1"]);
-
-			min_2 = processing.min(data["labor_1_2"], data["labor_3_2"]);
-			max_2 = processing.max(data["labor_1_2"], data["labor_3_2"]);
-
-			min_3 = processing.min(data["labor_1_3"], data["labor_3_3"]);
-			max_3 = processing.max(data["labor_1_3"], data["labor_3_3"]);
+			var temp_max_1 = processing.max(data["labor_1"][0], data["labor_3"][0]);
+			var temp_max_2 = processing.max(data["labor_1"][2], data["labor_3"][2]);	
+			max_1 = processing.max(temp_max_2, temp_max_1) * 1.1;
+			max_2 = processing.max(data["labor_1"][1], data["labor_3"][1]) * 1.1;
 		}
-		else if (hide_1)
+		else if (hide_1 && !hide_2)
 		{
-			min_1 = processing.min(data["labor_2_1"], data["labor_3_1"]);
-			max_1 = processing.max(data["labor_2_1"], data["labor_3_1"]);
-
-			min_2 = processing.min(data["labor_2_2"], data["labor_3_2"]);
-			max_2 = processing.max(data["labor_2_2"], data["labor_3_2"]);
-
-			min_3 = processing.min(data["labor_2_3"], data["labor_3_3"]);
-			max_3 = processing.max(data["labor_2_3"], data["labor_3_3"]);
+			var temp_max_1 = processing.max(data["labor_2"][0], data["labor_3"][0]);
+			var temp_max_2 = processing.max(data["labor_2"][2], data["labor_3"][2]);	
+			max_1 = processing.max(temp_max_2, temp_max_1) * 1.1;
+			max_2 = processing.max(data["labor_2"][1], data["labor_3"][1]) * 1.1;
 		}
 		else
 		{
-			min_1 = processing.min(data["labor_1_1"], data["labor_3_1"], data["labor_2_1"]);
-			max_1 = processing.max(data["labor_1_1"], data["labor_3_1"], data["labor_2_1"]);
-
-			min_2 = processing.min(data["labor_1_2"], data["labor_3_2"], data["labor_2_2"]);
-			max_2 = processing.max(data["labor_1_2"], data["labor_3_2"], data["labor_2_2"]);
-
-			min_3 = processing.min(data["labor_1_3"], data["labor_3_3"], data["labor_2_3"]);
-			max_3 = processing.max(data["labor_1_3"], data["labor_3_3"], data["labor_2_3"]);
+			var temp_max_1 = processing.max(data["labor_1"][0], data["labor_2"][0], data["labor_3"][0]);
+			var temp_max_2 = processing.max(data["labor_1"][2], data["labor_2"][2], data["labor_3"][2]);	
+			max_1 = processing.max(temp_max_2, temp_max_1) * 1.1;
+			max_2 = processing.max(data["labor_1"][1], data["labor_2"][1], data["labor_3"][1]) * 1.1;
 
 		}
 
-		//set mins and maxes to 
-		min_1 = 0.0;//min_1 * 0.8;
-		min_2 = 20000;//min_2 * 0.8;
-		min_3 = 0.0;//min_3 * 0.8;
-		max_1 = processing.max(max_1, max_3) * 1.2;
-		max_2 = max_2 * 1.2;
-		max_3 = max_1;
+		min_1 = 0.0;
+		min_2 = 0.0;
 
-		//draw national average line
-		processing.stroke(0);
-		var line_1 = graph_bot + (graph_top - graph_bot)*((data["labor_3_1"] -  min_1)/(max_1 - min_1));
-		var line_2 = graph_bot + (graph_top - graph_bot)*((data["labor_3_2"] -  min_2)/(max_2 - min_2));
-		var line_3 = graph_bot + (graph_top - graph_bot)*((data["labor_3_3"] -  min_3)/(max_3 - min_3));
-		
-		
-		processing.line(78, line_1, axis_location[0]+60, line_1);
-		processing.line(axis_location[0]+61, line_1, axis_location[1]-60, line_2);
-		processing.line(axis_location[1]-59, line_2, axis_location[1]+60, line_2);
-		processing.line(axis_location[1]+61, line_2, axis_location[2]-60, line_3);
-		processing.line(axis_location[2]-59, line_3, 578, line_3);
-
-		processing.noStroke();
-		processing.fill(255);
-		processing.rect(9, line_1-16, 72, 32);
-		processing.rect(574, line_3-16, 72, 32);
+		//draw scales
+		processing.stroke(245);
 		processing.fill(0);
-		processing.text("NATIONAL", 45, line_1-2);
-		processing.text("AVERAGES", 45, line_1+12);
+		var range = (graph_top - graph_bot)/10;
+		var per_scale = (max_1 - min_1)/10;
+		var money_scale = (max_2 - min_2)/10;
+		for (var i=1; i<=10; i++)
+		{
+			var h = graph_bot + range * i;
+			processing.line(graph_left+2, h, graph_right-3, h);
+			processing.textAlign(processing.RIGHT);
+			processing.text(String(processing.round(min_1 + per_scale * i * 10)/10) + "%", graph_left-5, h+5);
+			processing.textAlign(processing.LEFT);
+			processing.text("$" + String(processing.round(min_2 + money_scale * i / 1000)) + "k", graph_right+5, h+5);
+		}
 
-		processing.text("NATIONAL", 610, line_3-2);
-		processing.text("AVERAGES", 610, line_3+12);
+
+		
+
+		//draw NATIONAL AVERAGE rectangle and data
+		processing.stroke(0);
+		var line_1 = graph_bot + (graph_top - graph_bot)*((data["labor_3"][0] -  min_1)/(max_1 - min_1));
+		var line_2 = graph_bot + (graph_top - graph_bot)*((data["labor_3"][2] -  min_1)/(max_1 - min_1));
+		var line_3 = graph_bot + (graph_top - graph_bot)*((data["labor_3"][1] -  min_2)/(max_2 - min_2));
+		
+		processing.line(graph_left, line_1, axis_location[0]+40, line_1);
+		processing.line(axis_location[0]+41, line_1, axis_location[1]-46, line_2);
+		processing.line(axis_location[1]-45, line_2, axis_location[1]+45, line_2);
+		processing.line(axis_location[1]+46, line_2, axis_location[2]-41, line_3);
+		processing.line(axis_location[2]-40, line_3, graph_right-1, line_3);
 
 		processing.fill(255);
+		processing.stroke(0);
+		processing.rect((axis_location[1]+axis_location[2])/2-40, (line_2+line_3)/2-30, 80, 50)
 		processing.noStroke();
-		var height_1 = (graph_top - graph_bot)*((data["labor_1_1"] -  min_1)/(max_1 - min_1));
-		var height_2 = (graph_top - graph_bot)*((data["labor_1_2"] -  min_2)/(max_2 - min_2));
-		var height_3 = (graph_top - graph_bot)*((data["labor_1_3"] -  min_3)/(max_3 - min_3));
-		var height_4 = (graph_top - graph_bot)*((data["labor_2_1"] -  min_1)/(max_1 - min_1));
-		var height_5 = (graph_top - graph_bot)*((data["labor_2_2"] -  min_2)/(max_2 - min_2));
-		var height_6 = (graph_top - graph_bot)*((data["labor_2_3"] -  min_3)/(max_3 - min_3));
+		processing.fill(0);
+		processing.textAlign(processing.CENTER);
+		processing.text("NATIONAL", (axis_location[1]+axis_location[2])/2, (line_2+line_3)/2-9);
+		processing.text("AVERAGES", (axis_location[1]+axis_location[2])/2, (line_2+line_3)/2+8);
 
+
+
+
+		var height_1 = (graph_top - graph_bot)*((data["labor_1"][0] -  min_1)/(max_1 - min_1));
+		var height_2 = (graph_top - graph_bot)*((data["labor_1"][2] -  min_1)/(max_1 - min_1));
+		var height_3 = (graph_top - graph_bot)*((data["labor_1"][1] -  min_2)/(max_2 - min_2));
+		var height_4 = (graph_top - graph_bot)*((data["labor_2"][0] -  min_1)/(max_1 - min_1));
+		var height_5 = (graph_top - graph_bot)*((data["labor_2"][2] -  min_1)/(max_1 - min_1));
+		var height_6 = (graph_top - graph_bot)*((data["labor_2"][1] -  min_2)/(max_2 - min_2));
+
+		//buffer boxes
 		if (!hide_1)
 		{
-			processing.rect(axis_location[0]-40, graph_bot, 50, height_1-20);
-			processing.rect(axis_location[1]-40, graph_bot, 50, height_2-20);
-			processing.rect(axis_location[2]-40, graph_bot, 50, height_3-20);
+			processing.fill(255);
+			processing.rect(axis_location[0]-25, graph_bot, 30, height_1);
+			processing.rect(axis_location[1]-25, graph_bot, 30, height_2);
+			processing.rect(axis_location[2]-25, graph_bot, 30, height_3);
 		}
+
 		if (!hide_2)
 		{
-			processing.rect(axis_location[0]-10, graph_bot, 50, height_4-20);
-			processing.rect(axis_location[1]-10, graph_bot, 50, height_5-20);
-			processing.rect(axis_location[2]-10, graph_bot, 50, height_6-20);
+			processing.fill(255);
+			processing.rect(axis_location[0]-5, graph_bot, 30, height_4);
+			processing.rect(axis_location[1]-5, graph_bot, 30, height_5);
+			processing.rect(axis_location[2]-5, graph_bot, 30, height_6);
 		}
-
-
-		//draw city data
+		//data
 		if (!hide_1)
 		{
 			processing.fill(main);
 			processing.noStroke();
-			processing.rect(axis_location[0]-30, graph_bot, 30, height_1);
-			processing.rect(axis_location[1]-30, graph_bot, 30, height_2);
-			processing.rect(axis_location[2]-30, graph_bot, 30, height_3);
-	
-			processing.fill(0);
-			processing.text(data["labor_1_1"] + "%", axis_location[0]-15, graph_bot+height_1-7);
-			processing.text("$" + String(data["labor_1_2"]/1000) + "k", axis_location[1]-18, graph_bot+height_2-7);
-			processing.text(data["labor_1_3"] + "%", axis_location[2]-15, graph_bot+height_3-7);
+			processing.rect(axis_location[0]-20, graph_bot, 20, height_1);
+			processing.rect(axis_location[1]-20, graph_bot, 20, height_2);
+			processing.rect(axis_location[2]-20, graph_bot, 20, height_3);
 		}
+
 		if (!hide_2)
 		{
 			processing.fill(gray);
 			processing.noStroke();
-			processing.rect(axis_location[0], graph_bot, 30, height_4);
-			processing.rect(axis_location[1], graph_bot, 30, height_5);
-			processing.rect(axis_location[2], graph_bot, 30, height_6);
-
-			processing.fill(0);
-			processing.text(data["labor_2_1"] + "%", axis_location[0]+17, graph_bot+height_4-7);
-			processing.text("$" + String(data["labor_2_2"]/1000) + "k", axis_location[1]+14, graph_bot+height_5-7);
-			processing.text(data["labor_2_3"] + "%", axis_location[2]+17, graph_bot+height_6-7);
+			processing.rect(axis_location[0], graph_bot, 20, height_4);
+			processing.rect(axis_location[1], graph_bot, 20, height_5);
+			processing.rect(axis_location[2], graph_bot, 20, height_6);	
 		}
-
-
-
-		//draw axis
-		processing.fill(0);
-		processing.stroke(0);
-		processing.strokeWeight(2);
-		processing.line(65, 295, 595, 295);
-		processing.line(65, 325, 595, 325);
-
 	};
 
 	function taxes() {
