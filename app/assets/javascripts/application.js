@@ -800,8 +800,12 @@ function update_tab(name) {
 	document.getElementById("search_2_button").value = "HIDE";
 };
 
-function api_request() {
-    window.alert("api_request");
+function api_request(query) {
+	var url = "http://localhost:6001/query/" + query;
+	$.get(url, function(resp){
+		var data = jQuery.parseJSON(resp);
+		window.alert(data['operation']);
+	});
 };
 
 var hide_show_1 = "HIDE";
