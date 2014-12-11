@@ -36,7 +36,8 @@ class Api::V1::ColiController < ApplicationController
 		# Create a string of the form 'location = l1 OR location = l1 OR ...'.
 		where_string = ""
 		locations.each do |location|
-			where_string += "location = '#{location}' OR "
+			#where_string += "location = '#{location}' OR "
+			where_string += 'location = ? OR '
 		end
 
 		# Strip off the last ' OR '.
@@ -61,7 +62,7 @@ class Api::V1::ColiController < ApplicationController
 													:month,
 													:high,
 													:low)
-									.where(where_string)
+									.where([where_string, *locations])
 									.order('colis.id ASC')	
 
 		locations.each do |location|
