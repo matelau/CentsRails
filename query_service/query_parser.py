@@ -5,6 +5,22 @@ import csv
 import requests
 import re
 
+def pp(req):
+    """
+    At this point it is completely built and ready
+    to be fired; it is "prepared".
+
+    However pay attention at the formatting used in 
+    this function because it is programmed to be pretty 
+    printed and may differ from the actual request.
+    """
+    print('{}\n{}\n{}\n\n{}'.format(
+        '-----------START-----------',
+        req.method + ' ' + req.url,
+        '\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
+        req.body,
+    ))
+
 city = []
 state = {}
 commands = {"compare":"compare","vs.":"compare","vs":"compare","get":"get","find":"get","difference between":"compare"}
@@ -72,18 +88,22 @@ def query(query):
 		}
 	else:
 		package = {
-			"operation":command,
-			"search by":"location",
+			"search_by":"location",
 			"objects":[],
 			"query":query
 		}
 		for l in locations:
-			package["objects"].append({"city":l})
-		url = "http://localhost:3000/api/v1/coli"
+			package["objects"].append({"city":l[:l.index(",")]})
+		url = "http://localhost:3000/api/v1/coli/"
 		payload = json.dumps(package)
-		r = requests.post(url,payload)
-		resp = r.json
-	return resp
+		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
+		prep = r.prepare()
+		s = requests.Session()
+		resp = s.send(prep)
+		package = json.loads(resp.text)
+		package["operation"] = command
+		payload = json.dumps(package)
+	return payload
 
 if __name__ == '__main__':
-	app.run(debug=True)
+	app.run(port=6001,debug=True)

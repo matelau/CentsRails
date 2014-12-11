@@ -22,7 +22,7 @@ class Api::V1::ColiController < ApplicationController
 		column = params[:search_by]
 
 		# The objects whose data we're searching for. Currently these are cities.
-	  objects = params[:objects]
+	  	objects = params[:objects]
 
 		# A hash that stores the results. This will be converted into a JSON
 		# object.
