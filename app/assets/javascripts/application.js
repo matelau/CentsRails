@@ -17,6 +17,8 @@
 //= require ripples
 //= require_tree .
 
+
+
 var active_tab, type, data, hide_1, hide_2, axis_location, horz_locs, min, max, above_1, above_2, below_1, below_2;
 
 
@@ -32,7 +34,7 @@ function sketchProc(processing) {
 
 	processing.setup = function() {
 		//this will be retrieved from json object
-		type = "city";
+		//type = "city";
 		processing.size(655,375);
 		//always set the initial tab to the first one
 		active_tab = 1;
@@ -111,12 +113,15 @@ function sketchProc(processing) {
 		data["location_2"] = "Phoenix, AZ";
 
 		//labor statstics
-		data["unemploy_1"] = 3.4;
-		data["unemploy_2"] = 6.4;
-		data["avgsal_1"] = 48000;
-		data["avgsal_2"] = 51000;
-		data["econgrow_1"] = 4.4;
-		data["econgrow_2"] = 3.3;
+		data["labor_1_1"] = 3.4;
+		data["labor_2_1"] = 6.4;
+		data["labor_3_1"] = 5.8;
+		data["labor_1_2"] = 48000;
+		data["labor_2_2"] = 51000;
+		data["labor_3_2"] = 44800;
+		data["labor_1_3"] = 4.4;
+		data["labor_2_3"] = 3.3;
+		data["labor_3_3"] = 4.6;
 
 		//cost of living dummy data
 		// data["cli_1_1"] = 101;
@@ -133,6 +138,10 @@ function sketchProc(processing) {
 		// data["cli_6_2"] = 93;
 		// data["cli_7_1"] = 120;
 		// data["cli_7_2"] = 92;
+		// data["max_cli_1"] = 120;
+		// data["min_cli_1"] = 101;
+		// data["max_cli_2"] = 99;
+		// data["min_cli_2"] = 92;
 		data["cli_1_1"] = 102;
 		data["cli_1_2"] = 96;
 		data["cli_2_1"] = 94;
@@ -152,15 +161,6 @@ function sketchProc(processing) {
 		data["max_cli_2"] = 106;
 		data["min_cli_2"] = 92;
 
-
-
-		document.getElementById("search_1_name").value = data["location_1"];
-		document.getElementById("search_2_name").value = data["location_2"];
-
-
-
-
-
 		//set up min and max and any other design variables for each tab here 
 
 	};
@@ -168,8 +168,25 @@ function sketchProc(processing) {
 	processing.draw = function() {
 		processing.background(255);
 
+		var pathArray = window.location.pathname.split('/');
+		type = pathArray[2];
+
 		if (type == "city")
 			draw_city();
+
+		else if (type == "spending")
+			draw_spend();
+
+		else if (type == "career")
+			draw_career();
+
+		else if (type == "school")
+			draw_college();
+
+		else if (type == "major")
+			draw_major();
+
+		else;
 
 		//show cli details
 		if (type == "city" && active_tab == 1)
@@ -271,6 +288,8 @@ function sketchProc(processing) {
 
 	function draw_city() {
 		//tab helper 1-cost of living, 2-labor stats, 3-taxes, 4-weather
+		document.getElementById("search_1_name").value = data["location_1"];
+		document.getElementById("search_2_name").value = data["location_2"];
 		if (active_tab == 1)
 			cost_of_living();
 		else if (active_tab == 2)
@@ -331,31 +350,15 @@ function sketchProc(processing) {
 			if (processing.round(i) > 100)
 			{
 				processing.line(60, 45 + (axis_location-15-45)*(1-(i-100)/(max-100)), 605, 45 + (axis_location-15-45)*(1-(i-100)/(max-100)));
-				processing.text(processing.round(i) + "%", 55, 50 + (axis_location-15-45)*(1-(i-100)/(max-100)));
+				processing.text(processing.round(i-100) + "%", 55, 50 + (axis_location-15-45)*(1-(i-100)/(max-100)));
 			}
 		}
 		var step = (max-min)/10;
 		for (var i=min; i<100; i+=step)
 		{
 			processing.line(60, 330 - (330-(axis_location+15))*(1-(100-i)/(100-min)), 605, 330 - (330-(axis_location+15))*(1-(100-i)/(100-min)));
-			processing.text(processing.round(i) + "%", 55, 335 - (330-(axis_location+15))*(1-(100-i)/(100-min)));
+			processing.text("-" + processing.round(100-i) + "%", 55, 335 - (330-(axis_location+15))*(1-(100-i)/(100-min)));
 		}
-
-		// var max_percent = (max-100)/(max-min)+0.049;
-		// var min_percent = (100-min)/(max-min)+0.049;
-		// for (var i=0.1; i<max_percent-0.1; i+=0.1)
-		// {
-		// 	processing.text(processing.round(i*(max-min)) + "%", 55, (axis_location-15) - (axis_location-15+60)*i+5);
-		// 	processing.line(60, (axis_location-15) - (axis_location-15+60)*i, 605, (axis_location-15) - (axis_location-15+60)*i);
-
-		// }
-		// for (var i=0.1; i<min_percent-0.1; i+=0.1)
-		// {
-		// 	processing.text(processing.round("-" + i*(max-min)) + "%", 55, (axis_location+15) + (axis_location+15+60)*i+5);
-		// 	processing.line(60, (axis_location+15) + (axis_location+15+60)*i, 605, (axis_location+15) + (axis_location+15+60)*i);
-		// }
-
-		
 
 		//draw a rectangle to highlight better or worse than national average 
 		processing.fill(245);
@@ -449,47 +452,174 @@ function sketchProc(processing) {
 
 
 	function labor_stats() {
-		//draw axis
-		processing.fill(0);
-		processing.stroke(0);
-		processing.strokeWeight(2);
-		processing.line(100, 300, 225, 300);
-		processing.line(265, 300, 390, 300);
-		processing.line(430, 300, 555, 300);
-		
+		processing.textAlign(processing.CENTER);
+		axis_location = [163, 355, 545];
+		var graph_top = 75; 
+		var graph_bot = 300;
+
 		//draw labels
-		processing.text("UNEMPLOYMENT RATE", 94, 325);
-		processing.text("AVERAGE SALARY", 278, 325);
-		processing.text("ECONOMIC GROWTH", 432, 325);
-		processing.fill(gray);
-		processing.text("(%)", 143, 340);
-		processing.text("($)", 319, 340);
-		processing.text("(%)", 480, 340);
+		processing.stroke(0);
+		processing.text("UNEMPLOYMENT RATE", axis_location[0], 320);
+		processing.text("AVERAGE SALARY", axis_location[1], 320);
+		processing.text("ECONOMIC GROWTH", axis_location[2], 320);
+		processing.text("LABOR STATSTICS COMPARED TO NATIONAL AVERAGES", 345, 40);
+		processing.line(170, 47, 515, 47);
 
-		//draw data
-		var max_unemploy = processing.max(data["unemploy_1"], data["unemploy_2"]);
-		var max_salary = processing.max(data["avgsal_1"], data["avgsal_2"]);
-		var max_econ = processing.max(data["econgrow_1"], data["econgrow_2"]);
+		//get min and max, based upon data, national averages and what is being shown
+		var min_1, max_1, min_2, max_2, min_3, max_3;
+		if (hide_2)
+		{
+			min_1 = processing.min(data["labor_1_1"], data["labor_3_1"]);
+			max_1 = processing.max(data["labor_1_1"], data["labor_3_1"]);
 
+			min_2 = processing.min(data["labor_1_2"], data["labor_3_2"]);
+			max_2 = processing.max(data["labor_1_2"], data["labor_3_2"]);
+
+			min_3 = processing.min(data["labor_1_3"], data["labor_3_3"]);
+			max_3 = processing.max(data["labor_1_3"], data["labor_3_3"]);
+		}
+		else if (hide_1)
+		{
+			min_1 = processing.min(data["labor_2_1"], data["labor_3_1"]);
+			max_1 = processing.max(data["labor_2_1"], data["labor_3_1"]);
+
+			min_2 = processing.min(data["labor_2_2"], data["labor_3_2"]);
+			max_2 = processing.max(data["labor_2_2"], data["labor_3_2"]);
+
+			min_3 = processing.min(data["labor_2_3"], data["labor_3_3"]);
+			max_3 = processing.max(data["labor_2_3"], data["labor_3_3"]);
+		}
+		else
+		{
+			min_1 = processing.min(data["labor_1_1"], data["labor_3_1"], data["labor_2_1"]);
+			max_1 = processing.max(data["labor_1_1"], data["labor_3_1"], data["labor_2_1"]);
+
+			min_2 = processing.min(data["labor_1_2"], data["labor_3_2"], data["labor_2_2"]);
+			max_2 = processing.max(data["labor_1_2"], data["labor_3_2"], data["labor_2_2"]);
+
+			min_3 = processing.min(data["labor_1_3"], data["labor_3_3"], data["labor_2_3"]);
+			max_3 = processing.max(data["labor_1_3"], data["labor_3_3"], data["labor_2_3"]);
+
+		}
+
+		//set mins and maxes to 
+		min_1 = min_1 * 0.80;
+		min_2 = min_2 * 0.80;
+		min_3 = min_3 * 0.80;
+		max_1 = max_1 * 1.20;
+		max_2 = max_2 * 1.20;
+		max_3 = max_3 * 1.20;
+
+		//draw national average line
+		processing.stroke(0);
+		var line_1 = graph_bot + (graph_top - graph_bot)*((data["labor_3_1"] -  min_1)/(max_1 - min_1));
+		var line_2 = graph_bot + (graph_top - graph_bot)*((data["labor_3_2"] -  min_2)/(max_2 - min_2));
+		var line_3 = graph_bot + (graph_top - graph_bot)*((data["labor_3_3"] -  min_3)/(max_3 - min_3));
+		
+		processing.text("NATIONAL", 45, line_1-2);
+		processing.text("AVERAGES", 45, line_1+12);
+		processing.line(78, line_1, 230, line_1);
+		processing.line(231, line_1, 279, line_2);
+		processing.line(280, line_2, 420, line_2);
+		processing.line(421, line_2, 469, line_3);
+		processing.line(470, line_3, 610, line_3);
+
+		// processing.fill(255);
+		// processing.noStroke();
+		// processing.rect(axis_location[0]-45, graph_top, 90, graph_bot-graph_top);
+		// processing.rect(axis_location[1]-45, graph_top, 90, graph_bot-graph_top);
+		// processing.rect(axis_location[2]-45, graph_top, 90, graph_bot-graph_top);
+		
+		// processing.stroke(0);
+		// processing.line(axis_location[0]-45, line_1-3, axis_location[0]-45, line_1+3);
+		// processing.line(axis_location[0]+45, line_1-3, axis_location[0]+45, line_1+3);
+		// processing.line(axis_location[1]-45, line_2-3, axis_location[1]-45, line_2+3);
+		// processing.line(axis_location[1]+45, line_2-3, axis_location[1]+45, line_2+3);
+		// processing.line(axis_location[2]-45, line_3-3, axis_location[2]-45, line_3+3);
+		// processing.line(axis_location[2]+45, line_3-3, axis_location[2]+45, line_3+3);
+		processing.fill(255);
 		processing.noStroke();
+		var height_1 = (graph_top - graph_bot)*((data["labor_1_1"] -  min_1)/(max_1 - min_1));
+		var height_2 = (graph_top - graph_bot)*((data["labor_1_2"] -  min_2)/(max_2 - min_2));
+		var height_3 = (graph_top - graph_bot)*((data["labor_1_3"] -  min_3)/(max_3 - min_3));
+		var height_4 = (graph_top - graph_bot)*((data["labor_2_1"] -  min_1)/(max_1 - min_1));
+		var height_5 = (graph_top - graph_bot)*((data["labor_2_2"] -  min_2)/(max_2 - min_2));
+		var height_6 = (graph_top - graph_bot)*((data["labor_2_3"] -  min_3)/(max_3 - min_3));
 
 		if (!hide_1)
 		{
+			processing.rect(axis_location[0]-50, graph_bot, 60, height_1-20);
+			processing.rect(axis_location[1]-50, graph_bot, 60, height_2-20);
+			processing.rect(axis_location[2]-50, graph_bot, 60, height_3-20);
+		}
+		if (!hide_2)
+		{
+			processing.rect(axis_location[0]-10, graph_bot, 60, height_4-20);
+			processing.rect(axis_location[1]-10, graph_bot, 60, height_5-20);
+			processing.rect(axis_location[2]-10, graph_bot, 60, height_6-20);
+		}
+
+
+		//draw city data
+		if (!hide_1)
+		{
 			processing.fill(main);
-			processing.rect(121, 299 - 200 * (data["unemploy_1"]/max_unemploy), 42, 200 * (data["unemploy_1"]/max_unemploy));
-			processing.rect(286, 299 - 200 * (data["avgsal_1"]/max_salary), 42, 200 * (data["avgsal_1"]/max_salary));
-			processing.rect(451, 299 - 200 * (data["econgrow_1"]/max_econ), 42, 200 * (data["econgrow_1"]/max_econ));
+			processing.noStroke();
+			processing.rect(axis_location[0]-40, graph_bot, 40, height_1);
+			processing.rect(axis_location[1]-40, graph_bot, 40, height_2);
+			processing.rect(axis_location[2]-40, graph_bot, 40, height_3);
+	
+			processing.fill(0);
+			processing.text(data["labor_1_1"] + "%", axis_location[0]-20, graph_bot+height_1-7);
+			processing.text("$" + String(data["labor_1_2"]/1000) + "k", axis_location[1]-23, graph_bot+height_2-7);
+			processing.text(data["labor_1_3"] + "%", axis_location[2]-20, graph_bot+height_3-7);
 		}
 		if (!hide_2)
 		{
 			processing.fill(gray);
-			processing.rect(163, 299 - 200 * (data["unemploy_2"]/max_unemploy), 42, 200 * (data["unemploy_2"]/max_unemploy));
-			processing.rect(328, 299 - 200 * (data["avgsal_2"]/max_salary), 42, 200 * (data["avgsal_2"]/max_salary));
-			processing.rect(493, 299 - 200 * (data["econgrow_2"]/max_econ), 42, 200 * (data["econgrow_2"]/max_econ));
+			processing.noStroke();
+			processing.rect(axis_location[0], graph_bot, 40, height_4);
+			processing.rect(axis_location[1], graph_bot, 40, height_5);
+			processing.rect(axis_location[2], graph_bot, 40, height_6);
+
+			processing.fill(0);
+			processing.text(data["labor_2_1"] + "%", axis_location[0]+22, graph_bot+height_4-7);
+			processing.text("$" + String(data["labor_2_2"]/1000) + "k", axis_location[1]+19, graph_bot+height_5-7);
+			processing.text(data["labor_2_3"] + "%", axis_location[2]+22, graph_bot+height_6-7);
 		}
+
+
+
+		//draw axis
+		processing.fill(0);
+		processing.stroke(0);
+		processing.strokeWeight(2);
+		processing.line(85, 300, 615, 300);
+		processing.line(85, 330, 615, 330);
 
 		
 
+		// //draw data
+		// var max_unemploy = processing.max(data["unemploy_1"], data["unemploy_2"]);
+		// var max_salary = processing.max(data["avgsal_1"], data["avgsal_2"]);
+		// var max_econ = processing.max(data["econgrow_1"], data["econgrow_2"]);
+
+		// processing.noStroke();
+
+		// if (!hide_1)
+		// {
+		// 	processing.fill(main);
+		// 	processing.rect(121, 299 - 200 * (data["unemploy_1"]/max_unemploy), 42, 200 * (data["unemploy_1"]/max_unemploy));
+		// 	processing.rect(286, 299 - 200 * (data["avgsal_1"]/max_salary), 42, 200 * (data["avgsal_1"]/max_salary));
+		// 	processing.rect(451, 299 - 200 * (data["econgrow_1"]/max_econ), 42, 200 * (data["econgrow_1"]/max_econ));
+		// }
+		// if (!hide_2)
+		// {
+		// 	processing.fill(gray);
+		// 	processing.rect(163, 299 - 200 * (data["unemploy_2"]/max_unemploy), 42, 200 * (data["unemploy_2"]/max_unemploy));
+		// 	processing.rect(328, 299 - 200 * (data["avgsal_2"]/max_salary), 42, 200 * (data["avgsal_2"]/max_salary));
+		// 	processing.rect(493, 299 - 200 * (data["econgrow_2"]/max_econ), 42, 200 * (data["econgrow_2"]/max_econ));
+		// }
 	};
 
 	function taxes() {
@@ -632,14 +762,20 @@ function sketchProc(processing) {
 	};
 
 	function draw_major() {
-		//tab helper
+		document.getElementById("search_1_name").value = "computer science";
+		document.getElementById("search_2_name").value = "english";
+		//tab helper 1-salary, 2-job satisfication, 3-grad rate, 4-demand, 5-unemploy, 6-top jobs
 	};
 
 	function draw_college() {
+		document.getElementById("search_1_name").value = "University of Utah";
+		document.getElementById("search_2_name").value = "BYU";
 		//tab helper
 	};
 
 	function draw_career() {
+		document.getElementById("search_1_name").value = "software engineer";
+		document.getElementById("search_2_name").value = "music teacher";
 		//tab helper
 	};
 
@@ -649,6 +785,7 @@ function sketchProc(processing) {
 
 
 };
+
 
 var canvas = document.getElementById("main_viz");
 if (canvas != null)
@@ -661,6 +798,10 @@ function update_tab(name) {
 	hide_2 = false;
 	document.getElementById("search_1_button").value = "HIDE";
 	document.getElementById("search_2_button").value = "HIDE";
+};
+
+function api_request() {
+    window.alert("api_request");
 };
 
 var hide_show_1 = "HIDE";
