@@ -68,16 +68,10 @@ function sketchProc(processing) {
 		data["labor_2"] = [6.4, 51000, 3.3];
 		data["labor_3"] = [5.8, 44800, 4.6];
 
-		//labor statstics
-		// data["labor_1_1"] = 3.4;
-		// data["labor_2_1"] = 6.4;
-		// data["labor_3_1"] = 5.8;
-		// data["labor_1_2"] = 48000;
-		// data["labor_2_2"] = 51000;
-		// data["labor_3_2"] = 44800;
-		// data["labor_1_3"] = 4.4;
-		// data["labor_2_3"] = 3.3;
-		// data["labor_3_3"] = 4.6;
+		//sales, income min, income max, property
+		data["taxes_1"] = [6.85, 5.0, 5.0, 0.67];
+		data["taxes_2"] = [8.3, 2.59, 4.54, 0.59];
+		data["taxes_3"] = [9.6, 3.5, 7.8, 1.65];
 
 		//cost of living dummy data
 		// data["cli_1_1"] = 101;
@@ -419,9 +413,9 @@ function sketchProc(processing) {
 		processing.textAlign(processing.CENTER);
 		processing.stroke(0);
 		processing.fill(0);
-		processing.text("UNEMPLOYMENT RATE", axis_location[0], graph_bot+20);
-		processing.text("AVERAGE SALARY", axis_location[2], graph_bot+20);
-		processing.text("ECONOMIC GROWTH", axis_location[1], graph_bot+20);
+		processing.text("UNEMPLOYMENT RATE", axis_location[0], graph_bot+23);
+		processing.text("AVERAGE SALARY", axis_location[2], graph_bot+23);
+		processing.text("ECONOMIC GROWTH", axis_location[1], graph_bot+23);
 		processing.text("LABOR STATISTICS COMPARED TO NATIONAL AVERAGES", 327, 30);
 		//processing.line(154, 47, 499, 47);
 
@@ -431,7 +425,7 @@ function sketchProc(processing) {
 
 		//bottom lines around categories
 		processing.line(graph_left, graph_bot+1, graph_right-1, graph_bot+1);
-		processing.line(graph_left, graph_bot+31, graph_right-1, graph_bot+31);
+		//processing.line(graph_left, graph_bot+31, graph_right-1, graph_bot+31);
 
 		//need max for percentages
 		var min_1, max_1, min_2, max_2;
@@ -493,8 +487,8 @@ function sketchProc(processing) {
 		processing.line(axis_location[2]-40, line_3, graph_right-1, line_3);
 
 		processing.fill(255);
-		processing.stroke(0);
-		processing.rect((axis_location[1]+axis_location[2])/2-40, (line_2+line_3)/2-30, 80, 50)
+		processing.stroke(255);
+		processing.rect((axis_location[1]+axis_location[2])/2-40, (line_2+line_3)/2-30, 77, 50)
 		processing.noStroke();
 		processing.fill(0);
 		processing.textAlign(processing.CENTER);
@@ -548,6 +542,56 @@ function sketchProc(processing) {
 	};
 
 	function taxes() {
+		axis_location = [110, 195, 320, 530];
+		var graph_top = 50; 
+		var graph_bot = 320;
+		var graph_left = 60;
+		var graph_right = 595;
+
+		processing.textAlign(processing.CENTER);
+		processing.stroke(0);
+		processing.fill(0);
+		processing.text("SALES TAX", axis_location[0], graph_bot+15);
+		processing.text("- INCOME TAX -", (axis_location[2]+axis_location[1])/2, graph_bot+15);
+		processing.text("MIN", axis_location[1], graph_bot+15);
+		processing.text("MAX", axis_location[2], graph_bot+15);
+		processing.text("PROPERTY TAX", axis_location[3], graph_bot+15);
+		processing.text("TAX RATES COMPARED TO NATIONAL AVERAGES", 327, 30);
+		//processing.line(154, 47, 499, 47);
+
+		//left and right axis
+		processing.line(graph_left, graph_top, graph_left, graph_bot);
+		processing.line(graph_right, graph_top, graph_right, graph_bot);
+
+		//bottom lines around categories
+		processing.line(graph_left, graph_bot+1, graph_right-1, graph_bot+1);
+
+		var min_1, max_1, min_2, max_2;
+		if (hide_2 && !hide_1)
+		{
+			var temp_max_1 = processing.max(data["taxes_1"][0], data["taxes_3"][0]);
+			var temp_max_2 = processing.max(data["taxes_1"][2], data["taxes_3"][2]);	
+			max_1 = processing.max(temp_max_2, temp_max_1) * 1.1;
+			max_2 = processing.max(data["taxes_1"][3], data["taxes_3"][3]) * 1.1;
+		}
+		else if (hide_1 && !hide_2)
+		{
+			var temp_max_1 = processing.max(data["taxes_2"][0], data["taxes_3"][0]);
+			var temp_max_2 = processing.max(data["taxes_2"][2], data["taxes_3"][2]);	
+			max_1 = processing.max(temp_max_2, temp_max_1) * 1.1;
+			max_2 = processing.max(data["taxes_2"][3], data["taxes_3"][3]) * 1.1;
+		}
+		else
+		{
+			var temp_max_1 = processing.max(data["taxes_1"][0], data["taxes_2"][0], data["taxes_3"][0]);
+			var temp_max_2 = processing.max(data["taxes_1"][2], data["taxes_2"][2], data["taxes_3"][2]);	
+			max_1 = processing.max(temp_max_2, temp_max_1) * 1.1;
+			max_2 = processing.max(data["taxes_1"][3], data["taxes_2"][3], data["taxes_3"][3]) * 1.1;
+
+		}
+
+		min_1 = 0.0;
+		min_2 = 0.0;
 		
 	};
 
