@@ -21,45 +21,87 @@ class Api::V1::ColiController < ApplicationController
 		# but it could change.
 		column = params[:search_by]
 
-		# The objects whose data we're searching for. Currently these are cities.
-		objects = params[:objects]
-
 		# A hash that stores the results. This will be converted into a JSON
 		# object.
 		result = Hash.new
+
+		lookup = Hash.new
+
+		# A list of the locations that were passed in.
+		locations = Array.new
+		params[:objects].each do |object|
+			locations << object.values[0]
+		end
+
+		# Create a string of the form 'location = l1 OR location = l1 OR ...'.
+		where_string = ""
+		locations.each do |location|
+			where_string += "location = '#{location}' OR "
+		end
+
+		# Strip off the last ' OR '.
+		where_string = where_string[0..-5]
+
+		# Query the database.
+		records = Coli.joins(:weather_records)
+									.select(:cost_of_living,
+													:transportation,
+													:groceries,
+													:goods,
+													:health_care,
+													:utilities,
+													:housing,
+													:location,
+													:unemp_rate,
+													:unemp_trend,
+													:income,
+													:income_tax,
+													:sales_tax,
+													:property_tax,
+													:month,
+													:high,
+													:low)
+									.where(where_string)
+									.order('colis.id ASC')	
+
+		locations.each do |location|
+			records.each do |record|
+				if record[:location] == location then
+					lookup["#{location}"] = record
+					break
+				end
+			end
+		end
+
+		# Check that we found everything in the database.
+		not_found = Array.new
+		locations.each do |location|
+			not_found << location unless lookup["#{location}"]
+		end
+		unless not_found.empty?
+			result[:failure] = 'Some objects weren\'t found in the database.'
+			result[:not_found] = not_found
+			return render json: result, status: 200
+		end
 
 		# Store each object's data in result.
 		# We'll need to both iterate over each location and keep track of their
 		# indices, because that's how the view tracks them.
 		i = 1
-		objects.each do |object|
-			location = object.values[0]
-
-			# Query the database.
-			records = Coli.select('*').where(['location = ?', location])
-			
-			# Check that we found something in the database.
-			unless records[0]
-				message = {'failure' => 
-					'Your query seems to be correct, but no data was found.'}
-				render json: message, status: 200
-				return
-			end
-
+		locations.each do |location|
 			# Name each location.
-			result["location_#{i}".to_sym] = location
+			result["location_#{i}"] = location
 	
 			##### ---------------- COST OF LIVING ---------------- #####
 			coli_stats = Array.new	# Used for formatting the eventual JSON object.
 
-			# Get overall COLI data for this location.
-			coli_stats << records[0][:cost_of_living].to_f
-			coli_stats << records[0][:goods].to_f
-			coli_stats << records[0][:groceries].to_f
-			coli_stats << records[0][:health_care].to_f
-			coli_stats << records[0][:housing].to_f
-			coli_stats << records[0][:transportation].to_f
-			coli_stats << records[0][:utilities].to_f
+			coli_stats << lookup["#{location}"][:cost_of_living].to_f
+			coli_stats << lookup["#{location}"][:goods].to_f
+			coli_stats << lookup["#{location}"][:groceries].to_f
+			coli_stats << lookup["#{location}"][:health_care].to_f
+			coli_stats << lookup["#{location}"][:housing].to_f
+			coli_stats << lookup["#{location}"][:transportation].to_f
+			coli_stats << lookup["#{location}"][:utilities].to_f
 
 			# Add the mins and maxes.
 			coli_stats << coli_stats.max
@@ -72,10 +114,9 @@ class Api::V1::ColiController < ApplicationController
 			##### -------------------- LABOR --------------------- #####
 			labor_stats = Array.new	# Used for formatting the eventual JSON object.
 
-			# Get unemployment data for this location.
-			labor_stats << records[0][:unemp_rate].to_f
-			labor_stats << records[0][:income].to_f
-			labor_stats << records[0][:unemp_trend].to_f
+			labor_stats << lookup["#{location}"][:unemp_trend].to_f
+			labor_stats << lookup["#{location}"][:income].to_f
+			labor_stats << lookup["#{location}"][:unemp_trend].to_f
 
 			# Add max and min.
 			labor_stats << labor_stats.max
@@ -87,10 +128,9 @@ class Api::V1::ColiController < ApplicationController
 			##### -------------------- TAXES --------------------- #####
 			tax_stats = Array.new	# Used for formatting the eventual JSON object.			
 
-			# Get income taxes for this location.
-			tax_stats << records[0][:income_tax].to_f
-			tax_stats << records[0][:property_tax].to_f
-			tax_stats << records[0][:sales_tax].to_f
+			tax_stats << lookup["#{location}"][:income_tax].to_f
+			tax_stats << lookup["#{location}"][:property_tax].to_f
+			tax_stats << lookup["#{location}"][:sales_tax].to_f
 
 			# Add max and min.
 			tax_stats << labor_stats.max
@@ -103,15 +143,11 @@ class Api::V1::ColiController < ApplicationController
 			weather_high_stats = Array.new
 			weather_low_stats = Array.new
 
-			# Add weather data for high temperature records.
-			records = Coli.joins(:weather_records)
-										.select(:month, :high, :low)
-										.where(['location = ?', location])
-										.order('colis.id ASC')	
-
 			records.each do |record|
-				weather_high_stats << record[:high].to_f
-				weather_low_stats << record[:low].to_f
+				if record[:location] == location then
+					weather_high_stats << record[:high].to_f
+					weather_low_stats << record[:low].to_f
+				end
 			end
 
 			# Add max and min for each list.
