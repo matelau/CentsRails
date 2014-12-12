@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141202014519) do
+ActiveRecord::Schema.define(version: 20141207030344) do
 
   create_table "colis", force: true do |t|
     t.float    "cost_of_living", limit: 24
@@ -27,6 +27,9 @@ ActiveRecord::Schema.define(version: 20141202014519) do
     t.float    "unemp_rate",     limit: 24
     t.float    "unemp_trend",    limit: 24
     t.float    "income",         limit: 24
+    t.float    "income_tax",     limit: 24
+    t.float    "sales_tax",      limit: 24
+    t.float    "property_tax",   limit: 24
   end
 
   add_index "colis", ["location"], name: "location_UNIQUE", unique: true, using: :btree
