@@ -6,6 +6,9 @@
     <link href="/assets/bootstrap.css" rel="stylesheet">
     <link href="/assets/ripples.min.css" rel="stylesheet">
     <link href="/assets/material-wfont.css" rel="stylesheet">
+
+    <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -32,8 +35,7 @@
             <li><a href="/info/help">HELP</a></li>
             <li><a href="/info/about">ABOUT</a></li>
             <li class="dropdown">
-                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" ><img src="/assets/search white.png" height="15" width="15"></b></a>
-                
+                <a class="dropdown-toggle" data-toggle="dropdown" ><img src="/assets/search white.png" height="15" width="15"></a>
                 <ul class="dropdown-menu">
                     <form>
                         <input type="text" class="blank-search" >
@@ -50,13 +52,6 @@
 <%= yield %>
 
 <!-- Your site ends -->
-
-    <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
-    <script src="/assets/processing.js"></script>
-    <script src="/assets/application.js"></script>
-
     <script src="/assets/ripples.min.js"></script>
     <script src="/assets/material.min.js"></script>
     <script>
@@ -65,11 +60,8 @@
         });
     </script>
 
-    <script type="text/javascript">
-        function api_request() {
-            window.alert("api_request");
-        };
-    </script>
+    <script src="/assets/processing.js"></script>
+    <script src="/assets/application.js"></script>
 
 </body>
 </html>
