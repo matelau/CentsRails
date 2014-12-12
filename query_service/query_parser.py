@@ -109,18 +109,18 @@ def query(query):
 	for s in commands:
 		if s in query:
 			command = commands[s]
-	tags = nltk.pos_tag(tokens)
-	for w,t in tags:
-		if t == "JJ":
-			object.append(w)
-		if t == "NN":
-			object.append(w)
-		if t == "NNP":
-			ops.append(w)
-		if t == "VBP":
-			ops.append(w)
-		if t == "VBN":
-			ops.append(w)
+	#tags = nltk.pos_tag(tokens)
+	#for w,t in tags:
+	#	if t == "JJ":
+	#		object.append(w)
+	#	if t == "NN":
+	#		object.append(w)
+	#	if t == "NNP":
+	#		ops.append(w)
+	#	if t == "VBP":
+	#		ops.append(w)
+	#	if t == "VBN":
+	#		ops.append(w)
 	if command == "" and len(locations) == 1:
 		command = "get"
 	if command == "" and len(locations) > 1:
