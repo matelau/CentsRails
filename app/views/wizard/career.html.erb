@@ -1,0 +1,43 @@
+<div class="wizard-div">
+<img src="/assets/progress 3.png" height="40" width="850" usemap="#progress-map">
+<map name="progress-map">
+	<area onfocus="blur()" shape="rect" coords="10, 20, 150, 40" href="/wizard/major">
+	<area onfocus="blur()" shape="rect" coords="160, 20, 315, 40" href="/wizard/school">
+	<area onfocus="blur()" shape="rect" coords="325, 20, 475, 40" href="/wizard/career">
+	<area onfocus="blur()" shape="rect" coords="485, 20, 645, 40" href="/wizard/spending">
+	<area onfocus="blur()" shape="rect" coords="655, 20, 850, 40" href="/wizard/city">	
+</map>
+<br>
+</div>
+<div  class="center">
+	<ul class="viz_objects">
+		<li><canvas class="process_viz" id="main_viz" width="655" height="375"></canvas></li>
+		<li><ul style="list-style-type: none">
+			<li><a class="btn btn-default" onclick="update_tab(1)">SALARY</a></li>
+			<li><a class="btn btn-default" onclick="update_tab(3)">JOB SATISFACTION</a></li>
+			<li><a class="btn btn-default" onclick="update_tab(2)">DEMAND</a></li>
+			<li><a class="btn btn-default" onclick="update_tab(4)">UNEMPLOYMENT</a></li>
+		</ul></li>
+	</ul>
+	
+	<br> <!--errors will go here -->
+	<form>
+		<ul class="search_objects">
+			<li><input type="button" onclick="hide_toggle(1)" id="search_1_button" class="btn btn-default" value="HIDE" style="width:100px"></li>
+			<li><input class="search_1" id="search_1_name" type="text"></li>
+			<li><p class="versus">vs.</p></li>
+			<li><input class="search_2" id="search_2_name" type="text"></li>
+			<li><input type="button" onclick="hide_toggle(2)" id="search_2_button" class="btn btn-default" value="HIDE" style="width:100px"></li>
+		</ul>
+		<ul class="toggle_objects">
+			<li><button class="circle-arrow-update" type="submit" onclick="api_request(); return false;"><img src="/assets/circle arrow.png" height="38" width="38"></button></li>
+		</ul>
+	</form>
+
+	<div class="bottom_nav">
+		<a class="btn btn-default"  href="/wizard/school">PREVIOUS</a>
+		<a class="btn btn-default"  href="/user/register">LOGIN/REGISTER TO SAVE</a>
+		<a class="btn btn-default"  href="/wizard/spending">NEXT</a>
+	</div>
+</div>
+<br>
