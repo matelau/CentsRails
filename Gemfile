@@ -46,5 +46,7 @@ gem 'mysql2'
 
 # aws gems
 gem 'execjs'
-gem "puma"
+# gem "puma"
 gem 'passenger' 
+
+gem 'rspec'
