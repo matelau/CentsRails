@@ -840,7 +840,7 @@ function update_tab(name) {
 };
 
 function api_request(query) {
-	var url = "http://localhost:6001/query/" + query;
+	var url = "http://0.0.0.0:6001/query/" + query;
 	$.get(url, function(resp){
 		//data = jQuery.parseJSON(resp);
 		window.location = "/wizard/city/?" + resp;
