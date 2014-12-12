@@ -138,7 +138,7 @@ def query(query):
 		}
 		for l in locations:
 			package["objects"].append({"city":l[:l.index(",")]})
-		url = "http://localhost:3000/api/v1/coli/"
+		url = "/api/v1/coli/"
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
 		prep = r.prepare()
