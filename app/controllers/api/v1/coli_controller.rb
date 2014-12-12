@@ -54,8 +54,9 @@ class Api::V1::ColiController < ApplicationController
 			coli_stats << records[0][:utilities]
 
 			# Add the mins and maxes.
-			coli_stats << coli_stats.max
 			coli_stats << coli_stats.min
+			coli_stats << coli_stats.max
+
 
 			# Add the data to the result.
 			result["cli_#{i}"] = coli_stats
@@ -107,10 +108,12 @@ class Api::V1::ColiController < ApplicationController
 			end
 
 			# Add max and min for each list.
-			weather_high_stats << weather_high_stats.max
 			weather_high_stats << weather_high_stats.min
-			weather_low_stats << weather_low_stats.max
+			weather_high_stats << weather_high_stats.max
+
 			weather_low_stats << weather_low_stats.min
+			weather_low_stats << weather_low_stats.max
+
 
 			result["weather_#{i}"] = weather_high_stats
 			result["weatherlow_#{i}"] = weather_low_stats
