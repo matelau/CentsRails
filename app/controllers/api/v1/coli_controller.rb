@@ -3,18 +3,15 @@ class Api::V1::ColiController < ApplicationController
 	def show
 		# Check for the required fields, and return an appropriate message if
 		# they are not present.
-		unless params[:search_by]
+		unless params[:search_by].present?
 			message = {'error' => 
-				"The search_by field was empty. It should be a column name."}
-			render json: message, status: 400
-			return
+				"The search_by field was missing. Don't forget the underscore."}
+			return render json: message, status: 400
 		end
 
-		unless params[:objects]
-			message = {'error' => 
-				"The objects field was empty. It should be an array."}
-			render json: message, status: 400
-			return
+		unless params[:objects].present?
+			message = {'error' => "No objects were in the objects array."}
+			return render json: message, status: 400
 		end
 
 		# The column we're searching over. Currently this is always 'location',
@@ -27,7 +24,7 @@ class Api::V1::ColiController < ApplicationController
 
 		lookup = Hash.new
 
-		# A list of the locations that were passed in.
+		# Create a list of the locations that were passed in.
 		locations = Array.new
 		params[:objects].each do |object|
 			locations << object.values[0]
@@ -45,25 +42,27 @@ class Api::V1::ColiController < ApplicationController
 
 		# Query the database.
 		records = Coli.joins(:weather_records)
-									.select(:cost_of_living,
-													:transportation,
-													:groceries,
-													:goods,
-													:health_care,
-													:utilities,
-													:housing,
-													:location,
-													:unemp_rate,
-													:unemp_trend,
-													:income,
-													:income_tax,
-													:sales_tax,
-													:property_tax,
-													:month,
-													:high,
-													:low)
-									.where([where_string, *locations])
-									.order('colis.id ASC')	
+						.select(:cost_of_living,
+								:transportation,
+								:groceries,
+								:goods,
+								:health_care,
+								:utilities,
+								:housing,
+								:location,
+								:unemp_rate,
+								:unemp_trend,
+								:income,
+								:income_tax,
+								:sales_tax,
+								:property_tax,
+								:month,
+								:high,
+								:low)
+						.where([where_string, *locations])
+						.order('colis.id ASC')	
+
+		#result[:test] = records
 
 		locations.each do |location|
 			records.each do |record|
@@ -94,19 +93,23 @@ class Api::V1::ColiController < ApplicationController
 			result["location_#{i}"] = location
 	
 			##### ---------------- COST OF LIVING ---------------- #####
-			coli_stats = Array.new	# Used for formatting the eventual JSON object.
+			coli_stats = Array.new	# For formatting the eventual JSON object.
+			
+			# Note that order is important.
+			fields = [:cost_of_living, :goods, :groceries, :health_care, 
+				:housing, :transportation, :utilities]
 
-			coli_stats << lookup["#{location}"][:cost_of_living].to_f
-			coli_stats << lookup["#{location}"][:goods].to_f
-			coli_stats << lookup["#{location}"][:groceries].to_f
-			coli_stats << lookup["#{location}"][:health_care].to_f
-			coli_stats << lookup["#{location}"][:housing].to_f
-			coli_stats << lookup["#{location}"][:transportation].to_f
-			coli_stats << lookup["#{location}"][:utilities].to_f
+			# Collect the value of each non-nil field in coli_stats.
+			fields.each do |field|
+				stat = lookup["#{location}"][field]
+				coli_stats << stat.to_f if stat
+			end
 
 			# Add the mins and maxes.
-			coli_stats << coli_stats.max
-			coli_stats << coli_stats.min
+			unless coli_stats.empty?
+				coli_stats << coli_stats.max
+				coli_stats << coli_stats.min
+			end
 
 			# Add the data to the result.
 			result["cli_#{i}"] = coli_stats
@@ -115,47 +118,64 @@ class Api::V1::ColiController < ApplicationController
 			##### -------------------- LABOR --------------------- #####
 			labor_stats = Array.new	# Used for formatting the eventual JSON object.
 
-			labor_stats << lookup["#{location}"][:unemp_trend].to_f
-			labor_stats << lookup["#{location}"][:income].to_f
-			labor_stats << lookup["#{location}"][:unemp_trend].to_f
+			fields = [:unemp_trend, :income, :unemp_rate]
+
+			# Collect the value of each non-nil field in coli_stats.
+			fields.each do |field|
+				stat = lookup["#{location}"][field]
+				labor_stats << stat.to_f if stat
+			end
 
 			# Add max and min.
-			labor_stats << labor_stats.max
-			labor_stats << labor_stats.min
+			unless labor_stats.empty?
+				labor_stats << labor_stats.max
+				labor_stats << labor_stats.min
+			end
 
 			result["labor_#{i}"] = labor_stats
 
 			
 			##### -------------------- TAXES --------------------- #####
-			tax_stats = Array.new	# Used for formatting the eventual JSON object.			
+			tax_stats = Array.new	# For formatting the eventual JSON object.			
 
-			tax_stats << lookup["#{location}"][:income_tax].to_f
-			tax_stats << lookup["#{location}"][:property_tax].to_f
-			tax_stats << lookup["#{location}"][:sales_tax].to_f
+			fields = [:income_tax, :property_tax, :sales_tax]
+
+			# Collect the value of each non-nil field in coli_stats.
+			fields.each do |field|
+				stat = lookup["#{location}"][field]
+				tax_stats << stat.to_f if stat
+			end
 
 			# Add max and min.
-			tax_stats << labor_stats.max
-			tax_stats << labor_stats.min
+			unless tax_stats.empty?
+				tax_stats << tax_stats.max
+				tax_stats << tax_stats.min
+			end
 
 			result["taxes_#{i}"] = tax_stats
 
 
 			##### -------------------- WEATHER ------------------- #####
 			weather_high_stats = Array.new
-			weather_low_stats = Array.new
+ 			weather_low_stats = Array.new
 
 			records.each do |record|
 				if record[:location] == location then
-					weather_high_stats << record[:high].to_f
-					weather_low_stats << record[:low].to_f
+					weather_high_stats << record[:high].to_f if record[:high]
+					weather_low_stats << record[:low].to_f if record[:low]
 				end
 			end
 
 			# Add max and min for each list.
-			weather_high_stats << weather_high_stats.max
-			weather_high_stats << weather_high_stats.min
-			weather_low_stats << weather_low_stats.max
-			weather_low_stats << weather_low_stats.min
+			unless weather_high_stats.empty?
+				weather_high_stats << weather_high_stats.max
+				weather_high_stats << weather_high_stats.min
+			end
+			
+			unless weather_high_stats.empty?
+				weather_low_stats << weather_low_stats.max
+				weather_low_stats << weather_low_stats.min
+			end
 
 			result["weather_#{i}"] = weather_high_stats
 			result["weatherlow_#{i}"] = weather_low_stats
