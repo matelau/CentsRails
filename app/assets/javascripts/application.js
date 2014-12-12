@@ -70,48 +70,13 @@ function sketchProc(processing) {
 
 		//sales, income min, income max, property
 		data["taxes_1"] = [6.85, 5.0, 5.0, 0.67];
-		data["taxes_2"] = [8.3, 2.59, 4.54, 0.59];
-		data["taxes_3"] = [9.6, 3.5, 7.8, 1.65];
+		data["taxes_2"] = [8.3, 2.59, 4.54, 1.59];
+		data["taxes_3"] = [8.25, 3.5, 7.8, 1.15];
 
-		//cost of living dummy data
-		// data["cli_1_1"] = 101;
-		// data["cli_1_2"] = 99;
-		// data["cli_2_1"] = 102;
-		// data["cli_2_2"] = 98;
-		// data["cli_3_1"] = 103;
-		// data["cli_3_2"] = 97;
-		// data["cli_4_1"] = 105;
-		// data["cli_4_2"] = 96;
-		// data["cli_5_1"] = 110;
-		// data["cli_5_2"] = 95;
-		// data["cli_6_1"] = 115;
-		// data["cli_6_2"] = 93;
-		// data["cli_7_1"] = 120;
-		// data["cli_7_2"] = 92;
-		// data["max_cli_1"] = 120;
-		// data["min_cli_1"] = 101;
-		// data["max_cli_2"] = 99;
-		// data["min_cli_2"] = 92;
-		data["cli_1_1"] = 102;
-		data["cli_1_2"] = 96;
-		data["cli_2_1"] = 94;
-		data["cli_2_2"] = 92;
-		data["cli_3_1"] = 95;
-		data["cli_3_2"] = 100;
-		data["cli_4_1"] = 95;
-		data["cli_4_2"] = 106;
-		data["cli_5_1"] = 119;
-		data["cli_5_2"] = 97;
-		data["cli_6_1"] = 105;
-		data["cli_6_2"] = 101;
-		data["cli_7_1"] = 92;
-		data["cli_7_2"] = 99;
-		data["max_cli_1"] = 119;
-		data["min_cli_1"] = 92;
-		data["max_cli_2"] = 106;
-		data["min_cli_2"] = 92;
 
-		//set up min and max and any other design variables for each tab here 
+		data["cli_1"] = [102, 94, 95, 95, 119, 105, 92, 92, 119];
+		data["cli_2"] = [96, 92, 100, 106, 97, 101, 99, 92, 106];
+
 
 	};
 
@@ -142,13 +107,13 @@ function sketchProc(processing) {
 		if (type == "city" && active_tab == 1)
 		{
 			var category = ["Overall, costs in", "Goods in", "Groceries in", "Health care costs in", "Housing costs in", "Transportation costs in", "Utilities in"];
-			for (var i=0; i<horz_locs.length; i++)
+			for (var i=0; i<7; i++)
 			{
 				//aligned horizontally
 				if (processing.mouseX < horz_locs[i] && processing.mouseX >= (horz_locs[i] - 16) && !hide_1)
 				{
 						//location 1, postive change
-						var data1 = data["cli_" + String(i+1) + "_1"];
+						var data1 = data["cli_1"][i];
 						if (processing.mouseY < (axis_location-10) && processing.mouseY > above_1[i])
 						{
 							processing.fill(255);
@@ -191,7 +156,7 @@ function sketchProc(processing) {
 				}
 				if (processing.mouseX >= horz_locs[i] && processing.mouseX < (horz_locs[i] + 16) && !hide_2)
 				{
-					var data2 = data["cli_" + String(i+1) + "_2"];
+					var data2 = data["cli_2"][i];
 					if (processing.mouseY < (axis_location-10) && processing.mouseY > above_2[i])
 					{
 						processing.fill(255);
@@ -254,32 +219,33 @@ function sketchProc(processing) {
 
 		//need to check for hugh outliers that will skew viz and make data impossible to read
 
+		var graph_top, graph_bot;
+		graph_top = 45;
+		graph_bot = 330;
+
 
 		//calculate min and max depending on what data is being shown/hidden
 		
 		if (!hide_2 && hide_1)
 		{
-			min = data["min_cli_2"];
-			max = data["max_cli_2"];
+			min = data["cli_2"][7];
+			max = data["cli_2"][8];
 
 		}
 		else if (hide_2 && !hide_1)
 		{
-			min = data["min_cli_1"];
-			max = data["max_cli_1"];
+			min = data["cli_1"][7];
+			max = data["cli_1"][8];
 		}
 		else
 		{
-			min = processing.min(data["min_cli_1"], data["min_cli_2"]);
-			max = processing.max(data["max_cli_1"], data["max_cli_2"]);
-			//min = min - ((max-min));
-			//max = max + ((max-min));
+			min = processing.min(data["cli_1"][7], data["cli_2"][7]);
+			max = processing.max(data["cli_1"][8], data["cli_2"][8]);
 		}
 
 
 
 		//draw axis depending on where national average (100) falls within the calculated min and max
-		
 		axis_location;
 		if (max <= 100)
 			axis_location = 60;
@@ -289,39 +255,49 @@ function sketchProc(processing) {
 			axis_location = 60 + 255 * (1 - ((100 - min) / (max - min)));
 
 
-		//draw scale
+		//determin how much of scale is above and below the 100 line
 		processing.stroke(235);
 		processing.fill(0);
 		processing.textAlign(processing.RIGHT);
-		var step = (max-min)/10;
-		//var range = max-min;
-		for (var i=max; i>100; i-=step)
+		var num_above, num_below;
+		if (max <= 100)
 		{
-			if (processing.round(i) > 100)
-			{
-				processing.line(60, 45 + (axis_location-15-45)*(1-(i-100)/(max-100)), 605, 45 + (axis_location-15-45)*(1-(i-100)/(max-100)));
-				processing.text(processing.round(i-100) + "%", 55, 50 + (axis_location-15-45)*(1-(i-100)/(max-100)));
-			}
+			num_above = 0;
+			num_below = 10;
 		}
-		var step = (max-min)/10;
-		for (var i=min; i<100; i+=step)
+		else if (min >= 100)
 		{
-			processing.line(60, 330 - (330-(axis_location+15))*(1-(100-i)/(100-min)), 605, 330 - (330-(axis_location+15))*(1-(100-i)/(100-min)));
-			processing.text("-" + processing.round(100-i) + "%", 55, 335 - (330-(axis_location+15))*(1-(100-i)/(100-min)));
+			num_above = 10;
+			num_below = 0;
+		}
+		else
+		{
+			num_above = (max - 100) / (max - min);
+			num_below = 1.0 - num_above;
+			num_above = processing.round(num_above * 10);
+			num_below = processing.round(num_below * 10);
+		}
+		var range = (axis_location-15-graph_top)/ num_above;
+		var scale = (max - 100) / num_above;
+		//draw scale
+		for (var i=1; i<=num_above; i++)
+		{
+			processing.line(60 , (axis_location-15)-(i*range), 605, axis_location-15-(i*range));
+			processing.text(String(processing.round(10*((100 + scale * i)-100))/10) + "%", 55,  axis_location-15-(i*range)+5);
 		}
 
-		//draw a rectangle to highlight better or worse than national average 
-		processing.fill(245);
-		processing.noStroke();
-		// if (axis_location != 50 || axis_location != 325)
-		// 	processing.rect(60, 50, 545, 275 * (1 - ((100 - min) / (max - min))) - 15);
+		range = (graph_bot-(axis_location+15)) / num_below;
+		scale = (100 - min) / num_below;
+		for (var i=1; i<=num_below; i++)
+		{
+			processing.line(60 , (axis_location+15)+(i*range), 605, axis_location+15+(i*range));
+			processing.text("-" + String(processing.round(10*((100 + scale * i)-100))/10) + "%", 55,  axis_location+15+(i*range)+5);
+		}
 
 		processing.fill(255);
+		processing.noStroke();
 		processing.strokeWeight(2);
 		processing.rect(60, axis_location - 9, 545, 19);
-
-		
-
 		
 		processing.textAlign(processing.CENTER);
 		processing.fill(0);
@@ -335,60 +311,63 @@ function sketchProc(processing) {
 		
 		//draw data
 		processing.noStroke();
-		for (var i=1; i<=7; i++)
+		for (var i=0; i<7; i++)
 		{
 			if (!hide_1)
 			{
-				var data1 = data["cli_" + i + "_1"];
+				var data1 = data["cli_1"][i];
 				processing.fill(main);
 				if (data1 > 100) //above
 				{
-					var height = (100-data1)/(100-min)*(315-axis_location);
-					processing.rect(horz_locs[i-1]-16, axis_location - 15, 16, height);
-					above_1[i-1] = axis_location - 15 + height;
+					var height = ((data1-100) / (max-100)) * (axis_location - 15 -graph_top);
+					processing.rect(horz_locs[i]-16, axis_location-15, 16, -height);
+					above_1[i] = graph_top + ((axis_location - 15 - graph_top) * (1 - (data1-100) / (max-100)));
 				}
 				else if (data1 < 100)
 				{
-					var height = (100-data1)/(100-min)*(315-axis_location);
-					processing.rect(horz_locs[i-1]-16, axis_location + 15, 16, height);
-					below_1[i-1] = axis_location + 15 + height;
+					var height = ((data1-100) / (min-100)) * (graph_bot - (axis_location + 15));
+					processing.rect(horz_locs[i]-16, axis_location+15, 16, height);
+					below_1[i] = graph_bot - ((graph_bot - axis_location - 15) * (1 - (100-data1) / (100-min)));
 				}
 				else
 				{
-					processing.rect(horz_locs[i-1], axis_location - 15, 16, -5);
-					above_1[i-1] = axis_location-25;
+					processing.rect(horz_locs[i], axis_location - 15, 16, -5);
+					above_1[i] = axis_location-25;
 				}
 			}
 
 			if (!hide_2)
 			{
-				var data2 = data["cli_" + i + "_2"];
+				var data2 = data["cli_2"][i];
 				processing.fill(gray);
 				if (data2 > 100) //above
 				{
-					var height = (100-data2)/(100-min)*(315-axis_location);
-					processing.rect(horz_locs[i-1], axis_location - 15, 16, height);
-					above_2[i-1] = axis_location - 15 + height;
+					var height = ((data2-100) / (max-100)) * (axis_location - 15 -graph_top);
+					processing.rect(horz_locs[i], axis_location-15, 16, -height);
+					above_2[i] = graph_top + ((axis_location - 15 - graph_top) * (1 - (data2-100) / (max-100)));
 				}
 				else if (data2 < 100)
 				{
-					var height = (100-data2)/(100-min)*(315-axis_location);
-					processing.rect(horz_locs[i-1], axis_location + 15, 16, height);
-					below_2[i-1] = axis_location + 15 + height;
+					var height = ((data2-100) / (min-100)) * (graph_bot - (axis_location + 15));
+					processing.rect(horz_locs[i], axis_location+15, 16, height);
+					below_2[i] = graph_bot - ((graph_bot - axis_location - 15) * (1 - (100-data2) / (100-min)));
 				}
 				else
 				{
-					processing.rect(horz_locs[i-1], axis_location - 15, 16, -5);
-					above_2[i-1] = axis_location-25;
+					processing.rect(horz_locs[i], axis_location - 15, 16, -5);
+					above_2[i] = axis_location-25;
 				}
 			}
 
 		}
 
-
 		processing.stroke(0);
-		processing.line(60, axis_location - 15, 605, axis_location - 15);
-		processing.line(60, axis_location + 15, 605, axis_location + 15);
+		processing.line(60, graph_top, 60, axis_location-16);
+		processing.line(60, axis_location+15, 60, graph_bot);
+		processing.line(605, graph_top, 605, axis_location-16);
+		processing.line(605, axis_location+15, 605, graph_bot);
+		processing.line(60, axis_location - 15, 604, axis_location - 15);
+		processing.line(60, axis_location + 15, 604, axis_location + 15);
 
 		//title and help
 		processing.line(185, 30, 487, 30);
@@ -542,7 +521,7 @@ function sketchProc(processing) {
 	};
 
 	function taxes() {
-		axis_location = [110, 195, 320, 530];
+		axis_location = [105, 215, 340, 530];
 		var graph_top = 50; 
 		var graph_bot = 320;
 		var graph_left = 60;
@@ -552,7 +531,7 @@ function sketchProc(processing) {
 		processing.stroke(0);
 		processing.fill(0);
 		processing.text("SALES TAX", axis_location[0], graph_bot+15);
-		processing.text("- INCOME TAX -", (axis_location[2]+axis_location[1])/2, graph_bot+15);
+		processing.text("-INCOME TAX-", (axis_location[2]+axis_location[1])/2, graph_bot+15);
 		processing.text("MIN", axis_location[1], graph_bot+15);
 		processing.text("MAX", axis_location[2], graph_bot+15);
 		processing.text("PROPERTY TAX", axis_location[3], graph_bot+15);
@@ -592,6 +571,93 @@ function sketchProc(processing) {
 
 		min_1 = 0.0;
 		min_2 = 0.0;
+
+		processing.stroke(245);
+		processing.fill(0);
+		var range = (graph_top - graph_bot)/10;
+		var per_scale = (max_1 - min_1)/10;
+		var money_scale = (max_2 - min_2)/10;
+		for (var i=1; i<=10; i++)
+		{
+			var h = graph_bot + range * i;
+			processing.line(graph_left+2, h, graph_right-3, h);
+			processing.textAlign(processing.RIGHT);
+			processing.text(String(processing.round(min_1 + per_scale * i * 10)/10) + "%", graph_left-5, h+5);
+			processing.textAlign(processing.LEFT);
+			processing.text(String(processing.round(min_2 + money_scale * i * 100)/100) + "%", graph_right+5, h+5);
+		}
+
+		//draw NATIONAL AVERAGE rectangle and data
+		processing.stroke(0);
+		var line_1 = graph_bot + (graph_top - graph_bot)*((data["taxes_3"][0] -  min_1)/(max_1 - min_1));
+		var line_2 = graph_bot + (graph_top - graph_bot)*((data["taxes_3"][1] -  min_1)/(max_1 - min_1));
+		var line_3 = graph_bot + (graph_top - graph_bot)*((data["taxes_3"][2] -  min_1)/(max_1 - min_1));
+		var line_4 = graph_bot + (graph_top - graph_bot)*((data["taxes_3"][3] -  min_2)/(max_2 - min_2));
+		
+		processing.line(graph_left, line_1, axis_location[0]+40, line_1);
+		processing.line(axis_location[0]+41, line_1, axis_location[1]-40, line_2);
+		processing.line(axis_location[1]-40, line_2, axis_location[1]+40, line_2);
+		processing.line(axis_location[1]+41, line_2, axis_location[2]-41, line_3);
+		processing.line(axis_location[2]-40, line_3, axis_location[2]+40, line_3);
+		processing.line(axis_location[2]+41, line_3, axis_location[3]-41, line_4);
+		processing.line(axis_location[3]-40, line_4, graph_right-1, line_4);
+
+		processing.fill(255);
+		processing.stroke(255);
+		processing.rect((axis_location[2]+axis_location[3])/2-40, (line_3+line_4)/2-30, 77, 50)
+		processing.noStroke();
+		processing.fill(0);
+		processing.textAlign(processing.CENTER);
+		processing.text("NATIONAL", (axis_location[2]+axis_location[3])/2, (line_3+line_4)/2-9);
+		processing.text("AVERAGES", (axis_location[2]+axis_location[3])/2, (line_3+line_4)/2+8);
+
+		var height_1 = (graph_top - graph_bot)*((data["taxes_1"][0] -  min_1)/(max_1 - min_1));
+		var height_2 = (graph_top - graph_bot)*((data["taxes_1"][2] -  min_1)/(max_1 - min_1));
+		var height_3 = (graph_top - graph_bot)*((data["taxes_1"][1] -  min_1)/(max_1 - min_1));
+		var height_4 = (graph_top - graph_bot)*((data["taxes_1"][3] -  min_2)/(max_2 - min_2));
+		var height_5 = (graph_top - graph_bot)*((data["taxes_2"][0] -  min_1)/(max_1 - min_1));
+		var height_6 = (graph_top - graph_bot)*((data["taxes_2"][1] -  min_1)/(max_1 - min_1));
+		var height_7 = (graph_top - graph_bot)*((data["taxes_2"][2] -  min_1)/(max_1 - min_1));
+		var height_8 = (graph_top - graph_bot)*((data["taxes_2"][3] -  min_2)/(max_2 - min_2));
+
+		//buffer boxes
+		if (!hide_1)
+		{
+			processing.fill(255);
+			processing.rect(axis_location[0]-25, graph_bot, 30, height_1);
+			processing.rect(axis_location[1]-25, graph_bot, 30, height_2);
+			processing.rect(axis_location[2]-25, graph_bot, 30, height_3);
+			processing.rect(axis_location[3]-25, graph_bot, 30, height_4);
+		}
+
+		if (!hide_2)
+		{
+			processing.fill(255);
+			processing.rect(axis_location[0]-5, graph_bot, 30, height_5);
+			processing.rect(axis_location[1]-5, graph_bot, 30, height_6);
+			processing.rect(axis_location[2]-5, graph_bot, 30, height_7);
+			processing.rect(axis_location[3]-5, graph_bot, 30, height_8);
+		}
+		//data
+		if (!hide_1)
+		{
+			processing.fill(main);
+			processing.noStroke();
+			processing.rect(axis_location[0]-20, graph_bot, 20, height_1);
+			processing.rect(axis_location[1]-20, graph_bot, 20, height_2);
+			processing.rect(axis_location[2]-20, graph_bot, 20, height_3);
+			processing.rect(axis_location[3]-20, graph_bot, 20, height_4);
+		}
+
+		if (!hide_2)
+		{
+			processing.fill(gray);
+			processing.noStroke();
+			processing.rect(axis_location[0], graph_bot, 20, height_5);
+			processing.rect(axis_location[1], graph_bot, 20, height_6);
+			processing.rect(axis_location[2], graph_bot, 20, height_7);
+			processing.rect(axis_location[3], graph_bot, 20, height_8);		
+		}
 		
 	};
 
@@ -601,14 +667,13 @@ function sketchProc(processing) {
 		processing.fill(0);
 		processing.strokeWeight(2);
 		processing.line(60, 50, 60, 324);
+		processing.line(605, 50, 605, 324);
 		processing.line(60, 325, 605, 325);
-		//add scale, will be dynamic, pulling mins and max for the two cities
+		
 
 		var min, max;
 		if (!hide_2 && hide_1)
 		{
-			// min = data["min_weather_2"] - ((data["max_weather_2"]-data["min_weather_2"]) / 18);
-			// max = data["max_weather_2"] + ((data["max_weather_2"]-data["min_weather_2"]) / 18);
 			min = data["weatherlow_2"][13];
 			max = data["weather_2"][12];
 
@@ -617,8 +682,6 @@ function sketchProc(processing) {
 		{
 			min = data["weatherlow_1"][13];
 			max = data["weather_1"][12];
-			//min = data["min_weather_1"] - ((data["max_weather_1"]-data["min_weather_1"]) / 18);
-			//max = data["max_weather_1"] + ((data["max_weather_1"]-data["min_weather_1"]) / 18);
 		}
 		else
 		{
@@ -686,11 +749,8 @@ function sketchProc(processing) {
 			{
 				processing.stroke(main);
 				processing.fill(main);
-				//processing.strokeWeight(10);
-				//var percent_1 = (data["weather_1_"+i] -  min) / range;
 				var percent_1 = (data["weather_1"][i-1] - min) / range;
 				var percent_2 = (data["weatherlow_1"][i-1] -  min) / range;
-				//processing.rect(27+45*i, (1-percent_1) * 275 + 49, 10, percent_1 * 275);
 				processing.ellipse(28+45*i, (1-percent_1) * 275 + 49, 3, 3);
 				processing.ellipse(28+45*i, (1-percent_2) * 275 + 49, 3, 3);
 				processing.line(28+45*i, (1-percent_1) * 275 + 49, 28+45*i, (1-percent_2) * 275 + 49);
@@ -700,12 +760,8 @@ function sketchProc(processing) {
 			{
 				processing.stroke(gray);
 				processing.fill(gray);
-				//processing.strokeWeight(10);
 				var percent_1 = (data["weather_2"][i-1] - min) / range;
 				var percent_2 = (data["weatherlow_2"][i-1] -  min) / range;
-				// var percent_1 = (data["weather_2_"+i] -  min) / range;
-				// var percent_2 = (data["weatherlow_2_"+i] -  min) / range;
-				//processing.rect(27+45*i, (1-percent_1) * 275 + 49, 10, percent_1 * 275);
 				processing.ellipse(41+45*i, (1-percent_1) * 275 + 49, 3, 3);
 				processing.ellipse(41+45*i, (1-percent_2) * 275 + 49, 3, 3);
 				processing.line(41+45*i, (1-percent_1) * 275 + 49, 41+45*i, (1-percent_2) * 275 + 49);
@@ -717,7 +773,6 @@ function sketchProc(processing) {
 		processing.fill(255);
 		processing.stroke(235);
 		processing.rect(525, 25, 100, 68);
-		//processing.strokeWeight(2);
 		processing.fill(main);
 		processing.stroke(main);
 		processing.ellipse(545, 59, 3, 3);
