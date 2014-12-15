@@ -38,8 +38,8 @@
                 <a class="dropdown-toggle" data-toggle="dropdown" ><img src="/assets/search white.png" height="15" width="15"></a>
                 <ul class="dropdown-menu">
                     <form>
-                        <input type="text" class="blank-search" >
-                        <button class="arrow-button" onclick="api_request(); return false;"><img src="/assets/arrow white.png" height="15" width="15"></button>
+                        <input type="text" class="blank-search" id="drop-search">
+                        <button class="arrow-button" onclick="api_request(document.getElementById('drop-search').value); return false;"><img src="/assets/arrow white.png" height="15" width="15"></button>
                     </form>
                 </ul>
                 

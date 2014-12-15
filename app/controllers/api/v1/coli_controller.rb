@@ -107,8 +107,8 @@ class Api::V1::ColiController < ApplicationController
 
 			# Add the mins and maxes.
 			unless coli_stats.empty?
-				coli_stats << coli_stats.max
 				coli_stats << coli_stats.min
+				coli_stats << coli_stats.max
 			end
 
 			# Add the data to the result.
