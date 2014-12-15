@@ -4,6 +4,7 @@ import json
 import csv
 import requests
 import re
+import string
 from datetime import timedelta
 from functools import update_wrapper
 
@@ -67,7 +68,7 @@ def pp(req):
 city = []
 state = {}
 commands = {"compare":"compare","vs.":"compare","vs":"compare","get":"get","find":"get","difference between":"compare"}
-common_abbrs = {"nyc":"new york, new york","slc":"salt lake city, utah"}
+common_abbrs = {"nyc":"new york, new york","slc":"salt lake city, utah","la":"los angeles, california"}
 
 states = open("states.csv", "rU")
 
@@ -87,6 +88,7 @@ def query(query):
 	locations = []
 	command = ""
 	query = query.lower()
+	query = query.translate(string.maketrans("",""), string.punctuation)
 	if(query[len(query)-1:] == "." or query[len(query)-1:] == "?" or query[len(query)-1:] == "!" or query[len(query)-1:] == ";"):
 		query = query[:len(query)-1]
 	for abbr, st in state.iteritems():
@@ -127,7 +129,7 @@ def query(query):
 		command = "compare"
 	if command == "" and len(locations) == 0:
 		package = {
-			"operation":"not found",
+			"operation":"undefined",
 			"query":query
 		}
 	else:

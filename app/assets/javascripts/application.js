@@ -842,10 +842,16 @@ function update_tab(name) {
 function api_request(query) {
 	var url = "http://54.183.8.236:6001/query/" + query;
 	$.get(url, function(resp){
-		//data = jQuery.parseJSON(resp);
-		window.location = "/wizard/city/?" + resp;
+		data = jQuery.parseJSON(resp);
+		if(data["operation"] == "undefined")
+		{
+			window.location = "/info/examples/"
+		}
+		else
+		{
+			window.location = "/wizard/city/?" + resp;
+		}
 	});
-	return data;
 };
 
 var hide_show_1 = "HIDE";
