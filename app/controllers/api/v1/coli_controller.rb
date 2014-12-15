@@ -107,8 +107,8 @@ class Api::V1::ColiController < ApplicationController
 
 			# Add the mins and maxes.
 			unless coli_stats.empty?
-				coli_stats << coli_stats.max
 				coli_stats << coli_stats.min
+				coli_stats << coli_stats.max
 			end
 
 			# Add the data to the result.
@@ -128,8 +128,8 @@ class Api::V1::ColiController < ApplicationController
 
 			# Add max and min.
 			unless labor_stats.empty?
-				labor_stats << labor_stats.max
 				labor_stats << labor_stats.min
+				labor_stats << labor_stats.max
 			end
 
 			result["labor_#{i}"] = labor_stats
@@ -148,8 +148,8 @@ class Api::V1::ColiController < ApplicationController
 
 			# Add max and min.
 			unless tax_stats.empty?
-				tax_stats << tax_stats.max
 				tax_stats << tax_stats.min
+				tax_stats << tax_stats.max
 			end
 
 			result["taxes_#{i}"] = tax_stats
@@ -168,8 +168,8 @@ class Api::V1::ColiController < ApplicationController
 
 			# Add max and min for each list.
 			unless weather_high_stats.empty?
-				weather_high_stats << weather_high_stats.max
 				weather_high_stats << weather_high_stats.min
+				weather_high_stats << weather_high_stats.max
 			end
 			
 			unless weather_high_stats.empty?
