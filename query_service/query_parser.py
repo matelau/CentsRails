@@ -148,6 +148,13 @@ def query(query):
 		prep = r.prepare()
 		s = requests.Session()
 		resp = s.send(prep)
+		if(resp.status_code == 400):
+			package = {
+				"operation":"undefined",
+				"query":query
+			}
+			resp = json.dumps(package)
+			return resp
 		package = json.loads(resp.text)
 		if(package["operation"] == "undefined"):
 			package = {
