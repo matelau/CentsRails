@@ -5,12 +5,17 @@ class Api::V1::ColiController < ApplicationController
 		# they are not present.
 		unless params[:search_by].present?
 			message = {'error' => 
-				"The search_by field was missing. Don't forget the underscore."}
+				'The search_by field was missing. Don\'t forget the underscore.'}
 			return render json: message, status: 400
 		end
 
 		unless params[:objects].present?
-			message = {'error' => "No objects were in the objects array."}
+			message = {'error' => 'No objects were in the objects array.'}
+			return render json: message, status: 400
+		end
+
+		unless params[:operation].present?
+			message = {'error' => 'The operation field was empty.'}
 			return render json: message, status: 400
 		end
 
@@ -81,6 +86,7 @@ class Api::V1::ColiController < ApplicationController
 		unless not_found.empty?
 			result[:failure] = 'Some objects weren\'t found in the database.'
 			result[:not_found] = not_found
+			result[:operation] = 'Undefined'	# Needed for the query parser
 			return render json: result, status: 200
 		end
 
@@ -128,8 +134,8 @@ class Api::V1::ColiController < ApplicationController
 
 			# Add max and min.
 			unless labor_stats.empty?
-				labor_stats << labor_stats.max
 				labor_stats << labor_stats.min
+				labor_stats << labor_stats.max
 			end
 
 			result["labor_#{i}"] = labor_stats
@@ -148,8 +154,8 @@ class Api::V1::ColiController < ApplicationController
 
 			# Add max and min.
 			unless tax_stats.empty?
-				tax_stats << tax_stats.max
 				tax_stats << tax_stats.min
+				tax_stats << tax_stats.max
 			end
 
 			result["taxes_#{i}"] = tax_stats
