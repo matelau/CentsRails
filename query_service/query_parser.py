@@ -67,6 +67,7 @@ def pp(req):
 
 city = []
 state = {}
+#conflicts right now between Louisiana(LA) and Los Angeles(LA) and Indiana(IN) and the word 'in'
 commands = {"compare":"compare","vs.":"compare","vs":"compare","get":"get","find":"get","difference between":"compare"}
 common_abbrs = {"nyc":"new york, new york","slc":"salt lake city, utah","la":"los angeles, california"}
 
@@ -88,15 +89,15 @@ def query(query):
 	locations = []
 	command = ""
 	query = query.lower()
-	query = query.translate(string.maketrans("",""), string.punctuation)
+	query = str(query).translate(string.maketrans("",""), string.punctuation)
 	if(query[len(query)-1:] == "." or query[len(query)-1:] == "?" or query[len(query)-1:] == "!" or query[len(query)-1:] == ";"):
 		query = query[:len(query)-1]
 	for abbr, st in state.iteritems():
 		if re.search(r"\b" + abbr + r"\b", query):
-			query = re.sub(r"\b" + abbr + r"\b", st,query)
+			query = re.sub(r"\b" + abbr + r"\b", st, query)
 	for abbr, c in common_abbrs.iteritems():
 		if re.search(r"\b" + abbr + r"\b", query):
-			query = re.sub(r"\b" + abbr + r"\b", c,query)
+			query = re.sub(r"\b" + abbr + r"\b", c, query)
 	for c in cities:
 		temp = c.replace(",", "").lower()
 		if(temp in query):
@@ -147,9 +148,17 @@ def query(query):
 		s = requests.Session()
 		resp = s.send(prep)
 		package = json.loads(resp.text)
+		if(package["failure"] != ""):
+			package = {
+				"operation":"undefined",
+				"query":query
+			}
+			resp = json.dumps(package)
+			return resp
 		package["operation"] = command
+		package["query"] = query
 	resp = json.dumps(package)
 	return resp
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0',port=6001,debug=False)
+	app.run(host='0.0.0.0',port=6001,debug=True)

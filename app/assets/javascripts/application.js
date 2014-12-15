@@ -681,19 +681,19 @@ function sketchProc(processing) {
 		var min, max;
 		if (!hide_2 && hide_1)
 		{
-			min = data["weatherlow_2"][13];
-			max = data["weather_2"][12];
+			min = data["weatherlow_2"][12];
+			max = data["weather_2"][13];
 
 		}
 		else if (hide_2 && !hide_1)
 		{
-			min = data["weatherlow_1"][13];
-			max = data["weather_1"][12];
+			min = data["weatherlow_1"][12];
+			max = data["weather_1"][13];
 		}
 		else
 		{
-			min = processing.min(data["weatherlow_1"][13], data["weatherlow_2"][13]);
-			max = processing.max(data["weather_1"][12], data["weather_2"][12]);
+			min = processing.min(data["weatherlow_1"][13], data["weatherlow_2"][12]);
+			max = processing.max(data["weather_1"][12], data["weather_2"][13]);
 		}
 
 		min = min - ((max-min) / 10);

@@ -168,13 +168,13 @@ class Api::V1::ColiController < ApplicationController
 
 			# Add max and min for each list.
 			unless weather_high_stats.empty?
-				weather_high_stats << weather_high_stats.max
 				weather_high_stats << weather_high_stats.min
+				weather_high_stats << weather_high_stats.max
 			end
 			
 			unless weather_high_stats.empty?
-				weather_low_stats << weather_low_stats.max
 				weather_low_stats << weather_low_stats.min
+				weather_low_stats << weather_low_stats.max
 			end
 
 			result["weather_#{i}"] = weather_high_stats
