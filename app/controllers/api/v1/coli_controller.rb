@@ -173,8 +173,8 @@ class Api::V1::ColiController < ApplicationController
 			end
 			
 			unless weather_high_stats.empty?
-				weather_low_stats << weather_low_stats.max
 				weather_low_stats << weather_low_stats.min
+				weather_low_stats << weather_low_stats.max
 			end
 
 			result["weather_#{i}"] = weather_high_stats

@@ -7,9 +7,9 @@
 <div class="search-bar">
 	<p class="question-text">WHAT WOULD YOU LIKE TO KNOW?</p>
 	<form>
-	<input class="main-search" type="text";>
+	<input class="main-search" type="text" id="search">
 	
 	<p class="help-text">NEW HERE? CHECK OUT OUR <a href="/wizard/start">WIZARD</a> OR SOME <a href="/info/examples">EXAMPLES</a>.</p>
-	<button class="circle-arrow" type="submit" onclick="api_request(); return false;"><img src="assets/circle arrow.png" height="38" width="38"></button>
+	<button class="circle-arrow" type="submit" onclick="api_request(document.getElementById('search').value); return false;"><img src="assets/circle arrow.png" height="38" width="38"></button>
 	</form>
 </div>

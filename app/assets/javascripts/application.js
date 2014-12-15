@@ -30,8 +30,6 @@ function sketchProc(processing) {
 	var color_1 = processing.color(136, 68, 18);
 	var color_2 = processing.color(18, 86, 136);
 
-
-
 	processing.setup = function() {
 		//this will be retrieved from json object
 		//type = "city";
@@ -48,21 +46,35 @@ function sketchProc(processing) {
 		processing.textFont(font, 12);
 
 		//var to hold all data relevant to a given category
-		data = new Array();
 		above_1 = new Array();
 		above_2 = new Array();
 		below_1 = new Array();
 		below_2 = new Array();
+		data = new Array();
+
+		var query = window.location.search;
+		if(query != "")
+		{
+			if (query.substring(0, 1) == '?') {
+	   			query = query.substring(1);
+	  		}
+	  		data = jQuery.parseJSON(unescape(query));
+  		}
 		
 		//create dummy data
-		data["weather_1"] =    [38.0, 44.0, 53.0, 61.0, 71.0, 82.0, 90.0, 89.0, 78.0, 65.0, 50.0, 40.0, 90.0, 38.0];
-		data["weatherlow_1"] = [26.0, 31.0, 38.0, 43.0, 52.0, 61.0, 69.0, 67.0, 58.0, 46.0, 36.0, 27.0, 69.0, 26.0];
-		data["weather_2"]    = [67.0, 71.5, 77.5, 85.5, 95.5, 104.5, 106.5, 104.5, 100.5, 89.5, 76.5, 66.5, 106.5, 66.5];
-		data["weatherlow_2"] = [46.0, 49.5, 53.5, 60.5, 69.5, 78.5, 83.5, 83.5, 77.5, 65.5, 53.5, 45.5, 83.5, 45.5];
+		if(query == "")
+		{
+			data["weather_1"] =    [38.0, 44.0, 53.0, 61.0, 71.0, 82.0, 90.0, 89.0, 78.0, 65.0, 50.0, 40.0, 90.0, 38.0];
+			data["weatherlow_1"] = [26.0, 31.0, 38.0, 43.0, 52.0, 61.0, 69.0, 67.0, 58.0, 46.0, 36.0, 27.0, 69.0, 26.0];
+			data["weather_2"]    = [67.0, 71.5, 77.5, 85.5, 95.5, 104.5, 106.5, 104.5, 100.5, 89.5, 76.5, 66.5, 106.5, 66.5];
+			data["weatherlow_2"] = [46.0, 49.5, 53.5, 60.5, 69.5, 78.5, 83.5, 83.5, 77.5, 65.5, 53.5, 45.5, 83.5, 45.5];
 
+			data["location_1"] = "Salt Lake City, UT";
+			data["location_2"] = "Phoenix, AZ";
 
-		data["location_1"] = "Salt Lake City, UT";
-		data["location_2"] = "Phoenix, AZ";
+			data["cli_1"] = [102, 94, 95, 95, 119, 105, 92, 92, 119];
+			data["cli_2"] = [96, 92, 100, 106, 97, 101, 99, 92, 106];
+		}
 
 		data["labor_1"] = [3.4, 48000, 4.4];
 		data["labor_2"] = [6.4, 51000, 3.3];
@@ -72,11 +84,6 @@ function sketchProc(processing) {
 		data["taxes_1"] = [6.85, 5.0, 5.0, 0.67];
 		data["taxes_2"] = [8.3, 2.59, 4.54, 1.59];
 		data["taxes_3"] = [8.25, 3.5, 7.8, 1.15];
-
-
-		data["cli_1"] = [102, 94, 95, 95, 119, 105, 92, 92, 119];
-		data["cli_2"] = [96, 92, 100, 106, 97, 101, 99, 92, 106];
-
 
 	};
 
@@ -674,19 +681,19 @@ function sketchProc(processing) {
 		var min, max;
 		if (!hide_2 && hide_1)
 		{
-			min = data["weatherlow_2"][13];
-			max = data["weather_2"][12];
+			min = data["weatherlow_2"][12];
+			max = data["weather_2"][13];
 
 		}
 		else if (hide_2 && !hide_1)
 		{
-			min = data["weatherlow_1"][13];
-			max = data["weather_1"][12];
+			min = data["weatherlow_1"][12];
+			max = data["weather_1"][13];
 		}
 		else
 		{
-			min = processing.min(data["weatherlow_1"][13], data["weatherlow_2"][13]);
-			max = processing.max(data["weather_1"][12], data["weather_2"][12]);
+			min = processing.min(data["weatherlow_1"][13], data["weatherlow_2"][12]);
+			max = processing.max(data["weather_1"][12], data["weather_2"][13]);
 		}
 
 		min = min - ((max-min) / 10);
@@ -832,8 +839,19 @@ function update_tab(name) {
 	document.getElementById("search_2_button").value = "HIDE";
 };
 
-function api_request() {
-    window.alert("api_request");
+function api_request(query) {
+	var url = "http://54.183.8.236:6001/query/" + query;
+	$.get(url, function(resp){
+		data = jQuery.parseJSON(resp);
+		if(data["operation"] == "undefined")
+		{
+			window.location = "/info/examples/"
+		}
+		else
+		{
+			window.location = "/wizard/city/?" + resp;
+		}
+	});
 };
 
 var hide_show_1 = "HIDE";
