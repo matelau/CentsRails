@@ -156,10 +156,9 @@ def query(query):
 			}
 			resp = json.dumps(package)
 			return resp
-		package["operation"] = command
 		package["query"] = query
 	resp = json.dumps(package)
 	return resp
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0',port=6001,debug=True)
+	app.run(host='0.0.0.0',port=6001,debug=False)
