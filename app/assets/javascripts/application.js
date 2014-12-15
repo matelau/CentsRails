@@ -692,8 +692,8 @@ function sketchProc(processing) {
 		}
 		else
 		{
-			min = processing.min(data["weatherlow_1"][13], data["weatherlow_2"][12]);
-			max = processing.max(data["weather_1"][12], data["weather_2"][13]);
+			min = processing.min(data["weatherlow_1"][12], data["weatherlow_2"][12]);
+			max = processing.max(data["weather_1"][13], data["weather_2"][13]);
 		}
 
 		min = min - ((max-min) / 10);
