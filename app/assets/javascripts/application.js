@@ -64,10 +64,10 @@ function sketchProc(processing) {
 		//create dummy data
 		if(query == "")
 		{
-			data["weather_1"] =    [38.0, 44.0, 53.0, 61.0, 71.0, 82.0, 90.0, 89.0, 78.0, 65.0, 50.0, 40.0, 90.0, 38.0];
-			data["weatherlow_1"] = [26.0, 31.0, 38.0, 43.0, 52.0, 61.0, 69.0, 67.0, 58.0, 46.0, 36.0, 27.0, 69.0, 26.0];
-			data["weather_2"]    = [67.0, 71.5, 77.5, 85.5, 95.5, 104.5, 106.5, 104.5, 100.5, 89.5, 76.5, 66.5, 106.5, 66.5];
-			data["weatherlow_2"] = [46.0, 49.5, 53.5, 60.5, 69.5, 78.5, 83.5, 83.5, 77.5, 65.5, 53.5, 45.5, 83.5, 45.5];
+			data["weather_1"] =    [38.0, 44.0, 53.0, 61.0, 71.0, 82.0, 90.0, 89.0, 78.0, 65.0, 50.0, 40.0, 38.0, 90.0];
+			data["weatherlow_1"] = [26.0, 31.0, 38.0, 43.0, 52.0, 61.0, 69.0, 67.0, 58.0, 46.0, 36.0, 27.0, 26.0, 69.0];
+			data["weather_2"]    = [67.0, 71.5, 77.5, 85.5, 95.5, 104.5, 106.5, 104.5, 100.5, 89.5, 76.5, 66.5, 66.5, 106.5];
+			data["weatherlow_2"] = [46.0, 49.5, 53.5, 60.5, 69.5, 78.5, 83.5, 83.5, 77.5, 65.5, 53.5, 45.5, 45.5, 83.5];
 
 			data["location_1"] = "Salt Lake City, UT";
 			data["location_2"] = "Phoenix, AZ";
@@ -692,8 +692,8 @@ function sketchProc(processing) {
 		}
 		else
 		{
-			min = processing.min(data["weatherlow_1"][13], data["weatherlow_2"][12]);
-			max = processing.max(data["weather_1"][12], data["weather_2"][13]);
+			min = processing.min(data["weatherlow_1"][12], data["weatherlow_2"][12]);
+			max = processing.max(data["weather_1"][13], data["weather_2"][13]);
 		}
 
 		min = min - ((max-min) / 10);

@@ -86,7 +86,7 @@ class Api::V1::ColiController < ApplicationController
 		unless not_found.empty?
 			result[:failure] = 'Some objects weren\'t found in the database.'
 			result[:not_found] = not_found
-			result[:operation] = 'Undefined'	# Needed for the query parser
+			result[:operation] = 'undefined'	# Needed for the query parser
 			return render json: result, status: 200
 		end
 
@@ -190,6 +190,7 @@ class Api::V1::ColiController < ApplicationController
 			i += 1
 		end
 
+		result[:operation] = params[:operation]
 		# Return the result, formatted as JSON, and with a 200 OK HTTP code.
 		render json: result, status: 200
 	end

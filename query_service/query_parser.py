@@ -135,6 +135,7 @@ def query(query):
 		}
 	else:
 		package = {
+			"operation":command,
 			"search_by":"location",
 			"objects":[],
 			"query":query
@@ -147,15 +148,21 @@ def query(query):
 		prep = r.prepare()
 		s = requests.Session()
 		resp = s.send(prep)
-		package = json.loads(resp.text)
-		if(package["failure"] != ""):
+		if(resp.status_code == 400):
 			package = {
 				"operation":"undefined",
 				"query":query
 			}
 			resp = json.dumps(package)
 			return resp
-		package["operation"] = command
+		package = json.loads(resp.text)
+		if(package["operation"] == "undefined"):
+			package = {
+				"operation":"undefined",
+				"query":query
+			}
+			resp = json.dumps(package)
+			return resp
 		package["query"] = query
 	resp = json.dumps(package)
 	return resp
