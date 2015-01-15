@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141207030344) do
+ActiveRecord::Schema.define(version: 20150111003742) do
+
+  create_table "careers", force: true do |t|
+    t.float    "projected_employment", limit: 24
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "colis", force: true do |t|
     t.float    "cost_of_living", limit: 24
@@ -37,6 +43,34 @@ ActiveRecord::Schema.define(version: 20141207030344) do
   create_table "completeds", force: true do |t|
     t.integer  "user_id"
     t.string   "section"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "degrees", force: true do |t|
+    t.float    "salary",       limit: 24
+    t.float    "unemployment", limit: 24
+    t.boolean  "in_field"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.float    "satisfaction", limit: 24
+  end
+
+  create_table "gets", force: true do |t|
+    t.integer  "career_id"
+    t.integer  "degree_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "gets", ["career_id", "degree_id"], name: "index_gets_on_career_id_and_degree_id", unique: true, using: :btree
+  add_index "gets", ["career_id"], name: "index_gets_on_career_id", using: :btree
+  add_index "gets", ["degree_id"], name: "index_gets_on_degree_id", using: :btree
+
+  create_table "offers", force: true do |t|
+    t.integer  "university_id"
+    t.integer  "degree_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -67,6 +101,27 @@ ActiveRecord::Schema.define(version: 20141207030344) do
     t.boolean  "public"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "top_jobs", force: true do |t|
+    t.string   "name"
+    t.float    "salary",     limit: 24
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "degree_id"
+  end
+
+  create_table "universities", force: true do |t|
+    t.integer  "size"
+    t.integer  "rank"
+    t.float    "housing",          limit: 24
+    t.string   "state"
+    t.string   "name"
+    t.float    "tuition",          limit: 24
+    t.float    "grad_rate_4_year", limit: 24
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.float    "net_cost",         limit: 24
   end
 
   create_table "users", force: true do |t|
