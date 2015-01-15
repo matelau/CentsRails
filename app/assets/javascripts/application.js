@@ -951,7 +951,6 @@ function sketchProc(processing) {
 				processing.textFont(font, 58);
 				processing.text(data["school_1"][3], 415, 282);
 			}
-			//reset text size
 			processing.textFont(font, 12);
 		}
 		processing.noStroke();
@@ -992,86 +991,8 @@ function sketchProc(processing) {
 				processing.textFont(font, 58);
 				processing.text(data["school_2"][3], 555, 282);
 			}
-			//reset text size
 			processing.textFont(font, 12);
-
-
 		}
-
-		//graph variables
-		
-		// var graph_top = 50; 
-		// var graph_bot = 300;
-		// var graph_left = 60;
-		// var graph_right = 595;
-		// axis_location = [graph_left+70, 255, 390, graph_right-70];
-
-		// //draw labels and text
-		// processing.textAlign(processing.CENTER);
-		// processing.fill(0);
-		// processing.noStroke();
-		// processing.text("YEARLY", axis_location[0], graph_bot+20);
-		// processing.text("TUITION", axis_location[0], graph_bot+40);
-		// processing.text("GRADUATION", axis_location[1], graph_bot+20);
-		// processing.text("RATE", axis_location[1], graph_bot+40);
-		// processing.text("UNDERGRAD", axis_location[2], graph_bot+20);
-		// processing.text("ENROLLMENT", axis_location[2], graph_bot+40)
-		// processing.text("NATIONAL", axis_location[3], graph_bot+20);
-		// processing.text("RANKING", axis_location[3], graph_bot+40);
-		// processing.text("COLLEGE STATISTICS COMPARISON", 328, graph_top-10);
-
-
-
-		// // processing.noStroke();
-		// // processing.fill(235);
-		// // processing.rect(axis_location[1]-60, graph_top+1, 120, 268);
-		// // processing.rect(axis_location[3]-60, graph_top+1, 120, 268);
-
-		// processing.stroke(0);
-		// processing.strokeWeight(2);
-
-		// processing.line(graph_left+10, graph_bot, graph_right-11, graph_bot);
-		// processing.line(graph_left+10, graph_top, graph_right-11, graph_top);
-		// processing.line(graph_left+10, graph_bot+50, graph_right-11, graph_bot+50);
-		// processing.line(graph_left+10, graph_top, graph_right-11, graph_top);
-		// //processing.line(graph_left+10, graph_bot-1, graph_left+10, graph_top);
-		// //processing.line(graph_right-10, graph_bot-1, graph_right-10, graph_top);
-
-		
-		// if (!hide_1)
-		// {
-		// 	processing.noStroke();
-		// 	processing.fill(main);
-		// 	processing.rect(axis_location[0]-40, graph_bot-1, 40, -1*data["school_1"][0]/tuition_max*(graph_bot-graph_top));
-		// 	processing.rect(axis_location[1]-40, graph_bot-1, 40, -1*data["school_1"][1]/grad_max*(graph_bot-graph_top));
-		// 	processing.rect(axis_location[2]-40, graph_bot-1, 40, -1*data["school_1"][2]/size_max*(graph_bot-graph_top));
-		// 	processing.rect(axis_location[3]-40, graph_bot-1, 40, -1*(1-data["school_1"][3]/rank_max)*(graph_bot-graph_top-17));
-		// 	processing.stroke(0);
-		// 	processing.fill(0);
-		// 	processing.text("$" + String(data["school_1"][0]/1000) + "k", axis_location[0]-20, graph_bot - 5 - data["school_1"][0]/tuition_max*(graph_bot-graph_top));
-		// 	processing.text(String(data["school_1"][1]) + "%", axis_location[1]-20, graph_bot - 5 - data["school_1"][1]/grad_max*(graph_bot-graph_top));
-		// 	processing.text(String(data["school_1"][2]/1000) + "k", axis_location[2]-20, graph_bot - 5 - data["school_1"][2]/size_max*(graph_bot-graph_top));
-		// 	processing.text(String(data["school_1"][3]), axis_location[3]-20, graph_bot - 5 - (1-data["school_1"][3]/rank_max)*(graph_bot-graph_top-18));
-		// }
-		// if (!hide_2)
-		// {
-		// 	processing.noStroke();
-		// 	processing.fill(gray);
-		// 	processing.rect(axis_location[0], graph_bot-1, 40, -1*data["school_2"][0]/tuition_max*(graph_bot-graph_top));
-		// 	processing.rect(axis_location[1], graph_bot-1, 40, -1*data["school_2"][1]/grad_max*(graph_bot-graph_top));
-		// 	processing.rect(axis_location[2], graph_bot-1, 40, -1*data["school_2"][2]/size_max*(graph_bot-graph_top));
-		// 	processing.rect(axis_location[3], graph_bot-1, 40, -1*(1-data["school_2"][3]/rank_max)*(graph_bot-graph_top-17));
-		// 	processing.stroke(0);
-		// 	processing.fill(0);
-		// 	processing.text("$" + String(data["school_2"][0]/1000) + "k", axis_location[0]+20, graph_bot - 5 - data["school_2"][0]/tuition_max*(graph_bot-graph_top));
-		// 	processing.text(String(data["school_2"][1]) + "%", axis_location[1]+20, graph_bot - 5 - data["school_2"][1]/grad_max*(graph_bot-graph_top));
-		// 	processing.text(String(data["school_2"][2]/1000) + "k", axis_location[2]+20, graph_bot - 5 - data["school_2"][2]/size_max*(graph_bot-graph_top));
-		// 	processing.text(String(data["school_2"][3]), axis_location[3]+20, graph_bot - 5 - (1-data["school_2"][3]/rank_max)*(graph_bot-graph_top-18));
-
-		// }
-
-
-
 
 	};
 
