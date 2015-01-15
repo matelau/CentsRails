@@ -108,7 +108,7 @@ def query(query):
 		if(cname in query):
 			if(c not in locations):
 				locations.append(c)
-	tokens = nltk.word_tokenize(query)
+	#tokens = nltk.word_tokenize(query)
 	for s in commands:
 		if s in query:
 			command = commands[s]
