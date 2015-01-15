@@ -5,6 +5,7 @@ import csv
 import requests
 import re
 import string
+import urllib
 from datetime import timedelta
 from functools import update_wrapper
 
@@ -65,6 +66,7 @@ def pp(req):
         req.body,
     ))
 
+ip = urllib2.urlopen('http://whatismyip.akamai.com').read()
 city = []
 state = {}
 #conflicts right now between Louisiana(LA) and Los Angeles(LA) and Indiana(IN) and the word 'in'
@@ -142,7 +144,7 @@ def query(query):
 		}
 		for l in locations:
 			package["objects"].append({"city":l[:l.index(",")]})
-		url = "http://54.183.8.236/api/v1/coli/"
+		url = "http://%s/api/v1/coli/" % (ip)
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
 		prep = r.prepare()

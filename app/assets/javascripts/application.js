@@ -840,7 +840,7 @@ function update_tab(name) {
 };
 
 function api_request(query) {
-	var url = "http://54.183.8.236:6001/query/" + query;
+	var url = "http://54.67.106.77:6001/query/" + query;
 	$.get(url, function(resp){
 		data = jQuery.parseJSON(resp);
 		if(data["operation"] == "undefined")
