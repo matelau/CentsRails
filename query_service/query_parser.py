@@ -5,7 +5,7 @@ import csv
 import requests
 import re
 import string
-import urllib
+import urllib2
 from datetime import timedelta
 from functools import update_wrapper
 
