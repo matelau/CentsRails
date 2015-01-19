@@ -30,6 +30,7 @@ GEM
     addressable (2.3.6)
     arel (5.0.1.20140414130214)
     backports (3.6.4)
+    bcrypt (3.1.9)
     bootstrap-material-design (0.1.4)
       bootstrap-sass (~> 3.0)
     bootstrap-sass (3.3.1.0)
@@ -183,6 +184,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt (~> 3.1.7)
   bootstrap-material-design
   coffee-rails (~> 4.0.0)
   execjs
