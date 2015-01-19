@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150115224031) do
+ActiveRecord::Schema.define(version: 20150119233023) do
 
   create_table "careers", force: true do |t|
     t.float    "projected_employment", limit: 24
@@ -125,13 +125,15 @@ ActiveRecord::Schema.define(version: 20150115224031) do
   end
 
   create_table "users", force: true do |t|
-    t.float    "debt",       limit: 24
-    t.float    "books",      limit: 24
-    t.float    "savings",    limit: 24
+    t.float    "debt",            limit: 24
+    t.float    "books",           limit: 24
+    t.float    "savings",         limit: 24
     t.string   "email"
-    t.string   "password"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "password_digest"
   end
 
   create_table "weather_records", force: true do |t|
