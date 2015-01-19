@@ -29,8 +29,8 @@
         <!--check session variables to see if logged in -->
             <li><a href="/">HOME</a></li>
             <% if current_user %>
-                <li><a href="/user/profile"><%= current_user.first_name %></a></li>
-                <%= link_to "Logout", '/logout' %>
+                <li><a href="/user/profile"><%= current_user.first_name.upcase %></a></li>
+                <li><a href="/user/logout">LOGOUT</a></li>
             <% else %>
                 <li><a href="/user/login">LOGIN</a></li>
                 <li><a href="/user/register">REGISTER</a></li>
