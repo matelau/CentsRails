@@ -12,6 +12,10 @@ Rails.application.routes.draw do
   get 'wizard/spending'
   get 'user/profile'
   get 'user/register'
+  post 'user/register'
+  get 'user/login' => 'sessions#new'
+  post 'user/login' => 'sessions#create'
+  get 'user/logout' => 'sessions#destroy'
   root 'search#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
