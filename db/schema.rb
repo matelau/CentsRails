@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150119233023) do
+ActiveRecord::Schema.define(version: 20150121222742) do
 
   create_table "careers", force: true do |t|
     t.float    "projected_employment", limit: 24
@@ -20,24 +20,24 @@ ActiveRecord::Schema.define(version: 20150119233023) do
   end
 
   create_table "colis", force: true do |t|
-    t.float    "cost_of_living", limit: 24
-    t.float    "transportation", limit: 24
-    t.float    "groceries",      limit: 24
-    t.float    "goods",          limit: 24
-    t.float    "health_care",    limit: 24
-    t.float    "utilities",      limit: 24
-    t.float    "housing",        limit: 24
+    t.float    "cost_of_living",    limit: 24
+    t.float    "transportation",    limit: 24
+    t.float    "groceries",         limit: 24
+    t.float    "goods",             limit: 24
+    t.float    "health_care",       limit: 24
+    t.float    "utilities",         limit: 24
+    t.float    "housing",           limit: 24
     t.string   "location"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "unemp_rate",     limit: 24
-    t.float    "unemp_trend",    limit: 24
-    t.float    "income",         limit: 24
-    t.float    "sales_tax",      limit: 24
-    t.float    "property_tax",   limit: 24
+    t.float    "unemp_rate",        limit: 24
+    t.float    "unemp_trend",       limit: 24
+    t.float    "sales_tax",         limit: 24
+    t.float    "property_tax",      limit: 24
     t.string   "state"
-    t.float    "income_tax_max", limit: 24
-    t.float    "income_tax_min", limit: 24
+    t.float    "income_tax_max",    limit: 24
+    t.float    "income_tax_min",    limit: 24
+    t.float    "income_per_capita", limit: 24
   end
 
   create_table "completeds", force: true do |t|
