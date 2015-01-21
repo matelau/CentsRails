@@ -1,4 +1,7 @@
 class WizardController < ApplicationController
+
+	force_ssl
+	
 	def start
 		cookies[:skip] = "false"
 	end

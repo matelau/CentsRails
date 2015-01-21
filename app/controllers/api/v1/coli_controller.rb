@@ -1,4 +1,7 @@
 class Api::V1::ColiController < ApplicationController
+
+	force_ssl
+	
 	# Retrieve all location data by location name.
 	def show
 		# Check for the required fields, and return an appropriate message if
