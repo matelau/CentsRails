@@ -85,9 +85,22 @@ function sketchProc(processing) {
 		data["taxes_2"] = [8.3, 2.59, 4.54, 1.59];
 		data["taxes_3"] = [8.25, 3.5, 7.8, 1.15];
 
-		//college comparisons
+		//college comparisons, tuition, grad rate, undergrad enrollment, natl ranking
 		data["school_1"] = [8000, 24, 32000, 40];
 		data["school_2"] = [5000, 50, 29000, 62];
+
+		//career salary data, 1997-2013, min, max
+		data["career_salary_1"] = [52000, 53500, 53000, 54500, 54500, 55500, 59000, 72000, 73500, 77000, 79000, 81000, 82000, 85000, 86000, 86500, 88000, 52000, 88000];
+		data["career_salary_2"] = [27000, 28000, 29000, 29250, 29500, 30000, 29500, 27750, 25500, 26000, 26250, 26500, 26500, 26500, 25750, 28000, 27250, 25500, 30000];
+		//career satisfaction
+		data["career_satisfaction_1"] = 4.8;
+		data["career_satisfaction_2"] = 2.9;
+		//demand
+		data["career_demand_1"] = [353200];
+		data["career_demand_2"] = [35500];
+		//unemployment
+		data["career_unemploy_1"] = [2.8];
+		data["career_unemploy_2"] = [4.5];
 
 	};
 
@@ -729,8 +742,6 @@ function sketchProc(processing) {
 			
 		}
 
-		
-
 
 		processing.fill(0);
 		processing.textAlign(processing.LEFT);
@@ -999,7 +1010,160 @@ function sketchProc(processing) {
 	function draw_career() {
 		document.getElementById("search_1_name").value = "software engineer";
 		document.getElementById("search_2_name").value = "music teacher";
-		//tab helper
+		//tab helper salary, job satisfaction, demand, unemployment
+		if (active_tab == 1)
+			career_summary();
+		else if (active_tab == 2)
+			career_salary();
+		else if (active_tab == 3)
+			career_demand();
+		else
+			career_unemploy();
+	};
+
+	function career_salary() {
+		//graph variables
+		var graph_top = 50; 
+		var graph_bot = 320;
+		var graph_left = 70;
+		var graph_right = 605;
+
+		//draw title and graph border
+		processing.strokeWeight(2);
+		processing.stroke(0);
+		processing.fill(0);
+		processing.textAlign(processing.CENTER);
+		processing.text("AVERAGE NATIONAL SALARIES ($)", 327, 30);
+
+		processing.line(graph_left, graph_top, graph_left, graph_bot-1);
+		processing.line(graph_left, graph_bot, graph_right, graph_bot);
+
+		//draw year labels and lines
+		processing.stroke(235);
+		processing.strokeWeight(1);
+		processing.text("1997", graph_left, graph_bot+20);
+		for (var i=1; i<17; i++)
+		{
+			var horz_loc = graph_left+i*((graph_right-graph_left)/16);
+			if (i%2 == 0)
+			{
+				processing.text(String(1997+i), horz_loc, graph_bot+20);
+			}
+			processing.line(horz_loc, graph_top+1, horz_loc, graph_bot-2);
+		}
+
+		//calculate min and max for data being shown [17] = min, [18] = max
+		var min, max;
+		if (!hide_1 && !hide_2)
+		{
+			min = processing.min(data["career_salary_1"][17], data["career_salary_2"][17]);
+			max = processing.max(data["career_salary_1"][18], data["career_salary_2"][18]);
+		}
+		else if (hide_1)
+		{
+			min = data["career_salary_2"][17];
+			max = data["career_salary_2"][18];
+		}
+		else
+		{
+			min = data["career_salary_1"][17];
+			max = data["career_salary_1"][18];
+		}
+
+		//draw lines and labels for salary range
+		min = ((processing.round(min/10000))-1)*10000;
+		max = ((processing.round(max/10000))+1)*10000;
+
+		var range = (max-min);
+		var step = range/10;
+
+
+		processing.textAlign(processing.RIGHT);
+
+		processing.text(String(processing.round((min)/1000))+"k", graph_left-10, graph_bot);
+		for (var i=1; i<=10; i++)
+		{
+			var vert_loc = graph_bot-i*((graph_bot-graph_top)/10);
+			processing.text(String(processing.round((min+i*step)/1000))+"k", graph_left-10, vert_loc+2);
+			processing.line(graph_left+1, vert_loc, graph_right, vert_loc);
+		}
+
+		//draw data
+		processing.strokeWeight(4);
+		for (var i=0; i<16; i++)
+		{
+			if (!hide_1)
+			{
+				processing.stroke(main);
+				var horz_1 = graph_left+i*((graph_right-graph_left)/16);
+				var horz_2 = graph_left+(i+1)*((graph_right-graph_left)/16);
+				var vert_1 = graph_top+(1-(data["career_salary_1"][i] - min)/(range))*(graph_bot-graph_top);
+				var vert_2 = graph_top+(1-(data["career_salary_1"][i+1] - min)/(range))*(graph_bot-graph_top);
+				processing.line(horz_1, vert_1, horz_2, vert_2);
+			}
+			if (!hide_2)
+			{
+				processing.stroke(gray);
+				var horz_1 = graph_left+i*((graph_right-graph_left)/16);
+				var horz_2 = graph_left+(i+1)*((graph_right-graph_left)/16);
+				var vert_1 = graph_top+(1-(data["career_salary_2"][i] - min)/(range))*(graph_bot-graph_top);
+				var vert_2 = graph_top+(1-(data["career_salary_2"][i+1] - min)/(range))*(graph_bot-graph_top);
+				processing.line(horz_1, vert_1, horz_2, vert_2);
+			}
+		}
+
+
+	};
+
+	function career_summary() {
+		//draw categories and separations
+		processing.textAlign(processing.RIGHT);
+		processing.fill(0);
+		processing.text("2013 AVERAGE SALARY", 275, 55);
+		processing.text("JOB SATISFACTION", 275, 135);
+		processing.text("PROJECTED JOB DEMAND 2012-2022", 275, 215);
+		processing.text("2012 UNEMPLOYMENT", 275, 295);
+		processing.stroke(225);
+		processing.strokeWeight(1);
+		processing.line(55, 93, 275, 93);
+		processing.line(55, 173, 275, 173);
+		processing.line(55, 253, 275, 253);
+		processing.textAlign(processing.CENTER);
+		processing.text("(CLICK TABS ON RIGHT FOR MORE DETAILS)", 330, 355);
+		//processing.stroke(0);
+		//processing.line(190, 340, 464, 340);
+
+		//draw data
+		//salary[16]
+		processing.textFont(font, 30);
+		processing.fill(main);
+		processing.text("$" + (data["career_salary_1"][16]).toLocaleString(), 400, 60);
+		processing.text("" + (data["career_satisfaction_1"]), 400, 130);
+		processing.text((data["career_demand_1"][0]).toLocaleString(), 400, 215);
+		processing.text((data["career_unemploy_1"][0]) + "%", 400, 300);
+
+		processing.fill(gray);
+		processing.text("$" + (data["career_salary_2"][16]).toLocaleString(), 560, 60);
+		processing.text("" + (data["career_satisfaction_2"]), 560, 130);
+		processing.text((data["career_demand_2"][0]).toLocaleString(), 560, 215);
+		processing.text((data["career_unemploy_2"][0]) + "%", 560, 300);
+
+		processing.textFont(font, 12);
+		processing.fill(main);
+		processing.text("OUT OF 5.0", 400, 150);
+		processing.text("JOBS", 400, 235);
+		processing.fill(gray);
+		processing.text("OUT OF 5.0", 560, 150);
+		processing.text("JOBS", 560, 235);
+
+	};
+
+	function career_demand() {
+
+	};
+
+	function career_unemploy() {
+
 	};
 
 	function draw_spend() {
