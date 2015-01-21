@@ -8,9 +8,9 @@ class User < ActiveRecord::Base
 
   # Ensure that the names are made of letters.
   validates :first_name, format: { with: /\A[a-zA-Z]+\z/,
-    message: 'First name must be letters' }
+    message: 'must be letters' }
   validates :last_name, format: { with: /\A[a-zA-Z]+\z/,
-  	message: 'Last name must be letters' }
+  	message: 'must be letters' }
 
   # Ensure that the email is unique.
   validates :email, uniqueness: true,
