@@ -22,5 +22,6 @@ module Cents
 
     # When users register, don't record their email address or password in the logs.
     config.filter_parameters += [:email, :password, :password_confirmation]
+    config.use_ssl = false
   end
 end

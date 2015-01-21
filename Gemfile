@@ -50,3 +50,5 @@ gem 'execjs'
 gem 'passenger' 
 
 gem 'rspec'
+
+gem 'thin'

@@ -6,7 +6,7 @@ class UserController < ApplicationController
       session[:user_id] = user.id
       redirect_to '/'
     else
-      redirect_to '/register'
+      redirect_to '/user/register'
     end
   end
 
