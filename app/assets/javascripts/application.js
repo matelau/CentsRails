@@ -66,8 +66,8 @@ function sketchProc(processing) {
 		{
 			data["weather_1"] =    [38.0, 44.0, 53.0, 61.0, 71.0, 82.0, 90.0, 89.0, 78.0, 65.0, 50.0, 40.0, 38.0, 90.0];
 			data["weatherlow_1"] = [26.0, 31.0, 38.0, 43.0, 52.0, 61.0, 69.0, 67.0, 58.0, 46.0, 36.0, 27.0, 26.0, 69.0];
-			data["weather_2"]    = [67.0, 71.5, 77.5, 85.5, 95.5, 104.5, 106.5, 104.5, 100.5, 89.5, 76.5, 66.5, 66.5, 106.5];
-			data["weatherlow_2"] = [46.0, 49.5, 53.5, 60.5, 69.5, 78.5, 83.5, 83.5, 77.5, 65.5, 53.5, 45.5, 45.5, 83.5];
+			data["weather_2"]    = [67.0, 71.0, 77.0, 85.0, 95.0, 104.0, 106.0, 104.0, 100.0, 89.0, 76.0, 66.0, 66.0, 106.0];
+			data["weatherlow_2"] = [46.0, 49.0, 53.0, 60.0, 69.0, 78.0, 83.0, 83.0, 77.0, 65.0, 53.0, 45.0, 45.0, 83.0];
 
 			data["location_1"] = "Salt Lake City, UT";
 			data["location_2"] = "Phoenix, AZ";
@@ -128,7 +128,7 @@ function sketchProc(processing) {
 		else;
 
 		//show cli details
-		if (type == "city" && active_tab == 1)
+		if (type == "city" && active_tab == 2)
 		{
 			var category = ["Overall, costs in", "Goods in", "Groceries in", "Health care costs in", "Housing costs in", "Transportation costs in", "Utilities in"];
 			for (var i=0; i<7; i++)
@@ -226,17 +226,94 @@ function sketchProc(processing) {
 	};
 
 	function draw_city() {
-		//tab helper 1-cost of living, 2-labor stats, 3-taxes, 4-weather
+		//tab helper 2-cost of living, 3-labor stats, 4-taxes, 5-weather
 		document.getElementById("search_1_name").value = data["location_1"];
 		document.getElementById("search_2_name").value = data["location_2"];
 		if (active_tab == 1)
-			cost_of_living();
+			city_summary();
 		else if (active_tab == 2)
-			labor_stats();
+			cost_of_living();
 		else if (active_tab == 3)
+			labor_stats();
+		else if (active_tab == 4)
 			taxes();
 		else
 			weather();
+	};
+
+	function city_summary() {
+		//draw categories and separations
+		processing.textAlign(processing.RIGHT);
+		processing.fill(0);
+		processing.text("AVERAGE COST OF LIVING", 235, 55);
+		processing.text("AVERAGE INCOME", 235, 135);
+		processing.text("INCOME TAX RANGE", 235, 215);
+		processing.text("AVERAGE TEMPERATURES", 235, 295);
+		processing.stroke(225);
+		processing.strokeWeight(1);
+		processing.line(65, 93, 235, 93);
+		processing.line(65, 173, 235, 173);
+		processing.line(65, 253, 235, 253);
+		processing.textAlign(processing.CENTER);
+		processing.text("(CLICK TABS ON RIGHT FOR MORE DETAILS)", 330, 355);
+
+		//draw data
+		processing.textFont(font, 30);
+		processing.fill(main);
+		var c1 = data["cli_1"][0] - 100;
+		var percent1 = "";
+		if (c1 < 0)
+		{
+			c1 = c1 * -1;
+			percent1 = "BELOW";
+		}
+		else
+			percent1 = "ABOVE";
+
+		processing.text(c1 + "%", 360, 50);
+		processing.text("$" + (data["labor_1"][1]).toLocaleString(), 360, 140);
+		if (data["taxes_1"][1] == data["taxes_1"][2])
+			processing.text(data["taxes_1"][1] + "%", 360, 218);
+		else
+		{
+			processing.textFont(font, 24);
+			processing.text(data["taxes_1"][1] + "%-" + data["taxes_1"][2] + "%", 360, 215);
+			processing.textFont(font, 30);
+		}
+		processing.text(data["weatherlow_1"][12] + "°- " + data["weather_1"][13] + "°", 360, 295);
+		
+
+		processing.fill(gray);
+		var c2 = data["cli_2"][0] - 100;
+		var percent2 = "";
+		if (c2 < 0)
+		{
+			c2 = c2 * -1;
+			percent2 = "BELOW";
+		}
+		else
+			percent2 = "ABOVE";
+
+		processing.text(c2 + "%", 540, 50);
+		processing.text("$" + (data["labor_2"][1]).toLocaleString(), 540, 140);
+		if (data["taxes_2"][1] == data["taxes_2"][2])
+			processing.text(data["taxes_2"][1] + "%", 540, 218);
+		else
+		{
+			processing.textFont(font, 24);
+			processing.text(data["taxes_2"][1] + "%-" + data["taxes_2"][2] + "%", 540, 215);
+			processing.textFont(font, 30);
+		}
+		processing.text(data["weatherlow_2"][12] + "°- " + data["weather_2"][13] + "°", 540, 295);
+
+		processing.textFont(font, 12);
+		processing.fill(main);
+		processing.text(percent1 + " NATIONAL", 360, 70);
+		processing.text("AVERAGE", 360, 85);
+		processing.fill(gray);
+		processing.text(percent2 + " NATIONAL", 540, 70);
+		processing.text("AVERAGE", 540, 85);
+
 	};
 
 	function cost_of_living() {
@@ -415,6 +492,7 @@ function sketchProc(processing) {
 		//draw labels
 		processing.textAlign(processing.CENTER);
 		processing.stroke(0);
+		processing.strokeWeight(2);
 		processing.fill(0);
 		processing.text("UNEMPLOYMENT RATE", axis_location[0], graph_bot+23);
 		processing.text("AVERAGE SALARY", axis_location[2], graph_bot+23);
@@ -553,6 +631,7 @@ function sketchProc(processing) {
 
 		processing.textAlign(processing.CENTER);
 		processing.stroke(0);
+		processing.strokeWeight(2);
 		processing.fill(0);
 		processing.text("SALES TAX", axis_location[0], graph_bot+15);
 		processing.text("-INCOME TAX-", (axis_location[2]+axis_location[1])/2, graph_bot+15);
@@ -1120,7 +1199,7 @@ function sketchProc(processing) {
 		processing.textAlign(processing.RIGHT);
 		processing.fill(0);
 		processing.text("2013 AVERAGE SALARY", 275, 55);
-		processing.text("JOB SATISFACTION", 275, 135);
+		processing.text("CENTS JOB RATING", 275, 135);
 		processing.text("PROJECTED JOB DEMAND 2012-2022", 275, 215);
 		processing.text("2012 UNEMPLOYMENT", 275, 295);
 		processing.stroke(225);
