@@ -74,9 +74,9 @@ Rails.application.routes.draw do
   #   end
   namespace :api do
     namespace :v1 do
-			get  'coli/' => 'coli#index'
-      post 'coli/' => 'coli#show'
+      post 'coli' => 'coli#show'
       post 'register' => 'register#create'
+      post 'login' => 'login#create'
     end
   end
 end
