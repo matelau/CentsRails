@@ -4,31 +4,31 @@ class Api::V1::ColiController < ApplicationController
 	
 	# Retrieve all location data by location name.
 	def show
+		result = Hash.new
+  	error_list = []
+
 		# Check for the required fields, and return an appropriate message if
 		# they are not present.
 		unless params[:search_by].present?
-			message = {'error' => 
-				'The search_by field was missing. Don\'t forget the underscore.'}
-			return render json: message, status: 400
+			error_list.append 'The search_by field was missing. Don\'t forget the underscore.'
 		end
 
 		unless params[:objects].present?
-			message = {'error' => 'No objects were in the objects array.'}
-			return render json: message, status: 400
+			error_list.append 'No objects were in the objects array.'
 		end
 
 		unless params[:operation].present?
-			message = {'error' => 'The operation field was empty.'}
-			return render json: message, status: 400
+			error_list.append 'The operation field was empty.'
+		end
+
+		unless error_list.empty?
+			result[:errors] = error_list
+			return render json: result, status: 400
 		end
 
 		# The column we're searching over. Currently this is always 'location',
 		# but it could change.
 		column = params[:search_by]
-
-		# A hash that stores the results. This will be converted into a JSON
-		# object.
-		result = Hash.new
 
 		lookup = Hash.new
 
@@ -69,8 +69,6 @@ class Api::V1::ColiController < ApplicationController
 								:low)
 						.where([where_string, *locations])
 						.order('colis.id ASC')	
-
-		#result[:test] = records
 
 		locations.each do |location|
 			records.each do |record|

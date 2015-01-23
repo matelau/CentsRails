@@ -77,6 +77,7 @@ Rails.application.routes.draw do
       post 'coli' => 'coli#show'
       post 'register' => 'register#create'
       post 'login' => 'login#create'
+      post 'logout' => 'logout#destroy'
     end
   end
 end
