@@ -1,11 +1,9 @@
 class Api::V1::ColiController < ApplicationController
-
-	force_ssl
 	
 	# Retrieve all location data by location name.
 	def show
 		result = Hash.new
-  	error_list = []
+		error_list = []
 
 		# Check for the required fields, and return an appropriate message if
 		# they are not present.
@@ -164,7 +162,7 @@ class Api::V1::ColiController < ApplicationController
 
 			##### -------------------- WEATHER ------------------- #####
 			weather_high_stats = Array.new
- 			weather_low_stats = Array.new
+			weather_low_stats = Array.new
 
 			records.each do |record|
 				if record[:location] == location then
