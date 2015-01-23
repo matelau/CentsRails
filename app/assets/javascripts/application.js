@@ -99,8 +99,9 @@ function sketchProc(processing) {
 		data["career_demand_1"] = [353200];
 		data["career_demand_2"] = [35500];
 		//unemployment
-		data["career_unemploy_1"] = [2.8];
-		data["career_unemploy_2"] = [4.5];
+		data["career_unemploy_1"] = [2.8, 2.8];
+		data["career_unemploy_2"] = [4.1, 4.5];
+		data["career_unemploy_3"] = [3.2, 3.4];
 
 	};
 
@@ -1242,6 +1243,125 @@ function sketchProc(processing) {
 	};
 
 	function career_unemploy() {
+
+		var graph_top = 50; 
+		var graph_bot = 320;
+		var graph_left = 60;
+		var graph_right = 620;
+		axis_location = [150, 530];
+
+		//draw labels
+		processing.textAlign(processing.CENTER);
+		processing.stroke(0);
+		processing.strokeWeight(2);
+		processing.fill(0);
+		processing.text("UNEMPLOYMENT RATE 2011", axis_location[0], graph_bot+23);
+		processing.text("UNEMPLOYMENT RATE 2012", axis_location[1], graph_bot+23);
+		processing.text("CAREER UNEMPLOYMENT RATES", 335, 30);
+
+		//left and right axis
+		processing.line(graph_left, graph_top, graph_left, graph_bot);
+		processing.line(graph_right, graph_top, graph_right, graph_bot);
+
+		//bottom lines around categories
+		processing.line(graph_left, graph_bot+1, graph_right-1, graph_bot+1);
+
+		//need max for percentages
+		var min, max;
+		if (hide_2 && !hide_1)
+		{
+			min = processing.min(data["career_unemploy_1"][0], data["career_unemploy_1"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
+			max = processing.max(data["career_unemploy_1"][0], data["career_unemploy_1"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
+			min = min * 0.9;
+			max = max * 1.05;
+		}
+		else if (!hide_2 && hide_1)
+		{
+			min = processing.min(data["career_unemploy_2"][0], data["career_unemploy_2"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
+			max = processing.max(data["career_unemploy_2"][0], data["career_unemploy_2"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
+			min = min * 0.9;
+			max = max * 1.05;
+		}
+		else
+		{
+			min = processing.min(data["career_unemploy_1"][0], data["career_unemploy_1"][1], data["career_unemploy_2"][0], data["career_unemploy_2"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
+			max = processing.max(data["career_unemploy_1"][0], data["career_unemploy_1"][1], data["career_unemploy_2"][0], data["career_unemploy_2"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
+			min = min * 0.9;
+			max = max * 1.05;
+		}
+
+		//draw scales
+		processing.stroke(245);
+		processing.fill(0);
+		var range = (graph_top - graph_bot)/10;
+		var per_scale = (max - min)/10;
+		for (var i=1; i<=10; i++)
+		{
+			var h = graph_bot + range * i;
+			processing.line(graph_left+2, h, graph_right-3, h);
+			processing.textAlign(processing.RIGHT);
+			processing.text((min + per_scale * i).toFixed(1) + "%", graph_left-5, h+5);
+		}
+		//bottom value
+		processing.text((min).toFixed(1) + "%", graph_left-5, graph_bot);
+
+
+		
+
+		// //draw NATIONAL AVERAGE rectangle and data
+		processing.stroke(0);
+		var line_1 = graph_bot + (graph_top - graph_bot)*((data["career_unemploy_3"][0] -  min)/(max - min));
+		var line_2 = graph_bot + (graph_top - graph_bot)*((data["career_unemploy_3"][1] -  min)/(max - min));
+		
+		processing.line(graph_left, line_1, axis_location[0]+70, line_1);
+		processing.line(axis_location[0]+71, line_1, axis_location[1]-71, line_2);
+		processing.line(axis_location[1]-70, line_2, graph_right-1, line_2);
+
+		processing.fill(255);
+		processing.stroke(255);
+		processing.rect((axis_location[0]+axis_location[1])/2-40, (line_1+line_2)/2-30, 77, 50)
+		processing.noStroke();
+		processing.fill(0);
+		processing.textAlign(processing.CENTER);
+		processing.text("NATIONAL", (axis_location[0]+axis_location[1])/2, (line_1+line_2)/2-9);
+		processing.text("AVERAGES", (axis_location[0]+axis_location[1])/2, (line_1+line_2)/2+8);
+
+		var height_1 = (graph_top - graph_bot)*((data["career_unemploy_1"][0] -  min)/(max - min));
+		var height_2 = (graph_top - graph_bot)*((data["career_unemploy_1"][1] -  min)/(max - min));
+		var height_3 = (graph_top - graph_bot)*((data["career_unemploy_2"][0] -  min)/(max - min));
+		var height_4 = (graph_top - graph_bot)*((data["career_unemploy_2"][1] -  min)/(max - min));
+
+
+		//buffer boxes
+		if (!hide_1)
+		{
+			processing.fill(255);
+			processing.rect(axis_location[0]-35, graph_bot, 40, height_1);
+			processing.rect(axis_location[1]-35, graph_bot, 40, height_2);
+		}
+
+		if (!hide_2)
+		{
+			processing.fill(255);
+			processing.rect(axis_location[0]-5, graph_bot, 40, height_3);
+			processing.rect(axis_location[1]-5, graph_bot, 40, height_4);
+		}
+		//data
+		if (!hide_1)
+		{
+			processing.fill(main);
+			processing.noStroke();
+			processing.rect(axis_location[0]-30, graph_bot, 30, height_1);
+			processing.rect(axis_location[1]-30, graph_bot, 30, height_2);
+		}
+
+		if (!hide_2)
+		{
+			processing.fill(gray);
+			processing.noStroke();
+			processing.rect(axis_location[0], graph_bot, 30, height_3);
+			processing.rect(axis_location[1], graph_bot, 30, height_4);	
+		}
 
 	};
 
