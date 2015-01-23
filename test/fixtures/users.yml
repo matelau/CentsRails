@@ -17,3 +17,12 @@ two:
   first_name: MyString
   last_name: MyString
   password_digest: MyString
+
+three:
+  debt: 33
+  books: 33
+  savings: 34
+  email: testperson3@gmail.com
+  first_name: Albert
+  last_name: Aldridge
+  password_digest: MyString
