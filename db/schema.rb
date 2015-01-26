@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150121222742) do
+ActiveRecord::Schema.define(version: 20150125235655) do
 
   create_table "careers", force: true do |t|
     t.float    "projected_employment", limit: 24
@@ -101,6 +101,16 @@ ActiveRecord::Schema.define(version: 20150121222742) do
     t.boolean  "public"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "to_be_validated_users", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "password_digest"
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "confirmation_code"
   end
 
   create_table "top_jobs", force: true do |t|
