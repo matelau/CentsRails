@@ -12,11 +12,13 @@ Rails.application.routes.draw do
   get 'wizard/spending'
   get 'user/profile'
   get 'user/register'
-  get 'user/confirm'
-  post 'user/register' => 'to_be_validated_users#create'
+  get 'user/registered'
+  post 'user/register' => 'user#create'
   get 'user/login' => 'sessions#new'
   post 'user/login' => 'sessions#create'
   get 'user/logout' => 'sessions#destroy'
+  get 'user/confirm' => 'to_be_validated_users#confirm'
+  get 'user/confirmed'
   root 'search#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -79,6 +81,7 @@ Rails.application.routes.draw do
       post 'register' => 'register#create'
       post 'login' => 'login#create'
       post 'logout' => 'logout#destroy'
+      post 'confirm' => 'confirm#show'
     end
   end
 end

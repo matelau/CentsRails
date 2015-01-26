@@ -31,6 +31,9 @@ ActiveRecord::Schema.define(version: 20150125235655) do
     t.datetime "created_at"
     t.datetime "updated_at"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> feature/S-01063
     t.float    "unemp_rate",        limit: 24
     t.float    "unemp_trend",       limit: 24
     t.float    "sales_tax",         limit: 24
@@ -39,6 +42,7 @@ ActiveRecord::Schema.define(version: 20150125235655) do
     t.float    "income_tax_max",    limit: 24
     t.float    "income_tax_min",    limit: 24
     t.float    "income_per_capita", limit: 24
+<<<<<<< HEAD
 =======
     t.float    "unemp_rate",     limit: 24
     t.float    "unemp_trend",    limit: 24
@@ -48,6 +52,8 @@ ActiveRecord::Schema.define(version: 20150125235655) do
     t.float    "property_tax",   limit: 24
     t.string   "state"
 >>>>>>> fd4db8cf66ebf4ba6c1b2dc1401ef092fb708f14
+=======
+>>>>>>> feature/S-01063
   end
 
   create_table "completeds", force: true do |t|
@@ -120,7 +126,10 @@ ActiveRecord::Schema.define(version: 20150125235655) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
+<<<<<<< HEAD
     t.string   "confirmation_code"
+=======
+>>>>>>> feature/S-01063
   end
 
   create_table "top_jobs", force: true do |t|
