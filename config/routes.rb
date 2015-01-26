@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'wizard/spending'
   get 'user/profile'
   get 'user/register'
+  get 'user/confirm'
   post 'user/register' => 'to_be_validated_users#create'
   get 'user/login' => 'sessions#new'
   post 'user/login' => 'sessions#create'
