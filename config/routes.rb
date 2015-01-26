@@ -12,6 +12,10 @@ Rails.application.routes.draw do
   get 'wizard/spending'
   get 'user/profile'
   get 'user/register'
+  post 'user/register' => 'user#create'
+  get 'user/login' => 'sessions#new'
+  post 'user/login' => 'sessions#create'
+  get 'user/logout' => 'sessions#destroy'
   root 'search#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -70,8 +74,10 @@ Rails.application.routes.draw do
   #   end
   namespace :api do
     namespace :v1 do
-			get  'coli/' => 'coli#index'
-      post 'coli/' => 'coli#show'
+      post 'coli' => 'coli#show'
+      post 'register' => 'register#create'
+      post 'login' => 'login#create'
+      post 'logout' => 'logout#destroy'
     end
   end
 end

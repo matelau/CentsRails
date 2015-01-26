@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  salary: 1.5
+  unemployment: 1.5
+  in_field: false
+  name: MyString
+
+two:
+  salary: 1.5
+  unemployment: 1.5
+  in_field: false
+  name: MyString
