@@ -15,10 +15,15 @@ class Api::V1::ConfirmController < ApplicationController
 		end
 
 		# Search for the user.
-		to_be_validated_user = ToBeValidatedUser.find_by_confirmation_code(params[:confirmation_code])
+		tbvu = ToBeValidatedUser.find_by_confirmation_code(params[:confirmation_code])
+		user = User.new({ first_name: tbvu.first_name, 
+											last_name: tbvu.last_name, 
+											email: tbvu.email, 
+											password_digest: tbvu.password_digest})
 
 		# Try to save the user.
-		if user && user.authenticate(params[:password])
+		if user.save
+			tbvu.destroy
 			return render json: result, status: 200
 		else
 			error_list.append "authentication failed"
