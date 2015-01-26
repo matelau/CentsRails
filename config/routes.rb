@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'wizard/spending'
   get 'user/profile'
   get 'user/register'
+  get 'user/registered'
   post 'user/register' => 'user#create'
   get 'user/login' => 'sessions#new'
   post 'user/login' => 'sessions#create'
