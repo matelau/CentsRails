@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20150125235655) do
     t.string   "location"
     t.datetime "created_at"
     t.datetime "updated_at"
+<<<<<<< HEAD
     t.float    "unemp_rate",        limit: 24
     t.float    "unemp_trend",       limit: 24
     t.float    "sales_tax",         limit: 24
@@ -38,6 +39,15 @@ ActiveRecord::Schema.define(version: 20150125235655) do
     t.float    "income_tax_max",    limit: 24
     t.float    "income_tax_min",    limit: 24
     t.float    "income_per_capita", limit: 24
+=======
+    t.float    "unemp_rate",     limit: 24
+    t.float    "unemp_trend",    limit: 24
+    t.float    "income",         limit: 24
+    t.float    "income_tax",     limit: 24
+    t.float    "sales_tax",      limit: 24
+    t.float    "property_tax",   limit: 24
+    t.string   "state"
+>>>>>>> fd4db8cf66ebf4ba6c1b2dc1401ef092fb708f14
   end
 
   create_table "completeds", force: true do |t|

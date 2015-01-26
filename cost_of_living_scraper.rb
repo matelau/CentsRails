@@ -3,6 +3,8 @@ require 'open-uri'
 require 'json'
 require 'pathname'
 require 'yaml'
+require 'csv'
+
 ENV['RAILS_ENV'] = "development" # Set to your desired Rails environment name
 require '~/Documents/dev/CentsRails/config/environment.rb'
 
@@ -24,11 +26,32 @@ class CostOfLivingScraper
 		####### !!!!!!!!!!!!!!
 		####### !!!!!!!!!!!!!!
 		####### !!!!!!!!!!!!!!
+		areas = []
+		states = {}
+		citi = File.read("query_service/cities.txt")
+		areas = citi.split("\r")
+
+		arr = CSV::parse(File.open("query_service/states.csv", 'r') {|f| f.read})
+		arr.shift
+		arr.each {|k,v| states[k.downcase] = v.downcase}
+
 
 		# TODO update to collect data on multiple cities in a less formal matter
-		areas = ["phoenix-az" , "tucson-az" , "mesa-az", "los+angeles-ca", "san+francisco-ca", "san+jose-ca", "san+diego-ca", "sacramento-ca", "denver-co", "colorado+springs-co", "aurora-co","washington-dc", "fort+lauderdale-fl", "jacksonville-fl", "miami-fl", "tampa-fl", "chicago-il", "aurora-il", "indianapolis-in", "boston-ma", "detroit-mi", "columbus-oh", "charlotte-nc", "new+york-ny", "oyster+bay-ny", "buffalo-ny", "philadelphia-pa", "memphis-tn", "nashville-tn", "austin-tx","el+paso-tx", "fort+worth-tx", "houston-tx", "san+antonio-tx", "dallas-tx", "seattle-wa", "spokane-wa", "tacoma-wa", "vancouver-wa", "madison-wi", "milwaukee-wi", "green+bay-wi", "salt+lake+city-ut", "west+valley+city-ut", "provo-ut"]
+		#areas = ["phoenix-az" , "tucson-az" , "mesa-az", "los+angeles-ca", "san+francisco-ca", "san+jose-ca", "san+diego-ca", "sacramento-ca", "denver-co", "colorado+springs-co", "aurora-co","washington-dc", "fort+lauderdale-fl", "jacksonville-fl", "miami-fl", "tampa-fl", "chicago-il", "aurora-il", "indianapolis-in", "boston-ma", "detroit-mi", "columbus-oh", "charlotte-nc", "new+york-ny", "oyster+bay-ny", "buffalo-ny", "philadelphia-pa", "memphis-tn", "nashville-tn", "austin-tx","el+paso-tx", "fort+worth-tx", "houston-tx", "san+antonio-tx", "dallas-tx", "seattle-wa", "spokane-wa", "tacoma-wa", "vancouver-wa", "madison-wi", "milwaukee-wi", "green+bay-wi", "salt+lake+city-ut", "west+valley+city-ut", "provo-ut"]
 		#------------------------- Cost of Living data ------------------------------
 		areas.each do |area|
+			area.downcase!
+
+			states.each do |abbr, st|
+				if (area.include? ", #{st}")
+					area.gsub!(", #{st}", ", #{abbr}")
+					break
+				end
+			end
+
+			area.gsub! "\, ", "-"
+			area.gsub! " ", "+"
+
 			# Test Script used to play with nokogiri - pulls cost of living data from areavibes.com
 			url = "http://www.areavibes.com//cost-of-living/"
 			url.insert(25,area)
@@ -49,7 +72,7 @@ class CostOfLivingScraper
 			state = table.css('th')[2].text
 			city = table.css('th')[1].text
 
-			columns = ["cost_of_living", "goods", "groceries", "health_care", "housing", "transportation", "utilities" ]
+			columns = ["cost_of_living", "goods", "groceries", "health_care", "housing", "transportation", "utilities", "state"]
 
 			values = Array.new
 			state_values = Array.new
@@ -66,6 +89,8 @@ class CostOfLivingScraper
 					state_values.push str2.text.strip
 				end
 			end
+
+			values.push(state)
 
 			# TODO research map! and flatten to map vals
 			# map city vals to columns
@@ -189,7 +214,8 @@ class CostOfLivingScraper
 				housing = loc_data[columns[4]]
 				trans = loc_data[columns[5]]
 				util = loc_data[columns[6]]
-				Coli.find_or_create_by(cost_of_living: col, transportation: trans, groceries: groc, goods: goods, health_care: hc, utilities: util, location: curr_loc, housing: housing)
+				st = loc_data[columns[7]]
+				Coli.find_or_create_by(location: curr_loc, state: st).update(cost_of_living: col, transportation: trans, groceries: groc, goods: goods, health_care: hc, utilities: util, housing: housing)
 			end
 
 
@@ -212,7 +238,7 @@ class CostOfLivingScraper
 						min = arr_vals[0]
 						max = arr_vals[1]
 						avg = arr_vals[2]
-						WeatherRecord.find_or_create_by(high: max, low: min, average: avg, coli_id: id, month: curr_month)
+						WeatherRecord.find_or_create_by(coli_id: id, high: max, low: min, average: avg, month: curr_month)
 					end
 				end
 			end

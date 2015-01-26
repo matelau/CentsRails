@@ -19,7 +19,7 @@
 
 
 
-var active_tab, type, data, hide_1, hide_2, axis_location, horz_locs, min, max, above_1, above_2, below_1, below_2;
+var active_tab, type, data, hide_1, hide_2, axis_location, horz_locs, min, max, above_1, above_2, below_1, below_2, font;
 
 
 var sketch = new Processing.Sketch();
@@ -42,7 +42,7 @@ function sketchProc(processing) {
 		
 
 		//load font
-		var font = processing.loadFont("./fonts/Roboto-Regular.ttf");
+		font = processing.loadFont("./fonts/Roboto-Regular.ttf");
 		processing.textFont(font, 12);
 
 		//var to hold all data relevant to a given category
@@ -66,8 +66,8 @@ function sketchProc(processing) {
 		{
 			data["weather_1"] =    [38.0, 44.0, 53.0, 61.0, 71.0, 82.0, 90.0, 89.0, 78.0, 65.0, 50.0, 40.0, 38.0, 90.0];
 			data["weatherlow_1"] = [26.0, 31.0, 38.0, 43.0, 52.0, 61.0, 69.0, 67.0, 58.0, 46.0, 36.0, 27.0, 26.0, 69.0];
-			data["weather_2"]    = [67.0, 71.5, 77.5, 85.5, 95.5, 104.5, 106.5, 104.5, 100.5, 89.5, 76.5, 66.5, 66.5, 106.5];
-			data["weatherlow_2"] = [46.0, 49.5, 53.5, 60.5, 69.5, 78.5, 83.5, 83.5, 77.5, 65.5, 53.5, 45.5, 45.5, 83.5];
+			data["weather_2"]    = [67.0, 71.0, 77.0, 85.0, 95.0, 104.0, 106.0, 104.0, 100.0, 89.0, 76.0, 66.0, 66.0, 106.0];
+			data["weatherlow_2"] = [46.0, 49.0, 53.0, 60.0, 69.0, 78.0, 83.0, 83.0, 77.0, 65.0, 53.0, 45.0, 45.0, 83.0];
 
 			data["location_1"] = "Salt Lake City, UT";
 			data["location_2"] = "Phoenix, AZ";
@@ -84,6 +84,24 @@ function sketchProc(processing) {
 		data["taxes_1"] = [6.85, 5.0, 5.0, 0.67];
 		data["taxes_2"] = [8.3, 2.59, 4.54, 1.59];
 		data["taxes_3"] = [8.25, 3.5, 7.8, 1.15];
+
+		//college comparisons, tuition, grad rate, undergrad enrollment, natl ranking
+		data["school_1"] = [8000, 24, 32000, 40];
+		data["school_2"] = [5000, 50, 29000, 62];
+
+		//career salary data, 1997-2013, min, max
+		data["career_salary_1"] = [52000, 53500, 53000, 54500, 54500, 55500, 59000, 72000, 73500, 77000, 79000, 81000, 82000, 85000, 86000, 86500, 88000, 52000, 88000];
+		data["career_salary_2"] = [27000, 28000, 29000, 29250, 29500, 30000, 29500, 27750, 25500, 26000, 26250, 26500, 26500, 26500, 25750, 28000, 27250, 25500, 30000];
+		//career satisfaction
+		data["career_satisfaction_1"] = 4.8;
+		data["career_satisfaction_2"] = 2.9;
+		//demand
+		data["career_demand_1"] = [353200];
+		data["career_demand_2"] = [35500];
+		//unemployment
+		data["career_unemploy_1"] = [2.8, 2.8];
+		data["career_unemploy_2"] = [4.1, 4.5];
+		data["career_unemploy_3"] = [3.2, 3.4];
 
 	};
 
@@ -111,7 +129,7 @@ function sketchProc(processing) {
 		else;
 
 		//show cli details
-		if (type == "city" && active_tab == 1)
+		if (type == "city" && active_tab == 2)
 		{
 			var category = ["Overall, costs in", "Goods in", "Groceries in", "Health care costs in", "Housing costs in", "Transportation costs in", "Utilities in"];
 			for (var i=0; i<7; i++)
@@ -209,17 +227,94 @@ function sketchProc(processing) {
 	};
 
 	function draw_city() {
-		//tab helper 1-cost of living, 2-labor stats, 3-taxes, 4-weather
+		//tab helper 2-cost of living, 3-labor stats, 4-taxes, 5-weather
 		document.getElementById("search_1_name").value = data["location_1"];
 		document.getElementById("search_2_name").value = data["location_2"];
 		if (active_tab == 1)
-			cost_of_living();
+			city_summary();
 		else if (active_tab == 2)
-			labor_stats();
+			cost_of_living();
 		else if (active_tab == 3)
+			labor_stats();
+		else if (active_tab == 4)
 			taxes();
 		else
 			weather();
+	};
+
+	function city_summary() {
+		//draw categories and separations
+		processing.textAlign(processing.RIGHT);
+		processing.fill(0);
+		processing.text("AVERAGE COST OF LIVING", 235, 55);
+		processing.text("AVERAGE INCOME", 235, 135);
+		processing.text("INCOME TAX RANGE", 235, 215);
+		processing.text("AVERAGE TEMPERATURES", 235, 295);
+		processing.stroke(225);
+		processing.strokeWeight(1);
+		processing.line(65, 93, 235, 93);
+		processing.line(65, 173, 235, 173);
+		processing.line(65, 253, 235, 253);
+		processing.textAlign(processing.CENTER);
+		processing.text("(CLICK TABS ON RIGHT FOR MORE DETAILS)", 330, 355);
+
+		//draw data
+		processing.textFont(font, 30);
+		processing.fill(main);
+		var c1 = data["cli_1"][0] - 100;
+		var percent1 = "";
+		if (c1 < 0)
+		{
+			c1 = c1 * -1;
+			percent1 = "BELOW";
+		}
+		else
+			percent1 = "ABOVE";
+
+		processing.text(c1 + "%", 360, 50);
+		processing.text("$" + (data["labor_1"][1]).toLocaleString(), 360, 140);
+		if (data["taxes_1"][1] == data["taxes_1"][2])
+			processing.text(data["taxes_1"][1] + "%", 360, 218);
+		else
+		{
+			processing.textFont(font, 24);
+			processing.text(data["taxes_1"][1] + "%-" + data["taxes_1"][2] + "%", 360, 215);
+			processing.textFont(font, 30);
+		}
+		processing.text(data["weatherlow_1"][12] + "°- " + data["weather_1"][13] + "°", 360, 295);
+		
+
+		processing.fill(gray);
+		var c2 = data["cli_2"][0] - 100;
+		var percent2 = "";
+		if (c2 < 0)
+		{
+			c2 = c2 * -1;
+			percent2 = "BELOW";
+		}
+		else
+			percent2 = "ABOVE";
+
+		processing.text(c2 + "%", 540, 50);
+		processing.text("$" + (data["labor_2"][1]).toLocaleString(), 540, 140);
+		if (data["taxes_2"][1] == data["taxes_2"][2])
+			processing.text(data["taxes_2"][1] + "%", 540, 218);
+		else
+		{
+			processing.textFont(font, 24);
+			processing.text(data["taxes_2"][1] + "%-" + data["taxes_2"][2] + "%", 540, 215);
+			processing.textFont(font, 30);
+		}
+		processing.text(data["weatherlow_2"][12] + "°- " + data["weather_2"][13] + "°", 540, 295);
+
+		processing.textFont(font, 12);
+		processing.fill(main);
+		processing.text(percent1 + " NATIONAL", 360, 70);
+		processing.text("AVERAGE", 360, 85);
+		processing.fill(gray);
+		processing.text(percent2 + " NATIONAL", 540, 70);
+		processing.text("AVERAGE", 540, 85);
+
 	};
 
 	function cost_of_living() {
@@ -398,6 +493,7 @@ function sketchProc(processing) {
 		//draw labels
 		processing.textAlign(processing.CENTER);
 		processing.stroke(0);
+		processing.strokeWeight(2);
 		processing.fill(0);
 		processing.text("UNEMPLOYMENT RATE", axis_location[0], graph_bot+23);
 		processing.text("AVERAGE SALARY", axis_location[2], graph_bot+23);
@@ -536,6 +632,7 @@ function sketchProc(processing) {
 
 		processing.textAlign(processing.CENTER);
 		processing.stroke(0);
+		processing.strokeWeight(2);
 		processing.fill(0);
 		processing.text("SALES TAX", axis_location[0], graph_bot+15);
 		processing.text("-INCOME TAX-", (axis_location[2]+axis_location[1])/2, graph_bot+15);
@@ -725,8 +822,6 @@ function sketchProc(processing) {
 			
 		}
 
-		
-
 
 		processing.fill(0);
 		processing.textAlign(processing.LEFT);
@@ -809,13 +904,465 @@ function sketchProc(processing) {
 	function draw_college() {
 		document.getElementById("search_1_name").value = "University of Utah";
 		document.getElementById("search_2_name").value = "BYU";
-		//tab helper
+
+		var tuition_max = 30000;
+		var grad_max = 100;
+		var size_max = 60000;
+		//var rank_max = 220;
+
+		if (data["school_1"][0] > 30000 || data["school_2"][0] > 30000)
+			tuition_max = 60000;
+
+		//temp divider line
+		processing.strokeWeight(1);
+		processing.stroke(235);
+		processing.line(30, 187, 625, 187);
+		processing.line(327, 40, 327, 335);
+
+		//top and bottom labels and lines
+		processing.strokeWeight(2);
+		processing.stroke(0);
+		processing.line(30, 20, 625, 20);
+		processing.line(30, 40, 625, 40);
+		processing.line(30, 355, 625, 355);
+		processing.line(30, 335, 625, 335);
+		processing.fill(0);
+		processing.textAlign(processing.CENTER);
+		processing.text("YEARLY TUITION ($)", 175, 35);
+		processing.text("UNDERGRAD ENROLLMENT", 480, 35);
+		processing.text("GRADUATION RATE", 175, 350);
+		processing.text("NATIONAL RANKING", 480, 350);
+
+
+		//draw graphs
+		//yearly tuition graph outline and scale
+		processing.line(40, 75, 300, 75);
+		processing.line(40, 165, 300, 165);
+		processing.line(40, 75, 40, 164);
+		if (tuition_max == 60000)
+		{
+			processing.text("0", 40, 70);
+			processing.text("10k", 82, 70);
+			processing.text("20k", 126, 70);
+			processing.text("30k", 169, 70);
+			processing.text("40k", 212, 70);
+			processing.text("50k", 255, 70);
+			processing.text("60k", 300, 70);
+		}
+		else 
+		{
+			processing.text("0", 40, 70);
+			processing.text("5k", 82, 70);
+			processing.text("10k", 126, 70);
+			processing.text("15k", 169, 70);
+			processing.text("20k", 212, 70);
+			processing.text("25k", 255, 70);
+			processing.text("30k", 300, 70);
+		}
+		//undergrad enrollment
+		processing.line(355, 75, 615, 75);
+		processing.line(355, 165, 615, 165);
+		processing.line(355, 75, 355, 164);
+		processing.text("0", 355, 70);
+		processing.text("10k", 398, 70);
+		processing.text("20k", 441, 70);
+		processing.text("30k", 484, 70);
+		processing.text("40k", 527, 70);
+		processing.text("50k", 570, 70);
+		processing.text("60k", 613, 70);
+		//grad rate
+		processing.line(40, 210, 300, 210);
+		processing.line(40, 300, 300, 300);
+		processing.line(40, 210, 40, 299);
+		processing.text("0", 40, 315);
+		processing.text("25%", 105, 315);
+		processing.text("50%", 170, 315);
+		processing.text("75%", 235, 315);
+		processing.text("100%", 300, 315);
+
+		//all gray lines
+		processing.stroke(235);
+		processing.strokeWeight(1);
+		//tuition
+		processing.line(82, 76, 82, 163);
+		processing.line(126, 76, 126, 163);
+		processing.line(169, 76, 169, 163);
+		processing.line(212, 76, 212, 163);
+		processing.line(255, 76, 255, 163);
+		processing.line(300, 76, 300, 163);
+		//enroll
+		processing.line(398, 76, 398, 163);
+		processing.line(441, 76, 441, 163);
+		processing.line(484, 76, 484, 163);
+		processing.line(527, 76, 527, 163);
+		processing.line(570, 76, 570, 163);
+		processing.line(613, 76, 613, 163);
+		//grad
+		processing.line(105, 211, 105, 298);
+		processing.line(170, 211, 170, 298);
+		processing.line(235, 211, 235, 298);
+		processing.line(300, 211, 300, 298);
+
+		//draw data
+		processing.noStroke();
+		if (!hide_1)
+		{
+			processing.fill(main);
+			processing.rect(41, 95, data["school_1"][0]/tuition_max * 260, 25);
+			processing.rect(41, 230, data["school_1"][1]/grad_max * 260, 25);
+			processing.rect(356, 95, data["school_1"][2]/size_max * 260, 25);
+
+			processing.strokeWeight(3);
+			processing.stroke(main);
+			if (data["school_1"][3] > 100)
+			{
+				if (data["school_1"][3] > 201)
+				{
+					processing.fill(255);
+					processing.rect(362, 220, 110, 80, 10);
+					processing.fill(main);
+					processing.text("OVER", 419, 240);
+					processing.textFont(font, 56);
+					processing.text("200", 417, 287);
+				}
+				else
+				{
+					processing.fill(255);
+					processing.rect(362, 220, 110, 80, 10);
+					processing.fill(main);
+					processing.textFont(font, 58);
+					processing.text(data["school_1"][3], 415, 282);
+				}
+			}
+			else
+			{
+				processing.fill(255);
+				processing.rect(375, 220, 80, 80, 10);
+				processing.fill(main);
+				processing.textFont(font, 58);
+				processing.text(data["school_1"][3], 415, 282);
+			}
+			processing.textFont(font, 12);
+		}
+		processing.noStroke();
+		if (!hide_2)
+		{
+			processing.fill(gray);
+			processing.rect(41, 120, data["school_2"][0]/tuition_max * 260, 25);
+			processing.rect(41, 255, data["school_2"][1]/grad_max * 260, 25);
+			processing.rect(356, 120, data["school_2"][2]/size_max * 260, 25);
+
+			processing.strokeWeight(3);
+			processing.stroke(gray);
+			if (data["school_2"][3] > 100)
+			{
+				if (data["school_2"][3] > 201)
+				{
+					processing.fill(255);
+					processing.rect(503, 220, 110, 80, 10);
+					processing.fill(gray);
+					processing.text("OVER", 560, 240);
+					processing.textFont(font, 56);
+					processing.text("200", 558, 287);
+				}
+				else
+				{
+					processing.fill(255);
+					processing.rect(503, 220, 110, 80, 10);
+					processing.fill(gray);
+					processing.textFont(font, 58);
+					processing.text(data["school_2"][3], 555, 282);
+				}
+			}
+			else
+			{
+				processing.fill(255);
+				processing.rect(515, 220, 80, 80, 10);
+				processing.fill(gray);
+				processing.textFont(font, 58);
+				processing.text(data["school_2"][3], 555, 282);
+			}
+			processing.textFont(font, 12);
+		}
+
 	};
 
 	function draw_career() {
 		document.getElementById("search_1_name").value = "software engineer";
 		document.getElementById("search_2_name").value = "music teacher";
-		//tab helper
+		//tab helper salary, job satisfaction, demand, unemployment
+		if (active_tab == 1)
+			career_summary();
+		else if (active_tab == 2)
+			career_salary();
+		else if (active_tab == 3)
+			career_demand();
+		else
+			career_unemploy();
+	};
+
+	function career_salary() {
+		//graph variables
+		var graph_top = 50; 
+		var graph_bot = 320;
+		var graph_left = 70;
+		var graph_right = 605;
+
+		//draw title and graph border
+		processing.strokeWeight(2);
+		processing.stroke(0);
+		processing.fill(0);
+		processing.textAlign(processing.CENTER);
+		processing.text("AVERAGE NATIONAL SALARIES ($)", 327, 30);
+
+		processing.line(graph_left, graph_top, graph_left, graph_bot-1);
+		processing.line(graph_left, graph_bot, graph_right, graph_bot);
+
+		//draw year labels and lines
+		processing.stroke(235);
+		processing.strokeWeight(1);
+		processing.text("1997", graph_left, graph_bot+20);
+		for (var i=1; i<17; i++)
+		{
+			var horz_loc = graph_left+i*((graph_right-graph_left)/16);
+			if (i%2 == 0)
+			{
+				processing.text(String(1997+i), horz_loc, graph_bot+20);
+			}
+			processing.line(horz_loc, graph_top+1, horz_loc, graph_bot-2);
+		}
+
+		//calculate min and max for data being shown [17] = min, [18] = max
+		var min, max;
+		if (!hide_1 && !hide_2)
+		{
+			min = processing.min(data["career_salary_1"][17], data["career_salary_2"][17]);
+			max = processing.max(data["career_salary_1"][18], data["career_salary_2"][18]);
+		}
+		else if (hide_1)
+		{
+			min = data["career_salary_2"][17];
+			max = data["career_salary_2"][18];
+		}
+		else
+		{
+			min = data["career_salary_1"][17];
+			max = data["career_salary_1"][18];
+		}
+
+		//draw lines and labels for salary range
+		min = ((processing.round(min/10000))-1)*10000;
+		max = ((processing.round(max/10000))+1)*10000;
+
+		var range = (max-min);
+		var step = range/10;
+
+
+		processing.textAlign(processing.RIGHT);
+
+		processing.text(String(processing.round((min)/1000))+"k", graph_left-10, graph_bot);
+		for (var i=1; i<=10; i++)
+		{
+			var vert_loc = graph_bot-i*((graph_bot-graph_top)/10);
+			processing.text(String(processing.round((min+i*step)/1000))+"k", graph_left-10, vert_loc+2);
+			processing.line(graph_left+1, vert_loc, graph_right, vert_loc);
+		}
+
+		//draw data
+		processing.strokeWeight(4);
+		for (var i=0; i<16; i++)
+		{
+			if (!hide_1)
+			{
+				processing.stroke(main);
+				var horz_1 = graph_left+i*((graph_right-graph_left)/16);
+				var horz_2 = graph_left+(i+1)*((graph_right-graph_left)/16);
+				var vert_1 = graph_top+(1-(data["career_salary_1"][i] - min)/(range))*(graph_bot-graph_top);
+				var vert_2 = graph_top+(1-(data["career_salary_1"][i+1] - min)/(range))*(graph_bot-graph_top);
+				processing.line(horz_1, vert_1, horz_2, vert_2);
+			}
+			if (!hide_2)
+			{
+				processing.stroke(gray);
+				var horz_1 = graph_left+i*((graph_right-graph_left)/16);
+				var horz_2 = graph_left+(i+1)*((graph_right-graph_left)/16);
+				var vert_1 = graph_top+(1-(data["career_salary_2"][i] - min)/(range))*(graph_bot-graph_top);
+				var vert_2 = graph_top+(1-(data["career_salary_2"][i+1] - min)/(range))*(graph_bot-graph_top);
+				processing.line(horz_1, vert_1, horz_2, vert_2);
+			}
+		}
+
+
+	};
+
+	function career_summary() {
+		//draw categories and separations
+		processing.textAlign(processing.RIGHT);
+		processing.fill(0);
+		processing.text("2013 AVERAGE SALARY", 275, 55);
+		processing.text("CENTS JOB RATING", 275, 135);
+		processing.text("PROJECTED JOB DEMAND 2012-2022", 275, 215);
+		processing.text("2012 UNEMPLOYMENT", 275, 295);
+		processing.stroke(225);
+		processing.strokeWeight(1);
+		processing.line(55, 93, 275, 93);
+		processing.line(55, 173, 275, 173);
+		processing.line(55, 253, 275, 253);
+		processing.textAlign(processing.CENTER);
+		processing.text("(CLICK TABS ON RIGHT FOR MORE DETAILS)", 330, 355);
+		//processing.stroke(0);
+		//processing.line(190, 340, 464, 340);
+
+		//draw data
+		//salary[16]
+		processing.textFont(font, 30);
+		processing.fill(main);
+		processing.text("$" + (data["career_salary_1"][16]).toLocaleString(), 400, 60);
+		processing.text("" + (data["career_satisfaction_1"]), 400, 130);
+		processing.text((data["career_demand_1"][0]).toLocaleString(), 400, 215);
+		processing.text((data["career_unemploy_1"][0]) + "%", 400, 300);
+
+		processing.fill(gray);
+		processing.text("$" + (data["career_salary_2"][16]).toLocaleString(), 560, 60);
+		processing.text("" + (data["career_satisfaction_2"]), 560, 130);
+		processing.text((data["career_demand_2"][0]).toLocaleString(), 560, 215);
+		processing.text((data["career_unemploy_2"][0]) + "%", 560, 300);
+
+		processing.textFont(font, 12);
+		processing.fill(main);
+		processing.text("OUT OF 5.0", 400, 150);
+		processing.text("JOBS", 400, 235);
+		processing.fill(gray);
+		processing.text("OUT OF 5.0", 560, 150);
+		processing.text("JOBS", 560, 235);
+
+	};
+
+	function career_demand() {
+
+	};
+
+	function career_unemploy() {
+
+		var graph_top = 50; 
+		var graph_bot = 320;
+		var graph_left = 60;
+		var graph_right = 620;
+		axis_location = [150, 530];
+
+		//draw labels
+		processing.textAlign(processing.CENTER);
+		processing.stroke(0);
+		processing.strokeWeight(2);
+		processing.fill(0);
+		processing.text("UNEMPLOYMENT RATE 2011", axis_location[0], graph_bot+23);
+		processing.text("UNEMPLOYMENT RATE 2012", axis_location[1], graph_bot+23);
+		processing.text("CAREER UNEMPLOYMENT RATES", 335, 30);
+
+		//left and right axis
+		processing.line(graph_left, graph_top, graph_left, graph_bot);
+		processing.line(graph_right, graph_top, graph_right, graph_bot);
+
+		//bottom lines around categories
+		processing.line(graph_left, graph_bot+1, graph_right-1, graph_bot+1);
+
+		//need max for percentages
+		var min, max;
+		if (hide_2 && !hide_1)
+		{
+			min = processing.min(data["career_unemploy_1"][0], data["career_unemploy_1"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
+			max = processing.max(data["career_unemploy_1"][0], data["career_unemploy_1"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
+			min = min * 0.9;
+			max = max * 1.05;
+		}
+		else if (!hide_2 && hide_1)
+		{
+			min = processing.min(data["career_unemploy_2"][0], data["career_unemploy_2"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
+			max = processing.max(data["career_unemploy_2"][0], data["career_unemploy_2"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
+			min = min * 0.9;
+			max = max * 1.05;
+		}
+		else
+		{
+			min = processing.min(data["career_unemploy_1"][0], data["career_unemploy_1"][1], data["career_unemploy_2"][0], data["career_unemploy_2"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
+			max = processing.max(data["career_unemploy_1"][0], data["career_unemploy_1"][1], data["career_unemploy_2"][0], data["career_unemploy_2"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
+			min = min * 0.9;
+			max = max * 1.05;
+		}
+
+		//draw scales
+		processing.stroke(245);
+		processing.fill(0);
+		var range = (graph_top - graph_bot)/10;
+		var per_scale = (max - min)/10;
+		for (var i=1; i<=10; i++)
+		{
+			var h = graph_bot + range * i;
+			processing.line(graph_left+2, h, graph_right-3, h);
+			processing.textAlign(processing.RIGHT);
+			processing.text((min + per_scale * i).toFixed(1) + "%", graph_left-5, h+5);
+		}
+		//bottom value
+		processing.text((min).toFixed(1) + "%", graph_left-5, graph_bot);
+
+
+		
+
+		// //draw NATIONAL AVERAGE rectangle and data
+		processing.stroke(0);
+		var line_1 = graph_bot + (graph_top - graph_bot)*((data["career_unemploy_3"][0] -  min)/(max - min));
+		var line_2 = graph_bot + (graph_top - graph_bot)*((data["career_unemploy_3"][1] -  min)/(max - min));
+		
+		processing.line(graph_left, line_1, axis_location[0]+70, line_1);
+		processing.line(axis_location[0]+71, line_1, axis_location[1]-71, line_2);
+		processing.line(axis_location[1]-70, line_2, graph_right-1, line_2);
+
+		processing.fill(255);
+		processing.stroke(255);
+		processing.rect((axis_location[0]+axis_location[1])/2-40, (line_1+line_2)/2-30, 77, 50)
+		processing.noStroke();
+		processing.fill(0);
+		processing.textAlign(processing.CENTER);
+		processing.text("NATIONAL", (axis_location[0]+axis_location[1])/2, (line_1+line_2)/2-9);
+		processing.text("AVERAGES", (axis_location[0]+axis_location[1])/2, (line_1+line_2)/2+8);
+
+		var height_1 = (graph_top - graph_bot)*((data["career_unemploy_1"][0] -  min)/(max - min));
+		var height_2 = (graph_top - graph_bot)*((data["career_unemploy_1"][1] -  min)/(max - min));
+		var height_3 = (graph_top - graph_bot)*((data["career_unemploy_2"][0] -  min)/(max - min));
+		var height_4 = (graph_top - graph_bot)*((data["career_unemploy_2"][1] -  min)/(max - min));
+
+
+		//buffer boxes
+		if (!hide_1)
+		{
+			processing.fill(255);
+			processing.rect(axis_location[0]-35, graph_bot, 40, height_1);
+			processing.rect(axis_location[1]-35, graph_bot, 40, height_2);
+		}
+
+		if (!hide_2)
+		{
+			processing.fill(255);
+			processing.rect(axis_location[0]-5, graph_bot, 40, height_3);
+			processing.rect(axis_location[1]-5, graph_bot, 40, height_4);
+		}
+		//data
+		if (!hide_1)
+		{
+			processing.fill(main);
+			processing.noStroke();
+			processing.rect(axis_location[0]-30, graph_bot, 30, height_1);
+			processing.rect(axis_location[1]-30, graph_bot, 30, height_2);
+		}
+
+		if (!hide_2)
+		{
+			processing.fill(gray);
+			processing.noStroke();
+			processing.rect(axis_location[0], graph_bot, 30, height_3);
+			processing.rect(axis_location[1], graph_bot, 30, height_4);	
+		}
+
 	};
 
 	function draw_spend() {
@@ -840,7 +1387,7 @@ function update_tab(name) {
 };
 
 function api_request(query) {
-	var url = "http://54.183.8.236:6001/query/" + query;
+	var url = "http://54.67.106.77:6001/query/" + query;
 	$.get(url, function(resp){
 		data = jQuery.parseJSON(resp);
 		if(data["operation"] == "undefined")
@@ -854,7 +1401,7 @@ function api_request(query) {
 	});
 };
 
-var hide_show_1 = "HIDE";
+//var hide_show_1 = "HIDE";
 function hide_toggle(num) {
 	if (num == 1)
 	{
