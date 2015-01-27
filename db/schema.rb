@@ -30,10 +30,6 @@ ActiveRecord::Schema.define(version: 20150125235655) do
     t.string   "location"
     t.datetime "created_at"
     t.datetime "updated_at"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> feature/S-01063
     t.float    "unemp_rate",        limit: 24
     t.float    "unemp_trend",       limit: 24
     t.float    "sales_tax",         limit: 24
