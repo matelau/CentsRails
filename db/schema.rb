@@ -11,12 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150125235655) do
+ActiveRecord::Schema.define(version: 20150128220745) do
 
   create_table "careers", force: true do |t|
-    t.float    "projected_employment", limit: 24
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "employment_change_volume"
+    t.float    "employment_change_percent", limit: 24
+    t.integer  "job_openings"
   end
 
   create_table "colis", force: true do |t|
@@ -38,18 +40,6 @@ ActiveRecord::Schema.define(version: 20150125235655) do
     t.float    "income_tax_max",    limit: 24
     t.float    "income_tax_min",    limit: 24
     t.float    "income_per_capita", limit: 24
-<<<<<<< HEAD
-=======
-    t.float    "unemp_rate",     limit: 24
-    t.float    "unemp_trend",    limit: 24
-    t.float    "income",         limit: 24
-    t.float    "income_tax",     limit: 24
-    t.float    "sales_tax",      limit: 24
-    t.float    "property_tax",   limit: 24
-    t.string   "state"
->>>>>>> fd4db8cf66ebf4ba6c1b2dc1401ef092fb708f14
-=======
->>>>>>> feature/S-01063
   end
 
   create_table "completeds", force: true do |t|
@@ -122,10 +112,7 @@ ActiveRecord::Schema.define(version: 20150125235655) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
-<<<<<<< HEAD
     t.string   "confirmation_code"
-=======
->>>>>>> feature/S-01063
   end
 
   create_table "top_jobs", force: true do |t|

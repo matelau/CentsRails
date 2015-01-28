@@ -58,10 +58,12 @@ class Api::V1::ColiController < ApplicationController
 								:location,
 								:unemp_rate,
 								:unemp_trend,
-								:income,
-								:income_tax,
 								:sales_tax,
 								:property_tax,
+								:state,
+								:income_tax_max,
+								:income_tax_min,
+								:income_per_capita,
 								:month,
 								:high,
 								:low)
@@ -123,7 +125,7 @@ class Api::V1::ColiController < ApplicationController
 			##### -------------------- LABOR --------------------- #####
 			labor_stats = Array.new	# Used for formatting the eventual JSON object.
 
-			fields = [:unemp_trend, :income, :unemp_rate]
+			fields = [:unemp_trend, :income_tax_max, :income_tax_min, :unemp_rate]
 
 			# Collect the value of each non-nil field in coli_stats.
 			fields.each do |field|
@@ -143,7 +145,7 @@ class Api::V1::ColiController < ApplicationController
 			##### -------------------- TAXES --------------------- #####
 			tax_stats = Array.new	# For formatting the eventual JSON object.			
 
-			fields = [:income_tax, :property_tax, :sales_tax]
+			fields = [:sales_tax, :income_tax_min, :income_tax_max, :property_tax]
 
 			# Collect the value of each non-nil field in coli_stats.
 			fields.each do |field|
