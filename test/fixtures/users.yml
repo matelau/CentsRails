@@ -5,11 +5,13 @@ one:
   books: 1.5
   savings: 1.5
   email: MyString
-  password: MyString
+  first_name: MyString
+  last_name: MyString
 
 two:
   debt: 1.5
   books: 1.5
   savings: 1.5
   email: MyString
-  password: MyString
+  first_name: MyString
+  last_name: MyString
