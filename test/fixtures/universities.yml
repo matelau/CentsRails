@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  size: 1
+  rank: 1
+  housing: 1.5
+  state: MyString
+  name: MyString
+  tuition: 1.5
+  net_cost: 1.5
+  grad_rate_4_year: 1.5
+
+two:
+  size: 1
+  rank: 1
+  housing: 1.5
+  state: MyString
+  name: MyString
+  tuition: 1.5
+  net_cost: 1.5
+  grad_rate_4_year: 1.5

@@ -12,9 +12,9 @@ sf:
   location: 'San Francisco'
   unemp_rate: 4
   unemp_trend: 1.5
-  income_tax_min: 1.5
-  income_tax_max: 1.5
   income_per_capita: 1.5
+  income_tax_max: 6
+  income_tax_min: 2
   sales_tax: 1.5
   property_tax: 1.5
   state: 'CA'
@@ -31,9 +31,9 @@ slc:
   location: 'Salt Lake City'
   unemp_rate: 5
   unemp_trend: 1.5
-  income_tax_min: 1.5
-  income_tax_max: 1.5
   income_per_capita: 1.5
+  income_tax_max: 5
+  income_tax_min: 5
   sales_tax: 1.5
   property_tax: 1.5
   state: 'UT'

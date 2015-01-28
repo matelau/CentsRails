@@ -7,11 +7,22 @@ one:
   email: MyString
   first_name: MyString
   last_name: MyString
+  password_digest: MyString
 
 two:
-  debt: 1.5
-  books: 1.5
-  savings: 1.5
+  debt: 2.5
+  books: 2.5
+  savings: 2.5
   email: MyString
   first_name: MyString
   last_name: MyString
+  password_digest: MyString
+
+three:
+  debt: 33
+  books: 33
+  savings: 34
+  email: testperson3@gmail.com
+  first_name: Albert
+  last_name: Aldridge
+  password_digest: MyString
