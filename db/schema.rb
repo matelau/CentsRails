@@ -11,12 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150125234248) do
+ActiveRecord::Schema.define(version: 20150128220745) do
 
   create_table "careers", force: true do |t|
-    t.float    "projected_employment", limit: 24
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "employment_change_volume"
+    t.float    "employment_change_percent", limit: 24
+    t.integer  "job_openings"
   end
 
   create_table "colis", force: true do |t|
@@ -110,6 +112,10 @@ ActiveRecord::Schema.define(version: 20150125234248) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
+<<<<<<< HEAD
+=======
+    t.string   "confirmation_code"
+>>>>>>> dev
   end
 
   create_table "top_jobs", force: true do |t|

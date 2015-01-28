@@ -17,6 +17,7 @@ sf:
   income_tax_min: 2
   sales_tax: 1.5
   property_tax: 1.5
+  state: 'CA'
 
 slc:  
   id: 2
@@ -35,3 +36,4 @@ slc:
   income_tax_min: 5
   sales_tax: 1.5
   property_tax: 1.5
+  state: 'UT'
