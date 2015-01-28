@@ -96,12 +96,12 @@ function sketchProc(processing) {
 		data["career_satisfaction_1"] = 4.8;
 		data["career_satisfaction_2"] = 2.9;
 		//demand
-		data["career_demand_1"] = [353200];
-		data["career_demand_2"] = [35500];
+		data["career_demand_1"] = [353200, 22.4, 252700];
+		data["career_demand_2"] = [35500, 16.0, 18300];
 		//unemployment
-		data["career_unemploy_1"] = [2.8, 2.8];
-		data["career_unemploy_2"] = [4.1, 4.5];
-		data["career_unemploy_3"] = [3.2, 3.4];
+		data["career_unemploy_1"] = [3.8, 3.2];
+		data["career_unemploy_2"] = [8.1, 8.5];
+		data["career_unemploy_3"] = [6.0, 6.8];
 
 	};
 
@@ -538,7 +538,7 @@ function sketchProc(processing) {
 		min_2 = 0.0;
 
 		//draw scales
-		processing.stroke(245);
+		processing.stroke(235);
 		processing.fill(0);
 		var range = (graph_top - graph_bot)/10;
 		var per_scale = (max_1 - min_1)/10;
@@ -676,7 +676,7 @@ function sketchProc(processing) {
 		min_1 = 0.0;
 		min_2 = 0.0;
 
-		processing.stroke(245);
+		processing.stroke(235);
 		processing.fill(0);
 		var range = (graph_top - graph_bot)/10;
 		var per_scale = (max_1 - min_1)/10;
@@ -1239,6 +1239,85 @@ function sketchProc(processing) {
 	};
 
 	function career_demand() {
+		//graph variables
+		var graph_top = 50; 
+		var graph_bot = 320;
+		var graph_mid_1 = 122;
+		//var graph_right_1 = 212;
+		var graph_mid_2 = 327;
+		//var graph_right_2 = 417;
+		var graph_mid_3 = 532;
+		//var graph_right_3 = 622;
+
+		//draw title and graph border
+		processing.strokeWeight(1);
+		processing.stroke(0);
+		processing.fill(0);
+		processing.textAlign(processing.CENTER);
+		processing.text("PROJECTED CAREER DEMAND (2012-2022)", 327, 25);
+		// processing.textAlign(processing.RIGHT);
+		processing.text("CAREER GROWTH VOLUME", graph_mid_1+10, graph_bot+28);
+		processing.text("CAREER GROWTH PERCENT", graph_mid_2+10, graph_bot+28);
+		processing.text("JOB OPENINGS", graph_mid_3+10, graph_bot+28);
+
+		processing.line(graph_mid_1-55, graph_bot, graph_mid_1+90, graph_bot);
+		processing.line(graph_mid_2-55, graph_bot, graph_mid_2+90, graph_bot);
+		processing.line(graph_mid_3-55, graph_bot, graph_mid_3+90, graph_bot);
+
+		//draw scale lines
+		processing.stroke(235);
+		var scale = (graph_bot-graph_top)/10;
+		for (var i=0; i<10; i++)
+		{
+			processing.line(graph_mid_1-55, graph_top+(scale*i), graph_mid_1+90, graph_top+(scale*i));
+			processing.line(graph_mid_2-55, graph_top+(scale*i), graph_mid_2+90, graph_top+(scale*i));
+			processing.line(graph_mid_3-55, graph_top+(scale*i), graph_mid_3+90, graph_top+(scale*i));
+		}
+
+		//calculate min and max for each graph
+		//***************FIX FOR NEGATIVE NUMBERS
+		var min_1, max_1, min_2, max_2, min_3, max_3;
+		if (hide_2 && !hide_1)
+		{
+			min_1 = data["career_demand_1"][2] * 0.9;
+			max_1 = data["career_demand_1"][2] * 1.1;
+			min_2 = data["career_demand_1"][1] * 0.9;
+			max_2 = data["career_demand_1"][1] * 1.1;
+			min_3 = data["career_demand_1"][0] * 0.9;
+			max_3 = data["career_demand_1"][0] * 1.1;
+		}
+		else if (!hide_2 && hide_1)
+		{
+			min_1 = data["career_demand_2"][2] * 0.9;
+			max_1 = data["career_demand_2"][2] * 1.1;
+			min_2 = data["career_demand_2"][1] * 0.9;
+			max_2 = data["career_demand_2"][1] * 1.1;
+			min_3 = data["career_demand_2"][0] * 0.9;
+			max_3 = data["career_demand_2"][0] * 1.1;
+		}
+		else
+		{
+			min_1 = processing.min(data["career_demand_1"][2], data["career_demand_2"][2]) * 0.9;
+			max_1 = processing.max(data["career_demand_1"][2], data["career_demand_2"][2]) * 1.1;
+			min_2 = processing.min(data["career_demand_1"][1], data["career_demand_2"][1]) * 0.9;
+			max_2 = processing.max(data["career_demand_1"][1], data["career_demand_2"][1]) * 1.1;
+			min_3 = processing.min(data["career_demand_1"][0], data["career_demand_2"][0]) * 0.9;
+			max_3 = processing.max(data["career_demand_1"][0], data["career_demand_2"][0]) * 1.1;
+
+		}
+
+		//draw numerical scales
+		var range_1 = (max_1-min_1)/10;
+		var range_2 = (max_2-min_2)/10;
+		var range_3 = (max_3-min_3)/10;
+		processing.textAlign(processing.RIGHT);
+		for (var i=0; i<=10; i++)
+		{
+			processing.text(((min_1+(range_1*i))/1000).toFixed(1) + "k", graph_mid_1-60, graph_bot-(scale*i)+5);
+			processing.text((min_2+(range_2*i)).toFixed(1) + "%", graph_mid_2-60, graph_bot-(scale*i)+5);
+			processing.text(((min_3+(range_3*i))/1000).toFixed(1) + "k", graph_mid_3-60, graph_bot-(scale*i)+5);
+		}
+
 
 	};
 
@@ -1291,7 +1370,7 @@ function sketchProc(processing) {
 		}
 
 		//draw scales
-		processing.stroke(245);
+		processing.stroke(235);
 		processing.fill(0);
 		var range = (graph_top - graph_bot)/10;
 		var per_scale = (max - min)/10;
