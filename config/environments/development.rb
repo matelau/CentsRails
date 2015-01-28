@@ -14,7 +14,15 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.smtp_settings = {
+  	address: "smtp.gmail.com",
+  	port: "587",
+  	domain: "gmail.com",
+  	authentication: "plain",
+  	enable_starttls_auto: true,
+  	
+  }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -34,7 +42,7 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-
-  config.use_ssl = true
-  config.ssl_port = 3000
+  config.force_ssl = true
+  config.use_ssl = true	
+  config.ssl_port = 443
 end

@@ -112,10 +112,7 @@ ActiveRecord::Schema.define(version: 20150128220745) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
-<<<<<<< HEAD
-=======
     t.string   "confirmation_code"
->>>>>>> dev
   end
 
   create_table "top_jobs", force: true do |t|
