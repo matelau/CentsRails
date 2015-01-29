@@ -6,7 +6,7 @@ require 'yaml'
 require 'csv'
 
 ENV['RAILS_ENV'] = "development" # Set to your desired Rails environment name
-require '~/Documents/dev/CentsRails/config/environment.rb'
+require_relative '../config/environment.rb'
 
 class CostOfLivingScraper
 	
@@ -28,10 +28,10 @@ class CostOfLivingScraper
 		####### !!!!!!!!!!!!!!
 		areas = []
 		states = {}
-		citi = File.read("query_service/cities.txt")
+		citi = File.read("../query_service/cities.txt")
 		areas = citi.split("\r")
 
-		arr = CSV::parse(File.open("query_service/states.csv", 'r') {|f| f.read})
+		arr = CSV::parse(File.open("../query_service/states.csv", 'r') {|f| f.read})
 		arr.shift
 		arr.each {|k,v| states[k.downcase] = v.downcase}
 
@@ -60,7 +60,7 @@ class CostOfLivingScraper
 			begin
 				data = Nokogiri::HTML(open(url))
 			rescue OpenURI::HTTPError => e
-				log_file = Pathname.pwd.to_s + "/data/error_logs"
+				log_file = Pathname.pwd.to_s + "../data/error_logs"
 				error_message = DateTime.now.to_s + " income_scraper.rb area: "+ area + " error: "+ e.message.to_s
 				File.write(log_file, error_message)
 				# continue
@@ -140,7 +140,7 @@ class CostOfLivingScraper
 		if write_json
 			# -------------------- Write Json ---------------------------
 			# store_vals
-			col_file = Pathname.pwd.to_s + "/data/col.json"
+			col_file = Pathname.pwd.to_s + "../data/col.json"
 			# col_state_file = Pathname.pwd.to_s + "/data/col_state.json"
 			js = loc_to_values.to_json
 			File.write(col_file, js)
