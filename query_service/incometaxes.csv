@@ -1,0 +1,52 @@
+state,mintax,maxtax
+Alabama,2,5
+Alaska,0,0
+Arizona,2.59,4.54
+Arkansas,1,7
+California,1,13.3
+Colorado,4.63,4.63
+Connecticut,3,6.7
+Delaware,2.2,6
+District of Columbia,4,8.95
+Florida,0,0
+Georgia,1,6
+Hawaii,1.4,11
+Idaho,1.6,7.4
+Illinois,5,5
+Indiana,3.4,3.4
+Iowa,0.36,8.98
+Kansas,2.7,4.8
+Kentucky,2,6
+Louisiana,2,6
+Maine,6.5,7.95
+Maryland,2,5.75
+Massachusetts,5.2,5.2
+Michigan,4.25,4.25
+Minnesota,5.35,9.85
+Mississippi,3,5
+Missouri,1.5,6
+Montana,1,6.9
+Nebraska,2.46,6.84
+Nevada,0,0
+New Hampshire,5,5
+New Jersey,1.4,8.97
+New Mexico,1.7,4.9
+New York,4,8.82
+North Carolina,5.8,5.8
+North Dakota,1.22,3.22
+Ohio,0.54,5.392
+Oklahoma,0.5,5.25
+Oregon,5,9.9
+Pennsylvania,3.07,3.07
+Rhode Island,3.75,5.99
+South Carolina,0,7
+South Dakota,0,0
+Tennessee,6,6
+Texas,0,0
+Utah,5,5
+Vermont,3.55,8.95
+Virginia,2,5.75
+Washington,0,0
+West Virginia,3,6.5
+Wisconsin,4,7.65
+Wyoming,0,0

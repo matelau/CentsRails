@@ -53,7 +53,7 @@ class CostOfLivingScraper
 			area.gsub! " ", "+"
 
 			# Test Script used to play with nokogiri - pulls cost of living data from areavibes.com
-			url = "http://www.areavibes.com//cost-of-living/"
+			url = "http://www.areavibes.com//employment/"
 			url.insert(25,area)
 			puts "pulling data for: "+ url + "\n"
 			data = nil
@@ -61,32 +61,48 @@ class CostOfLivingScraper
 				data = Nokogiri::HTML(open(url))
 			rescue OpenURI::HTTPError => e
 				log_file = Pathname.pwd.to_s + "/data/error_logs"
-				error_message = DateTime.now.to_s + " Cost_of_living_scraper.rb area: "+ area + " error: "+ e.message.to_s
+				error_message = DateTime.now.to_s + " income_scraper.rb area: "+ area + " error: "+ e.message.to_s
 				File.write(log_file, error_message)
 				# continue
 				next
 			end
 
-			table =  data.css('table.std_facts.w')
+			table =  data.css('table.std_facts.w.emp')
 			#headers =  index, city, state, national
 			state = table.css('th')[2].text
 			city = table.css('th')[1].text
 
-			columns = ["cost_of_living", "goods", "groceries", "health_care", "housing", "transportation", "utilities"]
+			columns = ["income_per_capita","unemp_rate"]
 
 			values = Array.new
 			state_values = Array.new
 			#tds = column title, city val, state val, national val
 			table.css('tr').each do |row|
-				str = row.css('td')[1]
-				str2 = row.css('td')[2]
-				# check for nil
-				if str.to_s == "" 
-					# do nothing
-				else
-					# remove html tags
-					values.push str.text.strip
-					state_values.push str2.text.strip
+				next if row.css('td')[0] == nil
+				if(row.css('td')[0].text.strip == "Income per capita" || row.css('td')[0].text.strip == "Unemployment rate")
+					str = row.css('td')[1].text.strip
+					str2 = row.css('td')[2].text.strip
+
+					if(row.css('td')[0].text.strip == "Income per capita")
+						str.gsub! "$", ""
+						str.gsub! ",", ""
+						str2.gsub! "$", ""
+						str2.gsub! ",", ""
+					end
+
+					if(row.css('td')[0].text.strip == "Unemployment rate")
+						str.gsub! "%", ""
+						str2.gsub! "%", ""
+					end
+
+					# check for nil
+					if str.to_s == "" 
+						# do nothing
+					else
+						# remove html tags
+						values.push str
+						state_values.push str2
+					end
 				end
 			end
 
@@ -119,62 +135,6 @@ class CostOfLivingScraper
 				end
 				loc_to_values[str] = columns_to_values
 			end
-
-			#-------------------Weather Data ----------------------------------
-			# Test Script used to play with nokogiri - pulls cost of living data from areavibes.com
-			url = "http://www.areavibes.com//weather/"
-			url.insert(25,area)
-			puts "pulling data for: "+ url + "\n"
-			data = nil
-			
-			begin
-				data = Nokogiri::HTML(open(url))
-			rescue OpenURI::HTTPError => e
-				log_file = Pathname.pwd.to_s + "/data/error_logs"
-				error_message = DateTime.now.to_s + " Cost_of_living_scraper.rb weather: "+ area + " error: "+ e.message.to_s
-				File.write(log_file, error_message)
-				# continue
-				next
-			end
-
-			month_data = Hash.new
-			table =  data.css('table.std_facts.w')
-			
-			count = 0
-			#tds = month, min, max, avg, precip
-			table.css('tr').each do |row|
-				month = row.css('td')[0]
-				min = row.css('td')[1]
-				max = row.css('td')[2]
-				avg = row.css('td')[3]
-				precip = row.css('td')[4]
-
-				# check for nil 
-				if month.nil? || min.nil? || max.nil? || avg.nil? || precip.nil?
-					# do nothing
-					# puts "do nothing block"
-				elsif count > 11
-					# ignore air qual and pollution index
-					# puts "overcount"		
-				else
-					values = Array.new
-					# remove html tags
-					month = month.text.strip
-					values.push min.text.strip.slice 0..-3
-					values.push max.text.strip.slice 0..-3
-					values.push avg.text.strip.slice 0..-3
-
-					month_data[month] = values
-					count = count + 1
-				end
-			end
-
-
-			if !cities.include?(city)
-				cities.push city
-			end
-			weather_area[city] = month_data 
-
 		end
 
 		if write_json
@@ -194,13 +154,8 @@ class CostOfLivingScraper
 			table_name = "colis"
 			store_vals[table_name] = loc_to_values
 			curr_loc = " "
-			col = " "
-			goods = " "
-			groc = " "
-			hc = " "
-			housing = " "
-			trans = " "
-			util = " "
+			income = ""
+			unemp = ""
 
 			store_vals[table_name].each do |loc|
 				curr_loc = loc[0].to_s
@@ -208,39 +163,9 @@ class CostOfLivingScraper
 				ci = nil if ci == ""
 				st =  curr_loc.split(":")[1]
 				loc_data =loc_to_values[curr_loc]
-				col = loc_data[columns[0]]
-				goods = loc_data[columns[1]]
-				groc = loc_data[columns[2]]
-				hc = loc_data[columns[3]]
-				housing = loc_data[columns[4]]
-				trans = loc_data[columns[5]]
-				util = loc_data[columns[6]]
-				Coli.find_or_create_by(location: ci, state: st).update(cost_of_living: col, transportation: trans, groceries: groc, goods: goods, health_care: hc, utilities: util, housing: housing)
-			end
-
-
-			# --------------- Database Code weather_reports ------------------------- 
-
-			cities.each do |city|
-				# get id
-				results = Coli.find_by(location: city)
-				id = nil
-
-				id = results["id"]
-
-				if id != nil
-					# iterate through months and push data to db
-					weather_area[city].each do |months|
-						# get month
-						curr_month = months[0]
-						# get values
-						arr_vals = months[1]
-						min = arr_vals[0]
-						max = arr_vals[1]
-						avg = arr_vals[2]
-						WeatherRecord.find_or_create_by(coli_id: id, high: max, low: min, average: avg, month: curr_month)
-					end
-				end
+				income = loc_data[columns[0]]
+				unemp = loc_data[columns[1]]
+				Coli.find_or_create_by(location: ci, state: st).update(income_per_capita: income, unemp_rate: unemp)
 			end
 		end
 	end
