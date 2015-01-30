@@ -19,7 +19,8 @@
 
 
 
-var active_tab, type, data, hide_1, hide_2, axis_location, horz_locs, min, max, above_1, above_2, below_1, below_2, font;
+var active_tab, type, data, hide_1, hide_2, axis_location, horz_locs, min, max, above_1, above_2, below_1, below_2, font,
+	spending_default, spending_student, spending_custom, spending_selected, spending_income, spending_unalloc;
 
 
 var sketch = new Processing.Sketch();
@@ -31,14 +32,46 @@ function sketchProc(processing) {
 	var color_2 = processing.color(18, 86, 136);
 
 	processing.setup = function() {
+
+		//better way to do this is to check what is returned, if nothing, parse the url like this
+		var pathArray = window.location.pathname.split('/');
+		type = pathArray[2];
+
+		//setup if type is spending breakdown
+		spending_selected = "default";
+		//default spending breakdown
+		spending_default = {"Food":17, "Housing":25, "Utilities":6, "Transportation":12, "Healthcare":5, "Insurance":8, "Personal Debt":12, "Savings":10, "Misc":5};
+		spending_student = {};
+		spending_custom = {};
+
+		//draw in all fields/names
+		if (spending_selected == "default")
+		{
+			for (key in spending_default)
+			{
+				$( "<p>" + key.toUpperCase() + "</p>" ).appendTo( "#spend_name_list" );
+				//$("<li><div style='float:right'><input class='update_spend' id='" + key + "field' oninput='spendingVal('" + key + "')' type='text'></div>").append("#spend_field_list");
+			}
+
+		}
+
+		// if (document.getElementById("income_field"))
+		// {
+		// 	document.getElementById("income_field").value = spending["income"].toFixed(2);
+		// 	document.getElementById("food_field").value = ((spending["food"]/100*spending["income"])/12).toFixed(2);
+		// 	document.getElementById("housing_field").value = ((spending["housing"]/100*spending["income"])/12).toFixed(2);
+			
+		// }
+
 		//this will be retrieved from json object
-		//type = "city";
 		processing.size(655,375);
 		//always set the initial tab to the first one
 		active_tab = 1;
 		hide_1 = false;
 		hide_2 = false;
 		horz_locs = [87, 145, 215, 308, 389, 488, 577];
+
+		
 		
 
 		//load font
@@ -107,9 +140,6 @@ function sketchProc(processing) {
 
 	processing.draw = function() {
 		processing.background(255);
-
-		var pathArray = window.location.pathname.split('/');
-		type = pathArray[2];
 
 		if (type == "city")
 			draw_city();
@@ -1466,6 +1496,16 @@ function sketchProc(processing) {
 
 	function draw_spend() {
 		//no tabs, just draw
+		// document.getElementById("unalloc_field").value = ((spending["housing"]/100*spending["unalloc"])/12).toFixed(2);
+		// processing.fill(0);
+		// processing.text(spending["income"].toFixed(2), 100, 80);
+		// processing.text(((spending["food"]/100*spending["income"])/12).toFixed(2), 100, 100);
+		// processing.text(((spending["housing"]/100*spending["income"])/12).toFixed(2), 100, 120);
+		// processing.text(((spending["util"]/100*spending["income"])/12).toFixed(2), 100, 140);
+	
+
+
+
 	};
 
 
@@ -1522,5 +1562,24 @@ function hide_toggle(num) {
 		}
 		hide_2 = !hide_2;
 	}
+};
+
+function spendingVal(category) {
+	if (category == "income")
+		spending[category] = (document.getElementById(category + "_field").value).toFixed(2);
+	else
+	{
+		spending[category] = (document.getElementById(category + "_field").value*12/spending["income"]*100);
+	}
+	//determine if there is no positive or negative unallocation
+	var sum = 0.0;
+	var names = ["food", "housing", "util", "trans", "health", "insure", "debt", "save", "misc"];
+	for (var i=0; i<9; i++)
+	{
+		sum += spending[names[i]];
+	}
+	spending["unalloc"] = spending["income"] - (sum/100)*spending["income"];
+
+
 };
 
