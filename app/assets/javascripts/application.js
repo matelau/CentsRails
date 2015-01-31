@@ -1250,7 +1250,7 @@ function sketchProc(processing) {
 		//var graph_right_3 = 622;
 
 		//draw title and graph border
-		processing.strokeWeight(1);
+		processing.strokeWeight(2);
 		processing.stroke(0);
 		processing.fill(0);
 		processing.textAlign(processing.CENTER);
@@ -1265,6 +1265,7 @@ function sketchProc(processing) {
 		processing.line(graph_mid_3-55, graph_bot, graph_mid_3+90, graph_bot);
 
 		//draw scale lines
+		processing.strokeWeight(1);
 		processing.stroke(235);
 		var scale = (graph_bot-graph_top)/10;
 		for (var i=0; i<10; i++)
@@ -1323,18 +1324,18 @@ function sketchProc(processing) {
 		{
 			processing.fill(main);
 			processing.noStroke();
-			processing.rect(graph_mid_1-20, graph_bot, 30, -1*(graph_bot-graph_top)*(data["career_demand_1"][2]-min_1)/(max_1-min_1));
-			processing.rect(graph_mid_2-20, graph_bot, 30, -1*(graph_bot-graph_top)*(data["career_demand_1"][1]-min_2)/(max_2-min_2));
-			processing.rect(graph_mid_3-20, graph_bot, 30, -1*(graph_bot-graph_top)*(data["career_demand_1"][0]-min_3)/(max_3-min_3));
+			processing.rect(graph_mid_1-20, graph_bot-1, 30, -1*(graph_bot-graph_top)*(data["career_demand_1"][2]-min_1)/(max_1-min_1));
+			processing.rect(graph_mid_2-20, graph_bot-1, 30, -1*(graph_bot-graph_top)*(data["career_demand_1"][1]-min_2)/(max_2-min_2));
+			processing.rect(graph_mid_3-20, graph_bot-1, 30, -1*(graph_bot-graph_top)*(data["career_demand_1"][0]-min_3)/(max_3-min_3));
 
 		}
 		if (!hide_2)
 		{
 			processing.fill(gray);
 			processing.noStroke();
-			processing.rect(graph_mid_1+10, graph_bot, 30, -1*(graph_bot-graph_top)*(data["career_demand_2"][2]-min_1)/(max_1-min_1));
-			processing.rect(graph_mid_2+10, graph_bot, 30, -1*(graph_bot-graph_top)*(data["career_demand_2"][1]-min_2)/(max_2-min_2));
-			processing.rect(graph_mid_3+10, graph_bot, 30, -1*(graph_bot-graph_top)*(data["career_demand_2"][0]-min_3)/(max_3-min_3));
+			processing.rect(graph_mid_1+10, graph_bot-1, 30, -1*(graph_bot-graph_top)*(data["career_demand_2"][2]-min_1)/(max_1-min_1));
+			processing.rect(graph_mid_2+10, graph_bot-1, 30, -1*(graph_bot-graph_top)*(data["career_demand_2"][1]-min_2)/(max_2-min_2));
+			processing.rect(graph_mid_3+10, graph_bot-1, 30, -1*(graph_bot-graph_top)*(data["career_demand_2"][0]-min_3)/(max_3-min_3));
 		}
 
 
