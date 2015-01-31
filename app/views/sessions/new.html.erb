@@ -1,0 +1,15 @@
+<%= form_tag '/user/login' do %>
+	<table>
+  	<tr>
+  		<td>Email</td> <td><%= text_field_tag :email %></td>
+  	</tr>
+
+  	<tr>
+  		<td>Password</td> <td><%= password_field_tag :password %></td>
+  	</tr>
+
+  	<tr>
+  		<td><%= submit_tag "Log in" %></td>
+  	</tr>
+  </table>
+<% end %>
