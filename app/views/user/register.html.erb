@@ -9,11 +9,13 @@
   	</tr>
   
   	<tr>
-  		<td>Email</td> <td><%= f.email_field :email %></td>
+  		<td>Email</td> 
+  		<td><%= f.email_field :email, html: {onblur: "validate_email('#email_id')"} %></td> 
+  		<td><p "id"="email_id"></td>
   	</tr>
 
   	<tr>
-  		<td>Password</td> <td><%= f.password_field :password %></td>
+  		<td>Password</td> <td><%= f.password_field :password %></td> <td></td>
   	</tr>
 
   	<tr>
