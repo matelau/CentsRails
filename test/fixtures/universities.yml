@@ -6,9 +6,10 @@ one:
   housing: 1.5
   state: MyString
   name: MyString
-  tuition: 1.5
+  tuition_resident: 1.5
+  tuition_nonresident: 1.5
   net_cost: 1.5
-  grad_rate_4_year: 1.5
+  grad_rate_6_year: 1.5
 
 two:
   size: 1
@@ -16,6 +17,7 @@ two:
   housing: 1.5
   state: MyString
   name: MyString
-  tuition: 1.5
+  tuition_resident: 1.5
+  tuition_nonresident: 1.5
   net_cost: 1.5
-  grad_rate_4_year: 1.5
+  grad_rate_6_year: 1.5

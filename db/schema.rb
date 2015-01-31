@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150128220745) do
+ActiveRecord::Schema.define(version: 20150131035738) do
 
   create_table "careers", force: true do |t|
     t.datetime "created_at"
@@ -126,14 +126,15 @@ ActiveRecord::Schema.define(version: 20150128220745) do
   create_table "universities", force: true do |t|
     t.integer  "size"
     t.integer  "rank"
-    t.float    "housing",          limit: 24
+    t.float    "housing",             limit: 24
     t.string   "state"
     t.string   "name"
-    t.float    "tuition",          limit: 24
-    t.float    "grad_rate_4_year", limit: 24
+    t.float    "grad_rate_6_year",    limit: 24
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "net_cost",         limit: 24
+    t.float    "net_cost",            limit: 24
+    t.float    "tuition_resident",    limit: 24
+    t.float    "tuition_nonresident", limit: 24
   end
 
   create_table "users", force: true do |t|
