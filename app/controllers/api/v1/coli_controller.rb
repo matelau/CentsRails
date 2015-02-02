@@ -98,7 +98,7 @@ class Api::V1::ColiController < ApplicationController
 		unless no_data_for.empty?
 			result[:error] = 'No data on city or state for some locations'
 			result[:no_data_for] = no_data_for
-			result[:operation] = params[:operation]
+			result[:operation] = 'undefined' # Needed for the query parser.
 			return render json: result, status: 404
 		end
 
@@ -107,7 +107,7 @@ class Api::V1::ColiController < ApplicationController
 		unless used_state_data_for.empty?
 			result[:warning] = 'No data on city for some locations; used state data instead'
 			result[:used_state_data_for] = used_state_data_for
-			result[:operation] = 'undefined'	# Needed for the query parser.
+			result[:operation] = params[:operation]	# Needed for the query parser.
 		end
 
 		# Store each locations's data in result.
