@@ -17,6 +17,7 @@ class MajorDataScraper
 		end
 
 		arr = CSV::parse(File.open("../data/scraped/major_in_field.csv", 'r') {|f| f.read})
+		arr.shift
 
 		arr.each do |m, i|
 			puts m
@@ -24,6 +25,7 @@ class MajorDataScraper
 		end
 
 		arr = CSV::parse(File.open("../data/scraped/major_job_satisfaction.csv", 'r') {|f| f.read})
+		arr.shift
 
 		arr.each do |m, s, g|
 			puts m
