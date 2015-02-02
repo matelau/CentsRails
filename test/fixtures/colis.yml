@@ -9,7 +9,7 @@ sf:
   health_care: 114
   utilities: 99
   housing: 339
-  location: 'San Francisco'
+  city: 'San Francisco'
   unemp_rate: 4
   unemp_trend: 1.5
   income_per_capita: 1.5
@@ -28,7 +28,7 @@ slc:
   health_care: 95
   utilities: 92
   housing: 119
-  location: 'Salt Lake City'
+  city: 'Salt Lake City'
   unemp_rate: 5
   unemp_trend: 1.5
   income_per_capita: 1.5
