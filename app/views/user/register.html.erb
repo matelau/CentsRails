@@ -2,7 +2,7 @@
 	<fieldset>
 		<div class="control-group">
 			<!-- First name -->
-			<label class="control-label"  for="first_name">First Name</label>
+			<label class="control-label"	for="first_name">First Name</label>
 			<div class="controls">
 				<%= f.text_field :first_name, html: {'placeholder' => "", class: "input-xlarge"} %>
 				<p class="help-block">First name can contain any letters.</p>
@@ -11,7 +11,7 @@
 
 		<div class="control-group">
 			<!-- Last name -->
-			<label class="control-label"  for="first_name">Last Name</label>
+			<label class="control-label"	for="first_name">Last Name</label>
 			<div class="controls">
 				<%= f.text_field :last_name, html: {'placeholder' => "", class: "input-xlarge"} %>
 				<p class="help-block">Last name can contain any letters.</p>
@@ -38,7 +38,7 @@
  
 		<div class="control-group">
 			<!-- Password -->
-			<label class="control-label"  for="password_confirm">Password (Confirm)</label>
+			<label class="control-label"	for="password_confirm">Password (Confirm)</label>
 			<div class="controls">
 				<%= f.password_field :password_confirmation, html: {'placeholder' => "", class: "input-xlarge"} %>
 				<p class="help-block">Confirm your password</p>
@@ -48,66 +48,87 @@
 		<div class="control-group">
 			<!-- Button -->
 			<div class="controls">
-				<button class="btn btn-success">Register</button>
+				<button class="btn btn-primary">Register</button>
 			</div>
 		</div>
 	</fieldset>
 <% end %>
 
 <script src="/assets/jquery.validate.min.js"></script>
+<script src="/assets/additional-methods.min.js"></script>
 
 <script>
-(function($,W,D)
+(function($,W,document)
 {
-    var JQUERY4U = {};
+	var validator = {};
  
-    JQUERY4U.UTIL =
-    {
-        setupFormValidation: function()
-        {
-            $("#register-form").validate({
-            		onfocusout: function(element, event) {
-            		this.element(element);
-        			},
-        				// Set the requirements for the fields here.
-                rules: {
-                    "user[first_name]": "required",
-                    "user[last_name]": "required",
-                    "user[email]": {
-                        required: true,
-                        email: true
-                    },
-                    "user[password]": {
-                        required: true,
-                        minlength: 6
-                    },
-                    "user[password_confirmation]": {
-                    	required: true,
-                    	minlength: 6,
-                    	equalTo: "#user_password"
-                    }
-                },
-                // Set the error message here.
-                messages: {
-                    "user[first_name]": "First name is required",
-                    "user[last_name]": "Last name is required",
-                    "user[password]": {
-                        required: "Password is required",
-                        minlength: "Password must be at least 6 characters long"
-                    },
-                    "user[email]": "Enter a valid email address"
-                },
-                submitHandler: function(form) {
-                    form.submit();
-                }
-            });
-        }
-    }
+	validator.UTIL =
+	{
+		setupFormValidation: function()
+		{
+			$("#register-form").validate({
+					onfocusout: function(element, event) {
+						this.element(element);
+					},
+
+					// Set the requirements for the fields here.
+					rules: {
+						"user[first_name]": {
+							required: true,
+							lettersonly: true
+						},
+						"user[last_name]": {
+							required: true,
+							lettersonly: true
+						},
+						"user[email]": {
+							required: true,
+							email: true
+						},
+						"user[password]": {
+							required: true,
+							minlength: 6
+						},
+						"user[password_confirmation]": {
+							required: true,
+							minlength: 6,
+							equalTo: "#user_password"
+						}
+					},
+					
+					// Set the error message here.
+					messages: {
+						"user[first_name]": {
+							required: "Required",
+							lettersonly: "First name can only have letters"
+						},
+						"user[last_name]": {
+							required: "Required",
+							lettersonly: "Last name can only have letters"
+						},
+						"user[password]": {
+							required: "Required",
+							minlength: "Must be at least 6 characters long"
+						},
+						"user[email]": "Enter a valid email address",
+						"user[password_confirmation]": {
+							required: "Required",
+							equalTo: "Must match password"
+						}
+					},
+					submitHandler: function(form) {
+						form.submit();
+					}
+				});
+			}
+		}
  
-    //when the dom has loaded setup form validation rules
-    $(D).ready(function($) {
-        JQUERY4U.UTIL.setupFormValidation();
+	// Activate the rules on keyup.
+	$(document).ready(function($) {				
+		$('#register-form').bind('keyup', function(){
+       validator.UTIL.setupFormValidation();
     });
+	});
  
 })(jQuery, window, document);
 </script>
