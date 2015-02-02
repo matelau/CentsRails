@@ -20,7 +20,7 @@
 
 
 var active_tab, type, data, hide_1, hide_2, axis_location, horz_locs, min, max, above_1, above_2, below_1, below_2, font,
-	spending_default, spending_student, spending_custom, spending_selected, spending_income, spending_unalloc;
+	spending_selected, default_categories, spending_categories;
 
 
 var sketch = new Processing.Sketch();
@@ -39,20 +39,35 @@ function sketchProc(processing) {
 
 		//setup if type is spending breakdown
 		spending_selected = "default";
+
 		//default spending breakdown
-		spending_default = {"Food":17, "Housing":25, "Utilities":6, "Transportation":12, "Healthcare":5, "Insurance":8, "Personal Debt":12, "Savings":10, "Misc":5};
-		spending_student = {};
-		spending_custom = {};
+		// spending_default = {"Food":17, "Housing":25, "Utilities":6, "Transportation":12, "Healthcare":5, "Insurance":8, "Personal_Debt":12, "Savings":10, "Misc":5};
+		// spending_student = {};
+		// spending_custom = {};
+		default_categories = {	'default':{"Food":17, "Housing":25, "Utilities":6, "Transportation":12, "Healthcare":5, "Insurance":8, "Personal_Debt":12, "Savings":10, "Misc":5},
+								'student':{"Food":14, "Housing":21, "Utilities":6, "Transportation":12, "Tuition":20, "Books":11, "Savings":8, "Misc":8},
+								'custom':{"Food":17, "Housing":25, "Utilities":6}
+		};
 
+		spending_categories = {	'default':{"Food":17, "Housing":25, "Utilities":6, "Transportation":12, "Healthcare":5, "Insurance":8, "Personal_Debt":12, "Savings":10, "Misc":5},
+								'student':{"Food":14, "Housing":21, "Utilities":6, "Transportation":12, "Tuition":20, "Books":11, "Savings":8, "Misc":8},
+								'custom':{"Food":17, "Housing":25, "Utilities":6}
+		};
 		//draw in all fields/names
-		if (spending_selected == "default")
-		{
-			for (key in spending_default)
-			{
-				$( "<p>" + key.toUpperCase() + "</p>" ).appendTo( "#spend_name_list" );
-				//$("<li><div style='float:right'><input class='update_spend' id='" + key + "field' oninput='spendingVal('" + key + "')' type='text'></div>").append("#spend_field_list");
-			}
+		// if (spending_selected == "default" && type == "spending") 
+		// {
+		// 	for (key in spending_default)
+		// 	{
 
+				//<ul style="list-style-type: none; padding: 0; width:280px; height:30px;">
+				//<li style="display:inline;"><input class="update_spend" type="text"/></li>
+	  			//<li style="display:inline;"><a style="padding-left:5px">x</a></li>
+	  			//<li style="display:inline;"><p style="display:inline; float:left; margin:10px 0px 0px 0px; width:140px; text-align:right;">TRANSPORTATION</p></li>
+	  			
+				//</ul>
+		if (type == "spending")
+		{
+			buildCategories();
 		}
 
 		// if (document.getElementById("income_field"))
@@ -1564,22 +1579,106 @@ function hide_toggle(num) {
 	}
 };
 
+function buildCategories() {
+	for (key in spending_categories[spending_selected])
+	{
+		var add = "<ul id='" + key + "_list_item' style='list-style-type: none; padding: 0; width:280px; height:30px;'>";
+		add += "<li style='display:inline;'><input class='update_spend' oninput='spendingVal(&quot;" + key +"&quot;)' type='text'/></li>";
+		add += "<li style='display:inline;'><a style='padding-left:5px' onclick='deleteCategory(&quot;" + key + "&quot;)'>x</a></li>";
+		add += ("<li style='display:inline;'><p style='display:inline; float:left; margin:10px 0px 0px 0px; width:140px; text-align:right;'>" + key.toUpperCase().replace(/_/g, " ") + "</p></li></ul>");
+		$(add).appendTo("#category_list");
+		// $( "<p id='" + key + "_text_div' style='width:140px;'>" + key.toUpperCase().replace(/_/g, " ") + "</p>" ).appendTo( "#spend_name_list" );
+		// $( "<li id='" + key + "_div'><div style='float:right'><input class='update_spend' id='" + key + "_field' oninput='spendingVal(&quot;" + key +"&quot;)' type='text'><a onclick='deleteCategory(&quot;" + key + "&quot;)'>  X</a></div></li>" ).appendTo( "#spend_field_list" );
+		// document.getElementById(key + "_field").value = spending_default[key];
+		//$("<li><div style='float:right'><input class='update_spend' id='" + key + "field' oninput='spendingVal('" + key + "')' type='text'></div>").append("#spend_field_list");
+	}
+};
+
 function spendingVal(category) {
-	if (category == "income")
-		spending[category] = (document.getElementById(category + "_field").value).toFixed(2);
+	// if (category == "income")
+	// 	spending[category] = (document.getElementById(category + "_field").value).toFixed(2);
+	// else
+	// {
+	// 	spending[category] = (document.getElementById(category + "_field").value*12/spending["income"]*100);
+	// }
+	// //determine if there is no positive or negative unallocation
+	// var sum = 0.0;
+	// var names = ["food", "housing", "util", "trans", "health", "insure", "debt", "save", "misc"];
+	// for (var i=0; i<9; i++)
+	// {
+	// 	sum += spending[names[i]];
+	// }
+	// spending["unalloc"] = spending["income"] - (sum/100)*spending["income"];
+};
+
+function deleteCategory(category) {
+	$("#" + category + "_list_item").remove();
+	delete spending_categories[category];
+	//console.log(spending_default);
+};
+
+function addCategoryField() {
+	var add = "<ul id='new_category' style='list-style-type: none; padding: 0; width:280px; height:30px;''>";
+	add += "<li style='display:inline;'><input id='category_name' onkeyup='enterHit(event, &quot;btn1&quot;)' type='text' style='width:140px; float:left;'></li>";
+	add += "<li style='display:inline;'><a onclick='addCategory()'>O</a><a onclick='cancelCategory()'>X</a></li></ul>";
+	$(add).appendTo( "#category_list" );
+	document.getElementById("category_name").focus();
+};	
+
+function enterHit(event) {
+	event = event || window.event;
+    if (event.keyCode == 13) 
+        addCategory();
+    else if (event.keyCode == 27)
+    	cancelCategory();
+};
+
+function addCategory() {
+
+	//check length, concat if needed/ check if already a category, cleanse out html
+	if (document.getElementById("category_name").value == "")
+	{
+
+		window.alert("no blank categories");
+		$("#new_category").remove();
+		addCategoryField();
+	}
+
 	else
 	{
-		spending[category] = (document.getElementById(category + "_field").value*12/spending["income"]*100);
-	}
-	//determine if there is no positive or negative unallocation
-	var sum = 0.0;
-	var names = ["food", "housing", "util", "trans", "health", "insure", "debt", "save", "misc"];
-	for (var i=0; i<9; i++)
-	{
-		sum += spending[names[i]];
-	}
-	spending["unalloc"] = spending["income"] - (sum/100)*spending["income"];
+		var category = document.getElementById("category_name").value;
+		var no_space = category.replace(/ /g, "_");
+		$("#new_category").remove();
+		// if (spending_selected == "default")
+		// 	spending_default[no_space] = 0.0;
+		spending_categories[spending_selected][no_space] = 0.0
 
-
+		var add = "<ul id='" + no_space + "_list_item' style='list-style-type: none; padding: 0; width:280px; height:30px;''>";
+		add += "<li style='display:inline;''><input class='update_spend' oninput='spendingVal(&quot;" + no_space +"&quot;)' type='text'/></li>";
+		add += "<li style='display:inline;''><a style='padding-left:5px' onclick='deleteCategory(&quot;" + no_space + "&quot;)'>x</a></li>";
+		add += ("<li style='display:inline;''><p style='display:inline; float:left; margin:10px 0px 0px 0px; width:140px; text-align:right;'>" + category.toUpperCase() + "</p></li></ul>");
+		$(add).appendTo("#category_list");
+	}
 };
+
+function cancelCategory() {
+	$("#new_category").remove();		
+};
+
+function updateTemplate(template) {
+	//window.alert(template);
+	spending_selected = template;
+	//clear out old categories first
+	$("#category_list").empty();
+	buildCategories();
+};
+
+function resetCategories() {
+	spending_categories[spending_selected] = Object.create(default_categories[spending_selected]);
+	//spending_categories[spending_selected] = default_categories[spending_selected];
+	$("#category_list").empty();
+	buildCategories();
+};
+
+
 

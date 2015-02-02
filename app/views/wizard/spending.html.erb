@@ -10,42 +10,37 @@
 	<br>
 
 </div>
-<div  class="center" style="width:910px">
+<div  class="center" style="width:980px; padding-top:10px;">
 	<ul class="viz_objects">
-		<li><canvas class="process_viz" id="main_viz" width="655" height="375"></canvas></li>
-		<li>
-			<ul id="spend_name_list" style="list-style-type:none; padding-left:10px; padding-right:10px; text-align:right">
-				<!-- <p>ANNUAL INCOME</p>
-				<p>FOOD</p>
-				<p>HOUSING</p>
-				<p>UTILITIES</p>
-				<p>TRANSPORTATION</p>
-				<p>HEALTHCARE</p>
-				<p>INSURANCE</p>
-				<p>PERSONAL DEBT</p>
-				<p>SAVINGS</p>
-				<p>MISC</p>
-				<p>UNALLOCATED</p> -->
-			</ul>
-		</li>
-		<li>
-			<ul id="spend_field_list" style="list-style-type:none; padding-left:0px">
-				<!-- <li><div style="float:right"><input class="update_spend" id="income_field" oninput="spendingVal('income')" type="text"></div>
-				<li><div style="float:right"><input class="update_spend" id="food_field" oninput="spendingVal('food')" type="text"></div>
-				<li><div style="float:right"><input class="update_spend" id="housing_field" oninput="spendingVal('housing')" type="text"></div>
-				<li><div style="float:right"><input class="update_spend" type="text"></div>
-				<li><div style="float:right"><input class="update_spend" type="text"></div>
-				<li><div style="float:right"><input class="update_spend" type="text"></div>
-				<li><div style="float:right"><input class="update_spend" type="text"></div>
-				<li><div style="float:right"><input class="update_spend" type="text"></div>
-				<li><div style="float:right"><input class="update_spend" type="text"></div>
-				<li><div style="float:right"><input class="update_spend" type="text"></div>
-				<li><div style="float:right"><input class="update_spend" id="unalloc_field" type="text" readonly="true"></div> -->
-			</ul>
-		</li>
+		<canvas class="process_viz" id="main_viz" width="655" height="375"></canvas>
+		<ul style="padding-left:0px; list-style:none">
+			<!-- <a class="btn btn-default" onclick="addCategoryField()" >ADD CATEGORY</a> -->
+			<li id="category_list" style="overflow-y:auto; overflow-x:hidden; height:375px; width:275px; position:relative; margin-top:60px; margin-bottom:20px;"></li>
+			<!-- <ul style="list-style-type: none">
+				<li><a class="btn btn-default" onclick="addCategoryField()">ADD CATEGORY</a></li>
+				<li><a class="btn btn-default" onclick="update_tab(2)">SALARY</a></li>
+			</ul> -->
+			<li><a class="btn btn-default" onclick="addCategoryField()" >ADD CATEGORY</a></li>
+			<li><a class="btn btn-default" onclick="resetCategories()" >RESET TEMPLATE VALUES</a></li>
+		</ul>
 	</ul>
-	
-	<br> <!--errors will go here -->
+	<br>
+	<br>
+	<p style="display:inline; color:#884412; font-size:16px" >ANNUAL INCOME:  $</p> <input class="main-search" type="text" style="margin-left:10px; margin-right:60px; margin-top:20px; width:280px; height:36px"></input>
+		<div class="btn-group" data-toggle="buttons" style="float:right; margin-top:20px">
+    		<label class="btn btn-primary active" onclick="updateTemplate('default')">
+        		<input type="radio" name="template"> DEFAULT
+    		</label>
+    		<label class="btn btn-primary" onclick="updateTemplate('student')">
+        		<input type="radio" name="template"> STUDENT
+    		</label>
+    		<label class="btn btn-primary" onclick="updateTemplate('custom')">
+        		<input type="radio" name="template"> CUSTOM
+    		</label>
+		</div>
+	<!-- <a class="btn btn-default" onclick="addCategoryField()" style="margin-left:40px">ADD CATEGORY</a> -->
+	<br></br> 
+	<br>
 	<div class="bottom_nav">
 		<!-- add in annual income and radio buttons for bins (Default, Student, Custom) -->
 		<a class="btn btn-default"  href="/wizard/career">PREVIOUS</a>
