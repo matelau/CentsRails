@@ -65,8 +65,11 @@
     {
         setupFormValidation: function()
         {
-            //form validation rules
             $("#register-form").validate({
+            		onfocusout: function(element, event) {
+            		this.element(element);
+        			},
+        				// Set the requirements for the fields here.
                 rules: {
                     "user[first_name]": "required",
                     "user[last_name]": "required",
@@ -78,15 +81,21 @@
                         required: true,
                         minlength: 6
                     },
+                    "user[password_confirmation]": {
+                    	required: true,
+                    	minlength: 6,
+                    	equalTo: "#user_password"
+                    }
                 },
+                // Set the error message here.
                 messages: {
-                    "user[first_name]": "Please enter your firstname",
-                    "user[last_name]": "Please enter your lastname",
+                    "user[first_name]": "First name is required",
+                    "user[last_name]": "Last name is required",
                     "user[password]": {
-                        required: "Please provide a password",
-                        minlength: "Your password must be at least 6 characters long"
+                        required: "Password is required",
+                        minlength: "Password must be at least 6 characters long"
                     },
-                    "user[email]": "Please enter a valid email address"
+                    "user[email]": "Enter a valid email address"
                 },
                 submitHandler: function(form) {
                     form.submit();
