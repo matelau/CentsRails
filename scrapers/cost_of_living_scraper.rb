@@ -215,7 +215,7 @@ class CostOfLivingScraper
 				housing = loc_data[columns[4]]
 				trans = loc_data[columns[5]]
 				util = loc_data[columns[6]]
-				Coli.find_or_create_by(location: ci, state: st).update(cost_of_living: col, transportation: trans, groceries: groc, goods: goods, health_care: hc, utilities: util, housing: housing)
+				Coli.find_or_create_by(city: ci, state: st).update(cost_of_living: col, transportation: trans, groceries: groc, goods: goods, health_care: hc, utilities: util, housing: housing)
 			end
 
 

@@ -78,7 +78,7 @@ for i in 1..11
 		puts pop
 		puts grad
 
-		#Universities.find_or_create_by(name: school, state: location, rank: rank, size: pop, instate: instate, outofstate: outofstate, grad_rate_4_year: grad)
+		University.find_or_create_by(name: school, state: location, rank: rank, size: pop, tuition_resident: instate, tuition_nonresident: outofstate, grad_rate_6_year: grad)
 	end
 end
 puts count

@@ -8,7 +8,7 @@ class IncomeTaxScraper
 	def self.scrape()
 		taxes = {}
 
-		arr = CSV::parse(File.open("../query_service/incometaxes.csv", 'r') {|f| f.read})
+		arr = CSV::parse(File.open("../data/scraped/incometaxes.csv", 'r') {|f| f.read})
 		arr.shift
 
 		arr.each do |s, min, max|
@@ -18,7 +18,7 @@ class IncomeTaxScraper
 			end
 		end
 
-		arr = CSV::parse(File.open("../query_service/salestaxes.csv", 'r') {|f| f.read})
+		arr = CSV::parse(File.open("../data/scraped/salestaxes.csv", 'r') {|f| f.read})
 
 		arr.each do |s, rate|
 			puts s
