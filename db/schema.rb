@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150131035738) do
+ActiveRecord::Schema.define(version: 20150202082246) do
 
   create_table "careers", force: true do |t|
     t.datetime "created_at"
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20150131035738) do
     t.float    "health_care",       limit: 24
     t.float    "utilities",         limit: 24
     t.float    "housing",           limit: 24
-    t.string   "location"
+    t.string   "city"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "unemp_rate",        limit: 24
@@ -52,11 +52,11 @@ ActiveRecord::Schema.define(version: 20150131035738) do
   create_table "degrees", force: true do |t|
     t.float    "salary",       limit: 24
     t.float    "unemployment", limit: 24
-    t.boolean  "in_field"
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "satisfaction", limit: 24
+    t.float    "in_field",     limit: 24
   end
 
   create_table "gets", force: true do |t|
