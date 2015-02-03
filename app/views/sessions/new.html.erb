@@ -1,15 +1,77 @@
-<%= form_tag '/user/login' do %>
-	<table>
-  	<tr>
-  		<td>Email</td> <td><%= text_field_tag :email %></td>
-  	</tr>
+<%= form_tag('/user/login', 
+	{ class: "form-horizontal", 'id' => 'login-form', 'method' => 'post'}) do %>
+	<fieldset>
+		<div class="control-group">
+			<!-- E-mail -->
+			<label class="control-label"	for="first_name">E-mail</label>
+			<div class="controls">
+				<%= email_field_tag 'email'%>
+			</div>
+		</div>
 
-  	<tr>
-  		<td>Password</td> <td><%= password_field_tag :password %></td>
-  	</tr>
-
-  	<tr>
-  		<td><%= submit_tag "Log in" %></td>
-  	</tr>
-  </table>
+		<div class="control-group">
+			<!-- Password -->
+			<label class="control-label"	for="password_confirm">Password</label>
+			<div class="controls">
+				<%= password_field_tag 'password' %>
+			</div>
+		</div>
+ 
+		<div class="control-group">
+			<!-- Button -->
+			<div class="controls">
+				<button class="btn btn-primary">Log In</button>
+			</div>
+		</div>
+	</fieldset>
 <% end %>
+
+<script src="/assets/jquery.validate.min.js"></script>
+<script src="/assets/additional-methods.min.js"></script>
+
+<script>
+(function($,W,document)
+{
+	var validator = {};
+ 
+	validator.UTIL =
+	{
+		setupFormValidation: function()
+		{
+			$("#login-form").validate({
+					onfocusout: function(element, event) {
+						this.element(element);
+					},
+
+					// Set the requirements for the fields here.
+					rules: {
+						"email": {
+							required: true,
+							email: true
+						},
+						"password": {
+							required: true
+						},
+					},
+					
+					// Set the error message here.
+					messages: {
+						"password": "Enter your password",
+						"email": "Enter a valid email address",
+					},
+					submitHandler: function(form) {
+						form.submit();
+					}
+				});
+			}
+		}
+ 
+	// Activate the rules on keyup.
+	$(document).ready(function($) {				
+		$('#login-form').bind('keyup', function(){
+       validator.UTIL.setupFormValidation();
+    });
+	});
+ 
+})(jQuery, window, document);
+</script>
