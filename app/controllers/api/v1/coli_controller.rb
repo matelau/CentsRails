@@ -49,7 +49,6 @@ class Api::V1::ColiController < ApplicationController
 								:housing,
 								:city,
 								:unemp_rate,
-								:unemp_trend,
 								:sales_tax,
 								:property_tax,
 								:state,
@@ -141,8 +140,9 @@ class Api::V1::ColiController < ApplicationController
 
 			# Collect the value of each field in coli_stats.
 			fields.each do |field|
-				stat = lookup["#{location[:label]}"][field]
-				coli_stats << stat.to_f
+				stat = lookup["#{location[:label]}"][field] 
+				stat = stat ? stat.to_f : nil
+				coli_stats << stat
 			end
 
 			# Add the mins and maxes.
@@ -159,14 +159,15 @@ class Api::V1::ColiController < ApplicationController
 			labor_stats = Array.new	# Used for formatting the eventual JSON object.
 			# DONE: Unemployment rate, average salary, economic growth[needs to be added]:float,
 			# DONE: No unemp_trend
-			# DONE: Allow nulls to be returned
+			#  Allow nulls to be returned
 			# DONE: National average for each field
 			fields = [:unemp_rate, :income_per_capita, :economic_growth]
 
 			# Collect the value of each field in coli_stats.
 			fields.each do |field|
-				stat = lookup["#{location[:label]}"][field]
-				labor_stats << stat.to_f
+				stat = lookup["#{location[:label]}"][field] 
+				stat = stat ? stat.to_f : nil
+				labor_stats << stat
 			end
 
 			labor_stats << Coli.average(:unemp_rate).to_f
@@ -188,8 +189,9 @@ class Api::V1::ColiController < ApplicationController
 
 			# Collect the value of each field in coli_stats.
 			fields.each do |field|
-				stat = lookup["#{location[:label]}"][field]
-				tax_stats << stat.to_f
+				stat = lookup["#{location[:label]}"][field] 
+				stat = stat ? stat.to_f : nil
+				tax_stats << stat
 			end
 
 			# Add max and min.
@@ -206,21 +208,28 @@ class Api::V1::ColiController < ApplicationController
 			weather_low_stats = Array.new
 
 			records.each do |record|
-				if record[:city] == location[:city] then
-					weather_high_stats << record[:high].to_f if record[:high]
-					weather_low_stats << record[:low].to_f if record[:low]
+				if record[:city] == location[:city] and
+						record[:state] == location[:state] then
+					stat = record[:high]
+					stat = stat ? stat.to_f : nil
+					weather_high_stats << stat
+					stat = record[:low]
+					stat = stat ? stat.to_f : nil
+					weather_low_stats << stat
+					# weather_high_stats << record[:high] ? record[:high].to_f : nil
+					# weather_low_stats << record[:low] ? record[:low].to_f : nil
 				end
 			end
 
 			# Add max and min for each list.
 			unless weather_high_stats.empty?
-				weather_high_stats << weather_high_stats.min
-				weather_high_stats << weather_high_stats.max
+				weather_high_stats << weather_high_stats.compact.min
+				weather_high_stats << weather_high_stats.compact.max
 			end
 			
-			unless weather_high_stats.empty?
-				weather_low_stats << weather_low_stats.min
-				weather_low_stats << weather_low_stats.max
+			unless weather_low_stats.empty?
+				weather_low_stats << weather_low_stats.compact.min
+				weather_low_stats << weather_low_stats.compact.max
 			end
 
 			result["weather_#{i}"] = weather_high_stats

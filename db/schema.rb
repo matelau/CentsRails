@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150203235857) do
+ActiveRecord::Schema.define(version: 20150204154111) do
 
   create_table "careers", force: true do |t|
     t.datetime "created_at"
@@ -56,7 +56,6 @@ ActiveRecord::Schema.define(version: 20150203235857) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "unemp_rate",        limit: 24
-    t.float    "unemp_trend",       limit: 24
     t.float    "sales_tax",         limit: 24
     t.float    "property_tax",      limit: 24
     t.string   "state"
