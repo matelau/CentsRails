@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150202082246) do
+ActiveRecord::Schema.define(version: 20150204154111) do
 
   create_table "careers", force: true do |t|
     t.datetime "created_at"
@@ -19,6 +19,29 @@ ActiveRecord::Schema.define(version: 20150202082246) do
     t.integer  "employment_change_volume"
     t.float    "employment_change_percent", limit: 24
     t.integer  "job_openings"
+  end
+
+  create_table "coli_weather", id: false, force: true do |t|
+    t.float  "cost_of_living",        limit: 24
+    t.float  "transportation",        limit: 24
+    t.float  "groceries",             limit: 24
+    t.float  "goods",                 limit: 24
+    t.float  "health_care",           limit: 24
+    t.float  "utilities",             limit: 24
+    t.float  "housing",               limit: 24
+    t.string "city"
+    t.float  "unemp_rate",            limit: 24
+    t.float  "sales_tax",             limit: 24
+    t.float  "property_tax",          limit: 24
+    t.string "state"
+    t.float  "income_tax_min",        limit: 24
+    t.float  "income_tax_max",        limit: 24
+    t.float  "income_per_capita",     limit: 24
+    t.string "month",                 limit: 10
+    t.float  "high",                  limit: 24
+    t.float  "low",                   limit: 24
+    t.float  "avg_unemp_rate",        limit: 53
+    t.float  "avg_income_per_capita", limit: 53
   end
 
   create_table "colis", force: true do |t|
@@ -33,13 +56,13 @@ ActiveRecord::Schema.define(version: 20150202082246) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "unemp_rate",        limit: 24
-    t.float    "unemp_trend",       limit: 24
     t.float    "sales_tax",         limit: 24
     t.float    "property_tax",      limit: 24
     t.string   "state"
     t.float    "income_tax_max",    limit: 24
     t.float    "income_tax_min",    limit: 24
     t.float    "income_per_capita", limit: 24
+    t.float    "economic_growth",   limit: 24
   end
 
   create_table "completeds", force: true do |t|
