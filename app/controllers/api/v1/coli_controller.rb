@@ -206,7 +206,7 @@ class Api::V1::ColiController < ApplicationController
 			weather_low_stats = Array.new
 
 			records.each do |record|
-				if record[:location] == location then
+				if record[:city] == location[:city] then
 					weather_high_stats << record[:high].to_f if record[:high]
 					weather_low_stats << record[:low].to_f if record[:low]
 				end
