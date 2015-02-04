@@ -52,3 +52,4 @@ gem 'passenger'
 gem 'rspec'
 
 gem 'thin'
+gem 'jquery-validation-rails'
