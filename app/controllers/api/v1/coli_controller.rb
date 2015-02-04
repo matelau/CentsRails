@@ -7,12 +7,8 @@ class Api::V1::ColiController < ApplicationController
 
 		# Check for the required fields, and return an appropriate message if
 		# they are not present.
-		unless params[:search_by].present?
-			error_list.append 'The search_by field was missing. Don\'t forget the underscore.'
-		end
-
-		unless params[:objects].present?
-			error_list.append 'No objects were in the objects array.'
+		unless params[:locations].present?
+			error_list.append 'No objects were in the locations array.'
 		end
 
 		unless params[:operation].present?
@@ -24,30 +20,26 @@ class Api::V1::ColiController < ApplicationController
 			return render json: result, status: 400
 		end
 
-		# The column we're searching over. Currently this is always 'location',
-		# but it could change.
-		column = params[:search_by]
-
 		lookup = Hash.new
+		locations = params[:locations]
 
-		# Create a list of the locations that were passed in.
-		locations = Array.new
-		params[:objects].each do |object|
-			locations << object.values[0]
-		end
-
-		# Create a string of the form 'location = l1 OR location = l1 OR ...'.
+		# Create a string of the form '(city = c1 AND state = s1) OR
+		# (city = c2 AND state = s2) ... ' and a list of city, state pairs.
+		# This string and list will be used to dynamically create the where clause
+		# for the query.
 		where_string = ""
+		where_params = Array.new
 		locations.each do |location|
-			#where_string += "location = '#{location}' OR "
-			where_string += 'location = ? OR '
+			where_string += '(city = ? AND state = ?) OR (city IS NULL AND state = ?) OR '
+			where_params << location[:city]
+			where_params << location[:state]
+			where_params << location[:state]
 		end
-
-		# Strip off the last ' OR '.
-		where_string = where_string[0..-5]
+		where_string = where_string[0..-5]	# Strip off the last ' OR '.
 
 		# Query the database.
-		records = Coli.joins(:weather_records)
+		records = Coli.joins(
+						"LEFT OUTER JOIN weather_records ON colis.id = weather_records.coli_id")
 						.select(:cost_of_living,
 								:transportation,
 								:groceries,
@@ -55,7 +47,7 @@ class Api::V1::ColiController < ApplicationController
 								:health_care,
 								:utilities,
 								:housing,
-								:location,
+								:city,
 								:unemp_rate,
 								:unemp_trend,
 								:sales_tax,
@@ -64,31 +56,72 @@ class Api::V1::ColiController < ApplicationController
 								:income_tax_max,
 								:income_tax_min,
 								:income_per_capita,
+								:economic_growth,
 								:month,
 								:high,
 								:low)
-						.where([where_string, *locations])
-						.order('colis.id ASC')	
+						.where([where_string, *where_params])
+						.order('colis.id ASC')
 
+		# records = Coli.find_by_sql([
+		# 	"CREATE VIEW coli_weather
+		# 	 AS 
+		# 	 SELECT cost_of_living, transportation, groceries, goods, health_care, 
+		# 					utilities, housing, city, unemp_rate, sales_tax, property_tax,
+		# 					state, income_tax_min, income_tax_max, income_per_capita, month,
+		# 					high, low, AVG(unemp_rate) AS avg_unemp_rate, AVG(income_per_capita)
+		# 					AS avg_income_per_capita
+		# 	 FROM colis AS c
+		# 	 LEFT OUTER JOIN weather_records AS wr ON c.id = wr.coli_id
+		# 	 WHERE #{where_string}
+		# 	 ORDER BY c.id ASC", *where_params])
+
+		# Remember which record is associated with which location label.
 		locations.each do |location|
 			records.each do |record|
-				if record[:location] == location then
-					lookup["#{location}"] = record
+				if record[:city] == location[:city] and 
+					record[:state] == location[:state] then
+					lookup["#{location[:label]}"] = record
 					break
 				end
 			end
 		end
 
 		# Check that we found everything in the database.
-		not_found = Array.new
+		used_state_data_for = Array.new
+		no_data_for = Array.new
 		locations.each do |location|
-			not_found << location unless lookup["#{location}"]
+			# Make a list of cities that don't have data (but whose state do).
+			unless lookup["#{location[:label]}"]
+				used_state_data_for << location
+				# Search through the records for state-only data.
+				records.each do |record|
+					if record[:city] == nil and
+						record[:state] == location[:state] then
+						lookup["#{location[:label]}"] = record
+					end
+				end
+				# Make a list of cities that don't have city or state data.
+				unless lookup["#{location[:label]}"]
+					no_data_for << location
+				end
+			end
 		end
-		unless not_found.empty?
-			result[:failure] = 'Some objects weren\'t found in the database.'
-			result[:not_found] = not_found
-			result[:operation] = 'undefined'	# Needed for the query parser
-			return render json: result, status: 200
+		
+		# If there is no data for a city or its state, send an error message.
+		unless no_data_for.empty?
+			result[:error] = 'No data on city or state for some locations'
+			result[:no_data_for] = no_data_for
+			result[:operation] = 'undefined' # Needed for the query parser.
+			return render json: result, status: 404
+		end
+
+		# If there is no data for a city but there is data for its state, continue
+		# but with a warning.
+		unless used_state_data_for.empty?
+			result[:warning] = 'No data on city for some locations; used state data instead'
+			result[:used_state_data_for] = used_state_data_for
+			result[:operation] = params[:operation]	# Needed for the query parser.
 		end
 
 		# Store each object's data in result.
@@ -97,7 +130,7 @@ class Api::V1::ColiController < ApplicationController
 		i = 1
 		locations.each do |location|
 			# Name each location.
-			result["location_#{i}"] = location
+			result["location_#{i}"] = location[:label]
 	
 			##### ---------------- COST OF LIVING ---------------- #####
 			coli_stats = Array.new	# For formatting the eventual JSON object.
@@ -106,10 +139,10 @@ class Api::V1::ColiController < ApplicationController
 			fields = [:cost_of_living, :goods, :groceries, :health_care, 
 				:housing, :transportation, :utilities]
 
-			# Collect the value of each non-nil field in coli_stats.
+			# Collect the value of each field in coli_stats.
 			fields.each do |field|
-				stat = lookup["#{location}"][field]
-				coli_stats << stat.to_f if stat
+				stat = lookup["#{location[:label]}"][field]
+				coli_stats << stat.to_f
 			end
 
 			# Add the mins and maxes.
@@ -124,19 +157,26 @@ class Api::V1::ColiController < ApplicationController
 
 			##### -------------------- LABOR --------------------- #####
 			labor_stats = Array.new	# Used for formatting the eventual JSON object.
+			# DONE: Unemployment rate, average salary, economic growth[needs to be added]:float,
+			# DONE: No unemp_trend
+			# DONE: Allow nulls to be returned
+			# DONE: National average for each field
+			fields = [:unemp_rate, :income_per_capita, :economic_growth]
 
-			fields = [:unemp_trend, :income_tax_max, :income_tax_min, :unemp_rate]
-
-			# Collect the value of each non-nil field in coli_stats.
+			# Collect the value of each field in coli_stats.
 			fields.each do |field|
-				stat = lookup["#{location}"][field]
-				labor_stats << stat.to_f if stat
+				stat = lookup["#{location[:label]}"][field]
+				labor_stats << stat.to_f
 			end
 
-			# Add max and min.
+			labor_stats << Coli.average(:unemp_rate).to_f
+			labor_stats << Coli.average(:income_per_capita).to_f
+			labor_stats << Coli.average(:economic_growth).to_f
+
+			# Add max and min. The compact method removes nils.
 			unless labor_stats.empty?
-				labor_stats << labor_stats.min
-				labor_stats << labor_stats.max
+				labor_stats << labor_stats.compact.min
+				labor_stats << labor_stats.compact.max
 			end
 
 			result["labor_#{i}"] = labor_stats
@@ -144,13 +184,12 @@ class Api::V1::ColiController < ApplicationController
 			
 			##### -------------------- TAXES --------------------- #####
 			tax_stats = Array.new	# For formatting the eventual JSON object.			
-
 			fields = [:sales_tax, :income_tax_min, :income_tax_max, :property_tax]
 
-			# Collect the value of each non-nil field in coli_stats.
+			# Collect the value of each field in coli_stats.
 			fields.each do |field|
-				stat = lookup["#{location}"][field]
-				tax_stats << stat.to_f if stat
+				stat = lookup["#{location[:label]}"][field]
+				tax_stats << stat.to_f
 			end
 
 			# Add max and min.
