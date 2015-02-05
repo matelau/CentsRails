@@ -144,12 +144,12 @@ def query(query):
 		}
 		for l in locations:
 			package["objects"].append({"city":l[:l.index(",")]})
-		url = "http://%s/api/v1/coli/" % (ip)
+		url = "https://%s/api/v1/coli/" % (ip)
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
 		prep = r.prepare()
 		s = requests.Session()
-		resp = s.send(prep)
+		resp = s.send(prep, cert="cert.pem")
 		if(resp.status_code == 400):
 			package = {
 				"operation":"undefined",
