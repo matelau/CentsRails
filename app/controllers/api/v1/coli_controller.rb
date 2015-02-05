@@ -62,19 +62,6 @@ class Api::V1::ColiController < ApplicationController
 						.where([where_string, *where_params])
 						.order('colis.id ASC')
 
-		# records = Coli.find_by_sql([
-		# 	"CREATE VIEW coli_weather
-		# 	 AS 
-		# 	 SELECT cost_of_living, transportation, groceries, goods, health_care, 
-		# 					utilities, housing, city, unemp_rate, sales_tax, property_tax,
-		# 					state, income_tax_min, income_tax_max, income_per_capita, month,
-		# 					high, low, AVG(unemp_rate) AS avg_unemp_rate, AVG(income_per_capita)
-		# 					AS avg_income_per_capita
-		# 	 FROM colis AS c
-		# 	 LEFT OUTER JOIN weather_records AS wr ON c.id = wr.coli_id
-		# 	 WHERE #{where_string}
-		# 	 ORDER BY c.id ASC", *where_params])
-
 		# Remember which record is associated with which location label.
 		locations.each do |location|
 			records.each do |record|
@@ -207,20 +194,6 @@ class Api::V1::ColiController < ApplicationController
 			weather_high_stats = Array.new
 			weather_low_stats = Array.new
 
-			# records.each do |record|
-			# 	if record[:city] == location[:city] and
-			# 			record[:state] == location[:state] then
-			# 		stat = record[:high]
-			# 		stat = stat ? stat.to_f : nil
-			# 		weather_high_stats << stat
-			# 		stat = record[:low]
-			# 		stat = stat ? stat.to_f : nil
-			# 		weather_low_stats << stat
-			# 		# weather_high_stats << record[:high] ? record[:high].to_f : nil
-			# 		# weather_low_stats << record[:low] ? record[:low].to_f : nil
-			# 	end
-			# end
-
 			# First, look for an exact match (the current location's city matches 
 			# the record's city and likewise for state).
 			match_found = false
@@ -245,7 +218,7 @@ class Api::V1::ColiController < ApplicationController
 				end
 			end
 
-			# Reset matchFound for the next location.
+			# Reset match_found for the next location.
 			match_found = false
 
 			# Add min and max for each list.
