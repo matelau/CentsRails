@@ -90,6 +90,12 @@ function sketchProc(processing) {
 		processing.textFont(font, 12);
 		//******* END SETUP NEEDED FOR ALL VIZ
 
+		above_1 = new Array();
+		above_2 = new Array();
+		below_1 = new Array();
+		below_2 = new Array();
+		data = new Array();
+
 		var query = window.location.search;
 		if(query != "")
 		{
@@ -97,6 +103,7 @@ function sketchProc(processing) {
 	   			query = query.substring(1);
 	  		}
 	  		data = jQuery.parseJSON(unescape(query));
+	  		console.log(data);
   		}
 
 
@@ -104,11 +111,7 @@ function sketchProc(processing) {
 		horz_locs = [87, 145, 215, 308, 389, 488, 577];
 
 		//var to hold all data relevant to a given category
-		above_1 = new Array();
-		above_2 = new Array();
-		below_1 = new Array();
-		below_2 = new Array();
-		data = new Array();
+		
 		//****** END COL SETUP SECTION
 
 		
@@ -126,15 +129,18 @@ function sketchProc(processing) {
 
 			data["cli_1"] = [102, 94, 95, 95, 119, 105, 92, 92, 119];
 			data["cli_2"] = [96, 92, 100, 106, 97, 101, 99, 92, 106];
+
+			data["labor_1"] = [3.4, 48000, 4.4];
+			data["labor_2"] = [6.4, 51000, 3.3];
+			
+
+			//sales, income min, income max, property
+			data["taxes_1"] = [6.85, 5.0, 5.0, 0.67];
+			data["taxes_2"] = [8.3, 2.59, 4.54, 1.59];
+			
 		}
 
-		data["labor_1"] = [3.4, 48000, 4.4];
-		data["labor_2"] = [6.4, 51000, 3.3];
 		data["labor_3"] = [5.8, 44800, 4.6];
-
-		//sales, income min, income max, property
-		data["taxes_1"] = [6.85, 5.0, 5.0, 0.67];
-		data["taxes_2"] = [8.3, 2.59, 4.54, 1.59];
 		data["taxes_3"] = [8.25, 3.5, 7.8, 1.15];
 
 		//college comparisons, tuition, grad rate, undergrad enrollment, natl ranking
