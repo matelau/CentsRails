@@ -1779,8 +1779,7 @@ function deleteCategory(category) {
 	spending_sum -= spending_categories[spending_selected][category];
 	delete spending_categories[spending_selected][category];
 	document.getElementById("add_cat_button").text = "ADD CATEGORY";
-	$("#add_cat_button").removeAttr("disabled");
-	
+	$("#add_cat_button").removeAttr("disabled");	
 };
 
 function addCategoryField() {
@@ -1798,9 +1797,19 @@ function addCategoryField() {
 function enterHit(event) {
 	event = event || window.event;
     if (event.keyCode == 13 && document.getElementById("category_name").value != "") 
+    {
         addCategory();
+        return;
+    }
     else if (event.keyCode == 27)
     	cancelCategory();
+    else if (!(/^[a-zA-Z0-9 ]+$/.test(document.getElementById("category_name").value)))
+    {
+    	window.alert("Only letters, numbers and spaces allowed.");
+    	cancelCategory();
+    	addCategoryField();
+    	document.getElementById("category_name").blur();
+    }
 };
 
 function addCategory() {
