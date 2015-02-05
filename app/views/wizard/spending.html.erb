@@ -14,20 +14,21 @@
 	<ul class="viz_objects">
 		<canvas class="process_viz" id="main_viz" width="655" height="375"></canvas>
 		<ul style="padding-left:0px; list-style:none">
+			<li style="margin-top:25px"><a class="btn btn-default" id="add_cat_button" onclick="addCategoryField()" >ADD CATEGORY</a></li>
 			<!-- <a class="btn btn-default" onclick="addCategoryField()" >ADD CATEGORY</a> -->
-			<li id="category_list" style="overflow-y:auto; overflow-x:hidden; height:375px; width:275px; position:relative; margin-top:60px; margin-bottom:20px;"></li>
+			<li id="category_list" style="overflow-y:auto; overflow-x:hidden; height:375px; width:275px; position:relative; margin-bottom:20px;"></li>
 			<!-- <ul style="list-style-type: none">
 				<li><a class="btn btn-default" onclick="addCategoryField()">ADD CATEGORY</a></li>
 				<li><a class="btn btn-default" onclick="update_tab(2)">SALARY</a></li>
 			</ul> -->
-			<li><a class="btn btn-default" onclick="addCategoryField()" >ADD CATEGORY</a></li>
+			
 			<li><a class="btn btn-default" onclick="resetCategories()" >RESET TEMPLATE VALUES</a></li>
 		</ul>
 	</ul>
 	<br>
 	<br>
-	<p style="display:inline; color:#884412; font-size:16px" >ANNUAL INCOME:  $</p> <input class="main-search" type="text" style="margin-left:10px; margin-right:60px; margin-top:20px; width:280px; height:36px"></input>
-		<div class="btn-group" data-toggle="buttons" style="float:right; margin-top:20px">
+	<p style="display:inline; color:#884412; font-size:16px" >ANNUAL INCOME:  $</p> <input class="main-search" id="income_value" oninput="updateIncome()" type="text" style="margin-left:10px; margin-right:60px; width:280px; height:36px"></input>
+		<div class="btn-group" data-toggle="buttons" style="float:right; margin-top:0px">
     		<label class="btn btn-primary active" onclick="updateTemplate('default')">
         		<input type="radio" name="template"> DEFAULT
     		</label>

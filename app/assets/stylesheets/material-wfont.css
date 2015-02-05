@@ -179,6 +179,18 @@ canvas {
   text-align: right;
 }
 
+.tax_spend {
+  width: 85px;
+  height: 20px;
+  margin-top: 10px;
+  margin-right: 30px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 2px solid #884412;
+  text-align: right;
+}
+
 .help-text {
   text-align: center;
   font-size: 17px;
