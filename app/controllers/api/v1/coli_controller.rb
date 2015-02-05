@@ -57,7 +57,6 @@ class Api::V1::ColiController < ApplicationController
 								:housing,
 								:city,
 								:unemp_rate,
-								:unemp_trend,
 								:sales_tax,
 								:property_tax,
 								:state,

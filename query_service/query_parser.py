@@ -146,7 +146,7 @@ def query(query):
 			package["objects"].append({"city":l[:l.index(",")]})
 		url = "https://%s/api/v1/coli/" % (ip)
 		payload = json.dumps(package)
-		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload,verify=false)
+		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
 		prep = r.prepare()
 		s = requests.Session()
 		s.verify = False
