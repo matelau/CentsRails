@@ -207,30 +207,53 @@ class Api::V1::ColiController < ApplicationController
 			weather_high_stats = Array.new
 			weather_low_stats = Array.new
 
+			# records.each do |record|
+			# 	if record[:city] == location[:city] and
+			# 			record[:state] == location[:state] then
+			# 		stat = record[:high]
+			# 		stat = stat ? stat.to_f : nil
+			# 		weather_high_stats << stat
+			# 		stat = record[:low]
+			# 		stat = stat ? stat.to_f : nil
+			# 		weather_low_stats << stat
+			# 		# weather_high_stats << record[:high] ? record[:high].to_f : nil
+			# 		# weather_low_stats << record[:low] ? record[:low].to_f : nil
+			# 	end
+			# end
+
+			# First, look for an exact match (the current location's city matches 
+			# the record's city and likewise for state).
+			match_found = false
 			records.each do |record|
-				if record[:city] == location[:city] and
-						record[:state] == location[:state] then
-					stat = record[:high]
-					stat = stat ? stat.to_f : nil
-					weather_high_stats << stat
-					stat = record[:low]
-					stat = stat ? stat.to_f : nil
-					weather_low_stats << stat
-					# weather_high_stats << record[:high] ? record[:high].to_f : nil
-					# weather_low_stats << record[:low] ? record[:low].to_f : nil
+				if location[:city] == record[:city] and 
+					 location[:state] == record[:state] then
+					match_found = true
+					weather_high_stats << (record[:high] ? record[:high].to_f : nil)
+					weather_low_stats << (record[:low] ? record[:low].to_f : nil)
+				end					
+			end
+
+			# If that search didn't succeed, fall back to state.
+			if not match_found
+				records.each do |record|
+					if record[:city] == nil and 
+						 location[:state] == record[:state] then
+						weather_high_stats << (record[:high] ? record[:high].to_f : nil)
+						weather_low_stats << (record[:low] ? record[:low].to_f : nil)
+						break
+					end
 				end
 			end
 
-			# Add max and min for each list.
-			unless weather_high_stats.empty?
-				weather_high_stats << weather_high_stats.compact.min
-				weather_high_stats << weather_high_stats.compact.max
-			end
+			# Reset matchFound for the next location.
+			match_found = false
+
+			# Add min and max for each list.
+			weather_high_stats << weather_high_stats.compact.min
+			weather_high_stats << weather_high_stats.compact.max
 			
-			unless weather_low_stats.empty?
-				weather_low_stats << weather_low_stats.compact.min
-				weather_low_stats << weather_low_stats.compact.max
-			end
+			weather_low_stats << weather_low_stats.compact.min
+			weather_low_stats << weather_low_stats.compact.max
 
 			result["weather_#{i}"] = weather_high_stats
 			result["weatherlow_#{i}"] = weather_low_stats
