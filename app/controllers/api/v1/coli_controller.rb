@@ -40,7 +40,7 @@ class Api::V1::ColiController < ApplicationController
 		where_string = ""
 		locations.each do |location|
 			#where_string += "location = '#{location}' OR "
-			where_string += 'location = ? OR '
+			where_string += 'city = ? OR '
 		end
 
 		# Strip off the last ' OR '.
@@ -55,7 +55,7 @@ class Api::V1::ColiController < ApplicationController
 								:health_care,
 								:utilities,
 								:housing,
-								:location,
+								:city,
 								:unemp_rate,
 								:unemp_trend,
 								:sales_tax,
@@ -72,7 +72,7 @@ class Api::V1::ColiController < ApplicationController
 
 		locations.each do |location|
 			records.each do |record|
-				if record[:location] == location then
+				if record[:city] == location then
 					lookup["#{location}"] = record
 					break
 				end
@@ -167,7 +167,7 @@ class Api::V1::ColiController < ApplicationController
 			weather_low_stats = Array.new
 
 			records.each do |record|
-				if record[:location] == location then
+				if record[:city] == location then
 					weather_high_stats << record[:high].to_f if record[:high]
 					weather_low_stats << record[:low].to_f if record[:low]
 				end
