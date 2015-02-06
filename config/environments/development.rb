@@ -42,7 +42,7 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-  config.force_ssl = true
-  config.use_ssl = true	
-  config.ssl_port = 443
+  #config.force_ssl = true
+  config.use_ssl = false
+  #config.ssl_port = 443
 end
