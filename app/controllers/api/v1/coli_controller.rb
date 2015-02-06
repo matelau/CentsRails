@@ -62,23 +62,25 @@ class Api::V1::ColiController < ApplicationController
 						.where([where_string, *where_params])
 						.order('colis.id ASC')
 
-		# Remember which record is associated with which location label.
-		locations.each do |location|
-			records.each do |record|
-				if record[:city] == location[:city] and 
-					record[:state] == location[:state] then
-					lookup["#{location[:label]}"] = record
-					break
-				end
-			end
-		end
-
 		# Check that we found everything in the database.
 		used_state_data_for = Array.new
 		no_data_for = Array.new
 		locations.each do |location|
 			# Make a list of cities that don't have data (but whose state do).
-			unless lookup["#{location[:label]}"]
+			match_found = false
+			records.each do |record|
+				if location[:city] == record[:city] and 
+					 location[:state] == record[:state] then	
+					match_found = true
+				end			
+			end
+			unless match_found
+				used_state = false
+				records.each do |record|
+					if record[:city] == nil and 
+						 location[:state] == record[:state] then					
+				end
+			end
 				used_state_data_for << location
 				# Search through the records for state-only data.
 				records.each do |record|
