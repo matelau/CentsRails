@@ -19,9 +19,18 @@
 //= require ripples
 //= require_tree .
 
+// var path = window.location.pathname.split('/');
+// if (path[1]=="wizard")
+// {
+// 	$.getScript("test.js", function(){
+//    // Use anything defined in the loaded script...
+// });
+// }
 
 
-var active_tab, type, data, hide_1, hide_2, axis_location, horz_locs, min, max, above_1, above_2, below_1, below_2, font;
+
+var active_tab, type, data, hide_1, hide_2, axis_location, horz_locs, min, max, above_1, above_2, below_1, below_2, font,
+	spending_selected, default_categories, spending_categories, pie_colors, spending_sum, spending_income;
 
 
 var sketch = new Processing.Sketch();
@@ -33,21 +42,54 @@ function sketchProc(processing) {
 	var color_2 = processing.color(18, 86, 136);
 
 	processing.setup = function() {
-		//this will be retrieved from json object
-		//type = "city";
+
+		var pathArray = window.location.pathname.split('/');
+		type = pathArray[2];
+
+		//*******SPENDING SETUP
+		//setup if type is spending breakdown
+		spending_selected = "default";
+
+		//objects holding default spending quantities
+		default_categories = {	'default':{"Taxes":0, "Food":17, "Housing":25, "Utilities":6, "Transportation":12, "Healthcare":5, "Insurance":8, "Personal_Debt":12, "Savings":10, "Misc":5},
+								'student':{"Taxes":0, "Food":14, "Housing":21, "Utilities":6, "Transportation":12, "Tuition":25, "Books":6, "Savings":8, "Misc":8},
+								'custom':{"Taxes":0, "Food":17, "Housing":25, "Utilities":6}
+		};
+
+		spending_categories = {	'default':{"Taxes":0, "Food":17, "Housing":25, "Utilities":6, "Transportation":12, "Healthcare":5, "Insurance":8, "Personal_Debt":12, "Savings":10, "Misc":5},
+								'student':{"Taxes":0, "Food":14, "Housing":21, "Utilities":6, "Transportation":12, "Tuition":25, "Books":6, "Savings":8, "Misc":8},
+								'custom':{"Taxes":0, "Food":17, "Housing":25, "Utilities":6}
+		};
+		spending_income = 45000;
+		calculateTaxes();
+		rebuildPercentages();
+		if (type == "spending")
+		{
+			buildCategories();
+			document.getElementById("income_value").value = (spending_income).toFixed(2);
+		}
+
+		pie_colors = new Array();
+		pie_colors = [	processing.color(122,59,63), processing.color(110,118,135), processing.color(0,171,169), processing.color(170,0,255),
+						processing.color(216,193,0), processing.color(229,20,0), processing.color(244,114,208), processing.color(250,104,0),
+						processing.color(241,88,84), processing.color(109,135,100), processing.color(118,96,138), processing.color(0,138,0),
+						processing.color(96,169,23), processing.color(106,0,255), processing.color(164,196,0), processing.color(216,0,115),
+						processing.color(27,161,226), processing.color(162,0,37), processing.color(130,90,44), processing.color(240,163,10)];
+
+		shuffle(pie_colors);
+		//******* END SPENDING SETUP
+		
+		//******* SETUP NEEDED FOR ALL VIZ
 		processing.size(655,375);
 		//always set the initial tab to the first one
 		active_tab = 1;
 		hide_1 = false;
 		hide_2 = false;
-		horz_locs = [87, 145, 215, 308, 389, 488, 577];
-		
-
 		//load font
 		font = processing.loadFont("./fonts/Roboto-Regular.ttf");
 		processing.textFont(font, 12);
+		//******* END SETUP NEEDED FOR ALL VIZ
 
-		//var to hold all data relevant to a given category
 		above_1 = new Array();
 		above_2 = new Array();
 		below_1 = new Array();
@@ -61,9 +103,20 @@ function sketchProc(processing) {
 	   			query = query.substring(1);
 	  		}
 	  		data = jQuery.parseJSON(unescape(query));
+	  		console.log(data);
   		}
+
+
+  		//****** COL SETUP SECTION
+		horz_locs = [87, 145, 215, 308, 389, 488, 577];
+
+		//var to hold all data relevant to a given category
 		
-		//create dummy data
+		//****** END COL SETUP SECTION
+
+		
+		
+		//****** DUMMY DATA SECTION
 		if(query == "")
 		{
 			data["weather_1"] =    [38.0, 44.0, 53.0, 61.0, 71.0, 82.0, 90.0, 89.0, 78.0, 65.0, 50.0, 40.0, 38.0, 90.0];
@@ -76,18 +129,22 @@ function sketchProc(processing) {
 
 			data["cli_1"] = [102, 94, 95, 95, 119, 105, 92, 92, 119];
 			data["cli_2"] = [96, 92, 100, 106, 97, 101, 99, 92, 106];
+
+			data["labor_1"] = [3.4, 48000, 4.4];
+			data["labor_2"] = [6.4, 51000, 3.3];
+			
+
+			//sales, income min, income max, property
+			data["taxes_1"] = [6.85, 5.0, 5.0, 0.67];
+			data["taxes_2"] = [8.3, 2.59, 4.54, 1.59];
+			
 		}
 
-		data["labor_1"] = [3.4, 48000, 4.4];
-		data["labor_2"] = [6.4, 51000, 3.3];
 		data["labor_3"] = [5.8, 44800, 4.6];
-
-		//sales, income min, income max, property
-		data["taxes_1"] = [6.85, 5.0, 5.0, 0.67];
-		data["taxes_2"] = [8.3, 2.59, 4.54, 1.59];
 		data["taxes_3"] = [8.25, 3.5, 7.8, 1.15];
 
 		//college comparisons, tuition, grad rate, undergrad enrollment, natl ranking
+		//city, st, tuiiton breakdown, housing, net cost
 		data["school_1"] = [8000, 24, 32000, 40];
 		data["school_2"] = [5000, 50, 29000, 62];
 
@@ -105,13 +162,12 @@ function sketchProc(processing) {
 		data["career_unemploy_2"] = [8.1, 8.5];
 		data["career_unemploy_3"] = [6.0, 6.8];
 
+		//****** END DUMMY DATA SECTION
+
 	};
 
 	processing.draw = function() {
 		processing.background(255);
-
-		var pathArray = window.location.pathname.split('/');
-		type = pathArray[2];
 
 		if (type == "city")
 			draw_city();
@@ -130,7 +186,7 @@ function sketchProc(processing) {
 
 		else;
 
-		//show cli details
+		//show cli mouse over details
 		if (type == "city" && active_tab == 2)
 		{
 			var category = ["Overall, costs in", "Goods in", "Groceries in", "Health care costs in", "Housing costs in", "Transportation costs in", "Utilities in"];
@@ -321,15 +377,12 @@ function sketchProc(processing) {
 
 	function cost_of_living() {
 
-		//need to check for hugh outliers that will skew viz and make data impossible to read
-
 		var graph_top, graph_bot;
 		graph_top = 45;
 		graph_bot = 330;
 
 
 		//calculate min and max depending on what data is being shown/hidden
-		
 		if (!hide_2 && hide_1)
 		{
 			min = data["cli_2"][7];
@@ -383,6 +436,7 @@ function sketchProc(processing) {
 		}
 		var range = (axis_location-15-graph_top)/ num_above;
 		var scale = (max - 100) / num_above;
+		
 		//draw scale
 		for (var i=1; i<=num_above; i++)
 		{
@@ -478,7 +532,6 @@ function sketchProc(processing) {
 		processing.line(213, 347, 459, 347);
 		processing.fill(0);
 		processing.text("OVERALL AND CATEGORICAL COST OF LIVING (%)", 335, 25);
-		
 		processing.text("MOUSE OVER DATA FOR MORE DETAILS", 337, 362);
 		
 	};
@@ -501,7 +554,6 @@ function sketchProc(processing) {
 		processing.text("AVERAGE SALARY", axis_location[2], graph_bot+23);
 		processing.text("ECONOMIC GROWTH", axis_location[1], graph_bot+23);
 		processing.text("LABOR STATISTICS COMPARED TO NATIONAL AVERAGES", 327, 30);
-		//processing.line(154, 47, 499, 47);
 
 		//left and right axis
 		processing.line(graph_left, graph_top, graph_left, graph_bot);
@@ -509,7 +561,6 @@ function sketchProc(processing) {
 
 		//bottom lines around categories
 		processing.line(graph_left, graph_bot+1, graph_right-1, graph_bot+1);
-		//processing.line(graph_left, graph_bot+31, graph_right-1, graph_bot+31);
 
 		//need max for percentages
 		var min_1, max_1, min_2, max_2;
@@ -579,9 +630,6 @@ function sketchProc(processing) {
 		processing.text("NATIONAL", (axis_location[1]+axis_location[2])/2, (line_2+line_3)/2-9);
 		processing.text("AVERAGES", (axis_location[1]+axis_location[2])/2, (line_2+line_3)/2+8);
 
-
-
-
 		var height_1 = (graph_top - graph_bot)*((data["labor_1"][0] -  min_1)/(max_1 - min_1));
 		var height_2 = (graph_top - graph_bot)*((data["labor_1"][2] -  min_1)/(max_1 - min_1));
 		var height_3 = (graph_top - graph_bot)*((data["labor_1"][1] -  min_2)/(max_2 - min_2));
@@ -642,7 +690,6 @@ function sketchProc(processing) {
 		processing.text("MAX", axis_location[2], graph_bot+15);
 		processing.text("PROPERTY TAX", axis_location[3], graph_bot+15);
 		processing.text("TAX RATES COMPARED TO NATIONAL AVERAGES", 327, 30);
-		//processing.line(154, 47, 499, 47);
 
 		//left and right axis
 		processing.line(graph_left, graph_top, graph_left, graph_bot);
@@ -843,9 +890,7 @@ function sketchProc(processing) {
 		processing.fill(0);
 		processing.text("AVERAGE MONTHLY TEMPERATURE (°F) RANGE", 175, 40);
 
-		//processing.noStroke();
 		//draw data
-
 		processing.strokeWeight(4);
 		for (var i=1; i<13; i++)
 		{
@@ -1212,11 +1257,8 @@ function sketchProc(processing) {
 		processing.line(55, 253, 275, 253);
 		processing.textAlign(processing.CENTER);
 		processing.text("(CLICK TABS ON RIGHT FOR MORE DETAILS)", 330, 355);
-		//processing.stroke(0);
-		//processing.line(190, 340, 464, 340);
 
 		//draw data
-		//salary[16]
 		processing.textFont(font, 30);
 		processing.fill(main);
 		processing.text("$" + (data["career_salary_1"][16]).toLocaleString(), 400, 60);
@@ -1245,11 +1287,8 @@ function sketchProc(processing) {
 		var graph_top = 50; 
 		var graph_bot = 320;
 		var graph_mid_1 = 122;
-		//var graph_right_1 = 212;
 		var graph_mid_2 = 327;
-		//var graph_right_2 = 417;
 		var graph_mid_3 = 532;
-		//var graph_right_3 = 622;
 
 		//draw title and graph border
 		processing.strokeWeight(2);
@@ -1257,7 +1296,6 @@ function sketchProc(processing) {
 		processing.fill(0);
 		processing.textAlign(processing.CENTER);
 		processing.text("PROJECTED CAREER DEMAND (2012-2022)", 327, 25);
-		// processing.textAlign(processing.RIGHT);
 		processing.text("CAREER GROWTH VOLUME", graph_mid_1+10, graph_bot+28);
 		processing.text("CAREER GROWTH PERCENT", graph_mid_2+10, graph_bot+28);
 		processing.text("JOB OPENINGS", graph_mid_3+10, graph_bot+28);
@@ -1409,7 +1447,7 @@ function sketchProc(processing) {
 
 		
 
-		// //draw NATIONAL AVERAGE rectangle and data
+		//draw NATIONAL AVERAGE rectangle and data
 		processing.stroke(0);
 		var line_1 = graph_bot + (graph_top - graph_bot)*((data["career_unemploy_3"][0] -  min)/(max - min));
 		var line_2 = graph_bot + (graph_top - graph_bot)*((data["career_unemploy_3"][1] -  min)/(max - min));
@@ -1467,17 +1505,97 @@ function sketchProc(processing) {
 	};
 
 	function draw_spend() {
-		//no tabs, just draw
+		var num_cats = Object.keys(spending_categories[spending_selected]).length;
+		
+		var start = 205-20*processing.round((num_cats)/2-1);
+		var count = 0;
+
+		var temp_sum = 0;
+		for (key in spending_categories[spending_selected])
+			temp_sum += spending_categories[spending_selected][key];
+		spending_sum = temp_sum;
+
+		processing.textAlign(processing.CENTER);
+		processing.fill(0);
+		processing.text("SUGGESTED MONTHLY SPENDING", 335, 25);
+		processing.text("UPDATE INCOME BELOW, CATEGORY AND TEMPLATE CUSTOMIZATION ON RIGHT", 335, 365);
+
+		//draw key with colors
+		processing.noStroke();
+		processing.textAlign(processing.RIGHT);
+		for (key in spending_categories[spending_selected])
+		{
+			processing.fill(0);
+			processing.text(key.replace(/_/g, " ").toUpperCase(), 155, (count*18)+start);
+			processing.fill(pie_colors[count]);
+			processing.rect(160, (count*18)+start-10, 20, 10, 3);
+			count++;
+		}
+
+		//convert data into angles for pie chart
+		var angles = new Array(num_cats);
+		count = 0;
+		for (key in spending_categories[spending_selected])
+		{
+			angles[count] = (spending_categories[spending_selected][key]/spending_sum)*360;
+			count++;
+		}
+		//draw pie chart
+		var lastAngle = 0.0;
+		processing.stroke(255);
+		processing.strokeWeight(1);
+  		for (var i = 0; i < angles.length; i++) {
+    		processing.fill(pie_colors[i]);
+    		processing.arc(420, 190, 290, 290, lastAngle, lastAngle+processing.radians(angles[i]));
+    		lastAngle += processing.radians(angles[i]);
+  		}
+
+  		//draw white circle on top for allocation info
+  		processing.noStroke();
+  		processing.fill(255);
+  		processing.ellipse(420, 190, 220, 220);
+
+  		//determine and show if over/under spending for the month
+  		processing.textAlign(processing.CENTER);
+		if (spending_sum.toFixed(2) < 100)
+		{
+			processing.fill(0);
+			processing.textFont(font, 12);
+			processing.text("UNDER", 420, 170);
+			processing.text("BUDGET", 420, 230);
+			processing.fill(0,200,0);
+			processing.textFont(font, 36);
+			processing.text("$" + String((spending_income*(100-spending_sum)/1200).toFixed(2)), 415, 208);
+		}
+		//spending more than making
+		else if (spending_sum.toFixed(2) > 100)
+		{
+			processing.fill(0);
+			processing.textFont(font, 12);
+			processing.text("OVER", 420, 170);
+			processing.text("BUDGET", 420, 230);
+			processing.fill(200,0,0);
+			processing.textFont(font, 36);
+			processing.text("$" + String((spending_income*(spending_sum-100)/1200).toFixed(2)), 415, 208);
+
+		}
+		else
+		{
+			//maybe add something stating they are on budget (?)
+		}
+
+		//reset font
+		processing.textFont(font, 12);
 	};
 
 
 };
 
 
-var canvas = document.getElementById("main_viz");
-if (canvas != null)
-	var processingInstance = new Processing(canvas, sketchProc);
-
+function shuffle(o){
+    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+};
 
 function update_tab(name) {
 	active_tab = name;
@@ -1488,7 +1606,7 @@ function update_tab(name) {
 };
 
 function api_request(query) {
-	var url = "http://54.67.106.77:6001/query/" + query;
+	var url = "https://54.67.106.77:6001/query/" + query;
 	$.get(url, function(resp){
 		data = jQuery.parseJSON(resp);
 		if(data["operation"] == "undefined")
@@ -1502,7 +1620,6 @@ function api_request(query) {
 	});
 };
 
-//var hide_show_1 = "HIDE";
 function hide_toggle(num) {
 	if (num == 1)
 	{
@@ -1525,4 +1642,279 @@ function hide_toggle(num) {
 		hide_2 = !hide_2;
 	}
 };
+
+function buildCategories() {
+	//build field and labels for all currently selected spending categories
+	for (key in spending_categories[spending_selected])
+	{
+		var add = "<ul id='" + key + "_list_item' style='list-style-type: none; padding: 0; width:280px; height:30px;'>";
+		if (key != "Taxes")
+		{	
+			add += "<li style='display:inline;'><input class='update_spend' id='" + key + "_field' oninput='spendingVal(&quot;" + key +"&quot;)' type='text'/></li>";
+			add += "<li style='display:inline;'><a style='padding-left:5px' onclick='deleteCategory(&quot;" + key + "&quot;)'><img src='../assets/delete-color.png' height='9' width='9'></a></li>";
+			add += "<li style='display:inline;'><a style='padding-left:5px' onclick='lockToggle(&quot;" + key + "&quot;)'><img src='../assets/unlock-gray.png' value='false' id='" + key + "_lock' height='15' width='11'></a></li>";
+		}
+		//if it is the taxes field, dont allow changes/delete or locking
+		else
+			add += "<li style='display:inline;'><input class='tax_spend' id='" + key + "_field' readonly type='text'/></li>";
+		add += ("<li style='display:inline;'><p style='display:inline; float:left; margin:10px 0px 0px 0px; width:140px; text-align:right;'>" + key.toUpperCase().replace(/_/g, " ") + "</p></li></ul>");
+		$(add).appendTo("#category_list");
+		//add the appropriate values into the text fields
+		if (spending_sum <= 0)
+			document.getElementById(key + "_field").value = (0).toFixed(2);
+		else
+			document.getElementById(key + "_field").value = ((spending_categories[spending_selected][key]/100)*(spending_income/12)).toFixed(2);
+	}
+};
+
+function spendingVal(category) {
+	var temp_val = document.getElementById(category + "_field").value;
+
+	//check to make sure a valid number is in the field
+	if (isNaN(temp_val) || temp_val < 0.0)
+		window.alert("Invalid entry detected. Please enter a positive number.");
+
+	//if it is valid, update the stored value, recalculate income allocation amount
+	else
+	{
+		spending_categories[spending_selected][category] = (temp_val*12)/spending_income*100;
+		var temp_sum = 0;
+		for (key in spending_categories[spending_selected])
+			temp_sum += spending_categories[spending_selected][key];
+		spending_sum = temp_sum;
+	}
+};
+
+function updateIncome() {
+	var temp_income = document.getElementById("income_value").value;
+	if (temp_income == 0 || isNaN(temp_income))
+		temp_income = 0.001;
+
+	//reset values to initial
+	for (key_1 in spending_categories)
+	{
+		var old_tax = spending_categories[key_1]["Taxes"];
+		for (key_2 in spending_categories[key_1])
+		{
+			if (key_2 != "Taxes")
+			{
+				spending_categories[key_1][key_2] = (spending_categories[key_1][key_2]*100/(100-old_tax));
+			}
+		}
+	}
+
+	//calculate taxes for new income, then rebuild the values according to the new allocation
+	spending_income = temp_income;
+	calculateTaxes();
+	rebuildPercentages();
+	//populate the fields with the rebuilt values
+	for (key in spending_categories[spending_selected])
+	{
+		document.getElementById(key + "_field").value = ((spending_categories[spending_selected][key]/100)*(temp_income/12)).toFixed(2);
+	}
+};
+
+function calculateTaxes() {
+	if (spending_income < 9075)
+	{
+		spending_categories[spending_selected]["Taxes"] = 0.0;
+	}
+	else
+	{
+		//tax brackets and corresponding percentages
+		var brackets = [0, 9075, 36900, 89350, 186350, 405100, 406750];
+		var percents = [0.0, 0.2, 0.25, 0.35, 0.38, 0.43, 0.45, 0.496];
+		var taxed_income = 0.0;
+		var max_index = 0;
+		//get max tax bracket
+		for (; max_index<6; max_index++)
+		{
+			if (spending_income < brackets[max_index])
+			{
+				max_index--;
+				break;
+			}
+		}
+		var i=1;
+		//determine how much tax will be paid
+		for (;i<max_index+1; i++)
+		{
+			taxed_income += (percents[i]*(brackets[i]-brackets[i-1]));
+		}
+		taxed_income += (percents[i]*(spending_income-brackets[i-1]));
+		//convert taxed income to actual tax rate
+		for (key in spending_categories)
+		{
+			spending_categories[key]["Taxes"] = (taxed_income/spending_income)*100;
+		}
+	}
+};
+
+function rebuildPercentages() {
+	//category percentages need to be updated to fit within the new available income after taxes
+	for (key_1 in spending_categories)
+	{
+		for (key_2 in spending_categories[key_1])
+		{
+			if (key_2 != "Taxes")
+			{
+				if ($("#" + key_2 + "_lock").attr("value") == "true" && spending_selected == key_1)
+				{
+					spending_categories[key_1][key_2] = document.getElementById(key_2 + "_field").value*1200/spending_income;
+				}
+				else
+					spending_categories[key_1][key_2] = (spending_categories[key_1][key_2]/100)*(100-spending_categories[key_1]["Taxes"]);
+			}
+		}
+	}
+};
+
+function lockToggle(category) {
+	if ($("#" + category + "_lock").attr("value") == "false")
+	{
+		$("#" + category + "_lock").attr("value", "true");
+		$("#" + category + "_lock").attr("src", "../assets/lock-color.png");
+	}
+	else
+	{
+		$("#" + category + "_lock").attr("value", "false");
+		$("#" + category + "_lock").attr("src", "../assets/unlock-gray.png");
+	}
+};
+
+function deleteCategory(category) {
+	$("#" + category + "_list_item").remove();
+	spending_sum -= spending_categories[spending_selected][category];
+	delete spending_categories[spending_selected][category];
+	document.getElementById("add_cat_button").text = "ADD CATEGORY";
+	$("#add_cat_button").removeAttr("disabled");	
+};
+
+function addCategoryField() {
+	if (!document.getElementById("category_name"))
+	{
+		var add = "<ul id='new_category' style='list-style-type: none; padding: 0; width:270px; height:30px;''>";
+		add += "<li style='display:inline;'><input id='category_name' onkeyup='enterHit(event, &quot;btn1&quot;)' maxlength='15' type='text' style='width:140px; float:left;'></li>";
+		add += "<li style='display:inline;'><a onclick='addCategory()'><img src='../assets/check-color.png' height='12' width='14' style='margin-top:7px; margin-left:10px; margin-right:30px'></a></li>";
+		add += "<li style='display:inline;'><a onclick='cancelCategory()'><img src='../assets/delete-color.png' height='12' width='12'></a></li></ul>";
+		$(add).appendTo( "#category_list" );
+		document.getElementById("category_name").focus();
+	}
+};	
+
+function enterHit(event) {
+	event = event || window.event;
+    if (event.keyCode == 13 && document.getElementById("category_name").value != "") 
+    {
+        addCategory();
+        return;
+    }
+    else if (event.keyCode == 27)
+    	cancelCategory();
+    else if (!(/^[a-zA-Z0-9 ]+$/.test(document.getElementById("category_name").value)))
+    {
+    	window.alert("Only letters, numbers and spaces allowed.");
+    	cancelCategory();
+    	addCategoryField();
+    	document.getElementById("category_name").blur();
+    }
+};
+
+function addCategory() {
+	if (document.getElementById("category_name").value == "")
+	{
+		window.alert("Category cannot be blank.");
+		document.getElementById("category_name").blur();
+	}
+	else
+	{
+		var exist = false;
+		//check to see if category already exists
+		var new_category = document.getElementById("category_name").value;
+		for (key in spending_categories[spending_selected])
+		{
+			if (key.replace(/ /g, "_").toUpperCase() == new_category.replace(/ /g, "_").toUpperCase())
+			{
+				exist = true;
+				break;
+			}
+		}
+		if(exist == true)
+		{
+			window.alert("Category already exists.");
+			document.getElementById("category_name").blur();
+		}
+		else
+		{
+			var category = document.getElementById("category_name").value;
+			var no_space = category.replace(/ /g, "_");
+			var sanitized = category.replace(/&/g, '').replace(/</g, '').replace(/"/g, '');
+			
+			$("#new_category").remove();
+			spending_categories[spending_selected][no_space] = 0.00;
+
+			//add the new category to the html
+			var add = "<ul id='" + no_space + "_list_item' style='list-style-type: none; padding: 0; width:280px; height:30px;'>";
+			add += "<li style='display:inline;'><input class='update_spend' id='" + no_space + "_field' oninput='spendingVal(&quot;" + no_space +"&quot;)' pattern='[0-9.]+'' type='text'/></li>";
+			add += "<li style='display:inline;'><a style='padding-left:5px' onclick='deleteCategory(&quot;" + no_space + "&quot;)'><img src='../assets/delete-color.png' height='9' width='9'></a></li>";
+			add += "<li style='display:inline;'><a style='padding-left:5px' onclick='lockToggle(&quot;" + no_space + "&quot;)'><img src='../assets/unlock-gray.png' value='false' id='" + no_space + "_lock' height='15' width='11'></a></li>";
+			add += ("<li style='display:inline;'><p style='display:inline; float:left; margin:10px 0px 0px 0px; width:140px; text-align:right;'>" + sanitized.toUpperCase() + "</p></li></ul>");
+			$(add).appendTo("#category_list");
+
+			document.getElementById(no_space + "_field").value = 0.00;
+
+			//check to see if max number of categories has been met
+			var count = 0;
+			for (key in spending_categories[spending_selected])
+				count++;
+			if (count > 16)
+			{
+				document.getElementById("add_cat_button").text = "MAX CATEGORIES";
+				$("#add_cat_button").attr("disabled", "true");
+			}
+
+			document.getElementById(no_space + "_field").focus();
+		}
+	}
+};
+
+function cancelCategory() {
+	$("#new_category").remove();		
+};
+
+function updateTemplate(template) {
+	var temp_sum = 0;
+	for (key in spending_categories[template])
+		temp_sum += spending_categories[template][key];
+	spending_sum = temp_sum;
+	spending_selected = template;
+	//clear out old categories first
+	$("#category_list").empty();
+	shuffle(pie_colors);
+	buildCategories();
+};
+
+function resetCategories() {
+	spending_categories[spending_selected] = {};
+	for (var k1 in default_categories)
+	{
+		for (var k2 in default_categories[k1])
+			spending_categories[k1][k2] = default_categories[k1][k2];
+	}
+	$("#category_list").empty();
+	var temp_sum = 0;
+	for (key in spending_categories[spending_selected])
+		temp_sum += spending_categories[spending_selected][key];
+	spending_sum = temp_sum;
+	calculateTaxes();
+	rebuildPercentages();
+	buildCategories();
+};
+
+
+var canvas = document.getElementById("main_viz");
+if (canvas != null)
+	var processingInstance = new Processing(canvas, sketchProc);
+
+
 

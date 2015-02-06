@@ -144,11 +144,12 @@ def query(query):
 		}
 		for l in locations:
 			package["objects"].append({"city":l[:l.index(",")]})
-		url = "http://%s/api/v1/coli/" % (ip)
+		url = "https://%s/api/v1/coli/" % (ip)
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
 		prep = r.prepare()
 		s = requests.Session()
+		s.verify = False
 		resp = s.send(prep)
 		if(resp.status_code == 400):
 			package = {
@@ -170,4 +171,4 @@ def query(query):
 	return resp
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0',port=6001,debug=True)
+	app.run(host='0.0.0.0',port=6001,debug=True,ssl_context=('certificate.crt','privateKey.key'))

@@ -30,10 +30,15 @@ class Api::V1::ColiController < ApplicationController
 		where_string = ""
 		where_params = Array.new
 		locations.each do |location|
+<<<<<<< HEAD
 			where_string += '(city = ? AND state = ?) OR (city IS NULL AND state = ?) OR '
 			where_params << location[:city]
 			where_params << location[:state]
 			where_params << location[:state]
+=======
+			#where_string += "location = '#{location}' OR "
+			where_string += 'city = ? OR '
+>>>>>>> dev
 		end
 		where_string = where_string[0..-5]	# Strip off the last ' OR '.
 
@@ -200,12 +205,19 @@ class Api::V1::ColiController < ApplicationController
 			# the record's city and likewise for state).
 			match_found = false
 			records.each do |record|
+<<<<<<< HEAD
 				if location[:city] == record[:city] and 
 					 location[:state] == record[:state] then
 					match_found = true
 					weather_high_stats << (record[:high] ? record[:high].to_f : nil)
 					weather_low_stats << (record[:low] ? record[:low].to_f : nil)
 				end					
+=======
+				if record[:city] == location then
+					weather_high_stats << record[:high].to_f if record[:high]
+					weather_low_stats << record[:low].to_f if record[:low]
+				end
+>>>>>>> dev
 			end
 
 			# If that search didn't succeed, fall back to state.
