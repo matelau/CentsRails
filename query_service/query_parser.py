@@ -1,4 +1,4 @@
-from flask import Flask, make_response, request, current_app, context
+from flask import Flask, make_response, request, current_app
 import nltk
 import json
 import csv
@@ -80,10 +80,6 @@ cities = cities[0].split("\r")
 
 for line in csv.reader(states):
 	state[line[0].lower()] = line[1].lower()
-
-context = SSL.Context(SSL.SSLv3_METHOD)
-context.use_privatekey_file('privateKey.key')
-context.use_certificate_file('certificate.crt')
 
 app = Flask(__name__)
 
@@ -175,4 +171,4 @@ def query(query):
 	return resp
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0',port=6001,debug=True,ssl_context=context)
+	app.run(host='0.0.0.0',port=6001,debug=True,ssl_context=('certificate.crt','privateKey.key'))
