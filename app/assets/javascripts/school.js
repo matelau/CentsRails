@@ -1,7 +1,22 @@
-//window.alert("school page");
 var data, hide_1, hide_2, main, gray, font;
 
 var sketch = new Processing.Sketch();
+
+function school_api_request(query) {
+	window.alert("school api request");
+	// var url = "https://54.67.106.77:6001/query/" + query;
+	// $.get(url, function(resp){
+	// 	data = jQuery.parseJSON(resp);
+	// 	if(data["operation"] == "undefined")
+	// 	{
+	// 		window.location = "/info/examples/"
+	// 	}
+	// 	else
+	// 	{
+	// 		window.location = "/wizard/city/?" + resp;
+	// 	}
+	// });
+};
 
 function sketchProc(processing) {
 	
@@ -13,8 +28,6 @@ function sketchProc(processing) {
 		document.getElementById("search_2_name").value = "BYU";
 
 		processing.size(655,375);
-		//always set the initial tab to the first one
-		active_tab = 1;
 		hide_1 = false;
 		hide_2 = false;
 		//load font
@@ -210,9 +223,30 @@ function sketchProc(processing) {
 			}
 			processing.textFont(font, 12);
 		}
-
 	};
+};
 
+function hide_toggle(num) {
+	if (num == 1)
+	{
+		if (document.getElementById("search_1_button").value == "HIDE") { 
+			document.getElementById("search_1_button").value = "SHOW";
+		}
+		else { 
+			document.getElementById("search_1_button").value = "HIDE";
+		}
+		hide_1 = !hide_1;
+	}
+	else
+	{
+		if (document.getElementById("search_2_button").value == "HIDE") { 
+			document.getElementById("search_2_button").value = "SHOW";
+		}
+		else { 
+			document.getElementById("search_2_button").value = "HIDE";
+		}
+		hide_2 = !hide_2;
+	}
 };
 
 var canvas = document.getElementById("main_viz");
