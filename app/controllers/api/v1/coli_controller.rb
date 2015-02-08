@@ -36,6 +36,7 @@ class Api::V1::ColiController < ApplicationController
 		end
 		where_string = where_string[0..-5]	# Strip off the last ' OR '.
 
+=begin
 		# Query the database.
 		records = Coli.joins(
 						"LEFT OUTER JOIN weather_records ON colis.id = weather_records.coli_id")
@@ -54,11 +55,41 @@ class Api::V1::ColiController < ApplicationController
 								:income_tax_max,
 								:income_tax_min,
 								:income_per_capita,
+								:economic_growth,
 								:month,
 								:high,
 								:low)
 						.where([where_string, *where_params])
 						.order('colis.id ASC')	
+=end
+
+		records = Coli.find_by_sql [
+				"SELECT cost_of_living,
+								transportation,
+								groceries,
+								goods,
+								health_care,
+								utilities,
+								housing,
+								city,
+								unemp_rate,
+								sales_tax,
+								property_tax,
+								state,
+								income_tax_max,
+								income_tax_min,
+								income_per_capita,
+								economic_growth,
+								month,
+								high,
+								low
+				FROM colis
+				LEFT OUTER JOIN weather_records
+				ON colis.id = weather_records.coli_id
+				WHERE #{where_string}
+				ORDER BY colis.id ASC;",
+				*where_params
+			]
 
 		# Start putting the records into a JSON object that the view can use.
 		match = false
@@ -67,25 +98,25 @@ class Api::V1::ColiController < ApplicationController
 		used_state_data_for = Array.new
 		no_data_for = Array.new
 
-		# We'll need to both iterate over each location and keep track of their
-		# indices, because that's how the view tracks them.
-		i = 1
+		# Iterate over each location, keeping track of the location's index.
+		# (The index is needed because that's how the view tracks locations.)
+		index = 1
 		locations.each do |location|
 
 			# Search through the retrieved records for an exact match.
 			records.each do |record|
-				if record[:city] == location[:city] and 
-						record[:state] == location[:state] then
-						match = true
-						result = extract_coli_data(location, i, record, result)
-						break
+				if record[:city]  == location[:city]  and 
+					 record[:state] == location[:state] then
+					match = true
+					result = extract_coli_data(location, index, record, result)
+					break
 				end
 			end
 
 			# If no exact match is found, look for a matching state.
 			unless match
 				records.each do |record|
-					if record[:city] == nil and 
+					if record[:city]  == nil and 
 						 record[:state] == location[:state] then
 						state_match = true
 						result = extract_coli_data(location, i, record, result)
@@ -107,7 +138,7 @@ class Api::V1::ColiController < ApplicationController
 			end
 
 			# Increment for next object.
-			i += 1
+			index += 1
 		end
 		
 		# If there is no data for a city or its state, send an error message.
@@ -163,18 +194,28 @@ private
 		##### -------------------- LABOR --------------------- #####
 		labor_stats = Array.new	# For formatting the eventual JSON object.
 
-		fields = [:unemp_trend, :income_tax_max, :income_tax_min, :unemp_rate]
+		fields = [:unemp_rate, :income_per_capita, :economic_growth]
 
-		# Collect the value of each non-nil field in coli_stats.
+		# Collect the value of each field in coli_stats.
 		fields.each do |field|
-			stat = record[field]
-			labor_stats << stat.to_f if stat
+			stat = record[field] 
+			stat = stat ? stat.to_f : nil
+			labor_stats << stat
 		end
 
-		# Add max and min.
+		averages = Coli.find_by_sql "SELECT AVG(unemp_rate) AS avg_unemp_rate, 
+																			 AVG(income_per_capita) AS avg_income, 
+																			 AVG(economic_growth) AS avg_growth
+																FROM colis"
+
+		labor_stats << averages[0][:avg_unemp_rate].to_f
+		labor_stats << averages[0][:avg_income].to_f
+		labor_stats << averages[0][:avg_growth].to_f
+
+		# Add max and min. The compact method removes nils.
 		unless labor_stats.empty?
-			labor_stats << labor_stats.min
-			labor_stats << labor_stats.max
+			labor_stats << labor_stats.compact.min
+			labor_stats << labor_stats.compact.max
 		end
 
 		result["labor_#{i}"] = labor_stats
