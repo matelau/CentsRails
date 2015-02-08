@@ -91,6 +91,11 @@ class Api::V1::ColiController < ApplicationController
 				*where_params
 			]
 
+		@averages = Coli.find_by_sql "SELECT AVG(unemp_rate) AS avg_unemp_rate, 
+																	 AVG(income_per_capita) AS avg_income, 
+																	 AVG(economic_growth) AS avg_growth
+														FROM colis"
+
 		# Start putting the records into a JSON object that the view can use.
 		match = false
 		state_match = false
@@ -182,10 +187,8 @@ private
 		end
 
 		# Add the mins and maxes.
-		unless coli_stats.empty?
-			coli_stats << coli_stats.min
-			coli_stats << coli_stats.max
-		end
+		coli_stats << coli_stats.compact.min
+		coli_stats << coli_stats.compact.max
 
 		# Add the data to the result.
 		result["cli_#{i}"] = coli_stats
@@ -196,27 +199,20 @@ private
 
 		fields = [:unemp_rate, :income_per_capita, :economic_growth]
 
-		# Collect the value of each field in coli_stats.
+		# Collect the value of each field in labor_stats.
 		fields.each do |field|
 			stat = record[field] 
 			stat = stat ? stat.to_f : nil
 			labor_stats << stat
 		end
 
-		averages = Coli.find_by_sql "SELECT AVG(unemp_rate) AS avg_unemp_rate, 
-																			 AVG(income_per_capita) AS avg_income, 
-																			 AVG(economic_growth) AS avg_growth
-																FROM colis"
-
-		labor_stats << averages[0][:avg_unemp_rate].to_f
-		labor_stats << averages[0][:avg_income].to_f
-		labor_stats << averages[0][:avg_growth].to_f
+		labor_stats << @averages[0][:avg_unemp_rate].to_f
+		labor_stats << @averages[0][:avg_income].to_f
+		labor_stats << @averages[0][:avg_growth].to_f
 
 		# Add max and min. The compact method removes nils.
-		unless labor_stats.empty?
-			labor_stats << labor_stats.compact.min
-			labor_stats << labor_stats.compact.max
-		end
+		labor_stats << labor_stats.compact.min
+		labor_stats << labor_stats.compact.max
 
 		result["labor_#{i}"] = labor_stats
 
@@ -226,17 +222,15 @@ private
 
 		fields = [:sales_tax, :income_tax_min, :income_tax_max, :property_tax]
 
-		# Collect the value of each non-nil field in coli_stats.
+		# Collect the value of each non-nil field in tax_stats.
 		fields.each do |field|
 			stat = record[field]
 			tax_stats << stat.to_f if stat
 		end
 
 		# Add max and min.
-		unless tax_stats.empty?
-			tax_stats << tax_stats.min
-			tax_stats << tax_stats.max
-		end
+		tax_stats << tax_stats.compact.min
+		tax_stats << tax_stats.compact.max
 
 		result["taxes_#{i}"] = tax_stats
 
@@ -262,15 +256,11 @@ private
 		end
 
 		# Add max and min for each list.
-		unless weather_high_stats.empty?
-			weather_high_stats << weather_high_stats.min
-			weather_high_stats << weather_high_stats.max
-		end
+		weather_high_stats << weather_high_stats.compact.min
+		weather_high_stats << weather_high_stats.compact.max
 		
-		unless weather_high_stats.empty?
-			weather_low_stats << weather_low_stats.min
-			weather_low_stats << weather_low_stats.max
-		end
+		weather_low_stats << weather_low_stats.compact.min
+		weather_low_stats << weather_low_stats.compact.max
 
 		result["weather_#{i}"] = weather_high_stats
 		result["weatherlow_#{i}"] = weather_low_stats
