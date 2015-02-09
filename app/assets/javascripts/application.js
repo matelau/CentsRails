@@ -31,7 +31,9 @@ if (path[1] == "wizard" && path[2] != "start" && path[2] != "education")
 
 else if (path[1] == "search" && path[2] == "results")
 {
-	var query_type = "city";
+	//var query_type = localStorage.getItem("query_type");
+ 	//localStorage.removeItem("query_type");
+	var query_type = "career";
 	getPartial(query_type);
 	
 
@@ -79,6 +81,7 @@ function api_request(query) {
 
 	//write data to local storage for results page
 	localStorage.setItem("data_store", JSON.stringify(data));
+	//localStorage.setItem("query_type", data["query_type"]);
 
 	window.location = "/search/results/";
 
