@@ -20,6 +20,8 @@ class Api::V1::ColiController < ApplicationController
 			return render json: result, status: 400
 		end
 
+		puts params
+
 		locations = params[:locations]
 
 		# Create a string of the form '(city = c1 AND state = s1) OR
