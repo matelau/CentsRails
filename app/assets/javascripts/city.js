@@ -21,6 +21,8 @@ function city_api_request(query) {
 function sketchProc(processing) {
 	
 	processing.setup = function() {
+
+		console.log("loaded city.js successfully");
 		main = processing.color(136, 68, 18);
 		gray = processing.color(138, 136, 137);
 
@@ -44,25 +46,30 @@ function sketchProc(processing) {
 		below_2 = new Array();
 		data = new Array();
 
-		data["weather_1"] =    [38.0, 44.0, 53.0, 61.0, 71.0, 82.0, 90.0, 89.0, 78.0, 65.0, 50.0, 40.0, 38.0, 90.0];
-		data["weatherlow_1"] = [26.0, 31.0, 38.0, 43.0, 52.0, 61.0, 69.0, 67.0, 58.0, 46.0, 36.0, 27.0, 26.0, 69.0];
-		data["weather_2"]    = [67.0, 71.0, 77.0, 85.0, 95.0, 104.0, 106.0, 104.0, 100.0, 89.0, 76.0, 66.0, 66.0, 106.0];
-		data["weatherlow_2"] = [46.0, 49.0, 53.0, 60.0, 69.0, 78.0, 83.0, 83.0, 77.0, 65.0, 53.0, 45.0, 45.0, 83.0];
+  		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));
+  		localStorage.removeItem("data_store");
 
-		data["location_1"] = "Salt Lake City, UT";
-		data["location_2"] = "Phoenix, AZ";
+  		//data = jQuery.parseJSON(unescape($("#returned_data")));
 
-		data["cli_1"] = [102, 94, 95, 95, 119, 105, 92, 92, 119];
-		data["cli_2"] = [96, 92, 100, 106, 97, 101, 99, 92, 106];
+		// data["weather_1"] =    [38.0, 44.0, 53.0, 61.0, 71.0, 82.0, 90.0, 89.0, 78.0, 65.0, 50.0, 40.0, 38.0, 90.0];
+		// data["weatherlow_1"] = [26.0, 31.0, 38.0, 43.0, 52.0, 61.0, 69.0, 67.0, 58.0, 46.0, 36.0, 27.0, 26.0, 69.0];
+		// data["weather_2"]    = [67.0, 71.0, 77.0, 85.0, 95.0, 104.0, 106.0, 104.0, 100.0, 89.0, 76.0, 66.0, 66.0, 106.0];
+		// data["weatherlow_2"] = [46.0, 49.0, 53.0, 60.0, 69.0, 78.0, 83.0, 83.0, 77.0, 65.0, 53.0, 45.0, 45.0, 83.0];
 
-		data["labor_1"] = [3.4, 48000, 4.4];
-		data["labor_2"] = [6.4, 51000, 3.3];
-		data["labor_3"] = [5.8, 44800, 4.6];
+		// data["location_1"] = "Salt Lake City, UT";
+		// data["location_2"] = "Phoenix, AZ";
 
-		//sales, income min, income max, property
-		data["taxes_1"] = [6.85, 5.0, 5.0, 0.67];
-		data["taxes_2"] = [8.3, 2.59, 4.54, 1.59];
-		data["taxes_3"] = [8.25, 3.5, 7.8, 1.15];
+		// data["cli_1"] = [102, 94, 95, 95, 119, 105, 92, 92, 119];
+		// data["cli_2"] = [96, 92, 100, 106, 97, 101, 99, 92, 106];
+
+		// data["labor_1"] = [3.4, 48000, 4.4];
+		// data["labor_2"] = [6.4, 51000, 3.3];
+		// data["labor_3"] = [5.8, 44800, 4.6];
+
+		// //sales, income min, income max, property
+		// data["taxes_1"] = [6.85, 5.0, 5.0, 0.67];
+		// data["taxes_2"] = [8.3, 2.59, 4.54, 1.59];
+		// data["taxes_3"] = [8.25, 3.5, 7.8, 1.15];
 
 		document.getElementById("search_1_name").value = data["location_1"];
 		document.getElementById("search_2_name").value = data["location_2"];
