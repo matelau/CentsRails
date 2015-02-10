@@ -82,6 +82,7 @@ Rails.application.routes.draw do
       post 'login' => 'login#create'
       post 'logout' => 'logout#destroy'
       post 'confirm' => 'confirm#show'
+      post 'schools' => 'schools#show'
     end
   end
 end

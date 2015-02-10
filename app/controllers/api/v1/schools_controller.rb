@@ -27,7 +27,7 @@ class Api::V1::SchoolsController < ApplicationController
 		# clause for the query.
 		where_string = ""
 		where_params = Array.new
-		schools.each do |schools|
+		schools.each do |school|
 			where_string += 'name = ? OR '
 			where_params << school[:name]
 		end
@@ -37,7 +37,7 @@ class Api::V1::SchoolsController < ApplicationController
 		records = University.select(:name,
 								:state,
 								:tuition_resident,
-								:grade_rate_6_year,
+								:grad_rate_6_year,
 								:size,
 								:rank)
 						.where([where_string, *where_params])
@@ -59,7 +59,7 @@ class Api::V1::SchoolsController < ApplicationController
 					# Convert each record to a float, or nil iff null.
 					tuition = record[:tuition_resident]
 					tuition = tuition ? tuition.to_f : nil
-					grad_rate = record[:grade_rate_6_year]
+					grad_rate = record[:grad_rate_6_year]
 					grad_rate = grad_rate ? grad_rate.to_f : nil
 					size = record[:size]
 					size = size ? size.to_f : nil
@@ -67,7 +67,7 @@ class Api::V1::SchoolsController < ApplicationController
 					rank = rank ? rank.to_f : nil
 					
 					# Put the stats in result.
-					result = [tuition, grad_rate, size, rank]
+					result["school_#{index}"] = [tuition, grad_rate, size, rank]
 					break
 				end
 			end
@@ -80,7 +80,18 @@ class Api::V1::SchoolsController < ApplicationController
 			# Increment for next object.
 			index += 1
 		end
-	end
 
-	return render json: result, status: 200
+		# If there is no data for a school, send an error message.
+		unless no_data_for.empty?
+			result[:error] = 'No data on some schools'
+			result[:no_data_for] = no_data_for
+			result[:operation] = 'undefined' # Needed for the query parser.
+			return render json: result, status: 404
+		end
+
+		# Add the operation parameter for the query parser.
+		result[:operation] = params[:operation]
+
+		return render json: result, status: 200
+	end
 end
