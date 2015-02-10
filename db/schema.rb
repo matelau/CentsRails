@@ -11,11 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
+
 ActiveRecord::Schema.define(version: 20150204154111) do
-=======
-ActiveRecord::Schema.define(version: 20150201231611) do
->>>>>>> feature/S-01072
 
   create_table "careers", force: true do |t|
     t.datetime "created_at"
