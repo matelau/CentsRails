@@ -159,8 +159,9 @@ class Api::V1::ColiController < ApplicationController
 		unless used_state_data_for.empty?
 			result[:warning] = 'No data on city for some locations; used state data instead'
 			result[:used_state_data_for] = used_state_data_for
-			result[:operation] = params[:operation]	# Needed for the query parser.
 		end
+
+		result[:operation] = params[:operation]
 
 		# Return the result, formatted as JSON, and with a 200 OK HTTP code.
 		render json: result, status: 200

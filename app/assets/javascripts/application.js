@@ -36,18 +36,17 @@ else if (path[1] == "results")
 
 
 function api_request(query) {
-	window.alert("main api request");
-	// var url = "https://54.67.106.77:6001/query/" + query;
-	// $.get(url, function(resp){
-	// 	data = jQuery.parseJSON(resp);
-	// 	if(data["operation"] == "undefined")
-	// 	{
-	// 		window.location = "/info/examples/"
-	// 	}
-	// 	else
-	// 	{
-	// 		window.location = "/wizard/city/?" + resp;
-	// 	}
-	// });
+	var url = "http://localhost:6001/query/" + query;
+	$.get(url, function(resp){
+		data = jQuery.parseJSON(resp);
+		if(data["operation"] == "undefined")
+		{
+			window.location = "/info/examples/"
+		}
+		else
+		{
+			window.location = "/wizard/city/?" + resp;
+		}
+	});
 };
 
