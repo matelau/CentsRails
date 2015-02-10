@@ -62,7 +62,6 @@ class Api::V1::ColiController < ApplicationController
 								:high,
 								:low)
 						.where([where_string, *where_params])
-						.order('colis.id ASC')
 =end
 
 		records = Coli.find_by_sql [
