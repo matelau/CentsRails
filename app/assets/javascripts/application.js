@@ -33,7 +33,7 @@ else if (path[1] == "search" && path[2] == "results")
 {
 	//var query_type = localStorage.getItem("query_type");
  	//localStorage.removeItem("query_type");
-	var query_type = "career";
+	var query_type = "city";
 	getPartial(query_type);
 	
 
@@ -71,13 +71,13 @@ function api_request(query) {
 	data.cli_1 = [102, 94, 95, 95, 119, 105, 92, 92, 119];
 	data.cli_2 = [96, 92, 100, 106, 97, 101, 99, 92, 106];
 
-	data.labor_1 = [3.4, 48000, 4.4];
-	data.labor_2 = [6.4, 51000, 3.3];
+	data.labor_1 = [3.4, 48000, 4.2];
+	data.labor_2 = [6.4, 51000, null];
 	data.labor_3 = [5.8, 44800, 4.6];
 
-	data.taxes_1 = [6.85, 5.0, 5.0, 0.67];
-	data.taxes_2 = [8.3, 2.59, 4.54, 1.59];
-	data.taxes_3 = [8.25, 3.5, 7.8, 1.15];
+	data.taxes_1 = [6.85, 5.0, 5.0, 125];
+	data.taxes_2 = [8.3, 2.59, 4.54, 3000];
+	data.taxes_3 = [8.25, 3.5, 7.8, 237];
 
 	//write data to local storage for results page
 	localStorage.setItem("data_store", JSON.stringify(data));
