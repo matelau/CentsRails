@@ -251,8 +251,11 @@ function sketchProc(processing) {
 			processing.fill(main);
 			processing.text(percent1 + " NATIONAL", 360, 70);
 			processing.text("AVERAGE", 360, 85);
-		
+			processing.text("FAHRENHEIT", 360, 310);
+			//processing.textFont(font, 24);
 		}
+		
+		
 		processing.textFont(font, 30);
 		if (!hide_2)
 		{
@@ -282,6 +285,7 @@ function sketchProc(processing) {
 			processing.textFont(font, 12);
 			processing.text(percent2 + " NATIONAL", 540, 70);
 			processing.text("AVERAGE", 540, 85);
+			processing.text("FAHRENHEIT", 540, 310);
 		}
 
 		processing.textFont(font, 12);
