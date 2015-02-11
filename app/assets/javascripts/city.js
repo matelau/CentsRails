@@ -73,11 +73,22 @@ function sketchProc(processing) {
 			data["taxes_2"] = [8.3, 2.59, 4.54, 1.59];
 			data["taxes_3"] = [8.25, 3.5, 7.8, 1.15];
   		}
+  		//console.log(data["location_2"]);
+  		if (!data["location_2"])
+  		{
+  			hide_2 = true;
+  			document.getElementById("search_2_button").value = "SHOW";
+  			$("#search_2_button").attr("disabled", "true");
+  		}
+  		else
+  		{
+  			document.getElementById("search_2_name").value = data["location_2"];
+  		}
 
 		
 
 		document.getElementById("search_1_name").value = data["location_1"];
-		document.getElementById("search_2_name").value = data["location_2"];
+		
 		
 
 	};
@@ -212,60 +223,68 @@ function sketchProc(processing) {
 
 		//draw data
 		processing.textFont(font, 30);
-		processing.fill(main);
-		var c1 = data["cli_1"][0] - 100;
-		var percent1 = "";
-		if (c1 < 0)
+		if (!hide_1)
 		{
-			c1 = c1 * -1;
-			percent1 = "BELOW";
-		}
-		else
-			percent1 = "ABOVE";
+			processing.fill(main);
+			var c1 = data["cli_1"][0] - 100;
+			var percent1 = "";
+			if (c1 < 0)
+			{
+				c1 = c1 * -1;
+				percent1 = "BELOW";
+			}
+			else
+				percent1 = "ABOVE";
 
-		processing.text(c1 + "%", 360, 50);
-		processing.text("$" + (data["labor_1"][1]).toLocaleString(), 360, 140);
-		if (data["taxes_1"][1] == data["taxes_1"][2])
-			processing.text(data["taxes_1"][1] + "%", 360, 218);
-		else
-		{
-			processing.textFont(font, 24);
-			processing.text(data["taxes_1"][1] + "%-" + data["taxes_1"][2] + "%", 360, 215);
-			processing.textFont(font, 30);
-		}
-		processing.text(data["weatherlow_1"][12] + "°- " + data["weather_1"][13] + "°", 360, 295);
+			processing.text(c1 + "%", 360, 50);
+			processing.text("$" + (data["labor_1"][1]).toLocaleString(), 360, 140);
+			if (data["taxes_1"][1] == data["taxes_1"][2])
+				processing.text(data["taxes_1"][1] + "%", 360, 218);
+			else
+			{
+				processing.textFont(font, 24);
+				processing.text(data["taxes_1"][1] + "%-" + data["taxes_1"][2] + "%", 360, 215);
+				processing.textFont(font, 30);
+			}
+			processing.text(data["weatherlow_1"][12] + "°- " + data["weather_1"][13] + "°", 360, 295);
+			processing.textFont(font, 12);
+			processing.fill(main);
+			processing.text(percent1 + " NATIONAL", 360, 70);
+			processing.text("AVERAGE", 360, 85);
 		
-
-		processing.fill(gray);
-		var c2 = data["cli_2"][0] - 100;
-		var percent2 = "";
-		if (c2 < 0)
-		{
-			c2 = c2 * -1;
-			percent2 = "BELOW";
 		}
-		else
-			percent2 = "ABOVE";
-
-		processing.text(c2 + "%", 540, 50);
-		processing.text("$" + (data["labor_2"][1]).toLocaleString(), 540, 140);
-		if (data["taxes_2"][1] == data["taxes_2"][2])
-			processing.text(data["taxes_2"][1] + "%", 540, 218);
-		else
+		processing.textFont(font, 30);
+		if (!hide_2)
 		{
-			processing.textFont(font, 24);
-			processing.text(data["taxes_2"][1] + "%-" + data["taxes_2"][2] + "%", 540, 215);
-			processing.textFont(font, 30);
+			processing.fill(gray);
+			var c2 = data["cli_2"][0] - 100;
+			var percent2 = "";
+			if (c2 < 0)
+			{
+				c2 = c2 * -1;
+				percent2 = "BELOW";
+			}
+			else
+				percent2 = "ABOVE";
+
+			processing.text(c2 + "%", 540, 50);
+			processing.text("$" + (data["labor_2"][1]).toLocaleString(), 540, 140);
+			if (data["taxes_2"][1] == data["taxes_2"][2])
+				processing.text(data["taxes_2"][1] + "%", 540, 218);
+			else
+			{
+				processing.textFont(font, 24);
+				processing.text(data["taxes_2"][1] + "%-" + data["taxes_2"][2] + "%", 540, 215);
+				processing.textFont(font, 30);
+			}
+			processing.text(data["weatherlow_2"][12] + "°- " + data["weather_2"][13] + "°", 540, 295);
+			processing.fill(gray);
+			processing.textFont(font, 12);
+			processing.text(percent2 + " NATIONAL", 540, 70);
+			processing.text("AVERAGE", 540, 85);
 		}
-		processing.text(data["weatherlow_2"][12] + "°- " + data["weather_2"][13] + "°", 540, 295);
 
 		processing.textFont(font, 12);
-		processing.fill(main);
-		processing.text(percent1 + " NATIONAL", 360, 70);
-		processing.text("AVERAGE", 360, 85);
-		processing.fill(gray);
-		processing.text(percent2 + " NATIONAL", 540, 70);
-		processing.text("AVERAGE", 540, 85);
 
 	};
 
@@ -290,8 +309,16 @@ function sketchProc(processing) {
 		}
 		else
 		{
-			min = processing.min(data["cli_1"][7], data["cli_2"][7]);
-			max = processing.max(data["cli_1"][8], data["cli_2"][8]);
+			if(data["location_2"])
+			{
+				min = processing.min(data["cli_1"][7], data["cli_2"][7]);
+				max = processing.max(data["cli_1"][8], data["cli_2"][8]);
+			}
+			else
+			{
+				min = data["cli_1"][7];
+				max = data["cli_1"][8];
+			}
 		}
 
 
@@ -474,10 +501,20 @@ function sketchProc(processing) {
 		}
 		else
 		{
-			var temp_max_1 = processing.max(data["labor_1"][0], data["labor_2"][0], data["labor_3"][0]);
-			var temp_max_2 = processing.max(data["labor_1"][2], data["labor_2"][2], data["labor_3"][2]);	
-			max_1 = processing.max(temp_max_2, temp_max_1) * 1.1;
-			max_2 = processing.max(data["labor_1"][1], data["labor_2"][1], data["labor_3"][1]) * 1.1;
+			if (data["location_2"])
+			{
+				var temp_max_1 = processing.max(data["labor_1"][0], data["labor_2"][0], data["labor_3"][0]);
+				var temp_max_2 = processing.max(data["labor_1"][2], data["labor_2"][2], data["labor_3"][2]);	
+				max_1 = processing.max(temp_max_2, temp_max_1) * 1.1;
+				max_2 = processing.max(data["labor_1"][1], data["labor_2"][1], data["labor_3"][1]) * 1.1;
+			}
+			else
+			{
+				var temp_max_1 = processing.max(data["labor_1"][0], data["labor_3"][0]);
+				var temp_max_2 = processing.max(data["labor_1"][2], data["labor_3"][2]);	
+				max_1 = processing.max(temp_max_2, temp_max_1) * 1.1;
+				max_2 = processing.max(data["labor_1"][1], data["labor_3"][1]) * 1.1;
+			}
 
 		}
 
@@ -527,9 +564,12 @@ function sketchProc(processing) {
 		var height_1 = (graph_top - graph_bot)*((data["labor_1"][0] -  min_1)/(max_1 - min_1));
 		var height_2 = (graph_top - graph_bot)*((data["labor_1"][2] -  min_1)/(max_1 - min_1));
 		var height_3 = (graph_top - graph_bot)*((data["labor_1"][1] -  min_2)/(max_2 - min_2));
-		var height_4 = (graph_top - graph_bot)*((data["labor_2"][0] -  min_1)/(max_1 - min_1));
-		var height_5 = (graph_top - graph_bot)*((data["labor_2"][2] -  min_1)/(max_1 - min_1));
-		var height_6 = (graph_top - graph_bot)*((data["labor_2"][1] -  min_2)/(max_2 - min_2));
+		if (!hide_2)
+		{
+			var height_4 = (graph_top - graph_bot)*((data["labor_2"][0] -  min_1)/(max_1 - min_1));
+			var height_5 = (graph_top - graph_bot)*((data["labor_2"][2] -  min_1)/(max_1 - min_1));
+			var height_6 = (graph_top - graph_bot)*((data["labor_2"][1] -  min_2)/(max_2 - min_2));
+		}
 
 		//buffer boxes
 		if (!hide_1)
@@ -555,6 +595,12 @@ function sketchProc(processing) {
 			processing.rect(axis_location[0]-20, graph_bot, 20, height_1);
 			processing.rect(axis_location[1]-20, graph_bot, 20, height_2);
 			processing.rect(axis_location[2]-20, graph_bot, 20, height_3);
+			if (data["labor_1"][2] == null)
+			{
+				processing.textAlign(processing.LEFT);
+				processing.textFont(font, 16);
+				processing.text("N/A", axis_location[1]-30, graph_bot-7);
+			}
 		}
 
 		if (!hide_2)
@@ -564,7 +610,14 @@ function sketchProc(processing) {
 			processing.rect(axis_location[0], graph_bot, 20, height_4);
 			processing.rect(axis_location[1], graph_bot, 20, height_5);
 			processing.rect(axis_location[2], graph_bot, 20, height_6);	
+			if (data["labor_2"][2] == null)
+			{
+				processing.textAlign(processing.RIGHT);
+				processing.textFont(font, 16);
+				processing.text("N/A", axis_location[1]+30, graph_bot-7);
+			}
 		}
+		processing.textFont(font, 12);
 	};
 
 	function taxes() {
@@ -609,10 +662,20 @@ function sketchProc(processing) {
 		}
 		else
 		{
-			var temp_max_1 = processing.max(data["taxes_1"][0], data["taxes_2"][0], data["taxes_3"][0]);
-			var temp_max_2 = processing.max(data["taxes_1"][2], data["taxes_2"][2], data["taxes_3"][2]);	
-			max_1 = processing.max(temp_max_2, temp_max_1) * 1.1;
-			max_2 = processing.max(data["taxes_1"][3], data["taxes_2"][3], data["taxes_3"][3]) * 1.1;
+			if (data["location_2"])
+			{
+				var temp_max_1 = processing.max(data["taxes_1"][0], data["taxes_2"][0], data["taxes_3"][0]);
+				var temp_max_2 = processing.max(data["taxes_1"][2], data["taxes_2"][2], data["taxes_3"][2]);	
+				max_1 = processing.max(temp_max_2, temp_max_1) * 1.1;
+				max_2 = processing.max(data["taxes_1"][3], data["taxes_2"][3], data["taxes_3"][3]) * 1.1;
+			}
+			else
+			{
+				var temp_max_1 = processing.max(data["taxes_1"][0], data["taxes_3"][0]);
+				var temp_max_2 = processing.max(data["taxes_1"][2], data["taxes_3"][2]);	
+				max_1 = processing.max(temp_max_2, temp_max_1) * 1.1;
+				max_2 = processing.max(data["taxes_1"][3], data["taxes_3"][3]) * 1.1;
+			}
 
 		}
 
@@ -631,7 +694,7 @@ function sketchProc(processing) {
 			processing.textAlign(processing.RIGHT);
 			processing.text(String(processing.round(min_1 + per_scale * i * 10)/10) + "%", graph_left-5, h+5);
 			processing.textAlign(processing.LEFT);
-			processing.text(String(processing.round(min_2 + money_scale * i * 100)/100) + "%", graph_right+5, h+5);
+			processing.text("$" + String(processing.round(min_2 + money_scale * i * 100)/100), graph_right+5, h+5);
 		}
 
 		//draw NATIONAL AVERAGE rectangle and data
@@ -662,10 +725,13 @@ function sketchProc(processing) {
 		var height_2 = (graph_top - graph_bot)*((data["taxes_1"][2] -  min_1)/(max_1 - min_1));
 		var height_3 = (graph_top - graph_bot)*((data["taxes_1"][1] -  min_1)/(max_1 - min_1));
 		var height_4 = (graph_top - graph_bot)*((data["taxes_1"][3] -  min_2)/(max_2 - min_2));
-		var height_5 = (graph_top - graph_bot)*((data["taxes_2"][0] -  min_1)/(max_1 - min_1));
-		var height_6 = (graph_top - graph_bot)*((data["taxes_2"][1] -  min_1)/(max_1 - min_1));
-		var height_7 = (graph_top - graph_bot)*((data["taxes_2"][2] -  min_1)/(max_1 - min_1));
-		var height_8 = (graph_top - graph_bot)*((data["taxes_2"][3] -  min_2)/(max_2 - min_2));
+		if (!hide_2)
+		{
+			var height_5 = (graph_top - graph_bot)*((data["taxes_2"][0] -  min_1)/(max_1 - min_1));
+			var height_6 = (graph_top - graph_bot)*((data["taxes_2"][1] -  min_1)/(max_1 - min_1));
+			var height_7 = (graph_top - graph_bot)*((data["taxes_2"][2] -  min_1)/(max_1 - min_1));
+			var height_8 = (graph_top - graph_bot)*((data["taxes_2"][3] -  min_2)/(max_2 - min_2));
+		}
 
 		//buffer boxes
 		if (!hide_1)
@@ -732,8 +798,16 @@ function sketchProc(processing) {
 		}
 		else
 		{
-			min = processing.min(data["weatherlow_1"][12], data["weatherlow_2"][12]);
-			max = processing.max(data["weather_1"][13], data["weather_2"][13]);
+			if (data["location_2"])
+			{
+				min = processing.min(data["weatherlow_1"][12], data["weatherlow_2"][12]);
+				max = processing.max(data["weather_1"][13], data["weather_2"][13]);
+			}
+			else
+			{
+				min = data["weatherlow_1"][12];
+				max = data["weather_1"][13];
+			}
 		}
 
 		min = min - ((max-min) / 10);
@@ -838,9 +912,12 @@ function sketchProc(processing) {
 function update_tab(name) {
 	active_tab = name;
 	hide_1 = false;
-	hide_2 = false;
 	document.getElementById("search_1_button").value = "HIDE";
-	document.getElementById("search_2_button").value = "HIDE";
+	if(data["location_2"])
+	{
+		hide_2 = false;
+		document.getElementById("search_2_button").value = "HIDE";
+	}
 };
 
 function hide_toggle(num) {

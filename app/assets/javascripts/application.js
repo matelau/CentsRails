@@ -32,7 +32,11 @@ else if (path[1] == "search" && path[2] == "results")
 {
 	var query_type = localStorage.getItem("query_type");
  	//localStorage.removeItem("query_type");
+<<<<<<< HEAD
 	//var query_type = "career";
+=======
+	var query_type = "city";
+>>>>>>> feature/S-01103
 	getPartial(query_type);
 	
 
@@ -82,8 +86,8 @@ function api_request(query) {
 	data.cli_1 = [102, 94, 95, 95, 119, 105, 92, 92, 119];
 	data.cli_2 = [96, 92, 100, 106, 97, 101, 99, 92, 106];
 
-	data.labor_1 = [3.4, 48000, 4.4];
-	data.labor_2 = [6.4, 51000, 3.3];
+	data.labor_1 = [3.4, 48000, 4.2];
+	data.labor_2 = [6.4, 51000, null];
 	data.labor_3 = [5.8, 44800, 4.6];
 
 	data.taxes_1 = [6.85, 5.0, 5.0, 0.67];
