@@ -233,7 +233,7 @@ function sketchProc(processing) {
 			processing.text(data["taxes_1"][1] + "%-" + data["taxes_1"][2] + "%", 360, 215);
 			processing.textFont(font, 30);
 		}
-		processing.text(data["weatherlow_1"][12] + "°- " + data["weather_1"][13] + "°", 360, 295);
+		processing.text(data["weatherlow_1"][12] + "°-" + data["weather_1"][13] + "°", 360, 295);
 		
 
 		processing.fill(gray);
@@ -257,15 +257,17 @@ function sketchProc(processing) {
 			processing.text(data["taxes_2"][1] + "%-" + data["taxes_2"][2] + "%", 540, 215);
 			processing.textFont(font, 30);
 		}
-		processing.text(data["weatherlow_2"][12] + "°- " + data["weather_2"][13] + "°", 540, 295);
+		processing.text(data["weatherlow_2"][12] + "°-" + data["weather_2"][13] + "°", 540, 295);
 
 		processing.textFont(font, 12);
 		processing.fill(main);
 		processing.text(percent1 + " NATIONAL", 360, 70);
 		processing.text("AVERAGE", 360, 85);
+		processing.text("FAHRENHEIT", 360, 310);
 		processing.fill(gray);
 		processing.text(percent2 + " NATIONAL", 540, 70);
 		processing.text("AVERAGE", 540, 85);
+		processing.text("FAHRENHEIT", 540, 310);
 
 	};
 

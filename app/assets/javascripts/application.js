@@ -33,7 +33,7 @@ else if (path[1] == "search" && path[2] == "results")
 {
 	//var query_type = localStorage.getItem("query_type");
  	//localStorage.removeItem("query_type");
-	var query_type = "career";
+	var query_type = "city";
 	getPartial(query_type);
 	
 
