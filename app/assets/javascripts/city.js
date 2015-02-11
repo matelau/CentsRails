@@ -85,12 +85,7 @@ function sketchProc(processing) {
   			document.getElementById("search_2_name").value = data["location_2"];
   		}
 
-		
-
 		document.getElementById("search_1_name").value = data["location_1"];
-		
-		
-
 	};
 
 
