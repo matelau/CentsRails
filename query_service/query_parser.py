@@ -122,6 +122,16 @@ def query(query):
 	for s in commands:
 		if s in query:
 			command = commands[s]
+
+	if "afford" in query || "spending" in query:
+		package = {
+			"operation":"get",
+			"query":query,
+			"query_type":"spending"
+		}
+
+		resp = json.dumps(package)
+		return resp
 	#tags = nltk.pos_tag(tokens)
 	#for w,t in tags:
 	#	if t == "JJ":
@@ -147,6 +157,7 @@ def query(query):
 			"operation":"undefined",
 			"query":query
 		}
+
 	if len(locations) >= 1:
 		package = {
 			"operation":command,
