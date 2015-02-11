@@ -9,29 +9,5 @@
 </map>
 <br>
 </div>
-<div  class="center">
-	<ul class="viz_objects_center">
-		<li><canvas class="process_viz" id="main_viz" width="655" height="375"></canvas></li>
-	</ul>
-	
-	<br> <!--errors will go here -->
-	<form>
-		<ul class="search_objects">
-			<li><input type="button" onclick="hide_toggle(1)" id="search_1_button" class="btn btn-default" value="HIDE" style="width:100px"></li>
-			<li><input class="search_1" id="search_1_name" type="text"></li>
-			<li><p class="versus">vs.</p></li>
-			<li><input class="search_2" id="search_2_name" type="text"></li>
-			<li><input type="button" onclick="hide_toggle(2)" id="search_2_button" class="btn btn-default" value="HIDE" style="width:100px"></li>
-		</ul>
-		<ul class="toggle_objects">
-			<li><button class="circle-arrow-update" type="submit" onclick="api_request(); return false;"><img src="/assets/circle arrow.png" height="38" width="38"></button></li>
-		</ul>
-	</form>
 
-	<div class="bottom_nav">
-		<a class="btn btn-default"  href="/wizard/major">PREVIOUS</a>
-		<a class="btn btn-default"  href="/user/register">LOGIN/REGISTER TO SAVE</a>
-		<a class="btn btn-default"  href="/wizard/career">NEXT</a>
-	</div>
-</div>
-<br>
+<%= render partial: '/partials/school' %>

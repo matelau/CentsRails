@@ -75,8 +75,10 @@ common_abbrs = {"nyc":"new york, new york","slc":"salt lake city, utah","la":"lo
 
 states = open("states.csv", "rU")
 
-cities = [line.strip() for line in open("cities.txt")]
-cities = cities[0].split("\r")
+cities = [line.strip() for line in open("city_state.txt")]
+#cities = cities[0].split("\r")
+
+unis = [line.strip() for line in open("universities.csv")]
 
 for line in csv.reader(states):
 	state[line[0].lower()] = line[1].lower()
@@ -89,11 +91,17 @@ def query(query):
 	object = []
 	ops = []
 	locations = []
+	schools = []
 	command = ""
+	package = {}
 	query = query.lower()
 	query = str(query).translate(string.maketrans("",""), string.punctuation)
 	if(query[len(query)-1:] == "." or query[len(query)-1:] == "?" or query[len(query)-1:] == "!" or query[len(query)-1:] == ";"):
 		query = query[:len(query)-1]
+
+	for u in unis:
+		if u.lower() in query:
+			schools.append(u)
 	for abbr, st in state.iteritems():
 		if re.search(r"\b" + abbr + r"\b", query):
 			query = re.sub(r"\b" + abbr + r"\b", st, query)
@@ -126,24 +134,27 @@ def query(query):
 	#		ops.append(w)
 	#	if t == "VBN":
 	#		ops.append(w)
+	if command == "" and len(schools) == 1:
+		command = "get"
+	if command == "" and len(schools) > 1:
+		command = "compare"
 	if command == "" and len(locations) == 1:
 		command = "get"
 	if command == "" and len(locations) > 1:
 		command = "compare"
-	if command == "" and len(locations) == 0:
+	if command == "" and len(schools) == 0 and len(locations) == 0:
 		package = {
 			"operation":"undefined",
 			"query":query
 		}
-	else:
+	if len(locations) >= 1:
 		package = {
 			"operation":command,
-			"search_by":"location",
-			"objects":[],
-			"query":query
+			"query":query,
+			"locations":[]
 		}
 		for l in locations:
-			package["objects"].append({"city":l[:l.index(",")]})
+			package["locations"].append({"city":l[:l.index(",")],"state":l[l.index(", ")+2:]})
 		url = "https://%s/api/v1/coli/" % (ip)
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
@@ -167,6 +178,43 @@ def query(query):
 			resp = json.dumps(package)
 			return resp
 		package["query"] = query
+		package["query_type"] = "city"
+	if len(schools) >= 1:
+		package = {
+			"operation":command,
+			"query":query,
+			"schools":[]
+		}
+		for s in schools:
+			package["schools"].append({"name":s})
+		url = "https://%s/api/v1/schools/" % (ip)
+		payload = json.dumps(package)
+		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
+		prep = r.prepare()
+		s = requests.Session()
+		s.verify = False
+		resp = s.send(prep)
+		if(resp.status_code == 400):
+			package = {
+				"operation":"undefined",
+				"query":query
+			}
+			resp = json.dumps(package)
+			return resp
+		package = json.loads(resp.text)
+		if(package["operation"] == "undefined"):
+			package = {
+				"operation":"undefined",
+				"query":query
+			}
+			resp = json.dumps(package)
+			return resp
+		package["school_1_name"] = schools[0]
+		if len(schools) == 2:
+			package["school_2_name"] = schools[1]
+		package["query"] = query
+		package["query_type"] = "school"
+
 	resp = json.dumps(package)
 	return resp
 
