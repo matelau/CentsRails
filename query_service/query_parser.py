@@ -123,7 +123,7 @@ def query(query):
 		if s in query:
 			command = commands[s]
 
-	if "afford" in query || "spending" in query:
+	if("afford" in query or "spending" in query):
 		package = {
 			"operation":"get",
 			"query":query,
