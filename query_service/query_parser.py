@@ -143,8 +143,6 @@ def query(query):
 		}
 		for l in locations:
 			package["locations"].append({"city":l[:l.index(",")],"state":l[l.index(", ")+2:]})
-
-		print package
 		url = "http://localhost:3000/api/v1/coli/"
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
@@ -160,7 +158,6 @@ def query(query):
 			resp = json.dumps(package)
 			return resp
 		package = json.loads(resp.text)
-		print package
 		if(package["operation"] == "undefined"):
 			package = {
 				"operation":"undefined",
@@ -169,6 +166,9 @@ def query(query):
 			resp = json.dumps(package)
 			return resp
 		package["query"] = query
+		package["query_type"] = "city"
+
+		print package
 	resp = json.dumps(package)
 	return resp
 

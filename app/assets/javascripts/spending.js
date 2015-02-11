@@ -5,6 +5,7 @@ var sketch = new Processing.Sketch();
 function sketchProc(processing) {
 	
 	processing.setup = function() {
+		console.log("loaded spending.js successfully");
 		main = processing.color(136, 68, 18);
 		gray = processing.color(138, 136, 137);
 
@@ -151,8 +152,8 @@ function buildCategories() {
 		if (key != "Taxes")
 		{	
 			add += "<li style='display:inline;'><input class='update_spend' id='" + key + "_field' oninput='spendingVal(&quot;" + key +"&quot;)' type='text'/></li>";
-			add += "<li style='display:inline;'><a style='padding-left:5px' onclick='deleteCategory(&quot;" + key + "&quot;)'><img src='../assets/delete-color.png' height='9' width='9'></a></li>";
-			add += "<li style='display:inline;'><a style='padding-left:5px' onclick='lockToggle(&quot;" + key + "&quot;)'><img src='../assets/unlock-gray.png' value='false' id='" + key + "_lock' height='15' width='11'></a></li>";
+			add += "<li style='display:inline;'><a style='padding-left:5px' onclick='deleteCategory(&quot;" + key + "&quot;)'><img src='/assets/delete-color.png' height='9' width='9'></a></li>";
+			add += "<li style='display:inline;'><a style='padding-left:5px' onclick='lockToggle(&quot;" + key + "&quot;)'><img src='/assets/unlock-gray.png' value='false' id='" + key + "_lock' height='15' width='11'></a></li>";
 		}
 		//if it is the taxes field, dont allow changes/delete or locking
 		else
@@ -273,12 +274,12 @@ function lockToggle(category) {
 	if ($("#" + category + "_lock").attr("value") == "false")
 	{
 		$("#" + category + "_lock").attr("value", "true");
-		$("#" + category + "_lock").attr("src", "../assets/lock-color.png");
+		$("#" + category + "_lock").attr("src", "/assets/lock-color.png");
 	}
 	else
 	{
 		$("#" + category + "_lock").attr("value", "false");
-		$("#" + category + "_lock").attr("src", "../assets/unlock-gray.png");
+		$("#" + category + "_lock").attr("src", "/assets/unlock-gray.png");
 	}
 };
 
@@ -295,8 +296,8 @@ function addCategoryField() {
 	{
 		var add = "<ul id='new_category' style='list-style-type: none; padding: 0; width:270px; height:30px;''>";
 		add += "<li style='display:inline;'><input id='category_name' onkeyup='enterHit(event, &quot;btn1&quot;)' maxlength='15' type='text' style='width:140px; float:left;'></li>";
-		add += "<li style='display:inline;'><a onclick='addCategory()'><img src='../assets/check-color.png' height='12' width='14' style='margin-top:7px; margin-left:10px; margin-right:30px'></a></li>";
-		add += "<li style='display:inline;'><a onclick='cancelCategory()'><img src='../assets/delete-color.png' height='12' width='12'></a></li></ul>";
+		add += "<li style='display:inline;'><a onclick='addCategory()'><img src='/assets/check-color.png' height='12' width='14' style='margin-top:7px; margin-left:10px; margin-right:30px'></a></li>";
+		add += "<li style='display:inline;'><a onclick='cancelCategory()'><img src='/assets/delete-color.png' height='12' width='12'></a></li></ul>";
 		$(add).appendTo( "#category_list" );
 		document.getElementById("category_name").focus();
 	}
@@ -356,8 +357,8 @@ function addCategory() {
 			//add the new category to the html
 			var add = "<ul id='" + no_space + "_list_item' style='list-style-type: none; padding: 0; width:280px; height:30px;'>";
 			add += "<li style='display:inline;'><input class='update_spend' id='" + no_space + "_field' oninput='spendingVal(&quot;" + no_space +"&quot;)' pattern='[0-9.]+'' type='text'/></li>";
-			add += "<li style='display:inline;'><a style='padding-left:5px' onclick='deleteCategory(&quot;" + no_space + "&quot;)'><img src='../assets/delete-color.png' height='9' width='9'></a></li>";
-			add += "<li style='display:inline;'><a style='padding-left:5px' onclick='lockToggle(&quot;" + no_space + "&quot;)'><img src='../assets/unlock-gray.png' value='false' id='" + no_space + "_lock' height='15' width='11'></a></li>";
+			add += "<li style='display:inline;'><a style='padding-left:5px' onclick='deleteCategory(&quot;" + no_space + "&quot;)'><img src='/assets/delete-color.png' height='9' width='9'></a></li>";
+			add += "<li style='display:inline;'><a style='padding-left:5px' onclick='lockToggle(&quot;" + no_space + "&quot;)'><img src='/assets/unlock-gray.png' value='false' id='" + no_space + "_lock' height='15' width='11'></a></li>";
 			add += ("<li style='display:inline;'><p style='display:inline; float:left; margin:10px 0px 0px 0px; width:140px; text-align:right;'>" + sanitized.toUpperCase() + "</p></li></ul>");
 			$(add).appendTo("#category_list");
 

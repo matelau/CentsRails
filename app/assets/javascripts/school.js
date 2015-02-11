@@ -21,6 +21,7 @@ function school_api_request(query) {
 function sketchProc(processing) {
 	
 	processing.setup = function() {
+		console.log("loaded school.js successfully");
 		main = processing.color(136, 68, 18);
 		gray = processing.color(138, 136, 137);
 

@@ -94,7 +94,11 @@ class Api::V1::ColiController < ApplicationController
 
 		@averages = Coli.find_by_sql "SELECT AVG(unemp_rate) AS avg_unemp_rate, 
 																	 AVG(income_per_capita) AS avg_income, 
-																	 AVG(economic_growth) AS avg_growth
+																	 AVG(economic_growth) AS avg_growth,
+																	 AVG(sales_tax) AS avg_sales_tax,
+																	 AVG(income_tax_min) AS avg_inc_tax_min,
+																	 AVG(income_tax_max) AS avg_inc_tax_max,
+																	 AVG(property_tax) AS avg_property_tax
 														FROM colis"
 
 		# Start putting the records into a JSON object that the view can use.
@@ -131,7 +135,9 @@ class Api::V1::ColiController < ApplicationController
 			end
 
 			# Add the weather data for this location.
-			result = extract_weather_data(location, records, result)
+			weather_data = extract_weather_data(location, records, result)
+			result["weather_#{index}"] = weather_data[:weather_high_stats]
+			result["weatherlow_#{index}"] = weather_data[:weather_low_stats]
 
 			# Keep track of which states we substituted state data for.
 			if state_match
@@ -145,6 +151,19 @@ class Api::V1::ColiController < ApplicationController
 			# Increment for next object.
 			index += 1
 		end
+
+		labor_avg = Array.new
+		labor_avg << @averages[0][:avg_unemp_rate].to_f
+		labor_avg << @averages[0][:avg_income].to_f
+		labor_avg << @averages[0][:avg_growth].to_f
+		result[:labor_3] = labor_avg
+
+		tax_avg = Array.new
+		tax_avg << @averages[0][:avg_sales_tax].to_f
+		tax_avg << @averages[0][:avg_inc_tax_min].to_f
+		tax_avg << @averages[0][:avg_inc_tax_max].to_f
+		tax_avg << @averages[0][:avg_property_tax].to_f
+		result[:taxes_3] = tax_avg
 		
 		# If there is no data for a city or its state, send an error message.
 		unless no_data_for.empty?
@@ -207,9 +226,6 @@ private
 			labor_stats << stat
 		end
 
-		labor_stats << @averages[0][:avg_unemp_rate].to_f
-		labor_stats << @averages[0][:avg_income].to_f
-		labor_stats << @averages[0][:avg_growth].to_f
 
 		# Add max and min. The compact method removes nils.
 		labor_stats << labor_stats.compact.min
@@ -283,12 +299,16 @@ private
 		weather_low_stats << weather_low_stats.compact.min
 		weather_low_stats << weather_low_stats.compact.max
 
-		result["weather_#{i}"] = weather_high_stats
-		result["weatherlow_#{i}"] = weather_low_stats
+		# result["weather_#{i}"] = weather_high_stats
+		# result["weatherlow_#{i}"] = weather_low_stats
 	
 		# Increment for next object.	
 		i += 1
 
-		return result
+		data = Hash.new
+		data[:weather_high_stats] = weather_high_stats
+		data[:weather_low_stats] = weather_low_stats
+
+		return data
 	end
 end
