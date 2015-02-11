@@ -37,6 +37,7 @@ class Api::V1::SchoolsController < ApplicationController
 		records = University.select(:name,
 								:state,
 								:tuition_resident,
+								:tuition_nonresident,
 								:grad_rate_6_year,
 								:size,
 								:rank)
@@ -57,8 +58,10 @@ class Api::V1::SchoolsController < ApplicationController
 					match = true
 
 					# Convert each record to a float, or nil iff null.
-					tuition = record[:tuition_resident]
-					tuition = tuition ? tuition.to_f : nil
+					tuition_resident = record[:tuition_resident]
+					tuition_resident = tuition_resident ? tuition_resident.to_f : nil
+					tuition_nonresident = record[:tuition_nonresident]
+					tuition_nonresident = tuition_nonresident ? tuition_nonresident.to_f : nil
 					grad_rate = record[:grad_rate_6_year]
 					grad_rate = grad_rate ? grad_rate.to_f : nil
 					size = record[:size]
@@ -67,7 +70,8 @@ class Api::V1::SchoolsController < ApplicationController
 					rank = rank ? rank.to_f : nil
 					
 					# Put the stats in result.
-					result["school_#{index}"] = [tuition, grad_rate, size, rank]
+					result["school_#{index}"] = [tuition_resident, tuition_nonresident, 
+						grad_rate, size, rank, 0]
 					break
 				end
 			end

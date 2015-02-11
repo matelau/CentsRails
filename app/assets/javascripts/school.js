@@ -25,20 +25,33 @@ function sketchProc(processing) {
 		main = processing.color(136, 68, 18);
 		gray = processing.color(138, 136, 137);
 
-		document.getElementById("search_1_name").value = "University of Utah";
-		document.getElementById("search_2_name").value = "BYU";
-
 		processing.size(655,375);
 		hide_1 = false;
 		hide_2 = false;
 		//load font
 		font = processing.loadFont("./fonts/Roboto-Regular.ttf");
 		processing.textFont(font, 12);
-
-		data = new Array();
-		data["school_1"] = [8000, 25000, 24, 32000, 40, 4.1];
- 		data["school_2"] = [5000, 5000, 50, 29000, 62, 3.8];
-
+		
+ 		data = new Array();
+ 		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));
+ 		if(data == null) {
+	 		data["school_1"] = [8000, 25000, 24, 32000, 40, 4.1];
+ 			data["school_2"] = [5000, 5000, 50, 29000, 62, 3.8];
+	 		document.getElementById("search_1_name").value = "University of Utah";
+			document.getElementById("search_2_name").value = "BYU";
+		}
+		else {
+			if (!data["school_2"])
+	  		{
+	  			hide_2 = true;
+	  			document.getElementById("search_2_button").value = "SHOW";
+	  			$("#search_2_button").attr("disabled", "true");
+	  		}
+			else {		
+				document.getElementById("search_2_name").value = data["school_2_name"];
+			}
+			document.getElementById("search_1_name").value = data["school_1_name"];
+		}
 	};
 
 

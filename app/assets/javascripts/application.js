@@ -32,11 +32,8 @@ else if (path[1] == "search" && path[2] == "results")
 {
 	var query_type = localStorage.getItem("query_type");
  	//localStorage.removeItem("query_type");
-	//var query_type = "career";
-	var query_type = "city";
-	getPartial(query_type);
-	
 
+	getPartial(query_type);
 }
 
 
@@ -68,7 +65,7 @@ function api_request(query) {
     xmlHttp.send( null );
     data = jQuery.parseJSON(xmlHttp.responseText);
 
-	console.log(data)
+	//console.log(data)
 
 	//store query type in local storage
 
@@ -92,6 +89,7 @@ function api_request(query) {
 	data.taxes_3 = [8.25, 3.5, 7.8, 1.15];*/
 
 	//write data to local storage for results page
+	localStorage.removeItem("data_store");
 	localStorage.setItem("data_store", JSON.stringify(data));
 	localStorage.setItem("query_type", data["query_type"]);
 
