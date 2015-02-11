@@ -32,13 +32,14 @@ function sketchProc(processing) {
 		font = processing.loadFont("./fonts/Roboto-Regular.ttf");
 		processing.textFont(font, 12);
 		
- 		data = new Array();
  		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));
+
  		if(data == null) {
+ 			data = new Array();
 	 		data["school_1"] = [8000, 25000, 24, 32000, 40, 4.1];
  			data["school_2"] = [5000, 5000, 50, 29000, 62, 3.8];
 	 		document.getElementById("search_1_name").value = "University of Utah";
-			document.getElementById("search_2_name").value = "BYU";
+			document.getElementById("search_2_name").value = "Brigham Young University";
 		}
 		else {
 			if (!data["school_2"])

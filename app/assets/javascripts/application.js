@@ -22,6 +22,7 @@
 var path = window.location.pathname.split('/');
 if (path[1] == "wizard" && path[2] != "start" && path[2] != "education")
 {
+	localStorage.removeItem("data_store");
 	var script = document.createElement("script");
 	script.type = "application/javascript";
 	script.src = "../assets/" + path[2] + ".js";
@@ -88,12 +89,16 @@ function api_request(query) {
 	data.taxes_2 = [8.3, 2.59, 4.54, 1.59];
 	data.taxes_3 = [8.25, 3.5, 7.8, 1.15];*/
 
-	//write data to local storage for results page
-	localStorage.removeItem("data_store");
-	localStorage.setItem("data_store", JSON.stringify(data));
-	localStorage.setItem("query_type", data["query_type"]);
+	if(data["operation"] == "undefined") {
+		window.location = "/info/examples/";
+	}
+	else {
+		//write data to local storage for results page
+		localStorage.removeItem("data_store");
+		localStorage.setItem("data_store", JSON.stringify(data));
+		localStorage.setItem("query_type", data["query_type"]);
 
-	window.location = "/search/results/";
-
+		window.location = "/search/results/";
+	}
 };
 
