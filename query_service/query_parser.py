@@ -152,7 +152,7 @@ def query(query):
 		command = "get"
 	if command == "" and len(locations) > 1:
 		command = "compare"
-	if command == "" and len(schools) == 0 and len(locations) == 0:
+	if len(schools) == 0 and len(locations) == 0:
 		package = {
 			"operation":"undefined",
 			"query":query
