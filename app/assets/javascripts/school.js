@@ -68,7 +68,7 @@ function sketchProc(processing) {
 			processing.textFont(font, 28);
 			processing.textAlign(processing.CENTER);
 			processing.fill(main);
-			if (data["school_1"][4] > 201)
+			if (data["school_1"][4] == null)
 			{
 				processing.text("200", 360, 73);
 				processing.textFont(font, 12);
@@ -82,11 +82,26 @@ function sketchProc(processing) {
 				processing.text("OUT OF 200", 360, 78);
 				processing.textFont(font, 28);
 			}
-			processing.text("$" + (data["school_1"][0]).toLocaleString(), 360, 118);
-			processing.text("$" + (data["school_1"][1]).toLocaleString(), 360, 169);
-			processing.text(String(data["school_1"][2]) + "%", 360, 222);
-			processing.text(data["school_1"][3].toLocaleString(), 360, 265);
-			processing.text((data["school_1"][5]).toFixed(1), 360, 320);
+			if (data["school_1"][0] == null)
+				processing.text("N/A", 360, 118);
+			else
+				processing.text("$" + (data["school_1"][0]).toLocaleString(), 360, 118);
+			if (data["school_1"][1] == null)
+				processing.text("N/A", 360, 169);
+			else
+				processing.text("$" + (data["school_1"][1]).toLocaleString(), 360, 169);
+			if (data["school_1"][2] == null)
+				processing.text("N/A", 360, 222);
+			else
+				processing.text(String(data["school_1"][2]) + "%", 360, 222);
+			if (data["school_1"][3] == null)
+				processing.text("N/A", 360, 265);
+			else
+				processing.text(data["school_1"][3].toLocaleString(), 360, 265);
+			if (data["school_1"][5] == null)
+				processing.text("N/A", 360, 320);
+			else
+				processing.text((data["school_1"][5]).toFixed(1), 360, 320);
 
 			processing.textFont(font, 12);
 			processing.text("STUDENTS", 360, 283);
@@ -99,7 +114,7 @@ function sketchProc(processing) {
 			processing.textFont(font, 28);
 			processing.textAlign(processing.CENTER);
 			processing.fill(gray);
-			if (data["school_2"][4] > 201)
+			if (data["school_2"][4] == null)
 			{
 				processing.text("200", 540, 73);
 				processing.textFont(font, 12);
@@ -113,11 +128,28 @@ function sketchProc(processing) {
 				processing.text("OUT OF 200", 540, 78);
 				processing.textFont(font, 28);
 			}
-			processing.text("$" + (data["school_2"][0]).toLocaleString(), 540, 118);
-			processing.text("$" + (data["school_2"][1]).toLocaleString(), 540, 169);
-			processing.text(String(data["school_2"][2]) + "%", 540, 222);
-			processing.text(data["school_2"][3].toLocaleString(), 540, 265);
-			processing.text((data["school_2"][5]).toFixed(1), 540, 320);
+
+			if (data["school_2"][0] == null)
+				processing.text("N/A", 540, 118);
+			else
+				processing.text("$" + (data["school_2"][0]).toLocaleString(), 540, 118);
+			if (data["school_2"][1] == null)
+				processing.text("N/A", 540, 169);
+			else
+				processing.text("$" + (data["school_2"][1]).toLocaleString(), 540, 169);
+			if (data["school_2"][2] == null)
+				processing.text("N/A", 540, 222);
+			else
+				processing.text(String(data["school_2"][2]) + "%", 540, 222);
+			if (data["school_2"][3] == null)
+				processing.text("N/A", 540, 265);
+			else
+				processing.text(data["school_2"][3].toLocaleString(), 540, 265);
+			if (data["school_2"][5] == null)
+				processing.text("N/A", 540, 320);
+			else
+				processing.text((data["school_2"][5]).toFixed(1), 540, 320);
+
 
 			processing.textFont(font, 12);
 			processing.text("STUDENTS", 540, 283);
