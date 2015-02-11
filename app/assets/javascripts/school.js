@@ -69,9 +69,19 @@ function sketchProc(processing) {
 			processing.textAlign(processing.CENTER);
 			processing.fill(main);
 			if (data["school_1"][4] > 201)
-				processing.text(">200", 360, 65);
+			{
+				processing.text("200", 360, 73);
+				processing.textFont(font, 12);
+				processing.text("OVER", 360, 50);
+				processing.textFont(font, 28);
+			}
 			else
-				processing.text(data["school_1"][4], 360, 65);
+			{
+				processing.text(data["school_1"][4], 360, 60);
+				processing.textFont(font, 12);
+				processing.text("OUT OF 200", 360, 78);
+				processing.textFont(font, 28);
+			}
 			processing.text("$" + (data["school_1"][0]).toLocaleString(), 360, 118);
 			processing.text("$" + (data["school_1"][1]).toLocaleString(), 360, 169);
 			processing.text(String(data["school_1"][2]) + "%", 360, 222);
@@ -90,9 +100,19 @@ function sketchProc(processing) {
 			processing.textAlign(processing.CENTER);
 			processing.fill(gray);
 			if (data["school_2"][4] > 201)
-				processing.text(">200", 540, 65);
+			{
+				processing.text("200", 540, 73);
+				processing.textFont(font, 12);
+				processing.text("OVER", 540, 50);
+				processing.textFont(font, 28);
+			}
 			else
-				processing.text(data["school_2"][4], 540, 65);
+			{
+				processing.text(data["school_2"][4], 540, 60);
+				processing.textFont(font, 12);
+				processing.text("OUT OF 200", 540, 78);
+				processing.textFont(font, 28);
+			}
 			processing.text("$" + (data["school_2"][0]).toLocaleString(), 540, 118);
 			processing.text("$" + (data["school_2"][1]).toLocaleString(), 540, 169);
 			processing.text(String(data["school_2"][2]) + "%", 540, 222);
