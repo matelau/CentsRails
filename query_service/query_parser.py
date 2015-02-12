@@ -193,6 +193,8 @@ def query(query):
 			package["school_2_name"] = schools[1]
 		package["query"] = query
 		package["query_type"] = "school"
+		resp = json.dumps(package)
+		return resp
 	elif len(locations) >= 1:
 		package = {
 			"operation":command,
@@ -225,9 +227,8 @@ def query(query):
 			return resp
 		package["query"] = query
 		package["query_type"] = "city"
-
-	resp = json.dumps(package)
-	return resp
+		resp = json.dumps(package)
+		return resp
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0',port=6001,debug=True,processes=5,ssl_context=('/etc/ssl/certs/ssl-bundle.crt','../.ssl/myserver.key'))
