@@ -4,14 +4,17 @@ class ToBeValidatedUser < ActiveRecord::Base
 	has_secure_password
 
 	# Ensure that the names are made of letters.
-	validates :first_name, format: { with: /\A[a-zA-Z]+\z/,
+	validates :first_name, format: { with: /\A\w+\z/,
 		message: 'must be letters' }
-	validates :last_name, format: { with: /\A[a-zA-Z]+\z/,
+	validates :last_name, format: { with: /\A\w+\z/,
 		message: 'must be letters' }
 
 	# Ensure that the email is unique.
 	validates :email, uniqueness: true,
-										presence: true
+										presence: true,
+										format: { 
+											with: /\A[a-zA-Z0-9_.+\-!#$%&*+=?^_|~]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-.]+\z/,
+											message: 'must be a valid email address' }
 
 	# Ensure that the user has entered a password twice and that the password is
 	# the right length.

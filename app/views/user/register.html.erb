@@ -1,31 +1,134 @@
-<%= form_for(:user, html: { onkeyup: "validate_email(this);"}) do |f| %>
-	<table>
-		<tr>
-  		<td>First name</td> <td><%= f.text_field :first_name %></td>
-  	</tr>
+<%= form_for(:user, html: { class: "form-horizontal", 'id' => 'register-form'}) do |f| %>
+	<fieldset>
+		<div class="control-group">
+			<!-- First name -->
+			<label class="control-label"	for="first_name">First Name</label>
+			<div class="controls">
+				<%= f.text_field :first_name, html: {'placeholder' => "", class: "input-xlarge"} %>
+				<p class="help-block">First name can contain any letters.</p>
+			</div>
+		</div>
 
-  	<tr>
-  		<td>Last name</td> <td><%= f.text_field :last_name %></td>
-  	</tr>
-  
-  	<tr>
-  		<td>Email</td> 
-  		<td><%= f.email_field :email, html: {onblur: "validate_email('#email_id')"} %></td> 
-  		<td><p "id"="email_id"></td>
-  	</tr>
-
-  	<tr>
-  		<td>Password</td> <td><%= f.password_field :password %></td> <td></td>
-  	</tr>
-
-  	<tr>
-  		<td>Confirm password</td> <td><%= f.password_field :password_confirmation %></td>
-  	</tr>
-
-  	<tr>
-  		<td><%= f.submit "Register" %></td>
-  	</tr>
-  </table>
+		<div class="control-group">
+			<!-- Last name -->
+			<label class="control-label"	for="first_name">Last Name</label>
+			<div class="controls">
+				<%= f.text_field :last_name, html: {'placeholder' => "", class: "input-xlarge"} %>
+				<p class="help-block">Last name can contain any letters.</p>
+			</div>
+		</div>
+ 
+		<div class="control-group">
+			<!-- E-mail -->
+			<label class="control-label" for="email">E-mail</label>
+			<div class="controls">
+				<%= f.email_field :email, html: {'placeholder' => '', class: 'input-xlarge'} %>
+				<p class="help-block">Provide your e-mail.</p>
+			</div>
+		</div>
+ 
+		<div class="control-group">
+			<!-- Password-->
+			<label class="control-label" for="password">Password</label>
+			<div class="controls">
+				<%= f.password_field :password, html: {'placeholder' => "", class: "input-xlarge"} %>
+				<p class="help-block">Password should be at least 6 characters</p>
+			</div>
+		</div>
+ 
+		<div class="control-group">
+			<!-- Password -->
+			<label class="control-label"	for="password_confirm">Password (Confirm)</label>
+			<div class="controls">
+				<%= f.password_field :password_confirmation, html: {'placeholder' => "", class: "input-xlarge"} %>
+				<p class="help-block">Confirm your password</p>
+			</div>
+		</div>
+ 
+		<div class="control-group">
+			<!-- Button -->
+			<div class="controls">
+				<button class="btn btn-primary">Register</button>
+			</div>
+		</div>
+	</fieldset>
 <% end %>
 
-<script src="validate.js"></script>
+<!-- <script src="/assets/jquery.validate.min.js"></script>
+<script src="/assets/additional-methods.min.js"></script> -->
+
+<script>
+(function($,W,document)
+{
+	var validator = {};
+ 
+	validator.UTIL =
+	{
+		setupFormValidation: function()
+		{
+			$("#register-form").validate({
+					onfocusout: function(element, event) {
+						this.element(element);
+					},
+
+					// Set the requirements for the fields here.
+					rules: {
+						"user[first_name]": {
+							required: true,
+							lettersonly: true
+						},
+						"user[last_name]": {
+							required: true,
+							lettersonly: true
+						},
+						"user[email]": {
+							required: true,
+							email: true
+						},
+						"user[password]": {
+							required: true,
+							minlength: 6
+						},
+						"user[password_confirmation]": {
+							required: true,
+							minlength: 6,
+							equalTo: "#user_password"
+						}
+					},
+					
+					// Set the error message here.
+					messages: {
+						"user[first_name]": {
+							required: "Required",
+							lettersonly: "First name can only have letters"
+						},
+						"user[last_name]": {
+							required: "Required",
+							lettersonly: "Last name can only have letters"
+						},
+						"user[password]": {
+							required: "Required",
+							minlength: "Must be at least 6 characters long"
+						},
+						"user[email]": "Enter a valid email address",
+						"user[password_confirmation]": {
+							required: "Required",
+							equalTo: "Must match password"
+						}
+					},
+					submitHandler: function(form) {
+						form.submit();
+					}
+				});
+			}
+		}
+ 
+	// Activate the rules on keyup.
+	$(document).ready(function($) {				
+		$('#register-form').bind('keyup', function(){
+       validator.UTIL.setupFormValidation();
+    });
+	});
+ 
+})(jQuery, window, document);
+</script>

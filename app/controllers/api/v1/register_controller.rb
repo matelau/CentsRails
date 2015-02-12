@@ -1,6 +1,6 @@
 class Api::V1::RegisterController < ApplicationController
 
-	force_ssl
+	#force_ssl
 
   def create
   	result = Hash.new

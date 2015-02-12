@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   get 'user/logout' => 'sessions#destroy'
   get 'user/confirm' => 'to_be_validated_users#confirm'
   get 'user/confirmed'
+  get 'search/results'
+  get 'search/getPartial'
   root 'search#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -82,6 +84,7 @@ Rails.application.routes.draw do
       post 'login' => 'login#create'
       post 'logout' => 'logout#destroy'
       post 'confirm' => 'confirm#show'
+      post 'schools' => 'schools#show'
     end
   end
 end
