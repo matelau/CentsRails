@@ -99,6 +99,7 @@ def query(query):
 	command = ""
 	package = {}
 	query = query.lower()
+	query = " " + query + " "
 	#query = str(query).translate(string.maketrans("",""), string.punctuation)
 	if(query[len(query)-1:] == "." or query[len(query)-1:] == "?" or query[len(query)-1:] == "!" or query[len(query)-1:] == ";"):
 		query = query[:len(query)-1]
@@ -113,7 +114,7 @@ def query(query):
 		if re.search(r"\b" + abbr + r"\b", query):
 			query = re.sub(r"\b" + abbr + r"\b", c, query)
 	for c in cities:
-		temp = c.replace(",", "").lower()
+		temp = " " + c.replace(",", "").lower() + " "
 		if(temp in query):
 			locations.append(c)
 		if(c.lower() in query):
