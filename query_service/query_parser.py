@@ -180,8 +180,8 @@ def query(query):
 		}
 		for s in schools:
 			package["schools"].append({"name":s})
-		#url = "https://%s/api/v1/schools/" % (ip)
-		url = "https://trycents.com/api/v1/schools/"
+		url = "https://%s/api/v1/schools/" % (ip)
+		#url = "https://trycents.com/api/v1/schools/"
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
 		prep = r.prepare()
@@ -217,8 +217,8 @@ def query(query):
 		}
 		for l in locations:
 			package["locations"].append({"city":l[:l.index(",")],"state":l[l.index(", ")+2:]})
-		#url = "https://%s/api/v1/coli/" % (ip)
-		url = "https://trycents.com/api/v1/coli"
+		url = "https://%s/api/v1/coli/" % (ip)
+		#url = "https://trycents.com/api/v1/coli"
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
 		prep = r.prepare()
@@ -246,4 +246,4 @@ def query(query):
 		return resp
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0',port=6001,debug=True,processes=5)#,ssl_context=('/etc/ssl/certs/ssl-bundle.crt','../.ssl/myserver.key'))
+	app.run(host='0.0.0.0',port=6001,debug=True,processes=5,ssl_context=('/etc/ssl/certs/ssl-bundle.crt','../.ssl/myserver.key'))
