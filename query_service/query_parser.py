@@ -161,6 +161,8 @@ def query(query):
 			"operation":"undefined",
 			"query":query
 		}
+		resp = json.dumps(package)
+		return resp
 
 	if len(schools) >= 1:
 		package = {
