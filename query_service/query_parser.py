@@ -95,7 +95,7 @@ def query(query):
 	command = ""
 	package = {}
 	query = query.lower()
-	query = str(query).translate(string.maketrans("",""), string.punctuation)
+	#query = str(query).translate(string.maketrans("",""), string.punctuation)
 	if(query[len(query)-1:] == "." or query[len(query)-1:] == "?" or query[len(query)-1:] == "!" or query[len(query)-1:] == ";"):
 		query = query[:len(query)-1]
 
