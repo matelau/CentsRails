@@ -158,38 +158,6 @@ def query(query):
 			"query":query
 		}
 
-	if len(locations) >= 1:
-		package = {
-			"operation":command,
-			"query":query,
-			"locations":[]
-		}
-		for l in locations:
-			package["locations"].append({"city":l[:l.index(",")],"state":l[l.index(", ")+2:]})
-		url = "https://%s/api/v1/coli/" % (ip)
-		payload = json.dumps(package)
-		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
-		prep = r.prepare()
-		s = requests.Session()
-		s.verify = False
-		resp = s.send(prep)
-		if(resp.status_code == 400):
-			package = {
-				"operation":"undefined",
-				"query":query
-			}
-			resp = json.dumps(package)
-			return resp
-		package = json.loads(resp.text)
-		if(package["operation"] == "undefined"):
-			package = {
-				"operation":"undefined",
-				"query":query
-			}
-			resp = json.dumps(package)
-			return resp
-		package["query"] = query
-		package["query_type"] = "city"
 	if len(schools) >= 1:
 		package = {
 			"operation":command,
@@ -225,6 +193,38 @@ def query(query):
 			package["school_2_name"] = schools[1]
 		package["query"] = query
 		package["query_type"] = "school"
+	elif len(locations) >= 1:
+		package = {
+			"operation":command,
+			"query":query,
+			"locations":[]
+		}
+		for l in locations:
+			package["locations"].append({"city":l[:l.index(",")],"state":l[l.index(", ")+2:]})
+		url = "https://%s/api/v1/coli/" % (ip)
+		payload = json.dumps(package)
+		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
+		prep = r.prepare()
+		s = requests.Session()
+		s.verify = False
+		resp = s.send(prep)
+		if(resp.status_code == 400):
+			package = {
+				"operation":"undefined",
+				"query":query
+			}
+			resp = json.dumps(package)
+			return resp
+		package = json.loads(resp.text)
+		if(package["operation"] == "undefined"):
+			package = {
+				"operation":"undefined",
+				"query":query
+			}
+			resp = json.dumps(package)
+			return resp
+		package["query"] = query
+		package["query_type"] = "city"
 
 	resp = json.dumps(package)
 	return resp
