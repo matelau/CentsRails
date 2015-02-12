@@ -98,6 +98,7 @@ def query(query):
 	schools = []
 	command = ""
 	package = {}
+	sent_query = query
 	query = query.lower()
 	query = " " + query + " "
 	#query = str(query).translate(string.maketrans("",""), string.punctuation)
@@ -117,9 +118,9 @@ def query(query):
 		temp = " " + c.replace(",", "").lower() + " "
 		if(temp in query):
 			locations.append(c)
-		if(c.lower() in query):
+		if(" " + c.lower() + " " in query):
 			locations.append(c)
-		cname = c[:c.index(",")].lower()
+		cname = " " + c[:c.index(",")].lower() + " "
 		if(cname in query):
 			if(c not in locations):
 				locations.append(c)
@@ -131,7 +132,7 @@ def query(query):
 	if("afford" in query or "spending" in query):
 		package = {
 			"operation":"get",
-			"query":query,
+			"query":sent_query,
 			"query_type":"spending"
 		}
 
@@ -160,7 +161,7 @@ def query(query):
 	if len(schools) == 0 and len(locations) == 0:
 		package = {
 			"operation":"undefined",
-			"query":query
+			"query":sent_query
 		}
 		resp = json.dumps(package)
 		return resp
@@ -168,7 +169,7 @@ def query(query):
 	if len(schools) >= 1:
 		package = {
 			"operation":command,
-			"query":query,
+			"query":sent_query,
 			"schools":[]
 		}
 		for s in schools:
@@ -183,7 +184,7 @@ def query(query):
 		if(resp.status_code == 400):
 			package = {
 				"operation":"undefined",
-				"query":query
+				"query":sent_query
 			}
 			resp = json.dumps(package)
 			return resp
@@ -191,14 +192,14 @@ def query(query):
 		if(package["operation"] == "undefined"):
 			package = {
 				"operation":"undefined",
-				"query":query
+				"query":sent_query
 			}
 			resp = json.dumps(package)
 			return resp
 		package["school_1_name"] = schools[0]
 		if len(schools) == 2:
 			package["school_2_name"] = schools[1]
-		package["query"] = query
+		package["query"] = sent_query
 		package["query_type"] = "school"
 		resp = json.dumps(package)
 		return resp
@@ -220,7 +221,7 @@ def query(query):
 		if(resp.status_code == 400):
 			package = {
 				"operation":"undefined",
-				"query":query
+				"query":sent_query
 			}
 			resp = json.dumps(package)
 			return resp
@@ -228,11 +229,11 @@ def query(query):
 		if(package["operation"] == "undefined"):
 			package = {
 				"operation":"undefined",
-				"query":query
+				"query":sent_query
 			}
 			resp = json.dumps(package)
 			return resp
-		package["query"] = query
+		package["query"] = sent_query
 		package["query_type"] = "city"
 		resp = json.dumps(package)
 		return resp
