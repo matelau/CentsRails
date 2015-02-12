@@ -5,7 +5,7 @@ ENV['RAILS_ENV'] = "development" # Set to your desired Rails environment name
 require_relative '../config/environment.rb'
 
 class MajorRecommendScraper
-	def scrape()
+	def self.scrape()
 		data = Nokogiri::HTML(open("http://www.payscale.com/college-salary-report/most-recommended-majors"))
 
 		arr = {}
@@ -20,10 +20,9 @@ class MajorRecommendScraper
 			arr[name] = pct
 		end
 
-		puts arr
-
 		arr.each do |k, v|
-			Degree.find_or_create_by(:name = k.gsub(/\(.*?\)/, "")).update(:recommend v)
+			name = k.gsub(/\(.*?\)/, "")
+			Degree.find_or_create_by(name: name).update(recommend: v)
 		end
 	end
 end

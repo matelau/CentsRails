@@ -11,8 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 20150204154111) do
+ActiveRecord::Schema.define(version: 20150212211144) do
 
   create_table "careers", force: true do |t|
     t.datetime "created_at"
@@ -81,6 +80,8 @@ ActiveRecord::Schema.define(version: 20150204154111) do
     t.datetime "updated_at"
     t.float    "satisfaction", limit: 24
     t.float    "in_field",     limit: 24
+    t.float    "recommend",    limit: 24
+    t.float    "meaningful",   limit: 24
   end
 
   create_table "gets", force: true do |t|

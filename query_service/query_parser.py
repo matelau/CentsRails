@@ -82,7 +82,10 @@ states = open("states.csv", "rU")
 cities = [line.strip() for line in open("city_state.txt")]
 #cities = cities[0].split("\r")
 
-unis = [line.strip() for line in open("universities.csv")]
+unis = {}
+for line in open("universities.csv"):
+	arr = line.strip().split(",")
+	unis[arr[0]] = arr
 
 for line in csv.reader(states):
 	state[line[0].lower()] = line[1].lower()
@@ -100,14 +103,17 @@ def query(query):
 	package = {}
 	sent_query = query
 	query = query.lower()
-	query = " " + query + " "
+	
 	#query = str(query).translate(string.maketrans("",""), string.punctuation)
 	if(query[len(query)-1:] == "." or query[len(query)-1:] == "?" or query[len(query)-1:] == "!" or query[len(query)-1:] == ";"):
 		query = query[:len(query)-1]
 
-	for u in unis:
-		if u.lower() in query:
-			schools.append(u)
+	query = " " + query + " "
+
+	for u,l in unis.iteritems():
+		for a in l:
+			if " " + a.lower() + " " in query:
+				schools.append(u)
 	for abbr, st in state.iteritems():
 		if re.search(r"\b" + abbr + r"\b", query):
 			query = re.sub(r"\b" + abbr + r"\b", st, query)
@@ -174,7 +180,8 @@ def query(query):
 		}
 		for s in schools:
 			package["schools"].append({"name":s})
-		url = "https://%s/api/v1/schools/" % (ip)
+		#url = "https://%s/api/v1/schools/" % (ip)
+		url = "https://trycents.com/api/v1/schools/"
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
 		prep = r.prepare()
@@ -196,9 +203,8 @@ def query(query):
 			}
 			resp = json.dumps(package)
 			return resp
-		package["school_1_name"] = schools[0]
-		if len(schools) == 2:
-			package["school_2_name"] = schools[1]
+		for i in range(0, len(schools)):
+			package["school_"+`i+1`+"_name"] = schools[i]
 		package["query"] = sent_query
 		package["query_type"] = "school"
 		resp = json.dumps(package)
@@ -211,7 +217,8 @@ def query(query):
 		}
 		for l in locations:
 			package["locations"].append({"city":l[:l.index(",")],"state":l[l.index(", ")+2:]})
-		url = "https://%s/api/v1/coli/" % (ip)
+		#url = "https://%s/api/v1/coli/" % (ip)
+		url = "https://trycents.com/api/v1/coli"
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
 		prep = r.prepare()
@@ -239,4 +246,4 @@ def query(query):
 		return resp
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0',port=6001,debug=True,processes=5,ssl_context=('/etc/ssl/certs/ssl-bundle.crt','../.ssl/myserver.key'))
+	app.run(host='0.0.0.0',port=6001,debug=True,processes=5)#,ssl_context=('/etc/ssl/certs/ssl-bundle.crt','../.ssl/myserver.key'))

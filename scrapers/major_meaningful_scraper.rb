@@ -6,7 +6,7 @@ require_relative '../config/environment.rb'
 
 
 class MajorMeaningfulScraper
-	def scrape()
+	def self.scrape()
 		data = Nokogiri::HTML(open("http://www.payscale.com/college-salary-report/most-meaningful-majors"))
 
 		arr = {}
@@ -21,10 +21,9 @@ class MajorMeaningfulScraper
 			arr[name] = pct
 		end
 
-		puts arr
-
 		arr.each do |k, v|
-			Degree.find_or_create_by(:name = k.gsub(/\(.*?\)/, "")).update(:meaningful v)
+			name = k.gsub(/\(.*?\)/, "")
+			Degree.find_or_create_by(name: name).update(meaningful: v)
 		end
 	end
 end
