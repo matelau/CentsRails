@@ -39,12 +39,12 @@ else if (path[1] == "search" && path[2] == "results")
 
 
 function getPartial(query_type){
-	$.get("../getPartial", {query_type: query_type}, function(response){                  
+	$.get("../getPartial", {query_type: query_type}, function(response){  
+	$("main_body").empty();                
   	$(response).appendTo("#main_body");
   	var script = document.createElement("script");
 	script.type = "application/javascript";
 	script.src = "/../assets/" + query_type + ".js";
-	document.getElementsByTagName("body")[0].empty();
 	document.getElementsByTagName("body")[0].appendChild(script);
   });
 
