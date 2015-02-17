@@ -44,6 +44,7 @@ function getPartial(query_type){
   	var script = document.createElement("script");
 	script.type = "application/javascript";
 	script.src = "/../assets/" + query_type + ".js";
+	document.getElementsByTagName("body")[0].empty();
 	document.getElementsByTagName("body")[0].appendChild(script);
   });
 
