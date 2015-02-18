@@ -14,6 +14,27 @@ function showSearch(type, side) {
 	$(search).appendTo("#" + type + "_search");
 };
 
+function showSuggest() {
+	$("#suggest_container").empty();
+	var toAdd = "<div id='suggest_search' height='300px' width='540px' style='display:inline; box-shadow: -5px 5px 3px #CDCDCD; float:left; background-image: url(/assets/suggest_blur.jpeg); height: 300px; width: 540px; margin-left: 10px'></div>";
+	$(toAdd).appendTo("#suggest_container");
+	//build search objects
+	var search = "<form><ul class='examples_search'><li><input class='search_1_examples' id='search_1_name' type='text'></li>";
+	// search += "<li><p class='versus'>VS.</p></li>";
+	// search += "<li><input class='search_2_examples' id='search_2_name' type='text'></li>";
+	search += "<li><button class='circle-arrow-examples'><img src='/assets/circle arrow.png' height='38px' width='38px'></button></li>";
+	search += "<li><a class='btn btn-default' onclick='suggestResort()'>CANCEL</li>";
+	search += "</ul></form>";
+	$(search).appendTo("#suggest_search");
+};
+
+function suggestResort() {
+	$("#suggest_container").empty();
+	var toAdd = "<div height='300px' width='540px' onclick='showSuggest()' style='display:inline; box-shadow: -5px 5px 3px #CDCDCD; float:left; background-image: url(/assets/suggest.jpeg); height: 300px; width: 540px; margin-left: 10px'></div>;"
+	$(toAdd).appendTo("#suggest_container");
+};
+
+
 function resort(type, side) {
 	$("#" + type + "_container").empty();
 	var toAdd = "<div height='300px' width='540px' onclick='showSearch(&quot;" + type + "&quot;, &quot;" + side + "&quot;)' style='display:inline; box-shadow: -5px 5px 3px #CDCDCD; float:left;";
