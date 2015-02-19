@@ -35,7 +35,6 @@ function showSearch(type, side) {
 		search += "<form onsubmit='spendingRedirect(); return false;'><ul class='examples_search'><li><input class='search_1_examples_suggest' id='search_1_" + type + "' type='text'></li>";
 	}
 	search += "<li><button class='circle-arrow-examples'><img src='/assets/circle arrow.png' height='38px' width='38px'></button></li>";
-	//search += "<li><a class='btn btn-default' onclick='resort(&quot;" + type + "&quot;, &quot;" + side + "&quot;)'>CANCEL</li>";
 	search += "</ul></form>";
 	$(search).appendTo("#" + type + "_search");
 	//add in placeholders
@@ -104,6 +103,7 @@ function spendingRedirect() {
 
 function dataRequest(type)
 {
+
 	//make api request here with type included
 	localStorage.setItem("query_type", type);
 	window.location = "../../search/results";
