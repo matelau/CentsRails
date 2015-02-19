@@ -39,12 +39,8 @@ else if (path[1] == "search" && path[2] == "results")
 
 
 function getPartial(query_type){
-<<<<<<< HEAD
-	$.get("getPartial", {query_type: query_type}, function(response){                  
-=======
 	$.get("../getPartial", {query_type: query_type}, function(response){  
 	$(".center").remove();               
->>>>>>> dev
   	$(response).appendTo("#main_body");
   	var script = document.createElement("script");
 	script.type = "application/javascript";
