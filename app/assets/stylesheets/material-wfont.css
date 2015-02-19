@@ -213,6 +213,17 @@ canvas {
   padding-left: 5px;
   padding-right: 5px;
 }
+.search_1_examples_suggest {
+  width: 300px;
+  height: 40px;
+  border-color: #884412;
+  border-style: solid;
+  border-radius: 10px;
+  border-width: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-top: 50px;
+}
 .search_2_examples {
   width: 300px;
   height: 40px;
@@ -222,6 +233,18 @@ canvas {
   border-width: 5px;
   padding-left: 5px;
   padding-right: 5px;
+}
+.suggest_1 {
+  width: 400px;
+  height: 180px;
+  border-color: #884412;
+  border-style: solid;
+  border-radius: 10px;
+  border-width: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  resize: none;
+  overflow: hidden;
 }
 .update_spend {
   width: 85px;
