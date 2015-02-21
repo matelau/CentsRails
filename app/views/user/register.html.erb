@@ -1,6 +1,6 @@
 
 <%= form_for(:user, html: { class: "form-horizontal", 'id' => 'register-form'}) do |f| %>
-<div id="stylized" class="myform" >
+<div style="text-align:center" id="stylized" class="myform" >
 	<h2>Create a free account today.</h2><br>
     <form>
 
@@ -107,7 +107,8 @@
 						"user[email]": "Enter a valid email address.",
 						"user[password_confirmation]": {
 							required: "Required",
-							equalTo: "Password must match."
+							equalTo: "Password must match.",
+							minlength: "Must be at least 6 characters long."
 						}
 					},
 					submitHandler: function(form) {

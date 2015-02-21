@@ -124,13 +124,6 @@ canvas {
     font-weight: bold;
     margin-bottom: 8px;
 }
-#stylized p {
-    font-size: 11px;
-    color: #999;
-    margin-bottom: 20px;
-    border-bottom: solid 1px #b7ddf2;
-    padding-bottom: 10px;
-}
 #stylized label {
     display: block;
     font-weight: bold;
