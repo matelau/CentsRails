@@ -61,46 +61,57 @@ function sketchProc(processing) {
 	};
 
 	function major_summary() {
+		var title_offset = 0;
+		if (hide_1 || hide_2)
+			title_offset = 40;
+
 		processing.textAlign(processing.RIGHT);
 		processing.fill(0);
-		processing.text("AVERAGE SALARY", 235, 65);
-		processing.text("MAJOR RECOMMENDATION", 235, 145);
-		processing.text("MAJOR SATISFACTION", 235, 225);
-		processing.text("CENTS MAJOR RATING", 235, 305);
+		processing.text("AVERAGE SALARY", 235+title_offset, 65);
+		processing.text("MAJOR RECOMMENDATION", 235+title_offset, 145);
+		processing.text("MAJOR SATISFACTION", 235+title_offset, 225);
+		processing.text("CENTS MAJOR RATING", 235+title_offset, 305);
 		processing.stroke(225);
 		processing.strokeWeight(1);
-		processing.line(65, 103, 235, 103);
-		processing.line(65, 183, 235, 183);
-		processing.line(65, 263, 235, 263);
+		processing.line(65+title_offset, 103, 235+title_offset, 103);
+		processing.line(65+title_offset, 183, 235+title_offset, 183);
+		processing.line(65+title_offset, 263, 235+title_offset, 263);
+
+		//var to hold summary viz offset when hiding one column
+		var offset = 0;
 
 		processing.textAlign(processing.CENTER);
 		if (!hide_1)
 		{
+			if (hide_2)
+				offset = 90;
 			processing.textFont(font, 30);
 			processing.fill(main);
-			processing.text("$" + (data["major_1"][0]).toLocaleString(), 360, 70);
-			processing.text(data["major_1"][1], 360, 140);
-			processing.text(data["major_1"][2], 360, 220);
-			processing.text((data["major_1"][3]).toFixed(1), 360, 300);
+			processing.text("$" + (data["major_1"][0]).toLocaleString(), 360+offset, 70);
+			processing.text(data["major_1"][1], 360+offset, 140);
+			processing.text(data["major_1"][2], 360+offset, 220);
+			processing.text((data["major_1"][3]).toFixed(1), 360+offset, 300);
 
 			processing.textFont(font, 12);
-			processing.text("OUT OF 100", 360, 155);
-			processing.text("OUT OF 100", 360, 235);
-			processing.text("OUT OF 5.0", 360, 315);
+			processing.text("OUT OF 100", 360+offset, 155);
+			processing.text("OUT OF 100", 360+offset, 235);
+			processing.text("OUT OF 5.0", 360+offset, 315);
 		}
 		if (!hide_2)
 		{
+			if (hide_1)
+				offset = -90;
 			processing.textFont(font, 30);
 			processing.fill(gray);
-			processing.text("$" + (data["major_2"][0]).toLocaleString(), 540, 70);
-			processing.text(data["major_2"][1], 540, 140);
-			processing.text(data["major_2"][2], 540, 220);
-			processing.text((data["major_2"][3]).toFixed(1), 540, 300);
+			processing.text("$" + (data["major_2"][0]).toLocaleString(), 540+offset, 70);
+			processing.text(data["major_2"][1], 540+offset, 140);
+			processing.text(data["major_2"][2], 540+offset, 220);
+			processing.text((data["major_2"][3]).toFixed(1), 540+offset, 300);
 
 			processing.textFont(font, 12);
-			processing.text("OUT OF 100", 540, 155);
-			processing.text("OUT OF 100", 540, 235);
-			processing.text("OUT OF 5.0", 540, 315);
+			processing.text("OUT OF 100", 540+offset, 155);
+			processing.text("OUT OF 100", 540+offset, 235);
+			processing.text("OUT OF 5.0", 540+offset, 315);
 		}
 
 		processing.textFont(font, 12);
