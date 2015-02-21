@@ -1,29 +1,22 @@
-<%= form_tag('/user/login', 
-	{ class: "form-horizontal", 'id' => 'login-form', 'method' => 'post'}) do %>
-	<fieldset>
-		<div class="control-group">
-			<!-- E-mail -->
-			<label class="control-label"	for="first_name">E-mail</label>
-			<div class="controls">
-				<%= email_field_tag 'email'%>
-			</div>
-		</div>
+<%= form_tag('/user/login', { class: "form-horizontal", 'id' => 'login-form', 'method' => 'post'}) do %>
+	<div style="text-align:center" id="stylized" class="myform" >
+		<h3 >Log in to access your profile.</h3><br>
+    	<form>
 
-		<div class="control-group">
-			<!-- Password -->
-			<label class="control-label"	for="password_confirm">Password</label>
-			<div class="controls">
-				<%= password_field_tag 'password' %>
-			</div>
-		</div>
- 
-		<div class="control-group">
-			<!-- Button -->
-			<div class="controls">
-				<button class="btn btn-primary">Log In</button>
-			</div>
-		</div>
-	</fieldset>
+	    <label>EMAIL</label>
+	    <%= email_field_tag 'email'%>
+	    <label id="email-error" class="error" for="email"></label>
+
+	    <label>PASSWORD</label>
+	    <%= password_field_tag 'password' %>
+	    <label id="password-error" class="error" for="password"></label>
+
+		
+		<button style="margin-top:20px" class="btn btn-primary">LOG IN</button><br>
+		<a href="/user/register" style="margin-top:20px" class="btn btn-default">OR REGISTER HERE.</a>
+
+    </form>
+</div>
 <% end %>
 
 <!-- <script src="/assets/jquery.validate.min.js"></script>
@@ -43,6 +36,11 @@
 						this.element(element);
 					},
 
+					success: function(label)
+					{
+						label.text("");
+					},
+
 					// Set the requirements for the fields here.
 					rules: {
 						"email": {
@@ -56,8 +54,8 @@
 					
 					// Set the error message here.
 					messages: {
-						"password": "Enter your password",
-						"email": "Enter a valid email address",
+						"password": "Enter your password.",
+						"email": "Enter a valid email address.",
 					},
 					submitHandler: function(form) {
 						form.submit();

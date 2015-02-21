@@ -106,6 +106,69 @@ canvas {
   margin-right: auto;
   text-align: center;
 }
+.center_register{
+  width: 550px;
+  display: block;
+  margin: 0 auto;
+  text-align: right;
+}
+
+.myform {
+    width: 400px;
+    padding-top: 25px;
+    padding-left: 20px;
+    margin: auto;
+}
+#stylized h1 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+#stylized p {
+    font-size: 11px;
+    color: #999;
+    margin-bottom: 20px;
+    border-bottom: solid 1px #b7ddf2;
+    padding-bottom: 10px;
+}
+#stylized label {
+    display: block;
+    font-weight: bold;
+    text-align: left;
+    width: 160px;
+    float: left;
+}
+
+#stylized label.error {
+    float: right;
+    font-size: 12px;
+    color: #884412;
+    width: 280px;
+    height: 13px;
+    margin-bottom: 20px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+#stylized .small {
+    color: #999;
+    display: block;
+    font-size: 11px;
+    font-weight: normal;
+    text-align: left;
+    width: 160px;
+}
+#stylized input {
+    float: left;
+    font-size: 16px;
+    padding: 5px;
+    border: solid 1px #884412;
+    border-radius: 10px;
+    width: 200px;
+    margin: 2px 0 10px 10px;
+}
+
+
 .examples_center{
   width: 1100px;
   margin-left: auto;
