@@ -245,5 +245,10 @@ def query(query):
 		resp = json.dumps(package)
 		return resp
 
+@app.route('/data/<string:data>', methods=['GET'])
+@crossdomain(origin='*')
+def data(data):
+	
+
 if __name__ == '__main__':
 	app.run(host='0.0.0.0',port=6001,debug=True,processes=5,ssl_context=('/etc/ssl/certs/ssl-bundle.crt','../.ssl/myserver.key'))
