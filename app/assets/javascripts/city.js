@@ -202,24 +202,31 @@ function sketchProc(processing) {
 
 	function city_summary() {
 		//draw categories and separations
+		var title_offset = 0;
+		if (hide_1 || hide_2)
+			title_offset = 40;
 		processing.textAlign(processing.RIGHT);
 		processing.fill(0);
-		processing.text("AVERAGE COST OF LIVING", 235, 55);
-		processing.text("AVERAGE INCOME", 235, 135);
-		processing.text("INCOME TAX RANGE", 235, 215);
-		processing.text("AVERAGE TEMPERATURES", 235, 295);
+		processing.text("AVERAGE COST OF LIVING", 235+title_offset, 55);
+		processing.text("AVERAGE INCOME", 235+title_offset, 135);
+		processing.text("INCOME TAX RANGE", 235+title_offset, 215);
+		processing.text("AVERAGE TEMPERATURES", 235+title_offset, 295);
 		processing.stroke(225);
 		processing.strokeWeight(1);
-		processing.line(65, 93, 235, 93);
-		processing.line(65, 173, 235, 173);
-		processing.line(65, 253, 235, 253);
+		processing.line(65+title_offset, 93, 235+title_offset, 93);
+		processing.line(65+title_offset, 173, 235+title_offset, 173);
+		processing.line(65+title_offset, 253, 235+title_offset, 253);
 		processing.textAlign(processing.CENTER);
 		processing.text("(CLICK TABS ON RIGHT FOR MORE DETAILS)", 330, 355);
+
+		var offset = 0;
 
 		//draw data
 		processing.textFont(font, 30);
 		if (!hide_1)
 		{
+			if (hide_2)
+				offset = 80;
 			processing.fill(main);
 			var c1 = data["cli_1"][0] - 100;
 			var percent1 = "";
@@ -231,22 +238,22 @@ function sketchProc(processing) {
 			else
 				percent1 = "ABOVE";
 
-			processing.text(c1 + "%", 360, 50);
-			processing.text("$" + (data["labor_1"][1]).toLocaleString(), 360, 140);
+			processing.text(c1 + "%", 360+offset, 50);
+			processing.text("$" + (data["labor_1"][1]).toLocaleString(), 360+offset, 140);
 			if (data["taxes_1"][1] == data["taxes_1"][2])
-				processing.text(data["taxes_1"][1] + "%", 360, 218);
+				processing.text(data["taxes_1"][1] + "%", 360+offset, 218);
 			else
 			{
 				processing.textFont(font, 24);
-				processing.text(data["taxes_1"][1] + "%-" + data["taxes_1"][2] + "%", 360, 215);
+				processing.text(data["taxes_1"][1] + "%-" + data["taxes_1"][2] + "%", 360+offset, 215);
 				processing.textFont(font, 30);
 			}
-			processing.text(data["weatherlow_1"][12] + "°- " + data["weather_1"][13] + "°", 360, 295);
+			processing.text(data["weatherlow_1"][12] + "°- " + data["weather_1"][13] + "°", 360+offset, 295);
 			processing.textFont(font, 12);
 			processing.fill(main);
-			processing.text(percent1 + " NATIONAL", 360, 70);
-			processing.text("AVERAGE", 360, 85);
-			processing.text("FAHRENHEIT", 360, 310);
+			processing.text(percent1 + " NATIONAL", 360+offset, 70);
+			processing.text("AVERAGE", 360+offset, 85);
+			processing.text("FAHRENHEIT", 360+offset, 310);
 			//processing.textFont(font, 24);
 		}
 		
@@ -254,6 +261,8 @@ function sketchProc(processing) {
 		processing.textFont(font, 30);
 		if (!hide_2)
 		{
+			if (hide_1)
+				offset = -80;
 			processing.fill(gray);
 			var c2 = data["cli_2"][0] - 100;
 			var percent2 = "";
@@ -265,22 +274,22 @@ function sketchProc(processing) {
 			else
 				percent2 = "ABOVE";
 
-			processing.text(c2 + "%", 540, 50);
-			processing.text("$" + (data["labor_2"][1]).toLocaleString(), 540, 140);
+			processing.text(c2 + "%", 540+offset, 50);
+			processing.text("$" + (data["labor_2"][1]).toLocaleString(), 540+offset, 140);
 			if (data["taxes_2"][1] == data["taxes_2"][2])
-				processing.text(data["taxes_2"][1] + "%", 540, 218);
+				processing.text(data["taxes_2"][1] + "%", 540+offset, 218);
 			else
 			{
 				processing.textFont(font, 24);
-				processing.text(data["taxes_2"][1] + "%-" + data["taxes_2"][2] + "%", 540, 215);
+				processing.text(data["taxes_2"][1] + "%-" + data["taxes_2"][2] + "%", 540+offset, 215);
 				processing.textFont(font, 30);
 			}
-			processing.text(data["weatherlow_2"][12] + "°- " + data["weather_2"][13] + "°", 540, 295);
+			processing.text(data["weatherlow_2"][12] + "°- " + data["weather_2"][13] + "°", 540+offset, 295);
 			processing.fill(gray);
 			processing.textFont(font, 12);
-			processing.text(percent2 + " NATIONAL", 540, 70);
-			processing.text("AVERAGE", 540, 85);
-			processing.text("FAHRENHEIT", 540, 310);
+			processing.text(percent2 + " NATIONAL", 540+offset, 70);
+			processing.text("AVERAGE", 540+offset, 85);
+			processing.text("FAHRENHEIT", 540+offset, 310);
 		}
 
 		processing.textFont(font, 12);

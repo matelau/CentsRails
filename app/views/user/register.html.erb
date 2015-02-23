@@ -1,58 +1,48 @@
-<%= form_for(:user, html: { class: "form-horizontal", 'id' => 'register-form'}) do |f| %>
-	<fieldset>
-		<div class="control-group">
-			<!-- First name -->
-			<label class="control-label"	for="first_name">First Name</label>
-			<div class="controls">
-				<%= f.text_field :first_name, html: {'placeholder' => "", class: "input-xlarge"} %>
-				<p class="help-block">First name can contain any letters.</p>
-			</div>
-		</div>
 
-		<div class="control-group">
-			<!-- Last name -->
-			<label class="control-label"	for="first_name">Last Name</label>
-			<div class="controls">
-				<%= f.text_field :last_name, html: {'placeholder' => "", class: "input-xlarge"} %>
-				<p class="help-block">Last name can contain any letters.</p>
-			</div>
-		</div>
- 
-		<div class="control-group">
-			<!-- E-mail -->
-			<label class="control-label" for="email">E-mail</label>
-			<div class="controls">
-				<%= f.email_field :email, html: {'placeholder' => '', class: 'input-xlarge'} %>
-				<p class="help-block">Provide your e-mail.</p>
-			</div>
-		</div>
- 
-		<div class="control-group">
-			<!-- Password-->
-			<label class="control-label" for="password">Password</label>
-			<div class="controls">
-				<%= f.password_field :password, html: {'placeholder' => "", class: "input-xlarge"} %>
-				<p class="help-block">Password should be at least 6 characters</p>
-			</div>
-		</div>
- 
-		<div class="control-group">
-			<!-- Password -->
-			<label class="control-label"	for="password_confirm">Password (Confirm)</label>
-			<div class="controls">
-				<%= f.password_field :password_confirmation, html: {'placeholder' => "", class: "input-xlarge"} %>
-				<p class="help-block">Confirm your password</p>
-			</div>
-		</div>
- 
-		<div class="control-group">
-			<!-- Button -->
-			<div class="controls">
-				<button class="btn btn-primary">Register</button>
-			</div>
-		</div>
-	</fieldset>
+<%= form_for(:user, html: { class: "form-horizontal", 'id' => 'register-form'}) do |f| %>
+<div style="text-align:center" id="stylized" class="myform" >
+	<h2>Create a free account today.</h2><br>
+    <form>
+
+	    <label>FIRST NAME
+	    <span class="small">Only letters allowed.</span>
+	    </label>
+	    <%= f.text_field :first_name, html: {'placeholder' => "", class: "input-xlarge"} %>
+	    <label id="user_first_name-error" class="error" for="user_first_name"></label>
+
+	    <label>LAST NAME
+	    <span class="small">Only letters allowed.</span>
+	    </label>
+	    <%= f.text_field :last_name, html: {'placeholder' => "", class: "input-xlarge"} %>
+	    <label id="user_last_name-error" class="error" for="user_last_name"></label>
+
+	    <label>EMAIL
+	    <span class="small">Enter a valid address.</span>
+	    </label>
+	    <%= f.email_field :email, html: {'placeholder' => '', class: 'input-xlarge'} %>
+	    <label id="user_email-error" class="error" for="user_email"></label>
+
+	    <label>PASSWORD
+	    <span class="small">Must be at least 6 characters.</span>
+	    </label>
+	    <%= f.password_field :password, html: {'placeholder' => "", class: "input-xlarge"} %>
+	    <label id="user_password-error" class="error" for="user_password"></label>
+
+	    <label>PASSWORD (CONFIRM)
+	    <span class="small">Must match password above.</span>
+	    </label>
+	    <%= f.password_field :password_confirmation, html: {'placeholder' => "", class: "input-xlarge"} %>
+	    <label id="user_password_confirmation-error" class="error" for="user_password_confirmation"></label>
+
+
+		<button style="margin-top:80px" class="btn btn-primary">REGISTER</button>
+
+    </form>
+</div>
+
+
 <% end %>
+
 
 <!-- <script src="/assets/jquery.validate.min.js"></script>
 <script src="/assets/additional-methods.min.js"></script> -->
@@ -69,6 +59,10 @@
 			$("#register-form").validate({
 					onfocusout: function(element, event) {
 						this.element(element);
+					},
+					success: function(label)
+					{
+						label.text("");
 					},
 
 					// Set the requirements for the fields here.
@@ -100,20 +94,21 @@
 					messages: {
 						"user[first_name]": {
 							required: "Required",
-							lettersonly: "First name can only have letters"
+							lettersonly: "First name can only contain letters."
 						},
 						"user[last_name]": {
 							required: "Required",
-							lettersonly: "Last name can only have letters"
+							lettersonly: "Last name can only contain letters."
 						},
 						"user[password]": {
 							required: "Required",
-							minlength: "Must be at least 6 characters long"
+							minlength: "Must be at least 6 characters long."
 						},
-						"user[email]": "Enter a valid email address",
+						"user[email]": "Enter a valid email address.",
 						"user[password_confirmation]": {
 							required: "Required",
-							equalTo: "Must match password"
+							equalTo: "Password must match.",
+							minlength: "Must be at least 6 characters long."
 						}
 					},
 					submitHandler: function(form) {
