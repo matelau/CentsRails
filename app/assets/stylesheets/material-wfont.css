@@ -49,7 +49,7 @@ canvas {
   padding-left: 15px;
 }
 .search-bar {
-  width: 500px;
+  width: 580px;
   padding-top: 135px;
   margin-left: auto;
   margin-right: auto;
@@ -207,8 +207,8 @@ canvas {
   border: none;
   height: 50px;
   width: 50px;
-  margin-left: 225px;
-  margin-right: 225px;
+  display: inline-block;
+  vertical-align: middle;
 }
 .circle-arrow-update {
   background: none;
@@ -227,8 +227,7 @@ canvas {
 .main-search {
   width: 430px;
   height: 40px;
-  margin-right: 35px;
-  margin-left: 35px;
+  margin-left: 75px;
   margin-bottom: 15px;
   border-color: #884412;
   border-style: solid;
@@ -329,9 +328,16 @@ canvas {
 .help-text {
   text-align: center;
   font-size: 17px;
+  padding-left: 20px
 }
 .question-text {
   text-align: center;
+  padding-left: 15px
+}
+.suggestion-text {
+  text-align: center;
+  padding-left: 15px;
+  padding-top: 350px;
 }
 .mdi-action-3d-rotation:before {
   content: "\e600";
