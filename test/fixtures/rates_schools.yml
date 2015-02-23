@@ -1,13 +1,21 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-albert1:
+albert_princeton:
   rating: 1
-  user_id: 9001
+  user_id: 1
+  university_id: 1
 
-albert2:
-  rating: 2
-  user_id: 9002
-
-alice:
+albert_harvard:
   rating: 2
   user_id: 1
+  university_id: 2
+
+albert_byu:
+  rating: 2
+  user_id: 1
+  university_id: 2
+
+alice_princeton:
+  rating: 2
+  user_id: 1
+  university_id: 1

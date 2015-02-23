@@ -1,25 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  debt: 1.5
-  books: 1.5
-  savings: 1.5
-  email: MyString
-  first_name: MyString
-  last_name: MyString
-  password_digest: MyString
-
-two:
-  debt: 2.5
-  books: 2.5
-  savings: 2.5
-  email: MyString
-  first_name: MyString
-  last_name: MyString
-  password_digest: MyString
-
 albert:
-  id: 9001
+  id: 1
   debt: 33
   books: 33
   savings: 34
@@ -29,7 +10,7 @@ albert:
   password_digest: MyString
 
 alice:
-  id: 9002
+  id: 2
   debt: 33
   books: 33
   savings: 34
