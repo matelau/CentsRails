@@ -252,7 +252,6 @@ def data(data):
 	query = cgi.parse_qs(data)
 
 	if(query['type'][0] == 'coli'):
-		print "here\n\n"
 		package  = {
 			"query":query,
 			"locations":[]
@@ -275,6 +274,33 @@ def data(data):
 		s.verify = False
 		resp = s.send(prep)
 		return resp.text
+
+	if(query['type'][0] == 'school'):
+		package  = {
+			"query":query,
+			"schools":[]
+		}
+		for s in query['option']:
+			package["schools"].append({"name":s})
+
+		if(len(query['option']) == 1):
+			package['operation'] = "get"
+		else:
+			package['operation'] = "compare"
+
+		url = "https://trycents.com/api/v1/schools/"
+
+		print package
+		payload = json.dumps(package)
+		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
+		prep = r.prepare()
+		s = requests.Session()
+		s.verify = False
+		resp = s.send(prep)
+		package = json.loads(resp.text)
+		for i in range(0, len(query['option'])):
+			package["school_"+`i+1`+"_name"] = query['option'][i]
+		return json.dumps(package)
 	
 
 if __name__ == '__main__':
