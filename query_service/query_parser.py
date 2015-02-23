@@ -253,7 +253,6 @@ def data(data):
 
 	if(query['type'][0] == 'coli'):
 		package  = {
-			"query":query,
 			"locations":[]
 		}
 		for o in query['option']:
@@ -277,11 +276,21 @@ def data(data):
 
 	if(query['type'][0] == 'school'):
 		package  = {
-			"query":query,
 			"schools":[]
 		}
+
+		sarr = []
+		scarr = []
+
 		for s in query['option']:
-			package["schools"].append({"name":s})
+			sarr.append(s.lower())
+
+		for u,l in unis.iteritems():
+			for a in l:
+				if a.lower() in sarr:
+					package["schools"].append({"name":u})
+					scarr.append(u)
+
 
 		if(len(query['option']) == 1):
 			package['operation'] = "get"
@@ -298,8 +307,8 @@ def data(data):
 		s.verify = False
 		resp = s.send(prep)
 		package = json.loads(resp.text)
-		for i in range(0, len(query['option'])):
-			package["school_"+`i+1`+"_name"] = query['option'][i]
+		for i in range(0, len(scarr)):
+			package["school_"+`i+1`+"_name"] = scarr[i]
 		return json.dumps(package)
 	
 
