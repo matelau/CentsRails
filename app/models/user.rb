@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
 	has_many :queries, dependent: :destroy
 	has_many :completeds, dependent: :destroy
 	has_many :rates_schools, dependent: :destroy
+	has_many :rates_majors, dependent: :destroy
 
 	# Tell bcrypt to do its thing.
 	has_secure_password

@@ -1,13 +1,29 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  salary: 1.5
-  unemployment: 1.5
-  in_field: false
-  name: MyString
+cs:
+  id: 1
+  salary: 90000
+  unemployment: 3
+  in_field: 90
+  name: "Computer Science"
 
-two:
-  salary: 1.5
-  unemployment: 1.5
-  in_field: false
-  name: MyString
+math:
+  id: 2
+  salary: 80000
+  unemployment: 4
+  in_field: 89
+  name: "Mathematics"
+
+econ:
+  id: 3
+  salary: 70000
+  unemployment: 5
+  in_field: 85
+  name: "Economics"
+
+bw:
+  id: 4
+  salary: 2.63
+  unemployment: 90
+  in_field: 2
+  name: "Basketweaving"
