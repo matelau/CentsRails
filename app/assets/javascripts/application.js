@@ -46,7 +46,6 @@ function getPartial(query_type){
 		script.src = "/../assets/" + query_type + ".js";
 		document.getElementsByTagName("body")[0].appendChild(script);
 	});
-
 };
 
 function api_request(query) {

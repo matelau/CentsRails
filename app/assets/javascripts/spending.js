@@ -42,7 +42,13 @@ function sketchProc(processing) {
 
 		shuffle(pie_colors);
 
-		spending_income = 45000;
+
+		if (localStorage.getItem("income") == undefined || localStorage.getItem("income") == "" || isNaN(localStorage.getItem("income")))
+			spending_income = 45000;
+		else
+			spending_income = localStorage.getItem("income") * 1.00;
+		console.log(spending_income);
+
 		calculateTaxes();
 		rebuildPercentages();
 
@@ -206,6 +212,7 @@ function updateIncome() {
 
 	//calculate taxes for new income, then rebuild the values according to the new allocation
 	spending_income = temp_income;
+	localStorage.setItem("income", spending_income);
 	calculateTaxes();
 	rebuildPercentages();
 	//populate the fields with the rebuilt values
