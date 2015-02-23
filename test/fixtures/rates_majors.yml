@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+albert_cs:
+  user_id: 1
+  degree_id: 1
+  rating: 4
+
+albert_math:
+  user_id: 1
+  degree_id: 2
+  rating: 3
