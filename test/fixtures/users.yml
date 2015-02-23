@@ -18,11 +18,22 @@ two:
   last_name: MyString
   password_digest: MyString
 
-three:
+albert:
+  id: 9001
   debt: 33
   books: 33
   savings: 34
-  email: testperson3@gmail.com
+  email: albert.t.aldridge@gmail.com
   first_name: Albert
   last_name: Aldridge
+  password_digest: MyString
+
+alice:
+  id: 9002
+  debt: 33
+  books: 33
+  savings: 34
+  email: alice.t.albertson@gmail.com
+  first_name: Alice
+  last_name: Albertson
   password_digest: MyString

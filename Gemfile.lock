@@ -57,6 +57,8 @@ GEM
     faraday_middleware (0.9.1)
       faraday (>= 0.7.4, < 0.10)
     ffi (1.9.6)
+    foreigner (1.7.2)
+      activerecord (>= 3.0.0)
     gh (0.13.2)
       addressable
       backports
@@ -87,7 +89,6 @@ GEM
     minitest (5.4.3)
     multi_json (1.10.1)
     multipart-post (2.0.0)
-    mysql (2.9.1)
     mysql2 (0.3.17)
     net-http-persistent (2.9.4)
     net-http-pipeline (1.0.1)
@@ -197,10 +198,10 @@ DEPENDENCIES
   bootstrap-material-design
   coffee-rails (~> 4.0.0)
   execjs
+  foreigner
   jbuilder (~> 2.0)
   jquery-rails
   jquery-validation-rails
-  mysql
   mysql2
   passenger
   rails (= 4.1.6)
