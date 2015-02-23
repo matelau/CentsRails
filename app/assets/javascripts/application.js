@@ -70,11 +70,15 @@ function api_request(query) {
     				localStorage.removeItem("data_store");
 					localStorage.setItem("data_store", JSON.stringify(data));
 					localStorage.setItem("query_type", data["query_type"]);
+					window.location = "/search/results/";
 				}
       		}
   		}
   	}
-  	window.location = "/search/results/";
+  	
   	xhr.send(null);
+
+  	$('#search-bar').hide();
+    $('#loading').show();
 };
 
