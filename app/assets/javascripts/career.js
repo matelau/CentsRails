@@ -71,41 +71,56 @@ function sketchProc(processing) {
 
 	function career_summary() {
 		//draw categories and separations
+		var title_offset = 0;
+		if (hide_1 || hide_2)
+			title_offset = 40;
+
 		processing.textAlign(processing.RIGHT);
 		processing.fill(0);
-		processing.text("2013 AVERAGE SALARY", 275, 55);
-		processing.text("CENTS JOB RATING", 275, 135);
-		processing.text("PROJECTED JOB DEMAND 2012-2022", 275, 215);
-		processing.text("2012 UNEMPLOYMENT", 275, 295);
+		processing.text("2013 AVERAGE SALARY", 275+title_offset, 55);
+		processing.text("CENTS JOB RATING", 275+title_offset, 135);
+		processing.text("PROJECTED JOB DEMAND 2012-2022", 275+title_offset, 215);
+		processing.text("2012 UNEMPLOYMENT", 275+title_offset, 295);
 		processing.stroke(225);
 		processing.strokeWeight(1);
-		processing.line(55, 93, 275, 93);
-		processing.line(55, 173, 275, 173);
-		processing.line(55, 253, 275, 253);
+		processing.line(55+title_offset, 93, 275+title_offset, 93);
+		processing.line(55+title_offset, 173, 275+title_offset, 173);
+		processing.line(55+title_offset, 253, 275+title_offset, 253);
 		processing.textAlign(processing.CENTER);
 		processing.text("(CLICK TABS ON RIGHT FOR MORE DETAILS)", 330, 355);
 
+		var offset = 0;
+
 		//draw data
-		processing.textFont(font, 30);
-		processing.fill(main);
-		processing.text("$" + (data["career_salary_1"][16]).toLocaleString(), 400, 60);
-		processing.text("" + (data["career_satisfaction_1"]), 400, 130);
-		processing.text((data["career_demand_1"][0]).toLocaleString(), 400, 215);
-		processing.text((data["career_unemploy_1"][0]) + "%", 400, 300);
+		if (!hide_1)
+		{
+			if (hide_2)
+				offset = 80;
+			processing.textFont(font, 30);
+			processing.fill(main);
+			processing.text("$" + (data["career_salary_1"][16]).toLocaleString(), 400+offset, 60);
+			processing.text("" + (data["career_satisfaction_1"]), 400+offset, 130);
+			processing.text((data["career_demand_1"][0]).toLocaleString(), 400+offset, 215);
+			processing.text((data["career_unemploy_1"][0]) + "%", 400+offset, 300);
+			processing.textFont(font, 12);
+			processing.text("OUT OF 5.0", 400+offset, 150);
+			processing.text("JOBS", 400+offset, 235);
+		}
 
-		processing.fill(gray);
-		processing.text("$" + (data["career_salary_2"][16]).toLocaleString(), 560, 60);
-		processing.text("" + (data["career_satisfaction_2"]), 560, 130);
-		processing.text((data["career_demand_2"][0]).toLocaleString(), 560, 215);
-		processing.text((data["career_unemploy_2"][0]) + "%", 560, 300);
-
-		processing.textFont(font, 12);
-		processing.fill(main);
-		processing.text("OUT OF 5.0", 400, 150);
-		processing.text("JOBS", 400, 235);
-		processing.fill(gray);
-		processing.text("OUT OF 5.0", 560, 150);
-		processing.text("JOBS", 560, 235);
+		if (!hide_2)
+		{
+			if (hide_1)
+				offset = -80;
+			processing.textFont(font, 30);
+			processing.fill(gray);
+			processing.text("$" + (data["career_salary_2"][16]).toLocaleString(), 560+offset, 60);
+			processing.text("" + (data["career_satisfaction_2"]), 560+offset, 130);
+			processing.text((data["career_demand_2"][0]).toLocaleString(), 560+offset, 215);
+			processing.text((data["career_unemploy_2"][0]) + "%", 560+offset, 300);
+			processing.textFont(font, 12);
+			processing.text("OUT OF 5.0", 560+offset, 150);
+			processing.text("JOBS", 560+offset, 235);
+		}	
 
 	};
 

@@ -1,23 +1,49 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  size: 1
+princeton:
+  id: 1
+  size: 8104
   rank: 1
   housing: 1.5
-  state: MyString
-  name: MyString
-  tuition_resident: 1.5
-  tuition_nonresident: 1.5
+  state: "New Jersey"
+  name: "Princeton University"
+  tuition_resident: 41820
+  tuition_nonresident: 41820
   net_cost: 1.5
-  grad_rate_6_year: 1.5
+  grad_rate_6_year: 97
 
-two:
-  size: 1
-  rank: 1
+harvard:
+  id: 2
+  size: 19882
+  rank: 2
   housing: 1.5
-  state: MyString
-  name: MyString
-  tuition_resident: 1.5
-  tuition_nonresident: 1.5
+  state: "Massachusetts"
+  name: "Harvard University"
+  tuition_resident: 43938
+  tuition_nonresident: 43938
   net_cost: 1.5
-  grad_rate_6_year: 1.5
+  grad_rate_6_year: 97
+
+u:
+  id: 3
+  size: 32077
+  rank: 129
+  housing: 1.5
+  state: "Utah"
+  name: "University of Utah"
+  tuition_resident: 7935
+  tuition_nonresident: 25267
+  net_cost: 1.5
+  grad_rate_6_year: 60
+
+byu:
+  id: 4
+  size: 31123
+  rank: 62
+  housing: 1.5
+  state: "Utah"
+  name: "Brigham Young University -- Provo"
+  tuition_resident: 5000
+  tuition_nonresident: 5000
+  net_cost: 1.5
+  grad_rate_6_year: 77
