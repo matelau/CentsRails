@@ -2,6 +2,7 @@ from flask import Flask, make_response, request, current_app
 import nltk
 import json
 import csv
+import cgi
 import requests
 import re
 import string
@@ -248,7 +249,33 @@ def query(query):
 @app.route('/data/<string:data>', methods=['GET'])
 @crossdomain(origin='*')
 def data(data):
+	query = cgi.parse_qs(data)
+
+	if(query['type'][0] == 'coli'):
+		print "here\n\n"
+		package  = {
+			"query":query,
+			"locations":[]
+		}
+		for o in query['option']:
+			package["locations"].append({"city":o[:o.index(",")],"state":o[o.index(", ")+2:]})
+
+		if(len(query['option']) == 1):
+			package['operation'] = "get"
+		else:
+			package['operation'] = "compare"
+
+		url = "https://trycents.com/api/v1/coli/"
+
+		print package
+		payload = json.dumps(package)
+		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
+		prep = r.prepare()
+		s = requests.Session()
+		s.verify = False
+		resp = s.send(prep)
+		return resp.text
 	
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0',port=6001,debug=True,processes=5,ssl_context=('/etc/ssl/certs/ssl-bundle.crt','../.ssl/myserver.key'))
+	app.run(host='0.0.0.0',port=6001,debug=True,processes=5)#,ssl_context=('/etc/ssl/certs/ssl-bundle.crt','../.ssl/myserver.key'))
