@@ -112,7 +112,55 @@ canvas {
   margin: 0 auto;
   text-align: right;
 }
+.quote {
+  text-align: center;
+  padding-top: 155px;
+  padding-left: 35px;
+  position: absolute;
+  margin: 70px 30px;
+  height: 80px;
+  width: 500px;
+  top: 0px;
+  opacity: 0;
+  -moz-opacity: 0;
+  filter:alpha(opacity=0);
+}
+@-webkit-keyframes "quoteshift" {
+ 0% {
+   opacity: 0;
+ }
+ 2% {
+   opacity: 1;
+ }
+ 18% {
+   opacity: 1;
+ }
+ 20% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 0;
+ }
+}
+.quote:nth-child(1) {
+  -webkit-animation: quoteshift 20s 0s infinite linear;
+}
+ 
+.quote:nth-child(2) {
+  -webkit-animation: quoteshift 20s 4s infinite linear;
+}
+ 
+.quote:nth-child(3) {
+  -webkit-animation: quoteshift 20s 8s infinite linear;
+}
 
+.quote:nth-child(4) {
+  -webkit-animation: quoteshift 20s 12s infinite linear;
+}
+
+.quote:nth-child(5) {
+  -webkit-animation: quoteshift 20s 16s infinite linear;
+}
 .myform {
     width: 400px;
     padding-top: 25px;
@@ -338,6 +386,9 @@ canvas {
   text-align: center;
   padding-left: 15px;
   padding-top: 350px;
+  padding-bottom: 35px;
+  bottom 0;
+  position: relative;
 }
 .mdi-action-3d-rotation:before {
   content: "\e600";
@@ -2579,6 +2630,18 @@ canvas {
 }
 .shadow-z-5 {
   box-shadow: 0 15px 20px rgba(0, 0, 0, 0.22), 0 19px 60px rgba(0, 0, 0, 0.3);
+}
+footer
+{
+    background: #EEEEEE;
+    color: Black;
+    padding-bottom: 10px;
+    text-align: center;
+    vertical-align: middle;
+    margin: 0;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
 }
 body {
   background-color: #EEEEEE;
