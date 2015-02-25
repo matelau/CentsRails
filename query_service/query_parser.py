@@ -93,7 +93,7 @@ for line in csv.reader(states):
 
 app = Flask(__name__)
 
-@app.route('/query/<string:query>', methods=['GET'])
+@app.route('/query/<string:query>', methods=['GET','OPTIONS'])
 @crossdomain(origin='*')
 def query(query):
 	object = []
