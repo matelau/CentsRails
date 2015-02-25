@@ -78,7 +78,7 @@ function api_request(query) {
   	
   	xhr.send(null);
 
-  	$('#search-bar').attr("hidden", "true");
-    $('#loading').attr("hidden", "false");
+  	$('#search-bar').attr("hidden");
+    $('#loading').removeAttr("hidden");
 };
 
