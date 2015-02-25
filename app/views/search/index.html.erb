@@ -3,20 +3,42 @@
 </script>
 <!-- Search Field -->
 
-
 <div class="search-bar" id="search-bar">
-	<p class="question-text">WHAT WOULD YOU LIKE TO KNOW?</p>
 	<form>
-	<input class="main-search" type="text" id="search">
+	  <div class="quote">
+	    <p>ASK US ABOUT CITIES</p>
+	  </div>
+ 
+	  <div class="quote">
+	    <p>ASK US ABOUT CAREERS</p>
+	  </div>
+ 
+	  <div class="quote">
+	    <p>ASK US ABOUT UNIVERSITIES</p>
+	  </div>
+
+	  <div class="quote">
+	    <p>ASK US ABOUT MAJORS</p>
+	  </div>
+
+	  <div class="quote">
+	    <p>ASK US ABOUT MONTHLY SPENDING</p>
+	  </div>
+
 	
+	<input class="main-search" type="text" id="search">
+	<button class="circle-arrow" type="submit" onclick="api_request(document.getElementById('search').value); return false;"><img src="assets/circle arrow.png" height="25" width="25"></button>
+	<br>
 	<p class="help-text">NEW HERE? CHECK OUT OUR <a href="/wizard/start">WIZARD</a> OR SOME <a href="/info/examples">EXAMPLES</a>.</p>
-	<button class="circle-arrow" type="submit" onclick="api_request(document.getElementById('search').value); return false;"><img src="assets/circle arrow.png" height="38" width="38"></button>
 	</form>
 </div>
 
 <div id="loading">
   <img id="loading-image" style="display: block; margin: 0 auto;" src="../assets/circle load.gif" alt="Loading..." />
 </div>
+
+<footer>SUGGESTIONS? <a href="mailto:admin@trycents.com">LET US KNOW</a>!</footer>
+
 
 <script language="javascript" type="text/javascript">
   $(document).ready(function() {
