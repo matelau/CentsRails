@@ -92,9 +92,9 @@ for line in csv.reader(states):
 	state[line[0].lower()] = line[1].lower()
 
 app = Flask(__name__)
+cors = CORS(app)
 
 @app.route('/query/<string:query>', methods=['GET'])
-@crossdomain(origin='*')
 def query(query):
 	object = []
 	ops = []
@@ -247,7 +247,6 @@ def query(query):
 		return resp
 
 @app.route('/data/<string:data>', methods=['GET'])
-@crossdomain(origin='*')
 def data(data):
 	query = cgi.parse_qs(data)
 
