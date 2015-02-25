@@ -93,7 +93,7 @@ for line in csv.reader(states):
 
 app = Flask(__name__)
 
-@app.route('/query/<string:query>', methods=['GET','OPTIONS'])
+@app.route('/query/<string:query>', methods=['GET'])
 @crossdomain(origin='*')
 def query(query):
 	object = []
@@ -247,6 +247,7 @@ def query(query):
 		return resp
 
 @app.route('/data/<string:data>', methods=['GET'])
+@crossdomain(origin='*')
 def data(data):
 	query = cgi.parse_qs(data)
 
@@ -309,8 +310,9 @@ def data(data):
 		for i in range(0, len(scarr)):
 			package["school_"+`i+1`+"_name"] = scarr[i]
 		return json.dumps(package)
+
 	
-app.config['SERVER_NAME'] = "trycents.com"
+#app.config['SERVER_NAME'] = "trycents.com"
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0',port=6001,debug=False,processes=5,ssl_context=('/etc/ssl/certs/ssl-bundle.crt','../.ssl/myserver.key'))
