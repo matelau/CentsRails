@@ -34,7 +34,7 @@
 </div>
 
 <div id="loading">
-  <img id="loading-image" style="visibility: hidden; display: block; margin: 0 auto;" src="../assets/circle load.gif" alt="Loading..." />
+  <img id="loading-image" hidden="true" style="display: block; margin: 0 auto;" src="../assets/circle load.gif" alt="Loading..." />
 </div>
 
 <footer>SUGGESTIONS? <a href="mailto:admin@trycents.com">LET US KNOW</a>!</footer>
@@ -42,7 +42,7 @@
 
 <script language="javascript" type="text/javascript">
   $(document).ready(function() {
-    $('#loading').hide();
-    $('#search-bar').show();
+    $('#loading').attr("hidden", "true");
+    $('#search-bar').attr("hidden", "false");
   });
 </script>
