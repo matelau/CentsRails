@@ -260,7 +260,7 @@ def query(query):
 def data(data):
 	query = cgi.parse_qs(data)
 
-	if(query['type'][0] == 'coli'):
+	if(query['type'][0] == 'city'):
 		package  = {
 			"locations":[]
 		}
