@@ -111,13 +111,13 @@ function dataRequest(type)
 		return;
 	}
 	else if(field2 == ""){
-		url = "https://trycents.com:6001/data/type="+type+"&option='"+field1+"'";
+		url = "https://trycents.com:6001/data/type="+type+"&option="+field1;
 	}
 	else if(field1 == ""){
-		url = "https://trycents.com:6001/data/type="+type+"&option='"+field2+"'";
+		url = "https://trycents.com:6001/data/type="+type+"&option="+field2;
 	}
 	else{
-		url = "https://trycents.com:6001/data/type="+type+"&option='"+field1+"'&option='"+field2+"'";
+		url = "https://trycents.com:6001/data/type="+type+"&option="+field1+"&option="+field2;
 	}
 	var data = new Object();
 	var xmlHttp = null;
