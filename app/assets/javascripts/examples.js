@@ -103,8 +103,32 @@ function spendingRedirect() {
 
 function dataRequest(type)
 {
+	field1 = document.getElementById("search_1_" + type).value;
+	field2 = document.getElementById("search_2_" + type).value;
+	url = "";
+
+	if(field1 == null && field2 == null){
+		return;
+	}
+	else if(field2 == null){
+		url = "https://trycents.com:6001/data/type="+type+"&option="+field1;
+	}
+	else if(field1 == null){
+		url = "https://trycents.com:6001/data/type="+type+"&option="+field2;
+	}
+	else{
+		url = "https://trycents.com:6001/data/type="+type+"&option="+field1+"&option="+field2;
+	}
+	var data = new Object();
+	var xmlHttp = null;
+
+    xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", url, false );
+    xmlHttp.send( null );
+    data = jQuery.parseJSON(xmlHttp.responseText);
 
 	//make api request here with type included
 	localStorage.setItem("query_type", type);
+	localStorage.setItem("data_store",JSON.stringify(data));
 	window.location = "../../search/results";
 }
