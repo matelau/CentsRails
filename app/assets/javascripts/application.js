@@ -51,7 +51,7 @@ function getPartial(query_type){
 function api_request(query) {
 	var data =  new Object();
 
-	var url = "https://www.trycents.com:6001/query/" + query;
+	var url = "https://trycents.com:6001/query/" + query;
 
 	var xhr = null;
 

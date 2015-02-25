@@ -247,7 +247,6 @@ def query(query):
 		return resp
 
 @app.route('/data/<string:data>', methods=['GET'])
-@crossdomain(origin='*')
 def data(data):
 	query = cgi.parse_qs(data)
 

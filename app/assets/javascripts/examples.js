@@ -107,13 +107,13 @@ function dataRequest(type)
 	field2 = document.getElementById("search_2_" + type).value;
 	url = "";
 
-	if(field1 == null && field2 == null){
+	if(field1 == "" && field2 == ""){
 		return;
 	}
-	else if(field2 == null){
+	else if(field2 == ""){
 		url = "https://trycents.com:6001/data/type="+type+"&option="+field1;
 	}
-	else if(field1 == null){
+	else if(field1 == ""){
 		url = "https://trycents.com:6001/data/type="+type+"&option="+field2;
 	}
 	else{
