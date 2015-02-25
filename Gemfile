@@ -41,7 +41,6 @@ gem 'bcrypt', '~> 3.1.7'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-gem 'mysql'
 gem 'mysql2'
 
 # aws gems
@@ -53,3 +52,5 @@ gem 'rspec'
 
 gem 'thin'
 gem 'jquery-validation-rails'
+
+gem 'foreigner'
