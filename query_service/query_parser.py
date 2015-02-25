@@ -311,6 +311,7 @@ def data(data):
 			package["school_"+`i+1`+"_name"] = scarr[i]
 		return json.dumps(package)
 	
+app.config['SERVER_NAME'] = "trycents.com"
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0',port=6001,debug=True,processes=5)#,ssl_context=('/etc/ssl/certs/ssl-bundle.crt','../.ssl/myserver.key'))
+	app.run(host='0.0.0.0',port=6001,debug=False,processes=5,ssl_context=('/etc/ssl/certs/ssl-bundle.crt','../.ssl/myserver.key'))
