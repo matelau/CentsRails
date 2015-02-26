@@ -24,47 +24,6 @@ except ImportError:
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
-def crossdomain(origin=None, methods=None, headers=None,
-                max_age=21600, attach_to_all=True,
-                automatic_options=True):
-    if methods is not None:
-        methods = ', '.join(sorted(x.upper() for x in methods))
-    if headers is not None and not isinstance(headers, basestring):
-        headers = ', '.join(x.upper() for x in headers)
-    if not isinstance(origin, basestring):
-        origin = ', '.join(origin)
-    if isinstance(max_age, timedelta):
-        max_age = max_age.total_seconds()
-
-    def get_methods():
-        if methods is not None:
-            return methods
-
-        options_resp = current_app.make_default_options_response()
-        return options_resp.headers['allow']
-
-    def decorator(f):
-        def wrapped_function(*args, **kwargs):
-            if automatic_options and request.method == 'OPTIONS':
-                resp = current_app.make_default_options_response()
-            else:
-                resp = make_response(f(*args, **kwargs))
-            if not attach_to_all and request.method != 'OPTIONS':
-                return resp
-
-            h = resp.headers
-
-            h['Access-Control-Allow-Origin'] = origin
-            h['Access-Control-Allow-Methods'] = get_methods()
-            h['Access-Control-Max-Age'] = str(max_age)
-            if headers is not None:
-                h['Access-Control-Allow-Headers'] = headers
-            return resp
-
-        f.provide_automatic_options = False
-        return update_wrapper(wrapped_function, f)
-    return decorator
-
 def pp(req):
     """
     At this point it is completely built and ready
@@ -274,7 +233,6 @@ def data(data):
 
 		url = "https://trycents.com/api/v1/coli/"
 
-		print package
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
 		prep = r.prepare()
@@ -308,7 +266,6 @@ def data(data):
 
 		url = "https://trycents.com/api/v1/schools/"
 
-		print package
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
 		prep = r.prepare()
@@ -320,6 +277,31 @@ def data(data):
 			package["school_"+`i+1`+"_name"] = scarr[i]
 		return json.dumps(package)
 
+	if(query['type'][0] == 'major'):
+		package = {
+			"majors":[]
+		}
+
+		if(len(query['option']) == 1):
+			package['operation'] = "get"
+		else:
+			package['operation'] = "compare"
+
+		for o in query['option']:
+			package["majors"].append(o)
+
+		url = "https://trycents.com/api/v1/majors/"
+
+		payload = json.dumps(package)
+		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
+		prep = r.prepare()
+		s = requests.Session()
+		s.verify = False
+		resp = s.send(prep)
+		package = json.loads(resp.text)
+		for i in range(0, len(query['option'])):
+			package["major_"+`i+1`+"_name"] = query['option'][i]
+		return json.dumps(package)
 	
 #app.config['SERVER_NAME'] = "trycents.com"
 

@@ -123,12 +123,18 @@ function dataRequest(type)
 	var xmlHttp = null;
 
     xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", url, false );
-    xmlHttp.send( null );
-    data = jQuery.parseJSON(xmlHttp.responseText);
+    xmlHttp.open( "GET", url, true );
 
-	//make api request here with type included
-	localStorage.setItem("query_type", type);
-	localStorage.setItem("data_store",JSON.stringify(data));
-	window.location = "../../search/results";
+    xhr.onreadystatechange = function() {
+    	if (xmlHttp.readyState === 4) { 
+      		if (xmlHttp.status === 200) {
+      			data = jQuery.parseJSON(xmlHttp.responseText);
+      			//make api request here with type included
+				localStorage.setItem("query_type", type);
+				localStorage.setItem("data_store",JSON.stringify(data));
+				window.location = "../../search/results";
+      		}
+      	}
+    }
+    xmlHttp.send( null );
 }
