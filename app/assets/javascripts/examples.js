@@ -125,7 +125,7 @@ function dataRequest(type)
     xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", url, true );
 
-    xhr.onreadystatechange = function() {
+    xmlHttp.onreadystatechange = function() {
     	if (xmlHttp.readyState === 4) { 
       		if (xmlHttp.status === 200) {
       			data = jQuery.parseJSON(xmlHttp.responseText);
