@@ -1,9 +1,5 @@
 @font-face {
-  font-family: 'RobotoDraft';
-  font-style: normal;
-  font-weight: 100;
-  src: local('RobotoDraft Thin'), local('RobotoDraft-Thin'), url(https://fonts.gstatic.com/s/robotodraft/v2/hope9NW9iJ5hh8P5PM_EA2zZpt1Zv2lgqhgSPQ2HnUo.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+  font-family: 'Roboto', sans-serif;
 }
 @font-face {
   font-family: "Material-Design-Icons";
@@ -114,13 +110,10 @@ canvas {
 }
 .quote {
   text-align: center;
-  padding-top: 155px;
-  padding-left: 35px;
   position: absolute;
-  margin: 70px 30px;
-  height: 80px;
-  width: 500px;
-  top: 0px;
+  height: 20px;
+  width: 580px;
+  top: 220px;
   opacity: 0;
   -moz-opacity: 0;
   filter:alpha(opacity=0);
@@ -178,35 +171,71 @@ canvas {
    filter: alpha(opacity=0);
    opacity: 0;
  }
- 
+}
+@-ms-keyframes "quoteshift" {
+  0% {
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  -moz-opacity:0.0;
+  opacity: 0;
+ }
+ 2% {
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  filter: alpha(opacity=100);
+  -moz-opacity:1.0;
+  opacity: 1;
+ }
+ 16% {
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  filter: alpha(opacity=100);
+  -moz-opacity:1.0;
+  opacity: 1;
+ }
+ 20% {
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  -moz-opacity:0.0;
+  opacity: 0;
+ }
+ 100% {
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  -moz-opacity:0.0;
+  opacity: 0;
+ }
 }
 .quote:nth-child(1) {
   -webkit-animation: quoteshift 20s 0s infinite linear;
   -moz-animation: quoteshift 20s 0s infinite linear;
+  -ms-animation: quoteshift 20s 0s infinite linear;
   
 }
  
 .quote:nth-child(2) {
   -webkit-animation: quoteshift 20s 4s infinite linear;
   -moz-animation: quoteshift 20s 4s infinite linear;
+  -ms-animation: quoteshift 20s 4s infinite linear;
   
 }
  
 .quote:nth-child(3) {
   -webkit-animation: quoteshift 20s 8s infinite linear;
   -moz-animation: quoteshift 20s 8s infinite linear;
+  -ms-animation: quoteshift 20s 8s infinite linear;
   
 }
 
 .quote:nth-child(4) {
   -webkit-animation: quoteshift 20s 12s infinite linear;
   -moz-animation: quoteshift 20s 12s infinite linear;
+  -ms-animation: quoteshift 20s 12s infinite linear;
 
 }
 
 .quote:nth-child(5) {
   -webkit-animation: quoteshift 20s 16s infinite linear;
   -moz-animation: quoteshift 20s 16s infinite linear;
+  -ms-animation: quoteshift 20s 16s infinite linear;
 
 }
 .myform {
@@ -2712,12 +2741,12 @@ h6,
 .h2,
 .h3,
 .h4 {
-  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 300;
 }
 h5,
 h6 {
-  font-family: "Roboto Condensed", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 400;
 }
 body .well,
@@ -3071,7 +3100,7 @@ body .jumbotron-material-lightgrey,
   background-color: #0f9d58;
 }
 .btn-info:not(.btn-link):not(.btn-flat) {
-  background-color: #03a9f4;
+  background-color: white;
 }
 .btn-warning:not(.btn-link):not(.btn-flat) {
   background-color: #ff5722;

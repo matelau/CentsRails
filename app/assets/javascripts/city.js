@@ -34,7 +34,7 @@ function sketchProc(processing) {
 		hide_1 = false;
 		hide_2 = false;
 		//load font
-		font = processing.loadFont("./fonts/Roboto-Regular.ttf");
+		font = processing.loadFont("Roboto");
 		processing.textFont(font, 12);
 
 		horz_locs = [87, 145, 215, 308, 389, 488, 577];
