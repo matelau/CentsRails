@@ -36,14 +36,21 @@ function sketchProc(processing) {
 
 		data = new Array();
 
-		//salary, major recommendation, major satisfaction, cents major rating
-		data["major_1"] = [95000, 89, 77, 4.8];
-		data["major_2"] = [41000, 45, 72, 2.9];
-		data["jobs_1"] = ["Software Developer", 97500, "Database Administrator", 91000, "System Analyst", 89000];
-		data["jobs_2"] = ["Teacher", 43500, "Disc Jockey", 37000, "Performance Artist", 36500];
+		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));
+  		//localStorage.removeItem("data_store");
 
-		data["name_1"] = "Computer Science";
-		data["name_2"] = "Music";
+  		if (data == null)
+  		{
+  			data = new Array();
+			//salary, major recommendation, major satisfaction, cents major rating
+			data["major_1"] = [95000, 89, 77, 4.8];
+			data["major_2"] = [41000, 45, 72, 2.9];
+			data["jobs_1"] = ["Software Developer", 97500, "Database Administrator", 91000, "System Analyst", 89000];
+			data["jobs_2"] = ["Teacher", 43500, "Disc Jockey", 37000, "Performance Artist", 36500];
+
+			data["name_1"] = "Computer Science";
+			data["name_2"] = "Music";
+		}
 		
 		document.getElementById("search_1_name").value = data["name_1"];
 		document.getElementById("search_2_name").value = data["name_2"];
