@@ -74,7 +74,6 @@ class Api::V1::RecordNamesController < ApplicationController
 
 		# Return the record names as a JSON object.
 		result.sort!
-		result << result.length
 		return render json: result, status: 200
 	end
 end
