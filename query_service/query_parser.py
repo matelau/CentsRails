@@ -290,6 +290,8 @@ def data(data):
 		for o in query['option']:
 			package["majors"].append(o)
 
+		print package
+
 		url = "https://trycents.com/api/v1/majors/"
 
 		payload = json.dumps(package)
@@ -298,6 +300,9 @@ def data(data):
 		s = requests.Session()
 		s.verify = False
 		resp = s.send(prep)
+
+		print resp
+
 		package = json.loads(resp.text)
 		for i in range(0, len(query['option'])):
 			package["major_"+`i+1`+"_name"] = query['option'][i]
@@ -332,4 +337,4 @@ def data(data):
 #app.config['SERVER_NAME'] = "trycents.com"
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0',port=6001,debug=False,processes=5,ssl_context=('/etc/ssl/certs/ssl-bundle.crt','../.ssl/myserver.key'))
+	app.run(host='0.0.0.0',port=6001,debug=True,processes=5,ssl_context=('/etc/ssl/certs/ssl-bundle.crt','../.ssl/myserver.key'))
