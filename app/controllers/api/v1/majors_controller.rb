@@ -36,7 +36,7 @@ class Api::V1::MajorsController < ApplicationController
 			"SELECT d.name AS degree_name,
 							d.salary AS degree_salary,
 							d.recommend,
-							d.satisfaction,
+							d.meaningful,
 							j.name AS job_name,
 							j.salary AS job_salary
 			FROM degrees AS d
@@ -62,7 +62,7 @@ class Api::V1::MajorsController < ApplicationController
 
 					salary = record[:degree_salary] ? record[:degree_salary].to_f : nil
 					recommended = record[:recommend] ? record[:recommend].to_f : nil
-					satisfaction = record[:satisfaction] ? record[:satisfaction].to_f : nil
+					satisfaction = record[:meaningful] ? record[:meaningful].to_f : nil
 					job_name = record[:job_name] ? record[:job_name] : nil
 					job_salary = record[:job_salary] ? record[:job_salary].to_f : nil
 					# Cents rating goes here
