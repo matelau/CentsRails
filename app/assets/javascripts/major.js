@@ -48,12 +48,22 @@ function sketchProc(processing) {
 			data["jobs_1"] = ["Software Developer", 97500, "Database Administrator", 91000, "System Analyst", 89000];
 			data["jobs_2"] = ["Teacher", 43500, "Disc Jockey", 37000, "Performance Artist", 36500];
 
-			data["name_1"] = "Computer Science";
-			data["name_2"] = "Music";
+			data["major_1_name"] = "Computer Science";
+			data["major_2_name"] = "Music";
 		}
 		
-		document.getElementById("search_1_name").value = data["name_1"];
-		document.getElementById("search_2_name").value = data["name_2"];
+		document.getElementById("search_1_name").value = data["major_1_name"];
+
+		if (!data["major_2"])
+  		{
+  			hide_2 = true;
+  			document.getElementById("search_2_button").value = "SHOW";
+  			$("#search_2_button").attr("disabled", "true");
+  		}
+  		else
+  		{
+  			document.getElementById("search_2_name").value = data["major_2_name"];
+  		}
 
 	};
 
