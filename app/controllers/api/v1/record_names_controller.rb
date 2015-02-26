@@ -17,7 +17,7 @@ class Api::V1::RecordNamesController < ApplicationController
 			error_list << 'The operation field was empty'
 		end
 
-		# Also uses optional params[:where].
+		# Also uses optional params[:state].
 
 		unless error_list.empty?
 			result[:errors] = error_list
@@ -27,24 +27,21 @@ class Api::V1::RecordNamesController < ApplicationController
 		tables = params[:tables]
 
 		# Query the database.
-		where_string = ''
-		if params[:where]
-			where_string = "#{params[:where][0]} = #{params[:where][1]}"
-		else
-			where_string = 'TRUE'
-		end
-
 		records = nil
 		tables.each do |table|
 
 			# Get the cost of living names.
 			if table == 'coli' or table == 'colis' or table == 'cost of living'
-				records = Coli.select('DISTINCT city, state').where(where_string)
+				if params[:state]
+					records = Coli.select('DISTINCT city, state').where(state: params[:state])
+				else
+					records = Coli.select('DISTINCT city, state')
+				end
 
 				# Format the location name as a single string.
 				records.each do |record|
 					if not record[:city]
-						result << record[:city]
+						result << record[:state]
 					else
 						result << "#{record[:city]}, #{record[:state]}"
 					end
@@ -53,7 +50,7 @@ class Api::V1::RecordNamesController < ApplicationController
 			# Get the degree names.
 			elsif table == 'major' or table == 'majors' or table == 'degree' or 
 				table == 'degrees'
-				records = Degree.select('DISTINCT name').where(where_string)
+				records = Degree.select('DISTINCT name')
 
 				records.each do |record|
 					result << record[:name]
@@ -62,7 +59,7 @@ class Api::V1::RecordNamesController < ApplicationController
 			# Get the university names.
 			elsif table == 'university' or table == 'universities' or 
 				table == 'school' or table == 'schools'
-				records = University.select('DISTINCT name').where(where_string)
+				records = University.select('DISTINCT name')
 
 				records.each do |record|
 					result << record[:name]
@@ -76,6 +73,8 @@ class Api::V1::RecordNamesController < ApplicationController
 		end
 
 		# Return the record names as a JSON object.
+		result.sort!
+		result << result.length
 		return render json: result, status: 200
 	end
 end
