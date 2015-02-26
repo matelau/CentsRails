@@ -85,7 +85,6 @@ Rails.application.routes.draw do
       post 'logout' => 'logout#destroy'
       post 'confirm' => 'confirm#show'
       post 'schools' => 'schools#show'
-      post 'record_names' => 'record_names#show'
     end
   end
 end
