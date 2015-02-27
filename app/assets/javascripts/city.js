@@ -3,8 +3,8 @@ var data, hide_1, hide_2, main, gray, font, active_tab, axis_location, horz_locs
 var sketch = new Processing.Sketch();
 
 function city_api_request(query) {
-	field1 = document.getElementById("search_1_" + type).value;
-	field2 = document.getElementById("search_2_" + type).value;
+	field1 = document.getElementById("search_1_name").value;
+	field2 = document.getElementById("search_2_name").value;
 	url = "";
 
 	type = "city"
