@@ -35,6 +35,8 @@ function city_api_request(query) {
       			//make api request here with type included
 				localStorage.setItem("query_type", type);
 				localStorage.setItem("data_store",JSON.stringify(data));
+
+				location.reload();
       		}
       	}
     }
