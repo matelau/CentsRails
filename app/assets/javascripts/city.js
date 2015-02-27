@@ -3,6 +3,25 @@ var data, hide_1, hide_2, main, gray, font, active_tab, axis_location, horz_locs
 var sketch = new Processing.Sketch();
 
 function city_api_request(query) {
+	field1 = document.getElementById("search_1_" + type).value;
+	field2 = document.getElementById("search_2_" + type).value;
+	url = "";
+
+	type = "city"
+
+	if(field1 == "" && field2 == ""){
+		return;
+	}
+	else if(field2 == ""){
+		url = "https://trycents.com:6001/data/type="+type+"&option="+field1;
+	}
+	else if(field1 == ""){
+		url = "https://trycents.com:6001/data/type="+type+"&option="+field2;
+	}
+	else{
+		url = "https://trycents.com:6001/data/type="+type+"&option="+field1+"&option="+field2;
+	}
+
 	var data = new Object();
 	var xmlHttp = null;
 
