@@ -54,7 +54,7 @@ function sketchProc(processing) {
 		hide_1 = false;
 		hide_2 = false;
 		//load font
-		font = processing.loadFont("./fonts/Roboto-Regular.ttf");
+		font = processing.loadFont("Roboto");
 		processing.textFont(font, 12);
 		
  		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));
