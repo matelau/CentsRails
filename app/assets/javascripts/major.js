@@ -3,19 +3,44 @@ var data, hide_1, hide_2, main, gray, font, active_tab;
 var sketch = new Processing.Sketch();
 
 function major_api_request(query) {
-	window.alert("major api request");
-	// var url = "https://54.67.106.77:6001/query/" + query;
-	// $.get(url, function(resp){
-	// 	data = jQuery.parseJSON(resp);
-	// 	if(data["operation"] == "undefined")
-	// 	{
-	// 		window.location = "/info/examples/"
-	// 	}
-	// 	else
-	// 	{
-	// 		window.location = "/wizard/city/?" + resp;
-	// 	}
-	// });
+	field1 = document.getElementById("search_1_name").value;
+	field2 = document.getElementById("search_2_name").value;
+	url = "";
+
+	type = "major"
+
+	if(field1 == "" && field2 == ""){
+		return;
+	}
+	else if(field2 == ""){
+		url = "https://trycents.com:6001/data/type="+type+"&option="+field1;
+	}
+	else if(field1 == ""){
+		url = "https://trycents.com:6001/data/type="+type+"&option="+field2;
+	}
+	else{
+		url = "https://trycents.com:6001/data/type="+type+"&option="+field1+"&option="+field2;
+	}
+
+	var data = new Object();
+	var xmlHttp = null;
+
+    xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", url, true );
+
+    xmlHttp.onreadystatechange = function() {
+    	if (xmlHttp.readyState === 4) { 
+      		if (xmlHttp.status === 200) {
+      			data = jQuery.parseJSON(xmlHttp.responseText);
+      			//make api request here with type included
+				localStorage.setItem("query_type", type);
+				localStorage.setItem("data_store",JSON.stringify(data));
+
+				location.reload();
+      		}
+      	}
+    }
+    xmlHttp.send( null );
 };
 
 function sketchProc(processing) {
@@ -31,22 +56,39 @@ function sketchProc(processing) {
 		hide_1 = false;
 		hide_2 = false;
 		//load font
-		font = processing.loadFont("./fonts/Roboto-Regular.ttf");
+		font = processing.loadFont("Roboto");
 		processing.textFont(font, 12);
 
 		data = new Array();
 
-		//salary, major recommendation, major satisfaction, cents major rating
-		data["major_1"] = [95000, 89, 77, 4.8];
-		data["major_2"] = [41000, 45, 72, 2.9];
-		data["jobs_1"] = ["Software Developer", 97500, "Database Administrator", 91000, "System Analyst", 89000];
-		data["jobs_2"] = ["Teacher", 43500, "Disc Jockey", 37000, "Performance Artist", 36500];
+		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));
+  		//localStorage.removeItem("data_store");
 
-		data["name_1"] = "Computer Science";
-		data["name_2"] = "Music";
+  		if (data == null)
+  		{
+  			data = new Array();
+			//salary, major recommendation, major satisfaction, cents major rating
+			data["major_1"] = [95000, 89, 77, 4.8];
+			data["major_2"] = [41000, 45, 72, 2.9];
+			data["jobs_1"] = ["Software Developer", 97500, "Database Administrator", 91000, "System Analyst", 89000];
+			data["jobs_2"] = ["Teacher", 43500, "Disc Jockey", 37000, "Performance Artist", 36500];
+
+			data["major_1_name"] = "Computer Science";
+			data["major_2_name"] = "Music";
+		}
 		
-		document.getElementById("search_1_name").value = data["name_1"];
-		document.getElementById("search_2_name").value = data["name_2"];
+		document.getElementById("search_1_name").value = data["major_1_name"];
+
+		if (!data["major_2"])
+  		{
+  			hide_2 = true;
+  			document.getElementById("search_2_button").value = "SHOW";
+  			$("#search_2_button").attr("disabled", "true");
+  		}
+  		else
+  		{
+  			document.getElementById("search_2_name").value = data["major_2_name"];
+  		}
 
 	};
 
@@ -61,46 +103,57 @@ function sketchProc(processing) {
 	};
 
 	function major_summary() {
+		var title_offset = 0;
+		if (hide_1 || hide_2)
+			title_offset = 40;
+
 		processing.textAlign(processing.RIGHT);
 		processing.fill(0);
-		processing.text("AVERAGE SALARY", 235, 65);
-		processing.text("MAJOR RECOMMENDATION", 235, 145);
-		processing.text("MAJOR SATISFACTION", 235, 225);
-		processing.text("CENTS MAJOR RATING", 235, 305);
+		processing.text("AVERAGE SALARY", 235+title_offset, 65);
+		processing.text("MAJOR RECOMMENDATION", 235+title_offset, 145);
+		processing.text("MAJOR SATISFACTION", 235+title_offset, 225);
+		processing.text("CENTS MAJOR RATING", 235+title_offset, 305);
 		processing.stroke(225);
 		processing.strokeWeight(1);
-		processing.line(65, 103, 235, 103);
-		processing.line(65, 183, 235, 183);
-		processing.line(65, 263, 235, 263);
+		processing.line(65+title_offset, 103, 235+title_offset, 103);
+		processing.line(65+title_offset, 183, 235+title_offset, 183);
+		processing.line(65+title_offset, 263, 235+title_offset, 263);
+
+		//var to hold summary viz offset when hiding one column
+		var offset = 0;
 
 		processing.textAlign(processing.CENTER);
 		if (!hide_1)
 		{
+			if (hide_2)
+				offset = 90;
 			processing.textFont(font, 30);
 			processing.fill(main);
-			processing.text("$" + (data["major_1"][0]).toLocaleString(), 360, 70);
-			processing.text(data["major_1"][1], 360, 140);
-			processing.text(data["major_1"][2], 360, 220);
-			processing.text((data["major_1"][3]).toFixed(1), 360, 300);
+			processing.text("$" + (data["major_1"][0]).toLocaleString(), 360+offset, 70);
+			processing.text(data["major_1"][1], 360+offset, 140);
+			processing.text(data["major_1"][2], 360+offset, 220);
+			processing.text((data["major_1"][3]).toFixed(1), 360+offset, 300);
 
 			processing.textFont(font, 12);
-			processing.text("OUT OF 100", 360, 155);
-			processing.text("OUT OF 100", 360, 235);
-			processing.text("OUT OF 5.0", 360, 315);
+			processing.text("OUT OF 100", 360+offset, 155);
+			processing.text("OUT OF 100", 360+offset, 235);
+			processing.text("OUT OF 5.0", 360+offset, 315);
 		}
 		if (!hide_2)
 		{
+			if (hide_1)
+				offset = -90;
 			processing.textFont(font, 30);
 			processing.fill(gray);
-			processing.text("$" + (data["major_2"][0]).toLocaleString(), 540, 70);
-			processing.text(data["major_2"][1], 540, 140);
-			processing.text(data["major_2"][2], 540, 220);
-			processing.text((data["major_2"][3]).toFixed(1), 540, 300);
+			processing.text("$" + (data["major_2"][0]).toLocaleString(), 540+offset, 70);
+			processing.text(data["major_2"][1], 540+offset, 140);
+			processing.text(data["major_2"][2], 540+offset, 220);
+			processing.text((data["major_2"][3]).toFixed(1), 540+offset, 300);
 
 			processing.textFont(font, 12);
-			processing.text("OUT OF 100", 540, 155);
-			processing.text("OUT OF 100", 540, 235);
-			processing.text("OUT OF 5.0", 540, 315);
+			processing.text("OUT OF 100", 540+offset, 155);
+			processing.text("OUT OF 100", 540+offset, 235);
+			processing.text("OUT OF 5.0", 540+offset, 315);
 		}
 
 		processing.textFont(font, 12);

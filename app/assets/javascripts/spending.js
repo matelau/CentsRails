@@ -5,7 +5,7 @@ var sketch = new Processing.Sketch();
 function sketchProc(processing) {
 	
 	processing.setup = function() {
-		console.log("loaded spending.js successfully");
+		//console.log("loaded spending.js successfully");
 		main = processing.color(136, 68, 18);
 		gray = processing.color(138, 136, 137);
 
@@ -14,7 +14,7 @@ function sketchProc(processing) {
 		hide_1 = false;
 		hide_2 = false;
 		//load font
-		font = processing.loadFont("./fonts/Roboto-Regular.ttf");
+		font = processing.loadFont("Roboto");
 		processing.textFont(font, 12);
 
 		data = new Array();
@@ -42,7 +42,13 @@ function sketchProc(processing) {
 
 		shuffle(pie_colors);
 
-		spending_income = 45000;
+
+		if (localStorage.getItem("income") == undefined || localStorage.getItem("income") == "" || isNaN(localStorage.getItem("income")))
+			spending_income = 45000;
+		else
+			spending_income = localStorage.getItem("income") * 1.00;
+		//console.log(spending_income);
+
 		calculateTaxes();
 		rebuildPercentages();
 
@@ -206,6 +212,7 @@ function updateIncome() {
 
 	//calculate taxes for new income, then rebuild the values according to the new allocation
 	spending_income = temp_income;
+	localStorage.setItem("income", spending_income);
 	calculateTaxes();
 	rebuildPercentages();
 	//populate the fields with the rebuilt values
