@@ -11,7 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150223184003) do
+ActiveRecord::Schema.define(version: 20150302002228) do
+
+  create_table "amounts", force: true do |t|
+    t.integer  "user_id"
+    t.float    "misc",           limit: 24
+    t.float    "housing",        limit: 24
+    t.float    "books",          limit: 24
+    t.float    "insurance",      limit: 24
+    t.float    "utilities",      limit: 24
+    t.string   "type"
+    t.string   "name"
+    t.float    "food",           limit: 24
+    t.float    "savings",        limit: 24
+    t.float    "loans",          limit: 24
+    t.float    "tuition",        limit: 24
+    t.float    "healthcare",     limit: 24
+    t.float    "debt",           limit: 24
+    t.float    "transportation", limit: 24
+    t.boolean  "public"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "careers", force: true do |t|
     t.datetime "created_at"
@@ -130,27 +151,6 @@ ActiveRecord::Schema.define(version: 20150223184003) do
 
   add_index "rates_schools", ["university_id"], name: "rates_schools_university_id_fk", using: :btree
   add_index "rates_schools", ["user_id"], name: "rates_schools_user_id_fk", using: :btree
-
-  create_table "scalars", force: true do |t|
-    t.integer  "user_id"
-    t.float    "misc",           limit: 24
-    t.float    "housing",        limit: 24
-    t.float    "books",          limit: 24
-    t.float    "insurance",      limit: 24
-    t.float    "utilities",      limit: 24
-    t.string   "type"
-    t.string   "name"
-    t.float    "food",           limit: 24
-    t.float    "savings",        limit: 24
-    t.float    "loans",          limit: 24
-    t.float    "tuition",        limit: 24
-    t.float    "healthcare",     limit: 24
-    t.float    "debt",           limit: 24
-    t.float    "transportation", limit: 24
-    t.boolean  "public"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "to_be_validated_users", force: true do |t|
     t.string   "first_name"
