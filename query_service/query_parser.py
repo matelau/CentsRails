@@ -65,6 +65,10 @@ cors = CORS(app)
 
 @app.route('/query/<string:query>', methods=['GET'])
 def query(query):
+
+	with open("../data/queries.txt", "a") as logfile:
+    	logfile.write(query)
+
 	object = []
 	ops = []
 	locations = []
@@ -288,7 +292,7 @@ def data(data):
 			package['operation'] = "compare"
 
 		for o in query['option']:
-			package["majors"].append(o)
+			package["majors"].append(o.title())
 
 		print package
 
