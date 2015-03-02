@@ -15,6 +15,10 @@ class Api::V1::SpendingBreakdownController < ApplicationController
 			error_list << 'No user ID was present'
 		end
 
+		unless params[:fields].present?
+			error_list << 'The fields array was empty'
+		end
+
 		unless params[:operation].present?
 			error_list << 'The operation field was empty'
 		end
@@ -23,6 +27,17 @@ class Api::V1::SpendingBreakdownController < ApplicationController
 			result[:errors] = error_list
 			return render json: result, status: 400
 		end
+
+		params[:fields].each do |field|
+			amount = Amount.new
+			amount.user_id = params[:user_id]
+			amount.name = field[:name]
+			amount.value = field[:value]
+			amount.category = field[:category]
+			unless amount.save return render json: result, status: 500
+		end
+
+		return render json: result, status: 200
 	end
 
 end
