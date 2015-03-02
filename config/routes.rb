@@ -86,6 +86,8 @@ Rails.application.routes.draw do
       post 'confirm' => 'confirm#show'
       post 'schools' => 'schools#show'
       post 'majors' => 'majors#show'
+      post 'spending_breakdown' => 'spending_breakdown#save'
+      get 'spending_breakdown' => 'spending_breakdown#load'
     end
   end
 end
