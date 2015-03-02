@@ -2,6 +2,38 @@ class Api::V1::SpendingBreakdownController < ApplicationController
 
 	# Load spending breakdown data.
 	def load
+		result = Array.new
+		error_list = []
+
+		# Check for the required fields, and return an appropriate message if
+		# they are not present.
+		unless params[:user_id].present?
+			error_list << 'No user ID was present'
+		end
+
+		unless error_list.empty?
+			result[:errors] = error_list
+			return render json: result, status: 400
+		end
+
+		unless User.exists? params[:user_id]
+			return render json: 'No such user was found', status: 404
+		end
+
+		records = Amount.find_by_sql [
+			'SELECT name, value, category
+			 FROM users AS u
+			 INNER JOIN amounts AS a
+			 ON u.id = a.user_id
+			 WHERE a.user_id = ?',
+			 params[:user_id]
+		]
+
+		records.each do |record|
+			result << record.attributes.except('id')
+		end
+
+		return render json: result, status: 200
 	end
 
 	# Save spending breakdown data.
