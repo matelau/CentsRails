@@ -1,5 +1,45 @@
 class Api::V1::SpendingBreakdownController < ApplicationController
 
+	# Delete a user's spending breakdown data.
+	def delete
+		result = Array.new
+		error_list = []
+
+		# Check for the required fields, and return an appropriate message if
+		# they are not present.
+		unless params[:user_id].present?
+			error_list << 'No user ID was present'
+		end
+
+		unless params[:name].present?
+			error_list << 'The name parameter was missing'
+		end
+
+		unless params[:value].present?
+			error_list << 'The value parameter was missing'
+		end
+
+		unless params[:category].present?
+			error_list << 'The value category was missing'
+		end
+
+		unless error_list.empty?
+			result[:errors] = error_list
+			return render json: result, status: 400
+		end
+
+		unless User.exists? params[:user_id]
+			return render json: 'No such user was found', status: 404
+		end
+
+		success = Amount.where(['name = ? and value = ? and category = ?', 
+							params[:name], params[:value], params[:category]]).destroy_all
+
+		return render json: 'The server couldn\'t delete', status: 500 unless success
+
+		return render json: result, status: 200
+	end
+
 	# Load spending breakdown data.
 	def load
 		result = Array.new
