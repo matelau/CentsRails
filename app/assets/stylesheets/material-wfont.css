@@ -39,6 +39,24 @@ a:link, a:visited, a:hover, a:active {
 canvas {
   outline: none;
 }
+.ui-helper-hidden-accessible { 
+  display:none; 
+}
+.ui-autocomplete {
+  list-style: none;
+  max-height: 120px;
+  width: 300px;
+  padding-left: 10px;
+  margin-bottom: 0px;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  cursor: pointer;
+  background: white;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.23), 0 3px 10px rgba(0, 0, 0, 0.16);
+}
+
+
 .arrow-button {
   background: none;
   border: none;
