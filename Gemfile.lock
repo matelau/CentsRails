@@ -168,7 +168,7 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
-    travis (1.7.4)
+    travis (1.7.5)
       addressable (~> 2.3)
       backports
       faraday (~> 0.9)

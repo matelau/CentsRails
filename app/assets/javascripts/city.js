@@ -2306,7 +2306,7 @@ function city_api_request(query) {
 		url = "https://trycents.com:6001/data/type="+type+"&option="+field1+"&option="+field2;
 	}
 
-	var data = new Object();
+	//data = new Object();
 	var xmlHttp = null;
 
     xmlHttp = new XMLHttpRequest();
@@ -2320,7 +2320,21 @@ function city_api_request(query) {
 				localStorage.setItem("query_type", type);
 				localStorage.setItem("data_store",JSON.stringify(data));
 
-				location.reload();
+				//location.reload();
+				if (!data["location_2"])
+  				{
+		  			hide_2 = true;
+		  			document.getElementById("search_2_button").value = "SHOW";
+		  			$("#search_2_button").attr("disabled", "true");
+  				}
+  				else
+  				{
+  					hide_2 = false;
+  					document.getElementById("search_2_button").value = "SHOW";
+		  			$("#search_2_button").removeAttr("disabled");
+		  			document.getElementById("search_2_name").value = data["location_2"];
+
+  				}
       		}
       	}
     }
