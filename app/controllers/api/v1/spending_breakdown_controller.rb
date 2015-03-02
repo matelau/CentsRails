@@ -28,6 +28,11 @@ class Api::V1::SpendingBreakdownController < ApplicationController
 			return render json: result, status: 400
 		end
 
+		unless User.exists? params[:user_id]
+			return render json: 'No such user was found', status: 404
+		end
+
+		# Save the data.
 		params[:fields].each do |field|
 			amount = Amount.new
 			amount.user_id = params[:user_id]
