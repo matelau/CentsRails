@@ -11,27 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150302002228) do
+ActiveRecord::Schema.define(version: 20150302005653) do
 
   create_table "amounts", force: true do |t|
     t.integer  "user_id"
-    t.float    "misc",           limit: 24
-    t.float    "housing",        limit: 24
-    t.float    "books",          limit: 24
-    t.float    "insurance",      limit: 24
-    t.float    "utilities",      limit: 24
-    t.string   "type"
     t.string   "name"
-    t.float    "food",           limit: 24
-    t.float    "savings",        limit: 24
-    t.float    "loans",          limit: 24
-    t.float    "tuition",        limit: 24
-    t.float    "healthcare",     limit: 24
-    t.float    "debt",           limit: 24
-    t.float    "transportation", limit: 24
     t.boolean  "public"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "value",      limit: 24
   end
 
   create_table "careers", force: true do |t|
