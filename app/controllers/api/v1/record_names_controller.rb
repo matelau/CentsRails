@@ -17,7 +17,7 @@ class Api::V1::RecordNamesController < ApplicationController
 			error_list << 'The operation field was empty'
 		end
 
-		# Also uses optional params[:state].
+		# Also uses optional params[:select] and params[:where].
 
 		unless error_list.empty?
 			result[:errors] = error_list
@@ -33,18 +33,29 @@ class Api::V1::RecordNamesController < ApplicationController
 			# Get the cost of living names.
 			if table == 'coli' or table == 'colis' or table == 'cost of living' or
 				 table == 'city' or table == 'cities'
-				if params[:state]
-					records = Coli.select('DISTINCT city, state').where(state: params[:state])
-				else
-					records = Coli.select('DISTINCT city, state')
-				end
 
-				# Format the location name as a single string.
-				records.each do |record|
-					if not record[:city]
+				if params[:where] and not params[:select]
+					records = Coli.select('DISTINCT city, state').where(state: params[:where])
+
+					# Format the location name as a single string.
+					records.each do |record|
+						if not record[:city]
+							result << record[:state]
+						else
+							result << "#{record[:city]}, #{record[:state]}"
+						end
+					end
+
+				elsif params[:select] and not params[:where]
+					records = Coli.select('DISTINCT state')
+					records.each do |record|
 						result << record[:state]
-					else
-						result << "#{record[:city]}, #{record[:state]}"
+					end
+
+				else
+					records = Coli.select('DISTINCT state').where(state: params[:where])
+					records.each do |record|
+						result << record[:state]
 					end
 				end
 
