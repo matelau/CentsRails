@@ -2367,8 +2367,8 @@ function sketchProc(processing) {
 			data["weather_2"]    = [67.0, 71.0, 77.0, 85.0, 95.0, 104.0, 106.0, 104.0, 100.0, 89.0, 76.0, 66.0, 66.0, 106.0];
 			data["weatherlow_2"] = [46.0, 49.0, 53.0, 60.0, 69.0, 78.0, 83.0, 83.0, 77.0, 65.0, 53.0, 45.0, 45.0, 83.0];
 
-			data["location_1"] = "Salt Lake City, UT";
-			data["location_2"] = "Phoenix, AZ";
+			data["location_1"] = "Salt Lake City, Utah";
+			data["location_2"] = "Phoenix, Arizona";
 
 			data["cli_1"] = [102, 94, 95, 95, 119, 105, 92, 92, 119];
 			data["cli_2"] = [96, 92, 100, 106, 97, 101, 99, 92, 106];
