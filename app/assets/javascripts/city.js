@@ -2324,13 +2324,13 @@ function city_api_request(query) {
 				if (!data["location_2"])
   				{
 		  			hide_2 = true;
-		  			document.getElementById("search_2_button").value = "HIDE";
+		  			document.getElementById("search_2_button").value = "SHOW";
 		  			$("#search_2_button").attr("disabled", "true");
   				}
   				else
   				{
   					hide_2 = false;
-  					document.getElementById("search_2_button").value = "SHOW";
+  					document.getElementById("search_2_button").value = "HIDE";
 		  			$("#search_2_button").removeAttr("disabled");
 		  			document.getElementById("search_2_name").value = data["location_2"];
 
