@@ -2324,7 +2324,7 @@ function city_api_request(query) {
 				if (!data["location_2"])
   				{
 		  			hide_2 = true;
-		  			document.getElementById("search_2_button").value = "SHOW";
+		  			document.getElementById("search_2_button").value = "HIDE";
 		  			$("#search_2_button").attr("disabled", "true");
   				}
   				else
