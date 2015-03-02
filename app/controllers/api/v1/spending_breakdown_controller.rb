@@ -19,8 +19,12 @@ class Api::V1::SpendingBreakdownController < ApplicationController
 			error_list << 'The fields array was empty'
 		end
 
-		unless params[:operation].present?
-			error_list << 'The operation field was empty'
+		params[:fields].each do |field|
+			unless field[:name].present? and 
+					field[:value].present? and 
+					field[:category].present?
+				error_list << 'Each field object must have a name, value and category'
+			end
 		end
 
 		unless error_list.empty?
@@ -39,7 +43,7 @@ class Api::V1::SpendingBreakdownController < ApplicationController
 			amount.name = field[:name]
 			amount.value = field[:value]
 			amount.category = field[:category]
-			unless amount.save return render json: result, status: 500
+			return render json: result, status: 500 unless amount.save
 		end
 
 		return render json: result, status: 200
