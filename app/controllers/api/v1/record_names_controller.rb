@@ -35,8 +35,22 @@ class Api::V1::RecordNamesController < ApplicationController
 				 table == 'city' or table == 'cities'
 
 				if params[:where] and not params[:select]
-					records = Coli.select('DISTINCT city, state').where(state: params[:where])
+					records = Coli.select('DISTINCT city, state').where(['state = ? and city IS NOT NULL', params[:where]])
 
+					# Format the location name as a single string.
+					records.each do |record|
+						result << "#{record[:city]}, #{record[:state]}"
+					end
+
+				elsif params[:select] and not params[:where]
+					records = Coli.select('DISTINCT state')
+					records.each do |record|
+						result << record[:state]
+					end
+
+				elsif (not params[:select]) and (not params[:where])
+					records = Coli.select('DISTINCT city, state')
+					
 					# Format the location name as a single string.
 					records.each do |record|
 						if not record[:city]
@@ -44,12 +58,6 @@ class Api::V1::RecordNamesController < ApplicationController
 						else
 							result << "#{record[:city]}, #{record[:state]}"
 						end
-					end
-
-				elsif params[:select] and not params[:where]
-					records = Coli.select('DISTINCT state')
-					records.each do |record|
-						result << record[:state]
 					end
 
 				else
