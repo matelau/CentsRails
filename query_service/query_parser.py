@@ -294,8 +294,6 @@ def data(data):
 		for o in query['option']:
 			package["majors"].append(o.title())
 
-		print package
-
 		url = "https://trycents.com/api/v1/majors/"
 
 		payload = json.dumps(package)
@@ -305,11 +303,9 @@ def data(data):
 		s.verify = False
 		resp = s.send(prep)
 
-		print resp
-
 		package = json.loads(resp.text)
 		for i in range(0, len(query['option'])):
-			package["major_"+`i+1`+"_name"] = query['option'][i]
+			package["major_"+`i+1`+"_name"] = query['option'][i].title()
 		return json.dumps(package)
 
 	if(query['type'][0] == 'career'):
