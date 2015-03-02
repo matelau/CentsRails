@@ -3,19 +3,44 @@ var data, hide_1, hide_2, main, gray, font, active_tab;
 var sketch = new Processing.Sketch();
 
 function major_api_request(query) {
-	window.alert("major api request");
-	// var url = "https://54.67.106.77:6001/query/" + query;
-	// $.get(url, function(resp){
-	// 	data = jQuery.parseJSON(resp);
-	// 	if(data["operation"] == "undefined")
-	// 	{
-	// 		window.location = "/info/examples/"
-	// 	}
-	// 	else
-	// 	{
-	// 		window.location = "/wizard/city/?" + resp;
-	// 	}
-	// });
+	field1 = document.getElementById("search_1_name").value;
+	field2 = document.getElementById("search_2_name").value;
+	url = "";
+
+	type = "major"
+
+	if(field1 == "" && field2 == ""){
+		return;
+	}
+	else if(field2 == ""){
+		url = "https://trycents.com:6001/data/type="+type+"&option="+field1;
+	}
+	else if(field1 == ""){
+		url = "https://trycents.com:6001/data/type="+type+"&option="+field2;
+	}
+	else{
+		url = "https://trycents.com:6001/data/type="+type+"&option="+field1+"&option="+field2;
+	}
+
+	var data = new Object();
+	var xmlHttp = null;
+
+    xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", url, true );
+
+    xmlHttp.onreadystatechange = function() {
+    	if (xmlHttp.readyState === 4) { 
+      		if (xmlHttp.status === 200) {
+      			data = jQuery.parseJSON(xmlHttp.responseText);
+      			//make api request here with type included
+				localStorage.setItem("query_type", type);
+				localStorage.setItem("data_store",JSON.stringify(data));
+
+				location.reload();
+      		}
+      	}
+    }
+    xmlHttp.send( null );
 };
 
 function sketchProc(processing) {
@@ -31,22 +56,39 @@ function sketchProc(processing) {
 		hide_1 = false;
 		hide_2 = false;
 		//load font
-		font = processing.loadFont("./fonts/Roboto-Regular.ttf");
+		font = processing.loadFont("Roboto");
 		processing.textFont(font, 12);
 
 		data = new Array();
 
-		//salary, major recommendation, major satisfaction, cents major rating
-		data["major_1"] = [95000, 89, 77, 4.8];
-		data["major_2"] = [41000, 45, 72, 2.9];
-		data["jobs_1"] = ["Software Developer", 97500, "Database Administrator", 91000, "System Analyst", 89000];
-		data["jobs_2"] = ["Teacher", 43500, "Disc Jockey", 37000, "Performance Artist", 36500];
+		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));
+  		//localStorage.removeItem("data_store");
 
-		data["name_1"] = "Computer Science";
-		data["name_2"] = "Music";
+  		if (data == null)
+  		{
+  			data = new Array();
+			//salary, major recommendation, major satisfaction, cents major rating
+			data["major_1"] = [95000, 89, 77, 4.8];
+			data["major_2"] = [41000, 45, 72, 2.9];
+			data["jobs_1"] = ["Software Developer", 97500, "Database Administrator", 91000, "System Analyst", 89000];
+			data["jobs_2"] = ["Teacher", 43500, "Disc Jockey", 37000, "Performance Artist", 36500];
+
+			data["major_1_name"] = "Computer Science";
+			data["major_2_name"] = "Music";
+		}
 		
-		document.getElementById("search_1_name").value = data["name_1"];
-		document.getElementById("search_2_name").value = data["name_2"];
+		document.getElementById("search_1_name").value = data["major_1_name"];
+
+		if (!data["major_2"])
+  		{
+  			hide_2 = true;
+  			document.getElementById("search_2_button").value = "SHOW";
+  			$("#search_2_button").attr("disabled", "true");
+  		}
+  		else
+  		{
+  			document.getElementById("search_2_name").value = data["major_2_name"];
+  		}
 
 	};
 

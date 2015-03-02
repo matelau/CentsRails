@@ -2,6 +2,7 @@ from flask import Flask, make_response, request, current_app
 import nltk
 import json
 import csv
+import cgi
 import requests
 import re
 import string
@@ -10,49 +11,18 @@ from datetime import timedelta
 from functools import update_wrapper
 import sys
 
+try:
+    from flask.ext.cors import CORS  # The typical way to import flask-cors
+except ImportError:
+    # Path hack allows examples to be run without installation.
+    import os
+    parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    os.sys.path.insert(0, parentdir)
+
+    from flask.ext.cors import CORS
+
 reload(sys)
 sys.setdefaultencoding("utf-8")
-
-def crossdomain(origin=None, methods=None, headers=None,
-                max_age=21600, attach_to_all=True,
-                automatic_options=True):
-    if methods is not None:
-        methods = ', '.join(sorted(x.upper() for x in methods))
-    if headers is not None and not isinstance(headers, basestring):
-        headers = ', '.join(x.upper() for x in headers)
-    if not isinstance(origin, basestring):
-        origin = ', '.join(origin)
-    if isinstance(max_age, timedelta):
-        max_age = max_age.total_seconds()
-
-    def get_methods():
-        if methods is not None:
-            return methods
-
-        options_resp = current_app.make_default_options_response()
-        return options_resp.headers['allow']
-
-    def decorator(f):
-        def wrapped_function(*args, **kwargs):
-            if automatic_options and request.method == 'OPTIONS':
-                resp = current_app.make_default_options_response()
-            else:
-                resp = make_response(f(*args, **kwargs))
-            if not attach_to_all and request.method != 'OPTIONS':
-                return resp
-
-            h = resp.headers
-
-            h['Access-Control-Allow-Origin'] = origin
-            h['Access-Control-Allow-Methods'] = get_methods()
-            h['Access-Control-Max-Age'] = str(max_age)
-            if headers is not None:
-                h['Access-Control-Allow-Headers'] = headers
-            return resp
-
-        f.provide_automatic_options = False
-        return update_wrapper(wrapped_function, f)
-    return decorator
 
 def pp(req):
     """
@@ -91,9 +61,9 @@ for line in csv.reader(states):
 	state[line[0].lower()] = line[1].lower()
 
 app = Flask(__name__)
+cors = CORS(app)
 
 @app.route('/query/<string:query>', methods=['GET'])
-@crossdomain(origin='*')
 def query(query):
 	object = []
 	ops = []
@@ -180,8 +150,8 @@ def query(query):
 		}
 		for s in schools:
 			package["schools"].append({"name":s})
-		url = "https://%s/api/v1/schools/" % (ip)
-		#url = "https://trycents.com/api/v1/schools/"
+		#url = "https://%s/api/v1/schools/" % (ip)
+		url = "https://trycents.com/api/v1/schools/"
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
 		prep = r.prepare()
@@ -217,8 +187,8 @@ def query(query):
 		}
 		for l in locations:
 			package["locations"].append({"city":l[:l.index(",")],"state":l[l.index(", ")+2:]})
-		url = "https://%s/api/v1/coli/" % (ip)
-		#url = "https://trycents.com/api/v1/coli"
+		#url = "https://%s/api/v1/coli/" % (ip)
+		url = "https://trycents.com/api/v1/coli"
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
 		prep = r.prepare()
@@ -244,6 +214,127 @@ def query(query):
 		package["query_type"] = "city"
 		resp = json.dumps(package)
 		return resp
+
+@app.route('/data/<string:data>', methods=['GET'])
+def data(data):
+	query = cgi.parse_qs(data)
+
+	if(query['type'][0] == 'city'):
+		package  = {
+			"locations":[]
+		}
+		for o in query['option']:
+			package["locations"].append({"city":o[:o.index(",")],"state":o[o.index(", ")+2:]})
+
+		if(len(query['option']) == 1):
+			package['operation'] = "get"
+		else:
+			package['operation'] = "compare"
+
+		url = "https://trycents.com/api/v1/coli/"
+
+		payload = json.dumps(package)
+		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
+		prep = r.prepare()
+		s = requests.Session()
+		s.verify = False
+		resp = s.send(prep)
+		return resp.text
+
+	if(query['type'][0] == 'school'):
+		package  = {
+			"schools":[]
+		}
+
+		sarr = []
+		scarr = []
+
+		for s in query['option']:
+			sarr.append(s.lower())
+
+		for u,l in unis.iteritems():
+			for a in l:
+				if a.lower() in sarr:
+					package["schools"].append({"name":u})
+					scarr.append(u)
+
+
+		if(len(query['option']) == 1):
+			package['operation'] = "get"
+		else:
+			package['operation'] = "compare"
+
+		url = "https://trycents.com/api/v1/schools/"
+
+		payload = json.dumps(package)
+		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
+		prep = r.prepare()
+		s = requests.Session()
+		s.verify = False
+		resp = s.send(prep)
+		package = json.loads(resp.text)
+		for i in range(0, len(scarr)):
+			package["school_"+`i+1`+"_name"] = scarr[i]
+		return json.dumps(package)
+
+	if(query['type'][0] == 'major'):
+		package = {
+			"majors":[]
+		}
+
+		if(len(query['option']) == 1):
+			package['operation'] = "get"
+		else:
+			package['operation'] = "compare"
+
+		for o in query['option']:
+			package["majors"].append(o)
+
+		print package
+
+		url = "https://trycents.com/api/v1/majors/"
+
+		payload = json.dumps(package)
+		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
+		prep = r.prepare()
+		s = requests.Session()
+		s.verify = False
+		resp = s.send(prep)
+
+		print resp
+
+		package = json.loads(resp.text)
+		for i in range(0, len(query['option'])):
+			package["major_"+`i+1`+"_name"] = query['option'][i]
+		return json.dumps(package)
+
+	if(query['type'][0] == 'career'):
+		package = {
+			"careers":[]
+		}
+
+		if(len(query['option']) == 1):
+			package['operation'] = "get"
+		else:
+			package['operation'] = "compare"
+
+		for o in query['option']:
+			package["careers"].append(o)
+
+		url = "https://trycents.com/api/v1/careers/"
+
+		payload = json.dumps(package)
+		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
+		prep = r.prepare()
+		s = requests.Session()
+		s.verify = False
+		resp = s.send(prep)
+		package = json.loads(resp.text)
+		for i in range(0, len(query['option'])):
+			package["career_"+`i+1`+"_name"] = query['option'][i]
+		return json.dumps(package)
+	
+#app.config['SERVER_NAME'] = "trycents.com"
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0',port=6001,debug=True,processes=5,ssl_context=('/etc/ssl/certs/ssl-bundle.crt','../.ssl/myserver.key'))

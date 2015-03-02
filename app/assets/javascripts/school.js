@@ -3,19 +3,44 @@ var data, hide_1, hide_2, main, gray, font;
 var sketch = new Processing.Sketch();
 
 function school_api_request(query) {
-	window.alert("school api request");
-	// var url = "https://54.67.106.77:6001/query/" + query;
-	// $.get(url, function(resp){
-	// 	data = jQuery.parseJSON(resp);
-	// 	if(data["operation"] == "undefined")
-	// 	{
-	// 		window.location = "/info/examples/"
-	// 	}
-	// 	else
-	// 	{
-	// 		window.location = "/wizard/city/?" + resp;
-	// 	}
-	// });
+	field1 = document.getElementById("search_1_name").value;
+	field2 = document.getElementById("search_2_name").value;
+	url = "";
+
+	type = "school"
+
+	if(field1 == "" && field2 == ""){
+		return;
+	}
+	else if(field2 == ""){
+		url = "https://trycents.com:6001/data/type="+type+"&option="+field1;
+	}
+	else if(field1 == ""){
+		url = "https://trycents.com:6001/data/type="+type+"&option="+field2;
+	}
+	else{
+		url = "https://trycents.com:6001/data/type="+type+"&option="+field1+"&option="+field2;
+	}
+
+	var data = new Object();
+	var xmlHttp = null;
+
+    xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", url, true );
+
+    xmlHttp.onreadystatechange = function() {
+    	if (xmlHttp.readyState === 4) { 
+      		if (xmlHttp.status === 200) {
+      			data = jQuery.parseJSON(xmlHttp.responseText);
+      			//make api request here with type included
+				localStorage.setItem("query_type", type);
+				localStorage.setItem("data_store",JSON.stringify(data));
+
+				location.reload();
+      		}
+      	}
+    }
+    xmlHttp.send( null );
 };
 
 function sketchProc(processing) {
@@ -29,7 +54,7 @@ function sketchProc(processing) {
 		hide_1 = false;
 		hide_2 = false;
 		//load font
-		font = processing.loadFont("./fonts/Roboto-Regular.ttf");
+		font = processing.loadFont("Roboto");
 		processing.textFont(font, 12);
 		
  		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));

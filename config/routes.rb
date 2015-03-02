@@ -86,6 +86,7 @@ Rails.application.routes.draw do
       post 'confirm' => 'confirm#show'
       post 'schools' => 'schools#show'
       post 'record_names' => 'record_names#show'
+      post 'majors' => 'majors#show'
     end
   end
 end

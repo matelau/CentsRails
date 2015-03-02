@@ -1,0 +1,91 @@
+@font-face {
+  font-family: 'Roboto', sans-serif;
+}
+.ac-container{
+	width: 750px;
+	margin: 10px auto 30px auto;
+	padding-top: 20px;
+	text-align: left;
+
+}
+.ac-container div {
+	margin-bottom: 5px;
+	box-shadow: -2px 2px 5px #CDCDCD;
+
+}
+.ac-container label{
+	margin-bottom:0;
+	padding: 5px 20px;
+	position: relative;
+	z-index: 20;
+	display: block;
+	cursor: pointer;
+	font-size: 19px;
+	font-weight: inherit;;
+	background: white;
+}
+.ac-container label:hover{
+	background: #fff;
+}
+.ac-container input:checked + label,
+.ac-container input:checked + label:hover{
+	background: white;
+	color: black;
+}
+.ac-container label:hover:after,
+.ac-container input:checked + label:hover:after{
+	content: '';
+	position: absolute;
+	width: 24px;
+	height: 24px;
+	right: 13px;
+	top: 7px;
+	background: transparent url(/assets/arrow_down.png) no-repeat center center;	
+}
+.ac-container input:checked + label:hover:after{
+	background-image: url(/assets/arrow_up.png);
+}
+.ac-container input{
+	display: none;
+}
+.ac-container article{
+	background: white;
+	margin-top: 0;
+	overflow: hidden;
+	height: 0px;
+	position: relative;
+	z-index: 10;
+	-webkit-transition: height 0.3s ease-in-out;
+	-moz-transition: height 0.3s ease-in-out;
+	-o-transition: height 0.3s ease-in-out;
+	-ms-transition: height 0.3s ease-in-out;
+	transition: height 0.3s ease-in-out;
+}
+.ac-container article p{
+	font-style: italic;
+	color: #777;
+	font-size: 14px;
+	padding: 20px;
+	/*text-shadow: 1px 1px 1px rgba(255,255,255,0.8);*/
+}
+.ac-container input:checked ~ article{
+	-webkit-transition: height 0.5s ease-in-out;
+	-moz-transition: height 0.5s ease-in-out;
+	-o-transition: height 0.5s ease-in-out;
+	-ms-transition: height 0.5s ease-in-out;
+	transition: height 0.5s ease-in-out;
+}
+
+.ac-container input:checked ~ .ac-container div {
+
+	margin-bottom: 75px;
+}
+.ac-container input:checked ~ article.ac-small{
+	height: 130px;
+}
+.ac-container input:checked ~ article.ac-medium{
+	height: 150px;
+}
+.ac-container input:checked ~ article.ac-large{
+	height: 170px;
+}
