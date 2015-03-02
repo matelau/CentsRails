@@ -31,7 +31,8 @@ class Api::V1::RecordNamesController < ApplicationController
 		tables.each do |table|
 
 			# Get the cost of living names.
-			if table == 'coli' or table == 'colis' or table == 'cost of living'
+			if table == 'coli' or table == 'colis' or table == 'cost of living' or
+				 table == 'city' or table == 'cities'
 				if params[:state]
 					records = Coli.select('DISTINCT city, state').where(state: params[:state])
 				else
