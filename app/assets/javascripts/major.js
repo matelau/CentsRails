@@ -2,6 +2,17 @@ var data, hide_1, hide_2, main, gray, font, active_tab;
 
 var sketch = new Processing.Sketch();
 
+$(document).ready(function() {
+	$.post("/api/v1/record_names", {operation: 'get', tables: ['majors']}, function(response) { 
+		$( "#search_1_name" ).autocomplete({
+	  		source: response
+		});
+		$( "#search_2_name" ).autocomplete({
+	  		source: response
+		});
+	});	
+});
+
 function major_api_request(query) {
 	field1 = document.getElementById("search_1_name").value;
 	field2 = document.getElementById("search_2_name").value;
@@ -22,7 +33,7 @@ function major_api_request(query) {
 		url = "https://trycents.com:6001/data/type="+type+"&option="+field1+"&option="+field2;
 	}
 
-	var data = new Object();
+	//var data = new Object();
 	var xmlHttp = null;
 
     xmlHttp = new XMLHttpRequest();
@@ -36,7 +47,21 @@ function major_api_request(query) {
 				localStorage.setItem("query_type", type);
 				localStorage.setItem("data_store",JSON.stringify(data));
 
-				location.reload();
+				//location.reload();
+				if (!data["major_2_name"])
+  				{
+		  			hide_2 = true;
+		  			document.getElementById("search_2_button").value = "SHOW";
+		  			$("#search_2_button").attr("disabled", "true");
+  				}
+  				else
+  				{
+  					hide_2 = false;
+  					document.getElementById("search_2_button").value = "HIDE";
+		  			$("#search_2_button").removeAttr("disabled");
+		  			document.getElementById("search_2_name").value = data["major_2_name"];
+
+  				}
       		}
       	}
     }
