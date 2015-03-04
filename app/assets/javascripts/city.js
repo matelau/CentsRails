@@ -1,39 +1,41 @@
 $(document).ready(function() {
-	partial_1 = document.getElementById("search_1_name").value;
-	partial_2 = document.getElementById("search_2_name").value;
 	$.post("/api/v1/record_names", {operation: 'get', tables: ['coli']}, function(response) { 
 		auto_cities = response;
 		$( "#search_1_name" ).autocomplete({
 	  		source: response,
 	  		response: function(e, u) {
+	  			//if match list isnt empty, save the first match
 	  			if (u.content.length != 0)
-	  				partial_1 = u.content[0].value;
+	  				auto_1 = u.content[0].value;
 	  			else
-	  				partial_1 = null;
+	  				auto_1 = null;
 	  		},
 	  		close: function(e, u) {
+	  			//when leaving, replace with first match
 	  			field1 = document.getElementById("search_1_name").value;
-	  			if (auto_cities.indexOf(field1) < 0 && field1 != "" && partial_1 != null)
+	  			if (auto_cities.indexOf(field1) < 0 && field1 != "" && auto_1 != null)
 				{
-					document.getElementById("search_1_name").value = partial_1;
+					document.getElementById("search_1_name").value = auto_1;
 				}
-	  		}
+	  		},
+	  		delay: 0
 		});
 		$( "#search_2_name" ).autocomplete({
 	  		source: response,
 	  		response: function(e, u) {
 	  			if (u.content.length != 0)
-	  				partial_2 = u.content[0].value;
+	  				auto_2 = u.content[0].value;
 	  			else
-	  				partial_2 = null;
+	  				auto_2 = null;
 	  		},
 	  		close: function(e, u) {
 	  			field2 = document.getElementById("search_2_name").value;
-	  			if (auto_cities.indexOf(field2) < 0 && field2 != "" && partial_2 != null)
+	  			if (auto_cities.indexOf(field2) < 0 && field2 != "" && auto_2 != null)
 				{
-					document.getElementById("search_2_name").value = partial_2;
+					document.getElementById("search_2_name").value = auto_2;
 				}
-	  		}
+	  		},
+	  		delay: 0
 		});
 	});	
 });
@@ -41,21 +43,49 @@ $(document).ready(function() {
 
 
 
-var data, hide_1, hide_2, main, gray, font, active_tab, axis_location, horz_locs, partial_1, partial_2;
+var data, hide_1, hide_2, main, gray, font, active_tab, axis_location, horz_locs, auto_1, auto_2;
 
 var sketch = new Processing.Sketch();
 
 function city_api_request(query) {
-	if (partial_1 == null)
-		document.getElementById("search_1_name").value = "";
-	field1 = document.getElementById("search_1_name").value;
-	if (partial_2 == null)
-		document.getElementById("search_2_name").value = "";
-	field2 = document.getElementById("search_2_name").value;
-	if (partial_2 == null)
-		field2 = "";
-	url = "";
+	var field1, field2, sent1, sent2;
+	$("#error_1").empty();
+	$("#error_2").empty();
+	$('#search_1_name').autocomplete('close');
+	$('#search_2_name').autocomplete('close');
 
+	//has a matching value
+	if (auto_1 === null)
+	{
+		$("#error_1").append("Invalid city.");
+		field1 = "";
+		sent1 = false;	
+	}
+	else
+	{
+		if (auto_1 != undefined)
+			field1 = auto_1;
+		else
+			field1 = document.getElementById("search_1_name").value;
+		sent1 = true;	
+	}
+
+	if (auto_2 === null)
+	{
+		$("#error_2").append("Invalid city.");
+		field2 = "";
+		sent2 = false;	
+	}
+	else
+	{
+		if (auto_2 != undefined)
+			field2 = auto_2;
+		else
+			field2 = document.getElementById("search_2_name").value;
+		sent2 = true;	
+	}
+
+	url = "";
 	type = "city"
 
 	if(field1 == "" && field2 == ""){
@@ -63,12 +93,16 @@ function city_api_request(query) {
 	}
 	else if(field2 == ""){
 		url = "https://trycents.com:6001/data/type="+type+"&option="+field1;
+		sent2 = false;
 	}
 	else if(field1 == ""){
 		url = "https://trycents.com:6001/data/type="+type+"&option="+field2;
+		sent1 = false;
 	}
 	else{
 		url = "https://trycents.com:6001/data/type="+type+"&option="+field1+"&option="+field2;
+		sent1 = true;
+		sent2 = true;
 	}
 
 	//data = new Object();
@@ -85,22 +119,44 @@ function city_api_request(query) {
 				localStorage.setItem("query_type", type);
 				localStorage.setItem("data_store",JSON.stringify(data));
 
-				//location.reload();
-				if (!data["location_2"])
-  				{
-		  			hide_2 = true;
-		  			document.getElementById("search_2_button").value = "SHOW";
-		  			$("#search_2_button").attr("disabled", "true");
-		  			document.getElementById("search_2_name").value = "";
-  				}
-  				else
-  				{
-  					hide_2 = false;
-  					document.getElementById("search_2_button").value = "HIDE";
-		  			$("#search_2_button").removeAttr("disabled");
-		  			document.getElementById("search_2_name").value = data["location_2"];
+	  			if (sent1 && sent2)
+	  			{
+	  				hide_1 = false; 
+	  				hide_2 = false;
+	  			}
+	  			else if (!sent1 && sent2)
+	  			{
+	  				hide_1 = true;
+	  				document.getElementById("search_1_button").value = "SHOW";
+		  	 		$("#search_1_button").attr("disabled", "true");
+		  	 		hide_2 = false;
+		  	 		document.getElementById("search_2_button").value = "HIDE";
+		  	 		$("#search_2_button").removeAttr("disabled");
+		  	 		//need to flip data to _2 arrays
+		  	 		data["weather_2"] = $.extend(true, [], data["weather_1"]);
+					data["weatherlow_2"] = $.extend(true, [], data["weatherlow_1"]);
+					data["cli_2"] = $.extend(true, [], data["cli_1"])
+					data["labor_2"] = $.extend(true, [], data["labor_1"])
+					data["taxes_2"] = $.extend(true, [], data["taxes_1"])
+					data["location_2"] = data["location_1"];
+					data["weather_1"] = null;
+					data["weatherlow_1"] = null;
+					data["cli_1"] = null;
+					data["labor_1"] = null;
+					data["taxes_1"] = null;
+					data["location_1"] = null;
 
-  				}
+	  			}
+	  			else if (sent1 && !sent2)
+	  			{
+	  				hide_2 = true;
+	  				document.getElementById("search_2_button").value = "SHOW";
+		  	 		$("#search_2_button").attr("disabled", "true");
+		  	 		hide_1 = false;
+		  	 		document.getElementById("search_1_button").value = "HIDE";
+		  	 		$("#search_1_button").removeAttr("disabled");
+	  			}
+
       		}
       	}
     }
@@ -114,8 +170,6 @@ function sketchProc(processing) {
 		console.log("loaded city.js successfully");
 		main = processing.color(136, 68, 18);
 		gray = processing.color(138, 136, 137);
-
-
 
 		processing.size(655,375);
 		//always set the initial tab to the first one
@@ -158,9 +212,9 @@ function sketchProc(processing) {
 			data["labor_3"] = [5.8, 44800, 4.6];
 
 			//sales, income min, income max, property
-			data["taxes_1"] = [6.85, 5.0, 5.0, 0.67];
-			data["taxes_2"] = [8.3, 2.59, 4.54, 1.59];
-			data["taxes_3"] = [8.25, 3.5, 7.8, 1.15];
+			data["taxes_1"] = [6.85, 5.0, 5.0, 1407];
+			data["taxes_2"] = [8.3, 2.59, 4.54, 1427];
+			data["taxes_3"] = [8.25, 3.5, 7.8, 2065];
   		}
   		//console.log(data["location_2"]);
   		if (!data["location_2"])
@@ -598,6 +652,7 @@ function sketchProc(processing) {
 		}
 		else
 		{
+			
 			if (data["location_2"])
 			{
 				var temp_max_1 = processing.max(data["labor_1"][0], data["labor_2"][0], data["labor_3"][0]);
@@ -658,9 +713,12 @@ function sketchProc(processing) {
 		processing.text("NATIONAL", (axis_location[1]+axis_location[2])/2, (line_2+line_3)/2-9);
 		processing.text("AVERAGES", (axis_location[1]+axis_location[2])/2, (line_2+line_3)/2+8);
 
-		var height_1 = (graph_top - graph_bot)*((data["labor_1"][0] -  min_1)/(max_1 - min_1));
-		var height_2 = (graph_top - graph_bot)*((data["labor_1"][2] -  min_1)/(max_1 - min_1));
-		var height_3 = (graph_top - graph_bot)*((data["labor_1"][1] -  min_2)/(max_2 - min_2));
+		if (!hide_1)
+		{
+			var height_1 = (graph_top - graph_bot)*((data["labor_1"][0] -  min_1)/(max_1 - min_1));
+			var height_2 = (graph_top - graph_bot)*((data["labor_1"][2] -  min_1)/(max_1 - min_1));
+			var height_3 = (graph_top - graph_bot)*((data["labor_1"][1] -  min_2)/(max_2 - min_2));
+		}
 		if (!hide_2)
 		{
 			var height_4 = (graph_top - graph_bot)*((data["labor_2"][0] -  min_1)/(max_1 - min_1));
@@ -791,7 +849,7 @@ function sketchProc(processing) {
 			processing.textAlign(processing.RIGHT);
 			processing.text(String(processing.round(min_1 + per_scale * i * 10)/10) + "%", graph_left-5, h+5);
 			processing.textAlign(processing.LEFT);
-			processing.text("$" + String(processing.round(min_2 + money_scale * i * 100)/100), graph_right+5, h+5);
+			processing.text("$" + String((min_2 + money_scale * i).toFixed(0)), graph_right+5, h+5);
 		}
 
 		//draw NATIONAL AVERAGE rectangle and data
@@ -818,10 +876,13 @@ function sketchProc(processing) {
 		processing.text("NATIONAL", (axis_location[2]+axis_location[3])/2, (line_3+line_4)/2-9);
 		processing.text("AVERAGES", (axis_location[2]+axis_location[3])/2, (line_3+line_4)/2+8);
 
-		var height_1 = (graph_top - graph_bot)*((data["taxes_1"][0] -  min_1)/(max_1 - min_1));
-		var height_2 = (graph_top - graph_bot)*((data["taxes_1"][1] -  min_1)/(max_1 - min_1));
-		var height_3 = (graph_top - graph_bot)*((data["taxes_1"][2] -  min_1)/(max_1 - min_1));
-		var height_4 = (graph_top - graph_bot)*((data["taxes_1"][3] -  min_2)/(max_2 - min_2));
+		if (!hide_1)
+		{
+			var height_1 = (graph_top - graph_bot)*((data["taxes_1"][0] -  min_1)/(max_1 - min_1));
+			var height_2 = (graph_top - graph_bot)*((data["taxes_1"][1] -  min_1)/(max_1 - min_1));
+			var height_3 = (graph_top - graph_bot)*((data["taxes_1"][2] -  min_1)/(max_1 - min_1));
+			var height_4 = (graph_top - graph_bot)*((data["taxes_1"][3] -  min_2)/(max_2 - min_2));
+		}
 		if (!hide_2)
 		{
 			var height_5 = (graph_top - graph_bot)*((data["taxes_2"][0] -  min_1)/(max_1 - min_1));
@@ -1008,8 +1069,11 @@ function sketchProc(processing) {
 
 function update_tab(name) {
 	active_tab = name;
-	hide_1 = false;
-	document.getElementById("search_1_button").value = "HIDE";
+	if(data["location_1"])
+	{
+		hide_1 = false;
+		document.getElementById("search_1_button").value = "HIDE";
+	}
 	if(data["location_2"])
 	{
 		hide_2 = false;

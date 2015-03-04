@@ -72,9 +72,9 @@ canvas {
   display: -webkit-flex;
   display: flex;
   list-style-type: none;
-  padding-top: 25px;
+  padding-top: 0px;
   padding-left: 0px;
-  height: 430px;
+  height: 410px;
   -webkit-align-items: center;
   align-items: center;
 }
@@ -88,15 +88,32 @@ canvas {
   -webkit-align-items: center;
   align-items: center;
 }
+.error_msg {
+  width: 220px;
+  color: red;
+  text-align: center;
+}
 .search_objects {
+  display: -webkit-flex;
+  display: flex;
+  list-style-type: none;
+  padding-top: 5px;
+  padding-left: 0px;
+  width: 850px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.error_objects {
   display: -webkit-flex;
   display: flex;
   list-style-type: none;
   padding-top: 25px;
   padding-left: 0px;
-  width: 850px;
+  width: 600px;
+  height: 65px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 0px
 }
 .toggle_objects {
   display: -webkit-flex;
