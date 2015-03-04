@@ -87,6 +87,9 @@ Rails.application.routes.draw do
       post 'schools' => 'schools#show'
       post 'record_names' => 'record_names#show'
       post 'majors' => 'majors#show'
+      post 'spending_breakdown' => 'spending_breakdown#save'
+      get 'spending_breakdown/:user_id' => 'spending_breakdown#load'
+      delete 'spending_breakdown/:user_id' => 'spending_breakdown#delete'
     end
   end
 end
