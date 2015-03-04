@@ -13,9 +13,11 @@ $(document).ready(function() {
 	  		close: function(e, u) {
 	  			//when leaving, replace with first match
 	  			temp1 = document.getElementById("search_1_name").value;
-	  			if (auto_cities.indexOf(temp1) < 0 && auto_1 != null)
+	  			if (temp1 == "")
+	  				auto1 = null;
+	  			else if (auto_cities.indexOf(temp1) < 0 && auto_1)
 					document.getElementById("search_1_name").value = auto_1;
-				else
+				else if (auto_1)
 					auto_1 = temp1;
 	  		},
 	  		delay: 0
@@ -31,6 +33,8 @@ $(document).ready(function() {
 	  		close: function(e, u) {
 	  			//when leaving, replace with first match
 	  			temp2 = document.getElementById("search_2_name").value;
+	  			if (temp2 == "")
+	  				auto2 = null;
 	  			if (auto_cities.indexOf(temp2) < 0 && auto_2 != null)
 					document.getElementById("search_2_name").value = auto_2;
 				else
@@ -44,16 +48,26 @@ $(document).ready(function() {
 
 
 
-var data, hide_1, hide_2, main, gray, font, active_tab, axis_location, horz_locs, auto_1, auto_2;
+var data, hide_1, hide_2, main, gray, font, active_tab, axis_location, horz_locs, auto_1, auto_2, sent1, sent2;
+
+sent1 = true;
+sent2 = true;
 
 var sketch = new Processing.Sketch();
 
 function city_api_request(query) {
-	var field1, field2, sent1, sent2;
+	var field1, field2;
 	field1 = "";
 	field2 = "";
+	if (!sent1 && auto_1 == undefined)
+		auto_1 = null;
+	if (!sent2 && auto_2 == undefined)
+		auto_2 = null;
 	$("#error_1").empty();
 	$("#error_2").empty();
+	//$('#search_1_name').autocomplete('response');
+	//$('#search_2_name').autocomplete('response');
+	//$('#search_1_name').autocomplete('open');
 	$('#search_1_name').autocomplete('close');
 	$('#search_2_name').autocomplete('close');
 
@@ -168,7 +182,6 @@ function city_api_request(query) {
 		  	 		document.getElementById("search_1_button").value = "HIDE";
 		  	 		$("#search_1_button").removeAttr("disabled");
 	  			}
-
       		}
       	}
     }
@@ -182,7 +195,7 @@ function sketchProc(processing) {
 		console.log("loaded city.js successfully");
 		main = processing.color(136, 68, 18);
 		gray = processing.color(138, 136, 137);
-
+		fade_out = false;
 		processing.size(655,375);
 		//always set the initial tab to the first one
 		active_tab = 1;
@@ -191,7 +204,6 @@ function sketchProc(processing) {
 		//load font
 		font = processing.loadFont("Roboto");
 		processing.textFont(font, 12);
-
 		horz_locs = [87, 145, 215, 308, 389, 488, 577];
 
 		//var to hold all data relevant to a given category
