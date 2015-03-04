@@ -40,7 +40,8 @@ class Api::V1::SchoolsController < ApplicationController
 								:tuition_nonresident,
 								:grad_rate_6_year,
 								:size,
-								:rank)
+								:rank,
+								:image)
 						.where([where_string, *where_params])
 						.order('universities.id ASC')
 
@@ -72,6 +73,7 @@ class Api::V1::SchoolsController < ApplicationController
 					# Put the stats in result.
 					result["school_#{index}"] = [tuition_resident, tuition_nonresident, 
 						grad_rate, size, rank, 0]
+					result["school_#{index}_image"] = record[:image]
 					break
 				end
 			end

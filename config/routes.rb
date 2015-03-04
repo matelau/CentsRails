@@ -85,6 +85,7 @@ Rails.application.routes.draw do
       post 'logout' => 'logout#destroy'
       post 'confirm' => 'confirm#show'
       post 'schools' => 'schools#show'
+      post 'record_names' => 'record_names#show'
       post 'majors' => 'majors#show'
       post 'spending_breakdown' => 'spending_breakdown#save'
       get 'spending_breakdown/:user_id' => 'spending_breakdown#load'

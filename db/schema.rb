@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150302051253) do
+ActiveRecord::Schema.define(version: 20150304194348) do
 
   create_table "amounts", force: true do |t|
     t.integer  "user_id"
@@ -171,6 +171,7 @@ ActiveRecord::Schema.define(version: 20150302051253) do
     t.float    "net_cost",            limit: 24
     t.float    "tuition_resident",    limit: 24
     t.float    "tuition_nonresident", limit: 24
+    t.string   "image"
   end
 
   create_table "users", force: true do |t|
