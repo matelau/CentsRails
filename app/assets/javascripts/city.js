@@ -12,11 +12,11 @@ $(document).ready(function() {
 	  		},
 	  		close: function(e, u) {
 	  			//when leaving, replace with first match
-	  			field1 = document.getElementById("search_1_name").value;
-	  			if (auto_cities.indexOf(field1) < 0 && field1 != "" && auto_1 != null)
-				{
+	  			temp1 = document.getElementById("search_1_name").value;
+	  			if (auto_cities.indexOf(temp1) < 0 && auto_1 != null)
 					document.getElementById("search_1_name").value = auto_1;
-				}
+				else
+					auto_1 = temp1;
 	  		},
 	  		delay: 0
 		});
@@ -29,11 +29,12 @@ $(document).ready(function() {
 	  				auto_2 = null;
 	  		},
 	  		close: function(e, u) {
-	  			field2 = document.getElementById("search_2_name").value;
-	  			if (auto_cities.indexOf(field2) < 0 && field2 != "" && auto_2 != null)
-				{
+	  			//when leaving, replace with first match
+	  			temp2 = document.getElementById("search_2_name").value;
+	  			if (auto_cities.indexOf(temp2) < 0 && auto_2 != null)
 					document.getElementById("search_2_name").value = auto_2;
-				}
+				else
+					auto_2 = temp2;
 	  		},
 	  		delay: 0
 		});
@@ -130,6 +131,10 @@ function city_api_request(query) {
 	  			{
 	  				hide_1 = false; 
 	  				hide_2 = false;
+		  	 		document.getElementById("search_1_button").value = "HIDE";
+		  	 		$("#search_1_button").removeAttr("disabled");
+		  	 		document.getElementById("search_2_button").value = "HIDE";
+		  	 		$("#search_2_button").removeAttr("disabled");
 	  			}
 	  			else if (!sent1 && sent2)
 	  			{
@@ -568,7 +573,7 @@ function sketchProc(processing) {
 				}
 				else
 				{
-					processing.rect(horz_locs[i], axis_location - 15, 16, -5);
+					processing.rect(horz_locs[i]-16, axis_location-15, 16, -5);
 					above_1[i] = axis_location-25;
 				}
 			}
