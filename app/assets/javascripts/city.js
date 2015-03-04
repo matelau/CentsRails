@@ -49,6 +49,8 @@ var sketch = new Processing.Sketch();
 
 function city_api_request(query) {
 	var field1, field2, sent1, sent2;
+	field1 = "";
+	field2 = "";
 	$("#error_1").empty();
 	$("#error_2").empty();
 	$('#search_1_name').autocomplete('close');
@@ -59,7 +61,6 @@ function city_api_request(query) {
 	{
 		$("#error_1").append("Invalid city.");
 		field1 = "";
-		sent1 = false;	
 	}
 	else
 	{
@@ -67,14 +68,14 @@ function city_api_request(query) {
 			field1 = auto_1;
 		else
 			field1 = document.getElementById("search_1_name").value;
-		sent1 = true;	
+	
 	}
 
 	if (auto_2 === null)
 	{
 		$("#error_2").append("Invalid city.");
 		field2 = "";
-		sent2 = false;	
+
 	}
 	else
 	{
@@ -82,22 +83,26 @@ function city_api_request(query) {
 			field2 = auto_2;
 		else
 			field2 = document.getElementById("search_2_name").value;
-		sent2 = true;	
+
 	}
 
 	url = "";
 	type = "city"
 
 	if(field1 == "" && field2 == ""){
+		sent1 = false;
+		sent2 = false;
 		return;
 	}
 	else if(field2 == ""){
 		url = "https://trycents.com:6001/data/type="+type+"&option="+field1;
 		sent2 = false;
+		sent1 = true;
 	}
 	else if(field1 == ""){
 		url = "https://trycents.com:6001/data/type="+type+"&option="+field2;
 		sent1 = false;
+		sent2 = true;
 	}
 	else{
 		url = "https://trycents.com:6001/data/type="+type+"&option="+field1+"&option="+field2;
@@ -110,7 +115,6 @@ function city_api_request(query) {
 
     xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", url, true );
-
     xmlHttp.onreadystatechange = function() {
     	if (xmlHttp.readyState === 4) { 
       		if (xmlHttp.status === 200) {
@@ -118,6 +122,9 @@ function city_api_request(query) {
       			//make api request here with type included
 				localStorage.setItem("query_type", type);
 				localStorage.setItem("data_store",JSON.stringify(data));
+
+				auto_1 = undefined;
+				auto_2 = undefined;
 
 	  			if (sent1 && sent2)
 	  			{
