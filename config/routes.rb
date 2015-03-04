@@ -87,6 +87,7 @@ Rails.application.routes.draw do
       post 'schools' => 'schools#show'
       post 'record_names' => 'record_names#show'
       post 'majors' => 'majors#show'
+      get  'career' => 'career#show'
     end
   end
 end
