@@ -46,7 +46,7 @@ $(document).ready(function() {
 });
 
 
-var data, hide_1, hide_2, main, gray, font, active_tab, axis_location, horz_locs, auto_1, auto_2, sent1, sent2, nochanges, old1, old2;
+var data, hide_1, hide_2, main, gray, font, active_tab, axis_location, horz_locs, auto_1, auto_2, sent1, sent2, nochanges, old1, old2, auto_cities;
 
 sent1 = true;
 sent2 = true;
@@ -86,7 +86,12 @@ function city_api_request(query) {
 		if (auto_1 != "" && auto_1)
 			field1 = auto_1;		
 		else if (auto_1 == undefined)
-			field1 = document.getElementById("search_1_name").value;	
+		{
+			if (auto_cities.indexOf(document.getElementById("search_1_name").value) < 0)
+				$("#error_1").append("Invalid city.");
+			else
+				field1 = document.getElementById("search_1_name").value;	
+		}
 	}
 	$("#error_2").empty();
 	$('#search_2_name').autocomplete('close');
@@ -97,7 +102,12 @@ function city_api_request(query) {
 		if (auto_2 != "" && auto_2)
 			field2 = auto_2;		
 		else if (auto_2 == undefined)
-			field2 = document.getElementById("search_2_name").value;	
+		{
+			if (auto_cities.indexOf(document.getElementById("search_2_name").value) < 0)
+				$("#error_2").append("Invalid city.");
+			else
+				field2 = document.getElementById("search_2_name").value;	
+		}
 	}
 
 	url = "";
