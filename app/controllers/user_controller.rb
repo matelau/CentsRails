@@ -12,7 +12,7 @@ class UserController < ApplicationController
 		to_be_validated_user.confirmation_code = confirmation_code
 
 		# Add back when server set up.
-		#UserMailer.confirmation_email(to_be_validated_user).deliver
+		UserMailer.confirmation_email(to_be_validated_user).deliver
 
 		if to_be_validated_user.save
 			redirect_to registered_path(confirmation_code: confirmation_code)
