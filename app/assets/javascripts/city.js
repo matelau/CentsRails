@@ -2,19 +2,19 @@ $(document).ready(function() {
 	$.post("/api/v1/record_names", {operation: 'get', tables: ['coli']}, function(response) { 
 		auto_cities = response;
 		$( "#search_1_name" ).autocomplete({
-	  		source: response,
+	  		source: auto_cities,
 	  		response: function(e, u) {
 	  			//if match list isnt empty, save the first match
 	  			if (u.content.length != 0)
 	  				auto_1 = u.content[0].value;
 	  			else
-	  				auto_1 = null;
+	  				auto_1 = "";
 	  		},
 	  		close: function(e, u) {
 	  			//when leaving, replace with first match
 	  			temp1 = document.getElementById("search_1_name").value;
 	  			if (temp1 == "")
-	  				auto1 = null;
+	  				auto1 = "";
 	  			else if (auto_cities.indexOf(temp1) < 0 && auto_1)
 					document.getElementById("search_1_name").value = auto_1;
 				else if (auto_1)
@@ -23,21 +23,21 @@ $(document).ready(function() {
 	  		delay: 0
 		});
 		$( "#search_2_name" ).autocomplete({
-	  		source: response,
+	  		source: auto_cities,
 	  		response: function(e, u) {
 	  			if (u.content.length != 0)
 	  				auto_2 = u.content[0].value;
 	  			else
-	  				auto_2 = null;
+	  				auto_2 = "";
 	  		},
 	  		close: function(e, u) {
 	  			//when leaving, replace with first match
 	  			temp2 = document.getElementById("search_2_name").value;
 	  			if (temp2 == "")
-	  				auto2 = null;
-	  			if (auto_cities.indexOf(temp2) < 0 && auto_2 != null)
+	  				auto2 = "";
+	  			else if (auto_cities.indexOf(temp2) < 0 && auto_2)
 					document.getElementById("search_2_name").value = auto_2;
-				else
+				else if (auto_2)
 					auto_2 = temp2;
 	  		},
 	  		delay: 0
@@ -46,65 +46,64 @@ $(document).ready(function() {
 });
 
 
-
-
-var data, hide_1, hide_2, main, gray, font, active_tab, axis_location, horz_locs, auto_1, auto_2, sent1, sent2;
+var data, hide_1, hide_2, main, gray, font, active_tab, axis_location, horz_locs, auto_1, auto_2, sent1, sent2, nochanges, old1, old2;
 
 sent1 = true;
 sent2 = true;
 
 var sketch = new Processing.Sketch();
 
+function changeMade() {
+	if (old1 != document.getElementById("search_1_name").value)
+	{
+		old1 = document.getElementById("search_1_name").value;
+		nochanges = false;
+	}
+	if (old2 != document.getElementById("search_2_name").value)
+	{
+		old2 = document.getElementById("search_2_name").value;
+		nochanges = false;
+	}
+};
+
 function city_api_request(query) {
+	if (nochanges)
+	{
+		return;
+	}
+
 	var field1, field2;
 	field1 = "";
 	field2 = "";
-	if (!sent1 && auto_1 == undefined)
-		auto_1 = null;
-	if (!sent2 && auto_2 == undefined)
-		auto_2 = null;
+
 	$("#error_1").empty();
-	$("#error_2").empty();
-	//$('#search_1_name').autocomplete('response');
-	//$('#search_2_name').autocomplete('response');
-	//$('#search_1_name').autocomplete('open');
 	$('#search_1_name').autocomplete('close');
+	//check to see if any of the fields are empty
+	if (document.getElementById("search_1_name").value != "")
+	{
+		if (auto_1 == "")
+			$("#error_1").append("Invalid city.");
+		if (auto_1 != "" && auto_1)
+			field1 = auto_1;		
+		else if (auto_1 == undefined)
+			field1 = document.getElementById("search_1_name").value;	
+	}
+	$("#error_2").empty();
 	$('#search_2_name').autocomplete('close');
-
-	//has a matching value
-	if (auto_1 === null)
+	if (document.getElementById("search_2_name").value != "")
 	{
-		$("#error_1").append("Invalid city.");
-		field1 = "";
-	}
-	else
-	{
-		if (auto_1 != undefined)
-			field1 = auto_1;
-		else
-			field1 = document.getElementById("search_1_name").value;
-	
-	}
-
-	if (auto_2 === null)
-	{
-		$("#error_2").append("Invalid city.");
-		field2 = "";
-
-	}
-	else
-	{
-		if (auto_2 != undefined)
-			field2 = auto_2;
-		else
-			field2 = document.getElementById("search_2_name").value;
-
+		if (auto_2 == "")
+			$("#error_2").append("Invalid city.");
+		if (auto_2 != "" && auto_2)
+			field2 = auto_2;		
+		else if (auto_2 == undefined)
+			field2 = document.getElementById("search_2_name").value;	
 	}
 
 	url = "";
 	type = "city"
 
-	if(field1 == "" && field2 == ""){
+	if((field1 == "" && field2 == "")){
 		sent1 = false;
 		sent2 = false;
 		return;
@@ -113,16 +112,19 @@ function city_api_request(query) {
 		url = "https://trycents.com:6001/data/type="+type+"&option="+field1;
 		sent2 = false;
 		sent1 = true;
+		$("#main_viz").fadeTo(400, 0);
 	}
 	else if(field1 == ""){
 		url = "https://trycents.com:6001/data/type="+type+"&option="+field2;
 		sent1 = false;
 		sent2 = true;
+		$("#main_viz").fadeTo(400, 0);
 	}
 	else{
 		url = "https://trycents.com:6001/data/type="+type+"&option="+field1+"&option="+field2;
 		sent1 = true;
 		sent2 = true;
+		$("#main_viz").fadeTo(400, 0);
 	}
 
 	//data = new Object();
@@ -182,6 +184,8 @@ function city_api_request(query) {
 		  	 		document.getElementById("search_1_button").value = "HIDE";
 		  	 		$("#search_1_button").removeAttr("disabled");
 	  			}
+	  			nochanges = true;
+	  			$("#main_viz").fadeTo(800, 1);
       		}
       	}
     }
@@ -195,7 +199,6 @@ function sketchProc(processing) {
 		console.log("loaded city.js successfully");
 		main = processing.color(136, 68, 18);
 		gray = processing.color(138, 136, 137);
-		fade_out = false;
 		processing.size(655,375);
 		//always set the initial tab to the first one
 		active_tab = 1;
@@ -216,7 +219,7 @@ function sketchProc(processing) {
   		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));
   		//localStorage.removeItem("data_store");
 
-  		if (data == null)
+  		if (!data["location_1"] || !data["location_2"])
   		{
   			data = new Array();
 
@@ -253,6 +256,9 @@ function sketchProc(processing) {
   		}
 
 		document.getElementById("search_1_name").value = data["location_1"];
+		old1 = document.getElementById("search_1_name").value;
+		old2 = document.getElementById("search_2_name").value;
+		nochanges = true;
 	};
 
 
@@ -1088,7 +1094,6 @@ function sketchProc(processing) {
 		processing.text("HIGHS", 557, 62);
 		processing.text("LOWS", 558, 83);
 	};
-
 };
 
 function update_tab(name) {

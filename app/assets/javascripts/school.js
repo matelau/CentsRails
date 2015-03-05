@@ -84,7 +84,7 @@ function sketchProc(processing) {
 		
  		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));
 
- 		if(data == null) {
+ 		if(!data["school_1"] || !data["school_2"]) {
  			data = new Array();
 	 		data["school_1"] = [8000, 25000, 24, 32000, 40, 4.1];
  			data["school_2"] = [5000, 5000, 50, 29000, 62, 3.8];

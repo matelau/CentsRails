@@ -22,7 +22,7 @@
 var path = window.location.pathname.split('/');
 if (path[1] == "wizard" && path[2] != "start" && path[2] != "education")
 {
-	localStorage.removeItem("data_store");
+	//localStorage.removeItem("data_store");
 	var script = document.createElement("script");
 	script.type = "application/javascript";
 	script.src = "../assets/" + path[2] + ".js";
