@@ -18,6 +18,12 @@
 //= require material
 //= require ripples
 
+
+
+
+//forward declaration
+function changeMade(){};
+
 //determine which js file to load
 var path = window.location.pathname.split('/');
 if (path[1] == "wizard" && path[2] != "start" && path[2] != "education")

@@ -35,12 +35,12 @@ function build_city_auto() {
 	$( "#search_1_city" ).autocomplete({
   		source: city_auto,
   		autoFocus: true,
-  		delay: 0
+  		delay: 200
 	});
 	$( "#search_2_city" ).autocomplete({
   		source: city_auto,
   		autoFocus: true,
-  		delay: 0
+  		delay: 200
 	});
 };
 
@@ -48,21 +48,25 @@ function build_major_auto() {
 	$( "#search_1_major" ).autocomplete({
   		source: major_auto,
   		autoFocus: true,
-  		delay: 0
+  		delay: 200
 	});
 	$( "#search_2_major" ).autocomplete({
   		source: major_auto,
   		autoFocus: true,
-  		delay: 0
+  		delay: 200
 	});
 };
 
 function build_school_auto() {
 	$( "#search_1_school" ).autocomplete({
-  		source: school_auto
+  		source: school_auto,
+  		autoFocus: true,
+  		delay: 200
 	});
 	$( "#search_2_school" ).autocomplete({
-  		source: school_auto
+  		source: school_auto,
+  		autoFocus: true,
+  		delay: 200
 	});
 };
 
@@ -158,6 +162,11 @@ function spendingRedirect() {
 
 function dataRequest(type)
 {
+	if (dataRequest == "career")
+	{
+		window.alert("Career data coming soon!");
+		return;
+	}
 	field1 = document.getElementById("search_1_" + type).value;
 	if (type == "city" && city_auto.indexOf(field1) < 0)
 		field1 = "";

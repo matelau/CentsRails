@@ -14,7 +14,7 @@ $(document).ready(function() {
 	  			//when leaving, replace with first match
 	  			temp1 = document.getElementById("search_1_name").value;
 	  			if (temp1 == "")
-	  				auto1 = "";
+	  				auto_1 = "";
 	  			else if (auto_cities.indexOf(temp1) < 0 && auto_1)
 					document.getElementById("search_1_name").value = auto_1;
 				else if (auto_1)
@@ -34,7 +34,7 @@ $(document).ready(function() {
 	  			//when leaving, replace with first match
 	  			temp2 = document.getElementById("search_2_name").value;
 	  			if (temp2 == "")
-	  				auto2 = "";
+	  				auto_2 = "";
 	  			else if (auto_cities.indexOf(temp2) < 0 && auto_2)
 					document.getElementById("search_2_name").value = auto_2;
 				else if (auto_2)
@@ -122,19 +122,19 @@ function city_api_request(query) {
 		url = "https://trycents.com:6001/data/type="+type+"&option="+field1;
 		sent2 = false;
 		sent1 = true;
-		$("#main_viz").fadeTo(400, 0);
+		// $("#main_viz").fadeTo(400, 0);
 	}
 	else if(field1 == ""){
 		url = "https://trycents.com:6001/data/type="+type+"&option="+field2;
 		sent1 = false;
 		sent2 = true;
-		$("#main_viz").fadeTo(400, 0);
+		// $("#main_viz").fadeTo(400, 0);
 	}
 	else{
 		url = "https://trycents.com:6001/data/type="+type+"&option="+field1+"&option="+field2;
 		sent1 = true;
 		sent2 = true;
-		$("#main_viz").fadeTo(400, 0);
+		// $("#main_viz").fadeTo(400, 0);
 	}
 
 	//data = new Object();
@@ -195,7 +195,7 @@ function city_api_request(query) {
 		  	 		$("#search_1_button").removeAttr("disabled");
 	  			}
 	  			nochanges = true;
-	  			$("#main_viz").fadeTo(800, 1);
+	  			// $("#main_viz").fadeTo(800, 1);
       		}
       	}
     }
@@ -227,9 +227,11 @@ function sketchProc(processing) {
 		data = new Array();
 
   		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));
+
+  		//console.log(data["location_1"]);
   		//localStorage.removeItem("data_store");
 
-  		if (!data["location_1"] || !data["location_2"])
+  		if (!data["location_1"] && !data["location_2"])
   		{
   			data = new Array();
 

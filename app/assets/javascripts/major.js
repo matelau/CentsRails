@@ -121,19 +121,19 @@ function major_api_request(query) {
 		url = "https://trycents.com:6001/data/type="+type+"&option="+field1;
 		sent2 = false;
 		sent1 = true;
-		$("#main_viz").fadeTo(400, 0);
+		// $("#main_viz").fadeTo(400, 0);
 	}
 	else if(field1 == ""){
 		url = "https://trycents.com:6001/data/type="+type+"&option="+field2;
 		sent1 = false;
 		sent2 = true;
-		$("#main_viz").fadeTo(400, 0);
+		// $("#main_viz").fadeTo(400, 0);
 	}
 	else{
 		url = "https://trycents.com:6001/data/type="+type+"&option="+field1+"&option="+field2;
 		sent1 = true;
 		sent2 = true;
-		$("#main_viz").fadeTo(400, 0);
+		// $("#main_viz").fadeTo(400, 0);
 	}
 
 	var xmlHttp = null;
@@ -187,63 +187,11 @@ function major_api_request(query) {
 		  	 		$("#search_1_button").removeAttr("disabled");
 	  			}
 	  			nochanges = true;
-	  			$("#main_viz").fadeTo(800, 1);
+	  			// $("#main_viz").fadeTo(800, 1);
       		}
       	}
     }
     xmlHttp.send( null );
-	// field1 = document.getElementById("search_1_name").value;
-	// field2 = document.getElementById("search_2_name").value;
-	// url = "";
-
-	// type = "major"
-
-	// if(field1 == "" && field2 == ""){
-	// 	return;
-	// }
-	// else if(field2 == ""){
-	// 	url = "https://trycents.com:6001/data/type="+type+"&option="+field1;
-	// }
-	// else if(field1 == ""){
-	// 	url = "https://trycents.com:6001/data/type="+type+"&option="+field2;
-	// }
-	// else{
-	// 	url = "https://trycents.com:6001/data/type="+type+"&option="+field1+"&option="+field2;
-	// }
-
-	// //var data = new Object();
-	// var xmlHttp = null;
-
- //    xmlHttp = new XMLHttpRequest();
- //    xmlHttp.open( "GET", url, true );
-
- //    xmlHttp.onreadystatechange = function() {
- //    	if (xmlHttp.readyState === 4) { 
- //      		if (xmlHttp.status === 200) {
- //      			data = jQuery.parseJSON(xmlHttp.responseText);
- //      			//make api request here with type included
-	// 			localStorage.setItem("query_type", type);
-	// 			localStorage.setItem("data_store",JSON.stringify(data));
-
-	// 			//location.reload();
-	// 			if (!data["major_2_name"])
- //  				{
-	// 	  			hide_2 = true;
-	// 	  			document.getElementById("search_2_button").value = "SHOW";
-	// 	  			$("#search_2_button").attr("disabled", "true");
- //  				}
- //  				else
- //  				{
- //  					hide_2 = false;
- //  					document.getElementById("search_2_button").value = "HIDE";
-	// 	  			$("#search_2_button").removeAttr("disabled");
-	// 	  			document.getElementById("search_2_name").value = data["major_2_name"];
-
- //  				}
- //      		}
- //      	}
- //    }
- //    xmlHttp.send( null );
 };
 
 function sketchProc(processing) {
