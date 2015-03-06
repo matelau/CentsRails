@@ -65,6 +65,10 @@ cors = CORS(app)
 
 @app.route('/query/<string:query>', methods=['GET'])
 def query(query):
+
+	with open("../data/queries.txt", "a") as logfile:
+		logfile.write(query + "\n")
+
 	object = []
 	ops = []
 	locations = []
@@ -288,9 +292,7 @@ def data(data):
 			package['operation'] = "compare"
 
 		for o in query['option']:
-			package["majors"].append(o)
-
-		print package
+			package["majors"].append(o.title())
 
 		url = "https://trycents.com/api/v1/majors/"
 
@@ -301,11 +303,9 @@ def data(data):
 		s.verify = False
 		resp = s.send(prep)
 
-		print resp
-
 		package = json.loads(resp.text)
 		for i in range(0, len(query['option'])):
-			package["major_"+`i+1`+"_name"] = query['option'][i]
+			package["major_"+`i+1`+"_name"] = query['option'][i].title()
 		return json.dumps(package)
 
 	if(query['type'][0] == 'career'):
@@ -337,4 +337,4 @@ def data(data):
 #app.config['SERVER_NAME'] = "trycents.com"
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0',port=6001,debug=True,processes=5,ssl_context=('/etc/ssl/certs/ssl-bundle.crt','../.ssl/myserver.key'))
+	app.run(host='0.0.0.0',port=6001,debug=True,processes=10,ssl_context=('/etc/ssl/certs/ssl-bundle.crt','../.ssl/myserver.key'))
