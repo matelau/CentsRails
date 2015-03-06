@@ -21,13 +21,13 @@ University of California-Berkeley,UC Berkeley
 Emory University,Emory
 Georgetown University,Georgetown
 University of California-Los Angeles,UCLA
-University of Virginia
+University of Virginia,Virginia
 Carnegie Mellon University,CMU
 University of Southern California,USC
 Tufts University,Tufts
 Wake Forest University,Wake Forest
-University of Michigan-Ann Arbor,University of Michigan,U of M
-University of North Carolina-Chapel Hill,UNC,University of North Carolina
+University of Michigan-Ann Arbor,University of Michigan,U of M,Michigan
+University of North Carolina-Chapel Hill,UNC,University of North Carolina,North Carolina
 Boston College,BC
 New York University,NYU
 College of William and Mary
@@ -41,16 +41,16 @@ Lehigh University,Lehigh
 University of California-Santa Barbara,UCSB
 Boston University,BU
 Northeastern University,Northeastern
-Rensselaer Polytechnic Institute
+Rensselaer Polytechnic Institute,RPI
 University of California-Irvine,UCI
-University of Illinois-Urbana-​Champaign,UI,University of Illinois
-University of Wisconsin-Madison,University of Wisconsin,UW
+University of Illinois-Urbana-​Champaign,UI,University of Illinois,Illinois
+University of Wisconsin-Madison,University of Wisconsin,UW,Wisconsin
 Pennsylvania State University-University Park,Penn State,Penn State University,Pennsylvania State University
-University of Florida,UF
+University of Florida,UF,Florida
 University of Miami,U of Miami,The U
-University of Washington,UW
+University of Washington,UW,Washington
 Yeshiva University
-University of Texas-Austin,UT,UTA,University of Texas
+University of Texas-Austin,UT,UTA,University of Texas,Texas
 George Washington University,GWU,George Washington
 Ohio State University-Columbus,Ohio State,OSU,Ohio State University
 Pepperdine University,Pepperdine
@@ -62,19 +62,19 @@ University of Connecticut,UConn,UC
 Brigham Young University-Provo,BYU,Brigham Young University
 Clemson University,Clemson
 Purdue University-West Lafayette,Purdue,Purdue University
-University of Georgia,UG
-University of Maryland-College Park,UM,University of Maryland
+University of Georgia,UG,Georgia
+University of Maryland-College Park,UM,University of Maryland,Maryland
 University of Pittsburgh,Pitt
 Texas A&M University-College Station,Texas A&M,Texas A&M University,A&M
 Worcester Polytechnic Institute
 Rutgers
 American University
 Baylor University,Baylor
-University of Iowa
-University of Minnesota-Twin Cities,University of Minnesota
+University of Iowa,Iowa
+University of Minnesota-Twin Cities,University of Minnesota,Minnesota
 Virginia Tech,VT
 Clark University
-Indiana University-Bloomington,Indiana University,IU
+Indiana University-Bloomington,Indiana University,IU,Indiana
 Marquette University,Marquette
 Miami University-Oxford,Miami University
 Stevens Institute of Technology
@@ -84,12 +84,12 @@ University of Delaware,UD
 University of Massachusetts-Amherst,UMass
 Michigan State University,MSU,Michigan State
 University of California-Santa Cruz,UCSC
-University of Vermont,UV
+University of Vermont,UV,Vermont
 Binghamton University-SUNY
 Colorado School of Mines
 Stony Brook University-SUNY
-University of Alabama,Bama
-University of Colorado-Boulder,UC Boulder,University of Colorada
+University of Alabama,Bama,Alabama
+University of Colorado-Boulder,CU,University of Colorado,Colorado
 University of Denver
 University of Tulsa,Tulsa
 Drexel University,Drexel
@@ -97,21 +97,21 @@ Florida State University,FSU
 North Carolina State University-Raleigh,NCSU,North Carolina State,North Carolina State University
 University of San Diego,USD
 St. Louis University
-University of Missouri
-University of Nebraska-Lincoln,University of Nebraska
-University of New Hampshire,UNH
+University of Missouri,Missouri,Mizzou
+University of Nebraska-Lincoln,University of Nebraska,Nebraska
+University of New Hampshire,UNH,New Hampshire
 Auburn University,Auburn
 University at Buffalo-SUNY
 University of Dayton,Dayton
 Iowa State University,Iowa State
 Loyola University Chicago,Loyola,Loyola University
-University of Kansas,UK
-University of Oklahoma
-University of Oregon
+University of Kansas,UK,Kansas
+University of Oklahoma,Oklahoma,OU
+University of Oregon,Oregon
 University of San Francisco
-University of Tennessee
+University of Tennessee,Tennessee,Tenn
 University of California-Riverside,UC Riverside
-University of South Carolina
+University of South Carolina,South Carolina,SC
 University of St. Thomas
 The Catholic University of America
 Duquesne University,Duquesne
@@ -122,18 +122,18 @@ Clarkson University,Clarkson
 Colorado State University,CSU
 DePaul University,DePaul
 Temple University,Temple
-University of Arizona
+University of Arizona, Arizona, U of A
 Rutgers Newark
 Seton Hall University,Seton Hall
 University at Albany-SUNY
 Arizona State University-Tempe,Arizona State University,ASU
 Louisiana State University-Baton Rouge,Louisiana State,LSU,Louisiana State University
-Ohio University
+Ohio University,Ohio
 University of Cincinnati
-University of Kentucky,UK
-University of Utah,U of U
+University of Kentucky,UK,Kentucky
+University of Utah,U of U,Utah,UofU
 Hofstra University,Hofstra
-University of Arkansas
+University of Arkansas,Arkansas,Razorbacks
 George Mason University,George Mason
 Missouri University of Science & Technology
 Oregon State University,OSU
@@ -151,7 +151,7 @@ San Diego State University,SDSU
 University of Alabama-Birmingham
 University of Illinois-Chicago
 University of Maryland-Baltimore County
-University of Mississippi
+University of Mississippi,Mississippi,Ole Miss
 Maryville University of St. Louis
 Mississippi State University,MSU
 Texas Tech University,Texas Tech,TTU
@@ -159,15 +159,15 @@ University of Massachusetts-Lowell
 Virginia Commonwealth University,VCU
 Biola University,Biola
 University of Louisville
-University of Rhode Island,URI
+University of Rhode Island,URI,Rhode Island
 University of South Florida,USF
 University of Wyoming
-University of Idaho
+University of Idaho,Idaho
 University of La Verne,La Verne
 Andrews University,Andrews
 University of Hawaii-Manoa,University of Hawaii,UH
-University of North Dakota,UND
-University of South Dakota,USD
+University of North Dakota,UND,North Dakota
+University of South Dakota,USD,South Dakota
 West Virginia University,WVU
 Azusa Pacific University
 Ball State University,Ball State
@@ -175,7 +175,7 @@ Bowling Green State University,BGSU
 Florida Institute of Technology
 Pace University,Pace
 University of Central Florida,UCF
-University of Maine
+University of Maine,Maine
 Western Michigan University,WMU
 Edgewood College,Edgewood
 Immaculata University
@@ -188,14 +188,14 @@ University of North Carolina-Greensboro
 Southern Illinois University-Carbondale
 University of Houston
 University of Missouri-Kansas City
-University of New Mexico,UNM
+University of New Mexico,UNM,New Mexico
 Widener University
 Central Michigan University,CMU
 Indiana University-​Purdue University-Indianapolis
 Kent State University,Kent State,KSU
 Northern Illinois University,NIU
-University of Montana
-University of Nevada-Reno,University of Nevada
+University of Montana,Montana
+University of Nevada-Reno,University of Nevada,Nevada
 Utah State University,USU
 Louisiana Tech University,LTU,Louisiana Tech
 University of North Carolina-Charlotte,UNC Charlotte
@@ -242,7 +242,7 @@ Texas Woman's University
 Trevecca Nazarene University
 Trinity International University
 University of Akron
-University of Alaska-Fairbanks
+University of Alaska-Fairbanks,Alaska
 University of Arkansas-Little Rock
 University of Colorado-Denver
 University of Louisiana-Lafayette

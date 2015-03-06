@@ -16,6 +16,59 @@ blur_5.src = "/assets/spend_compare_blur.jpeg";
 var blur_6 = new Image(540, 300);
 blur_6.src = "/assets/suggest_blur.jpeg";
 
+//get all data for the auto completes
+var city_auto, major_auto, school_auto;
+
+$.post("/api/v1/record_names", {operation: 'get', tables: ['colis']}, function(response) { 
+	city_auto = response;
+});
+$.post("/api/v1/record_names", {operation: 'get', tables: ['schools']}, function(response) { 
+	school_auto = response;
+});
+$.post("/api/v1/record_names", {operation: 'get', tables: ['majors']}, function(response) { 
+	major_auto = response;
+});			
+
+
+
+function build_city_auto() {
+	$( "#search_1_city" ).autocomplete({
+  		source: city_auto,
+  		autoFocus: true,
+  		delay: 200
+	});
+	$( "#search_2_city" ).autocomplete({
+  		source: city_auto,
+  		autoFocus: true,
+  		delay: 200
+	});
+};
+
+function build_major_auto() {
+	$( "#search_1_major" ).autocomplete({
+  		source: major_auto,
+  		autoFocus: true,
+  		delay: 200
+	});
+	$( "#search_2_major" ).autocomplete({
+  		source: major_auto,
+  		autoFocus: true,
+  		delay: 200
+	});
+};
+
+function build_school_auto() {
+	$( "#search_1_school" ).autocomplete({
+  		source: school_auto,
+  		autoFocus: true,
+  		delay: 200
+	});
+	$( "#search_2_school" ).autocomplete({
+  		source: school_auto,
+  		autoFocus: true,
+  		delay: 200
+	});
+};
 
 
 function showSearch(type, side) {
@@ -41,6 +94,12 @@ function showSearch(type, side) {
 	$("#search_1_" + type ).attr("placeholder", prefill[type][0]);
 	if (type != "spend")
 		$("#search_2_" + type ).attr("placeholder", prefill[type][1]);
+	if (type == "city")
+		build_city_auto();
+	if (type == "major")
+		build_major_auto();
+	if (type == "school")
+		build_school_auto();
 };
 
 function showSuggest() {
@@ -103,8 +162,17 @@ function spendingRedirect() {
 
 function dataRequest(type)
 {
+	if (dataRequest == "career")
+	{
+		window.alert("Career data coming soon!");
+		return;
+	}
 	field1 = document.getElementById("search_1_" + type).value;
+	if (type == "city" && city_auto.indexOf(field1) < 0)
+		field1 = "";
 	field2 = document.getElementById("search_2_" + type).value;
+	if (type == "city" && city_auto.indexOf(field2) < 0)
+		field2 = "";
 	url = "";
 
 	if(field1 == "" && field2 == ""){

@@ -1,12 +1,33 @@
 <div  class="center">
+
+	<form>
+		<ul class="error_objects">
+			<li><p id="error_1" class="error_msg" ></p></li>
+			<li><button class="btn btn-default" type="submit" onclick="school_api_request(); return false;">UPDATE SCHOOLS</button></li>
+			<li><p id="error_2" class="error_msg"></p></li>
+			<!-- errors -->
+		</ul>
+
+		<ul class="search_objects">
+			<li><input type="button" onclick="hide_toggle(1)" id="search_1_button" class="btn btn-default" value="HIDE" style="width:100px"></li>
+			<li><input class="search_1" onchange="changeMade()" id="search_1_name" type="text"></li>
+			<li><p class="versus">vs.</p></li>
+			<li><input class="search_2" onchange="changeMade()" id="search_2_name" type="text"></li>
+			<li><input type="button" onclick="hide_toggle(2)" id="search_2_button" class="btn btn-default" value="HIDE" style="width:100px"></li>
+			<!-- errors -->
+		</ul>
+	</form>
+
+
+
 	<ul class="viz_objects">
 		<li><canvas class="process_viz" id="main_viz" width="655" height="375"></canvas></li>
 		<li><ul style="list-style-type: none">
 			<li><a class="btn btn-default">SUMMARY</a></li>
 		</ul></li>
 	</ul>
-	
-	<br> <!--errors will go here -->
+	<!-- 
+	<br>s
 	<form>
 		<ul class="search_objects">
 			<li><input type="button" onclick="hide_toggle(1)" id="search_1_button" class="btn btn-default" value="HIDE" style="width:100px"></li>
@@ -19,3 +40,4 @@
 			<li><button class="circle-arrow-update" type="submit" onclick="school_api_request(); return false;"><img src="/assets/circle arrow.png" height="38" width="38"></button></li>
 		</ul>
 	</form>
+ -->
