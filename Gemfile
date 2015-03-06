@@ -55,4 +55,4 @@ gem 'jquery-validation-rails'
 
 gem 'foreigner'
 
-gem 'mailchimp-api'
+gem 'mailchimp-api', require: 'mailchimp'
