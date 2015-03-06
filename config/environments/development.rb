@@ -16,10 +16,10 @@ Rails.application.configure do
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.smtp_settings = {
-  	address: "smtp.gmail.com",
+  	address: "smtp.trycents.com",
   	port: "587",
-  	domain: "gmail.com",
-  	enable_starttls_auto: true,
+  	domain: "trycents.com",
+  	enable_starttls_auto: true
   	
   }
 
