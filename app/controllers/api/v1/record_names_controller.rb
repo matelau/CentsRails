@@ -87,8 +87,6 @@ class Api::V1::RecordNamesController < ApplicationController
 
 				if params[:where] and not params[:select]
 					records = University.select('DISTINCT name').where(['state LIKE ?', "%#{params[:where]}"])
-
-					# Format the location name as a single string.
 					records.each do |record|
 						result << record[:name]
 					end
@@ -101,10 +99,8 @@ class Api::V1::RecordNamesController < ApplicationController
 
 				elsif (not params[:select]) and (not params[:where])
 					records = University.select('DISTINCT name, state')
-					
-					# Format the location name as a single string.
 					records.each do |record|
-						result << "#{record[:name]}, #{record[:state]}"
+						result << record[:name]
 					end
 
 				else

@@ -1,0 +1,22 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+albert_taxes:
+  name: "Taxes"
+  public: false
+  value: 967.19
+  category: "Default"
+  user_id: 1
+
+albert_food:
+  name: "Food"
+  public: false
+  value: 473.08
+  category: "Default"
+  user_id: 1
+
+albert_housing:
+  name: "Housing"
+  public: false
+  value: 659.70
+  category: "Default"
+  user_id: 1
