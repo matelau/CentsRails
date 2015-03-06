@@ -2,7 +2,13 @@ $(document).ready(function() {
 	$.post("/api/v1/record_names", {operation: 'get', tables: ['coli']}, function(response) { 
 		auto_cities = response;
 		$( "#search_1_name" ).autocomplete({
-	  		source: auto_cities,
+	  		source: function(req, responseFn) {
+	  			var re = $.ui.autocomplete.escapeRegex(req.term);
+	  			var pattern1 = new RegExp("^"+re, "i");
+	  			var a = $.grep(auto_cities, function(item, index){return pattern1.test(item);});
+	  			var b = $.grep(auto_cities, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
+	  			responseFn(a.concat(b));
+	  		},
 	  		response: function(e, u) {
 	  			//if match list isnt empty, save the first match
 	  			if (u.content.length != 0)
@@ -23,8 +29,15 @@ $(document).ready(function() {
 	  		delay: 0
 		});
 		$( "#search_2_name" ).autocomplete({
-	  		source: auto_cities,
+	  		source: function(req, responseFn) {
+	  			var re = $.ui.autocomplete.escapeRegex(req.term);
+	  			var pattern1 = new RegExp("^"+re, "i");
+	  			var a = $.grep(auto_cities, function(item, index){return pattern1.test(item);});
+	  			var b = $.grep(auto_cities, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
+	  			responseFn(a.concat(b));
+	  		},
 	  		response: function(e, u) {
+
 	  			if (u.content.length != 0)
 	  				auto_2 = u.content[0].value;
 	  			else
@@ -45,8 +58,11 @@ $(document).ready(function() {
 	});	
 });
 
+var data, hide_1, hide_2, main, gray, font, active_tab, axis_location, horz_locs, auto_1, auto_2, sent1, sent2, nochanges, old1, old2, auto_cities, canvas, processingInstance;
 
-var data, hide_1, hide_2, main, gray, font, active_tab, axis_location, horz_locs, auto_1, auto_2, sent1, sent2, nochanges, old1, old2, auto_cities;
+canvas = document.getElementById("main_viz");
+if (canvas != null)
+	processingInstance = new Processing(canvas, sketchProc);
 
 sent1 = true;
 sent2 = true;
@@ -122,19 +138,22 @@ function city_api_request(query) {
 		url = "https://trycents.com:6001/data/type="+type+"&option="+field1;
 		sent2 = false;
 		sent1 = true;
-		// $("#main_viz").fadeTo(400, 0);
+		processingInstance.noLoop();
+		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
 	}
 	else if(field1 == ""){
 		url = "https://trycents.com:6001/data/type="+type+"&option="+field2;
 		sent1 = false;
 		sent2 = true;
-		// $("#main_viz").fadeTo(400, 0);
+		processingInstance.noLoop();
+		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
 	}
 	else{
 		url = "https://trycents.com:6001/data/type="+type+"&option="+field1+"&option="+field2;
 		sent1 = true;
 		sent2 = true;
-		// $("#main_viz").fadeTo(400, 0);
+		processingInstance.noLoop();
+		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
 	}
 
 	//data = new Object();
@@ -195,7 +214,7 @@ function city_api_request(query) {
 		  	 		$("#search_1_button").removeAttr("disabled");
 	  			}
 	  			nochanges = true;
-	  			// $("#main_viz").fadeTo(800, 1);
+	  			
       		}
       	}
     }
@@ -231,7 +250,7 @@ function sketchProc(processing) {
   		//console.log(data["location_1"]);
   		//localStorage.removeItem("data_store");
 
-  		if (!data["location_1"] && !data["location_2"])
+  		if (!data || (!data["location_1"] && !data["location_2"]))
   		{
   			data = new Array();
 
@@ -1109,20 +1128,27 @@ function sketchProc(processing) {
 };
 
 function update_tab(name) {
-	active_tab = name;
-	if(data["location_1"])
+	if (name != active_tab)
 	{
-		hide_1 = false;
-		document.getElementById("search_1_button").value = "HIDE";
-	}
-	if(data["location_2"])
-	{
-		hide_2 = false;
-		document.getElementById("search_2_button").value = "HIDE";
+		processingInstance.noLoop();
+		$("#main_viz").fadeTo(500, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(700, 1);});
+		active_tab = name;
+		if(data["location_1"])
+		{
+			hide_1 = false;
+			document.getElementById("search_1_button").value = "HIDE";
+		}
+		if(data["location_2"])
+		{
+			hide_2 = false;
+			document.getElementById("search_2_button").value = "HIDE";
+		}
 	}
 };
 
 function hide_toggle(num) {
+	processingInstance.noLoop();
+	$("#main_viz").fadeTo(500, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(700, 1);});
 	if (num == 1)
 	{
 		if (document.getElementById("search_1_button").value == "HIDE") { 
@@ -1145,8 +1171,5 @@ function hide_toggle(num) {
 	}
 };
 
-var canvas = document.getElementById("main_viz");
-if (canvas != null)
-	var processingInstance = new Processing(canvas, sketchProc);
 
 
