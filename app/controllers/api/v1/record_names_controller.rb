@@ -79,10 +79,39 @@ class Api::V1::RecordNamesController < ApplicationController
 			# Get the university names.
 			elsif table == 'university' or table == 'universities' or 
 				table == 'school' or table == 'schools'
-				records = University.select('DISTINCT name')
+				# records = University.select('DISTINCT name')
 
-				records.each do |record|
-					result << record[:name]
+				# records.each do |record|
+				# 	result << record[:name]
+				# end
+
+				if params[:where] and not params[:select]
+					records = University.select('DISTINCT name').where(['state LIKE ?', "%#{params[:where]}"])
+
+					# Format the location name as a single string.
+					records.each do |record|
+						result << record[:name]
+					end
+
+				elsif params[:select] and not params[:where]
+					records = University.select('DISTINCT state')
+					records.each do |record|
+						result << record[:state]
+					end
+
+				elsif (not params[:select]) and (not params[:where])
+					records = University.select('DISTINCT name, state')
+					
+					# Format the location name as a single string.
+					records.each do |record|
+						result << "#{record[:name]}, #{record[:state]}"
+					end
+
+				else
+					records = University.select('DISTINCT state').where(['state LIKE ?', "%#{params[:where]}"])
+					records.each do |record|
+						result << record[:state]
+					end
 				end
 			end
 		end
