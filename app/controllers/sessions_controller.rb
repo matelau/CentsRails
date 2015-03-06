@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
 		user = User.find_by_email(params[:email])
 
 		if user && user.authenticate(params[:password])
-			members = @mc.lists.members(@list_id)
+			cents_members = @mc.lists.members(@list_id)
 			if members
 				puts members
 			end
