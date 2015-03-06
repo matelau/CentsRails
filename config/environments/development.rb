@@ -19,6 +19,8 @@ Rails.application.configure do
   	address: "smtp.trycents.com",
   	port: "587",
   	domain: "trycents.com",
+  	username: "cents",
+  	password: "Engineering!",
   	enable_starttls_auto: true
   	
   }
