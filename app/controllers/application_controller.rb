@@ -7,8 +7,9 @@ class ApplicationController < ActionController::Base
 	force_ssl
 
 	# Create a MailChimp API object and the list ID for the New Cents Users list.
-	@mc = Mailchimp::API.new('96bf81c0c618d011dfe85bc9b312d1c5-us10')
-	@list_id = '2f68e3af0f'
+	@@mc = Mailchimp::API.new('96bf81c0c618d011dfe85bc9b312d1c5-us10')
+	@@list_id = '2f68e3af0f'
+			#puts @mc
 
 	# Populate the @current_user variable.
 	def current_user
