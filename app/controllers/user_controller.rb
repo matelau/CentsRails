@@ -10,6 +10,12 @@ class UserController < ApplicationController
 		#confirmation_code = SecureRandom.urlsafe_base64
 
 		new_user = User.new(user_params)
+		@@mc.lists.subscribe(@@list_id, 
+                   {"email" => user_params[:email]},
+                   {"FNAME" => user_params[:first_name],
+                   	"LNAME" => user_params[:last_name],
+                   	"EMAIL" => user_params[:email]},
+                   	user_params[:email_type])
 
 		#to_be_validated_user.confirmation_code = confirmation_code
 

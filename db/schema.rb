@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150304194348) do
+ActiveRecord::Schema.define(version: 20150307230112) do
 
   create_table "amounts", force: true do |t|
     t.integer  "user_id"
@@ -184,6 +184,7 @@ ActiveRecord::Schema.define(version: 20150304194348) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "password_digest"
+    t.string   "email_type"
   end
 
   create_table "weather_records", force: true do |t|
