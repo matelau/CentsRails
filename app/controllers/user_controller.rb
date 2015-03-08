@@ -1,13 +1,6 @@
 class UserController < ApplicationController
 
 	def create
-		# Check that the user doesn't already exist.
-		if User.find_by_email(params[:email])
-			redirect_to '/user/register'
-		end
-
-		#to_be_validated_user = ToBeValidatedUser.new(user_params)
-		#confirmation_code = SecureRandom.urlsafe_base64
 
 		new_user = User.new(user_params)
 		@@mc.lists.subscribe(@@list_id, 
@@ -38,7 +31,8 @@ class UserController < ApplicationController
 private
 
 	def user_params
-		params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+		params.require(:user).permit(:first_name, :last_name, :email, 
+			:email_type, :password, :password_confirmation)
 	end
 
 end
