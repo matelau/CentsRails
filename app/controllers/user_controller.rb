@@ -1,8 +1,9 @@
 class UserController < ApplicationController
 
 	def create
-
 		new_user = User.new(user_params)
+
+		# Subscribe with MailChimp's API.
 		@@mc.lists.subscribe(@@list_id, 
                    {"email" => user_params[:email]},
                    {"FNAME" => user_params[:first_name],

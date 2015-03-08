@@ -34,10 +34,10 @@
 	    <%= f.password_field :password_confirmation, html: {'placeholder' => "", class: "input-xlarge"} %>
 	    <label id="user_password_confirmation-error" class="error" for="user_password_confirmation"></label>
 
-<%= f.radio_button(:email_type, "HTML") %>
-<%= label_tag(:email_type_html, "HTML") %>
-<%= f.radio_button(:email_type, "text") %>
-<%= label_tag(:email_type_text, "text") %>
+<% ['HTML', 'text'].each do |type| %>
+	<%= f.radio_button(:email_type, type, checked: type == 'HTML') %>
+	<%= label_tag("email_type_html[#{type}]", type) %>
+<% end %>
 
 <%= check_box_tag(:terms) %>
 <%= label_tag(:terms, "I accept the terms and conditions") %>
