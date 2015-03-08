@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150308082208) do
+ActiveRecord::Schema.define(version: 20150308195717) do
 
   create_table "amounts", force: true do |t|
     t.integer  "user_id"
@@ -140,16 +140,6 @@ ActiveRecord::Schema.define(version: 20150308082208) do
 
   add_index "rates_schools", ["university_id"], name: "rates_schools_university_id_fk", using: :btree
   add_index "rates_schools", ["user_id"], name: "rates_schools_user_id_fk", using: :btree
-
-  create_table "to_be_validated_users", force: true do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "password_digest"
-    t.string   "email"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "confirmation_code"
-  end
 
   create_table "top_jobs", force: true do |t|
     t.string   "name"

@@ -3,6 +3,11 @@ class UserController < ApplicationController
 	def create
 		new_user = User.new(user_params)
 
+		# Run the model's validations.
+		unless new_user.valid?
+			redirect_to 'user/registered'
+		end
+
 		# Subscribe with MailChimp's API.
 		@@mc.lists.subscribe(@@list_id, 
                    {"email" => user_params[:email]},

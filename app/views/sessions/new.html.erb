@@ -1,75 +1,23 @@
-<%= form_tag('/user/login', { class: "form-horizontal", 'id' => 'login-form', 'method' => 'post'}) do %>
+<%= form_tag('/user/login', { class: 'form-horizontal', id: 'login-form', method: 'post'}) do %>
 	<div style="text-align:center" id="stylized" class="myform" >
 		<h3>Log in to access your profile.</h3><br>
-    	<form>
 
-	    <label>EMAIL</label>
-	    <%= email_field_tag 'email'%>
-	    <label id="email-error" class="error" for="email"></label>
+		<label>EMAIL</label>
+		<%= email_field_tag 'email'%>
+		<label id="email-error" class="error" for="email"></label>
 
-	    <label>PASSWORD</label>
-	    <%= password_field_tag 'password' %>
-	    <label id="password-error" class="error" for="password"></label>
-
+		<label>PASSWORD</label>
+		<%= password_field_tag 'password' %>
+		<label id="password-error" class="error" for="password"></label>
 		
 		<button style="margin-top:20px" class="btn btn-primary">LOG IN</button><br>
 		<a href="/user/register" style="margin-top:20px" class="btn btn-default">OR REGISTER HERE.</a>
-
-    </form>
-</div>
+	</div>
 <% end %>
 
-<!-- <script src="/assets/jquery.validate.min.js"></script>
-<script src="/assets/additional-methods.min.js"></script> -->
+<!-- Include the jQuery Validation plugin. -->
+<script src="/assets/jquery.validate.min.js" ></script>
+<script src="/assets/additional-methods.min.js"></script>
 
-<script>
-(function($,W,document)
-{
-	var validator = {};
- 
-	validator.UTIL =
-	{
-		setupFormValidation: function()
-		{
-			$("#login-form").validate({
-					onfocusout: function(element, event) {
-						this.element(element);
-					},
-
-					success: function(label)
-					{
-						label.text("");
-					},
-
-					// Set the requirements for the fields here.
-					rules: {
-						"email": {
-							required: true,
-							email: true
-						},
-						"password": {
-							required: true
-						},
-					},
-					
-					// Set the error message here.
-					messages: {
-						"password": "Enter your password.",
-						"email": "Enter a valid email address.",
-					},
-					submitHandler: function(form) {
-						form.submit();
-					}
-				});
-			}
-		}
- 
-	// Activate the rules on keyup.
-	$(document).ready(function($) {				
-		$('#login-form').bind('keyup', function(){
-       validator.UTIL.setupFormValidation();
-    });
-	});
- 
-})(jQuery, window, document);
-</script>
+<!-- Include the form validation rules. -->
+<script src="/assets/validate_login_form.js"></script>

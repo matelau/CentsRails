@@ -1,44 +1,45 @@
-
-<%= form_for :user, html: { class: "form-horizontal", 'id' => 'register-form'} do |f| %>
-<div style="text-align:center" id="stylized" class="myform" >
-	<h2>Create a free account today.</h2><br>
+<%= form_for :user, html: {class: "form-horizontal", id: 'register-form'} do |f| %>
+	<div style="text-align:center" id="stylized" class="myform" >
+		<h2>Create a free account today.</h2><br>
 
 		<label>FIRST NAME</label>
-		<%= f.text_field :first_name, html: {'placeholder' => "", class: "input-xlarge"} %>
+		<%= f.text_field :first_name, html: {placeholder: '', class: 'input-xlarge'} %>
 		<label id="user_first_name-error" class="error" for="user_first_name"></label>
 
 		<label>LAST NAME</label>
-		<%= f.text_field :last_name, html: {'placeholder' => "", class: "input-xlarge"} %>
+		<%= f.text_field :last_name, html: {placeholder: '', class: 'input-xlarge'} %>
 		<label id="user_last_name-error" class="error" for="user_last_name"></label>
 
 		<label>EMAIL</label>
-		<%= f.email_field :email, html: {'placeholder' => '', class: 'input-xlarge'} %>
+		<%= f.email_field :email, html: {placeholder: '', class: 'input-xlarge'} %>
 		<label id="user_email-error" class="error" for="user_email"></label>
 
 		<label>PASSWORD</label>
-		<%= f.password_field :password, html: {'placeholder' => "", class: "input-xlarge"} %>
+		<%= f.password_field :password, html: {placeholder: '', class: 'input-xlarge'} %>
 		<label id="user_password-error" class="error" for="user_password"></label>
 
 		<label>PASSWORD (CONFIRM)</label>
-		<%= f.password_field :password_confirmation, html: {'placeholder' => "", class: "input-xlarge"} %>
+		<%= f.password_field :password_confirmation, html: {placeholder: '', class: 'input-xlarge'} %>
 		<label id="user_password_confirmation-error" class="error" for="user_password_confirmation"></label>
 
+		<!-- Radio buttons that determine what kind of confirmation email to send. -->
 		<% ['HTML', 'text'].each do |type| %>
 			<%= f.radio_button :email_type, type, checked: type == 'HTML'%>
 			<%= label_tag "email_type_html[#{type}]", type %>
 		<% end %>
 
+		<!-- Terms and conditions checkbox. -->
 		<%= check_box_tag :terms %>
-		<%= label_tag :terms, "I accept the terms and conditions" %>
+		<%= label_tag :terms, 'I accept the terms and conditions' %>
 		<label id="terms-error" class="error" for="terms"></label>
 
 		<button style="margin-top:20px" class="btn btn-primary">REGISTER</button>
-</div>
+	</div>
 <% end %>
  
 <!-- Include the jQuery Validation plugin. -->
 <script src="/assets/jquery.validate.min.js" ></script>
 <script src="/assets/additional-methods.min.js"></script>
 
-<!-- Include the form validation logic. -->
+<!-- Include the form validation rules. -->
 <script src="/assets/validate_register_form.js"></script>
