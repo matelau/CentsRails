@@ -76,14 +76,14 @@ ms = requests.Session()
 ms.verify = False
 mresp = ms.send(mprep)
 
-print mresp
+print mresp.text.to_a
 
 majs = json.loads(mresp.text)
 
 print majs
 
 for c in cities:
-	for a, s in states.iteritems():
+	for a, s in state.iteritems():
 		if s in c:
 			li = c.rsplit(s, 1)
 			cabbr = a.join(li)
