@@ -78,6 +78,9 @@ mresp = ms.send(mprep)
 
 majs = json.loads(mresp.text)
 
+for m in majs:
+	print m
+
 # for c in cities:
 # 	cabbr = ""
 # 	for a, s in state.iteritems():
@@ -224,7 +227,6 @@ def query(query):
 		resp = json.dumps(package)
 		return resp
 	elif len(majors) >= 1:
-		print majors
 		package = {
 			"operation":command,
 			"query":query,
