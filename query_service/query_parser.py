@@ -78,19 +78,19 @@ mresp = ms.send(mprep)
 
 majs = json.loads(mresp.text)
 
-for c in cities:
-	cabbr = []
-	for a, s in state.iteritems():
-		if s in c:
-			li = c.rsplit(s, 1)
-			cabbr = a.join(li)
+# for c in cities:
+# 	cabbr = ""
+# 	for a, s in state.iteritems():
+# 		if s in c:
+# 			li = c.rsplit(s, 1)
+# 			cabbr = a.join(li)
 
-	cname = c[:c.index(",")]
-	city = c.replace(",","")
-	cabbr = cabbr.replace(",","")
-	carr = city.split(" ")
-	cabbrarr = cabbr.split(" ")
-	cnamearr = cname.split(" ")
+# 	cname = c[:c.index(",")]
+# 	city = c.replace(",","")
+# 	cabbr = cabbr.replace(",","")
+# 	carr = city.split(" ")
+# 	cabbrarr = cabbr.split(" ")
+# 	cnamearr = cname.split(" ")
 #cities = cities[0].split("\r")
 
 app = Flask(__name__)
