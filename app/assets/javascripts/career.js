@@ -3,44 +3,45 @@ var data, hide_1, hide_2, main, gray, font, active_tab;
 var sketch = new Processing.Sketch();
 
 function career_api_request(query) {
-	field1 = document.getElementById("search_1_name").value;
-	field2 = document.getElementById("search_2_name").value;
-	url = "";
+	window.alert("Career data coming soon!");
+	// field1 = document.getElementById("search_1_name").value;
+	// field2 = document.getElementById("search_2_name").value;
+	// url = "";
 
-	type = "career"
+	// type = "career"
 
-	if(field1 == "" && field2 == ""){
-		return;
-	}
-	else if(field2 == ""){
-		url = "https://trycents.com:6001/data/type="+type+"&option="+field1;
-	}
-	else if(field1 == ""){
-		url = "https://trycents.com:6001/data/type="+type+"&option="+field2;
-	}
-	else{
-		url = "https://trycents.com:6001/data/type="+type+"&option="+field1+"&option="+field2;
-	}
+	// if(field1 == "" && field2 == ""){
+	// 	return;
+	// }
+	// else if(field2 == ""){
+	// 	url = "https://trycents.com:6001/data/type="+type+"&option="+field1;
+	// }
+	// else if(field1 == ""){
+	// 	url = "https://trycents.com:6001/data/type="+type+"&option="+field2;
+	// }
+	// else{
+	// 	url = "https://trycents.com:6001/data/type="+type+"&option="+field1+"&option="+field2;
+	// }
 
-	var data = new Object();
-	var xmlHttp = null;
+	// var data = new Object();
+	// var xmlHttp = null;
 
-    xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", url, true );
+ //    xmlHttp = new XMLHttpRequest();
+ //    xmlHttp.open( "GET", url, true );
 
-    xmlHttp.onreadystatechange = function() {
-    	if (xmlHttp.readyState === 4) { 
-      		if (xmlHttp.status === 200) {
-      			data = jQuery.parseJSON(xmlHttp.responseText);
-      			//make api request here with type included
-				localStorage.setItem("query_type", type);
-				localStorage.setItem("data_store",JSON.stringify(data));
+ //    xmlHttp.onreadystatechange = function() {
+ //    	if (xmlHttp.readyState === 4) { 
+ //      		if (xmlHttp.status === 200) {
+ //      			data = jQuery.parseJSON(xmlHttp.responseText);
+ //      			//make api request here with type included
+	// 			localStorage.setItem("query_type", type);
+	// 			localStorage.setItem("data_store",JSON.stringify(data));
 
-				location.reload();
-      		}
-      	}
-    }
-    xmlHttp.send( null );
+	// 			location.reload();
+ //      		}
+ //      	}
+ //    }
+ //    xmlHttp.send( null );
 };
 
 function sketchProc(processing) {

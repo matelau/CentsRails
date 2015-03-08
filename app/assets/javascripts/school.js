@@ -1,17 +1,79 @@
-var data, hide_1, hide_2, main, gray, font;
-
-var sketch = new Processing.Sketch();
-
 $(document).ready(function() {
 	$.post("/api/v1/record_names", {operation: 'get', tables: ['schools']}, function(response) { 
+		auto_schools = response;
 		$( "#search_1_name" ).autocomplete({
-	  		source: response
+	  		source: function(req, responseFn) {
+	  			var re = $.ui.autocomplete.escapeRegex(req.term);
+	  			var pattern1 = new RegExp("^"+re, "i");
+	  			var a = $.grep(auto_schools, function(item, index){return pattern1.test(item);});
+	  			var b = $.grep(auto_schools, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
+	  			responseFn(a.concat(b));
+	  		},
+	  		close: function(e, u){
+	  			temp1 = document.getElementById("search_1_name").value;
+	  			if (temp1 == "")
+	  				auto_1 = "";
+	  			else if (response.indexOf(temp1) < 0 && auto_1)
+					document.getElementById("search_1_name").value = auto_1;
+				else if (auto_1)
+					auto_1 = temp1;
+	  		},
+	  		response: function(e, u){
+	  			if (u.content.length != 0)
+	  				auto_1 = u.content[0].value;
+	  			else
+	  				auto_1 = "";
+	  		},
+  			delay: 0
 		});
 		$( "#search_2_name" ).autocomplete({
-	  		source: response
+	  		source: function(req, responseFn) {
+	  			var re = $.ui.autocomplete.escapeRegex(req.term);
+	  			var pattern1 = new RegExp("^"+re, "i");
+	  			var a = $.grep(auto_schools, function(item, index){return pattern1.test(item);});
+	  			var b = $.grep(auto_schools, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
+	  			responseFn(a.concat(b));
+	  		},
+	  		close: function(e, u){
+	  			temp2 = document.getElementById("search_2_name").value;
+	  			if (temp2 == "")
+	  				auto_2 = "";
+	  			else if (response.indexOf(temp2) < 0 && auto_2)
+					document.getElementById("search_2_name").value = auto_2;
+				else if (auto_2)
+					auto_2 = temp2;
+	  		},
+	  		response: function(e, u){
+	  			if (u.content.length != 0)
+	  				auto_2 = u.content[0].value;
+	  			else
+	  				auto_2 = "";
+	  		},
+  			delay: 0
 		});
 	});	
 });
+
+var data, hide_1, hide_2, main, gray, font, old1, old2, sent1, sent2, auto_1, auto_2, canvas, processingInstance;
+
+canvas = document.getElementById("main_viz");
+if (canvas != null)
+	processingInstance = new Processing(canvas, sketchProc);
+
+var sketch = new Processing.Sketch();
+
+function changeMade() {
+	if (old1 != document.getElementById("search_1_name").value)
+	{
+		old1 = document.getElementById("search_1_name").value;
+		nochanges = false;
+	}
+	if (old2 != document.getElementById("search_2_name").value)
+	{
+		old2 = document.getElementById("search_2_name").value;
+		nochanges = false;
+	}
+};
 
 function school_api_request(query) {
 	field1 = document.getElementById("search_1_name").value;
@@ -21,16 +83,30 @@ function school_api_request(query) {
 	type = "school"
 
 	if(field1 == "" && field2 == ""){
+		sent1 = false;
+		sent2 = false;
 		return;
 	}
 	else if(field2 == ""){
+		sent2 = false;
+		sent1 = true;
 		url = "https://trycents.com:6001/data/type="+type+"&option="+field1;
+		processingInstance.noLoop();
+		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
 	}
 	else if(field1 == ""){
+		sent1 = false;
+		sent2 = true;
 		url = "https://trycents.com:6001/data/type="+type+"&option="+field2;
+		processingInstance.noLoop();
+		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
 	}
 	else{
+		sent1 = true;
+		sent2 = true;
 		url = "https://trycents.com:6001/data/type="+type+"&option="+field1+"&option="+field2;
+		processingInstance.noLoop();
+		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
 	}
 
 	//var data = new Object();
@@ -47,21 +123,138 @@ function school_api_request(query) {
 				localStorage.setItem("query_type", type);
 				localStorage.setItem("data_store",JSON.stringify(data));
 
-				//location.reload();
-				if (!data["school_2_name"])
-  				{
-		  			hide_2 = true;
-		  			document.getElementById("search_2_button").value = "SHOW";
-		  			$("#search_2_button").attr("disabled", "true");
-  				}
-  				else
-  				{
-  					hide_2 = false;
-  					document.getElementById("search_2_button").value = "HIDE";
-		  			$("#search_2_button").removeAttr("disabled");
-		  			document.getElementById("search_2_name").value = data["school_2_name"];
+				$("#error_1").empty();
+				$("#error_2").empty();
+				//invalid searches could have been made, check to see what all was sent and returned
+				//both sent
+				if (sent1 && sent2)
+				{
+					//check to see if two results have been returned
+					if (data["school_1_name"] && data["school_2_name"])
+					{
+						//two results are returned, check to make sure they line up with the right fields
+						if (data["school_1_name"] != field1)
+						{
+							//need to swap
+							var tempArray = $.extend(true, [], data["school_1"]);
+							data["school_1"] = $.extend(true, [], data["school_2"]);
+							data["school_2"] = $.extend(true, [], tempArray);
+							var tempName = data["school_1_name"];
+							data["school_1_name"] = data["school_2_name"];
+							data["school_2_name"] = tempName;
+						}
+						hide_1 = false;
+						hide_2 = false;
+						document.getElementById("search_1_button").value = "HIDE";
+			  	 		$("#search_1_button").removeAttr("disabled");
+			  	 		document.getElementById("search_2_button").value = "HIDE";
+			  	 		$("#search_2_button").removeAttr("disabled");
 
-  				}
+					}
+					//first search was invalid, write error, disable field and swap arrays
+					else if (data["school_1_name"] == field2 && !data["school_2_name"])
+					{
+						hide_1 = true;
+						$("#error_1").append("Invalid school.");
+	  					document.getElementById("search_1_button").value = "SHOW";
+		  	 			$("#search_1_button").attr("disabled", "true");
+		  	 			hide_2 = false;
+		  	 			document.getElementById("search_2_button").value = "HIDE";
+			  	 		$("#search_2_button").removeAttr("disabled");
+		  	 			data["school_2"] = $.extend(true, [], data["school_1"]);
+		  	 			data["school_1"] = null;
+		  	 			data["school_2_name"] = data["school_1_name"];
+		  	 			data["school_1_name"] = null;
+					}
+					//second search was invalid, just write error, disable field
+					else if (data["school_1_name"] == field1 && !data["school_2_name"])
+					{
+						hide_2 = true;
+						$("#error_2").append("Invalid school.");
+	  					document.getElementById("search_2_button").value = "SHOW";
+		  	 			$("#search_2_button").attr("disabled", "true");
+		  	 			hide_1 = false;
+		  	 			document.getElementById("search_1_button").value = "HIDE";
+			  	 		$("#search_1_button").removeAttr("disabled");
+					}
+					//write both erros
+					else
+					{
+						if (!data["school_1"])
+						{
+							hide_1 = true;
+							$("#error_1").append("Invalid school.");
+		  					document.getElementById("search_1_button").value = "SHOW";
+			  	 			$("#search_1_button").attr("disabled", "true");
+			  	 			hide_2 = true;
+							$("#error_2").append("Invalid school.");
+		  					document.getElementById("search_2_button").value = "SHOW";
+			  	 			$("#search_2_button").attr("disabled", "true");
+			  	 		}
+			  	 		else
+			  	 		{
+			  	 			hide_2 = true;
+							$("#error_2").append("Invalid school.");
+		  					document.getElementById("search_2_button").value = "SHOW";
+			  	 			$("#search_2_button").attr("disabled", "true");
+			  	 			document.getElementById("search_2_name").value = "";
+			  	 			document.getElementById("search_1_name").value = data["school_1_name"];
+
+			  	 		}
+					}
+
+				}
+				//just 1 sent
+				else if (sent1 && !sent2)
+				{
+					if (!data["school_1_name"])
+					{
+						hide_1 = true;
+						$("#error_1").append("Invalid school.");
+	  					document.getElementById("search_1_button").value = "SHOW";
+		  	 			$("#search_1_button").attr("disabled", "true");
+					}
+					else
+					{
+						hide_2 = true;
+	  					document.getElementById("search_2_button").value = "SHOW";
+		  	 			$("#search_2_button").attr("disabled", "true");
+						hide_1 = false;
+		  	 			document.getElementById("search_1_button").value = "HIDE";
+			  	 		$("#search_1_button").removeAttr("disabled");
+					}
+
+				}
+				//just 2 sent
+				else if (!sent1 && sent2)
+				{
+					if (!data["school_1_name"])
+					{
+						hide_2 = true;
+						$("#error_2").append("Invalid school.");
+	  					document.getElementById("search_2_button").value = "SHOW";
+		  	 			$("#search_2_button").attr("disabled", "true");
+					}
+					//swap to 2 spot
+					else
+					{
+						hide_1 = true;
+	  					document.getElementById("search_1_button").value = "SHOW";
+		  	 			$("#search_1_button").attr("disabled", "true");
+						hide_2 = false;
+		  	 			document.getElementById("search_2_button").value = "HIDE";
+			  	 		$("#search_2_button").removeAttr("disabled");
+						data["school_2"] = $.extend(true, [], data["school_1"]);
+		  	 			data["school_1"] = null;
+		  	 			data["school_2_name"] = data["school_1_name"];
+		  	 			data["school_1_name"] = null;
+					}
+				}
+				else
+					window.alert("serious logic error here...");
+				nochanges = true;
+				auto_1 = "";
+				auto_2 = "";
       		}
       	}
     }
@@ -78,13 +271,15 @@ function sketchProc(processing) {
 		processing.size(655,375);
 		hide_1 = false;
 		hide_2 = false;
+		auto_1 = "";
+		auto_2 = "";
 		//load font
 		font = processing.loadFont("Roboto");
 		processing.textFont(font, 12);
 		
  		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));
 
- 		if(!data["school_1"] || !data["school_2"]) {
+ 		if(!data || (!data["school_1"] && !data["school_2"])) {
  			data = new Array();
 	 		data["school_1"] = [8000, 25000, 24, 32000, 40, 4.1];
  			data["school_2"] = [5000, 5000, 50, 29000, 62, 3.8];
@@ -103,6 +298,9 @@ function sketchProc(processing) {
 			}
 			document.getElementById("search_1_name").value = data["school_1_name"];
 		}
+		old1 = document.getElementById("search_1_name").value;
+		old2 = document.getElementById("search_2_name").value;
+		nochanges = true;
 	};
 
 
@@ -237,6 +435,8 @@ function sketchProc(processing) {
 };
 
 function hide_toggle(num) {
+	processingInstance.noLoop();
+	$("#main_viz").fadeTo(500, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(700, 1);});
 	if (num == 1)
 	{
 		if (document.getElementById("search_1_button").value == "HIDE") { 
@@ -259,6 +459,3 @@ function hide_toggle(num) {
 	}
 };
 
-var canvas = document.getElementById("main_viz");
-if (canvas != null)
-	var processingInstance = new Processing(canvas, sketchProc);
