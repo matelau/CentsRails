@@ -179,7 +179,11 @@ def query(query):
 		command = "get"
 	if command == "" and len(locations) > 1:
 		command = "compare"
-	if len(schools) == 0 and len(locations) == 0:
+	if command == "" and len(majors) == 1:
+		command = "get"
+	if command == "" and len(majors) > 1:
+		command = "compare"
+	if len(schools) == 0 and len(locations) == 0 and len(majors) == 0:
 		package = {
 			"operation":"undefined",
 			"query":sent_query
@@ -225,7 +229,6 @@ def query(query):
 		resp = json.dumps(package)
 		return resp
 	elif len(majors) >= 1:
-		print majors
 		package = {
 			"operation":command,
 			"query":query,
