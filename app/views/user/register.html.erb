@@ -95,6 +95,9 @@
 							required: true,
 							minlength: 6,
 							equalTo: "#user_password"
+						},
+						"terms": {
+							required: true
 						}
 					},
 					
@@ -117,7 +120,8 @@
 							required: "Required",
 							equalTo: "Password must match.",
 							minlength: "Must be at least 6 characters long."
-						}
+						},
+						"terms": "You must accept the terms and conditions to have an account."
 					},
 					submitHandler: function(form) {
 						form.submit();
