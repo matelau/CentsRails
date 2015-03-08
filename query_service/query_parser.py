@@ -79,6 +79,7 @@ mresp = ms.send(mprep)
 majs = json.loads(mresp.text)
 
 for c in cities:
+	cabbr = []
 	for a, s in state.iteritems():
 		if s in c:
 			li = c.rsplit(s, 1)
