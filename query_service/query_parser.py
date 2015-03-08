@@ -192,7 +192,7 @@ def query(query):
 		}
 		resp = json.dumps(package)
 		return resp
-
+	print "here"
 	if len(schools) >= 1:
 		package = {
 			"operation":command,
