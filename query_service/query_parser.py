@@ -183,6 +183,8 @@ def query(query):
 		command = "get"
 	if command == "" and len(majors) > 1:
 		command = "compare"
+
+	print len(majors)
 	if len(schools) == 0 and len(locations) == 0 and len(majors) == 0:
 		package = {
 			"operation":"undefined",
