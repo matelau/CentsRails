@@ -260,7 +260,7 @@ def query(query):
 			resp = json.dumps(package)
 			return resp
 		for i in range(0, len(schools)):
-			package["major_"+`i+1`+"_name"] = schools[i]
+			package["major_"+`i+1`+"_name"] = majors[i]
 		package["query"] = sent_query
 		package["query_type"] = "major"
 		resp = json.dumps(package)
