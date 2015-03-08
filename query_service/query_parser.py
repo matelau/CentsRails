@@ -53,6 +53,14 @@ states = open("states.csv", "rU")
 
 cities = [line.strip() for line in open("city_state.txt")]
 
+unis = {}
+for line in open("universities.csv"):
+	arr = line.strip().split(",")
+	unis[arr[0]] = arr
+
+for line in csv.reader(states):
+	state[line[0].lower()] = line[1].lower()
+
 mpac = {
 	"operation":"get",
 	"tables":[
@@ -67,6 +75,9 @@ mprep = r.prepare()
 ms = requests.Session()
 ms.verify = False
 mresp = ms.send(mprep)
+
+print mresp
+
 majs = json.loads(mresp.text)
 
 print majs
@@ -84,14 +95,6 @@ for c in cities:
 	cabbrarr = cabbr.split(" ")
 	cnamearr = cname.split(" ")
 #cities = cities[0].split("\r")
-
-unis = {}
-for line in open("universities.csv"):
-	arr = line.strip().split(",")
-	unis[arr[0]] = arr
-
-for line in csv.reader(states):
-	state[line[0].lower()] = line[1].lower()
 
 app = Flask(__name__)
 cors = CORS(app)
