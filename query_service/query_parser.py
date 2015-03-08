@@ -46,10 +46,42 @@ state = {}
 #conflicts right now between Louisiana(LA) and Los Angeles(LA) and Indiana(IN) and the word 'in'
 commands = {"compare":"compare","vs.":"compare","vs":"compare","get":"get","find":"get","difference between":"compare"}
 common_abbrs = {"nyc":"new york, new york","slc":"salt lake city, utah","la":"los angeles, california"}
+supers = {"best":"","worst":"","cheapest":"","expensive":"","priciest":""}
+datasets = {"schools":"school","universities":"university","cities":"city","majors":"degree","degrees":"degrees"}
 
 states = open("states.csv", "rU")
 
 cities = [line.strip() for line in open("city_state.txt")]
+
+mpac = {
+	"operation":"get",
+	"tables":[
+		"majors"
+	]
+}
+
+mpayload = json.dumps(mpac)
+r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=mpayload)
+mprep = r.prepare()
+ms = requests.Session()
+ms.verify = False
+mresp = ms.send(mprep)
+majors = json.loads(mresp.text)
+
+print majors
+
+for c in cities:
+	for a, s in states.iteritems():
+		if s in c:
+			li = c.rsplit(s, 1)
+			cabbr = a.join(li)
+
+	cname = c[:c.index(",")]
+	city = c.replace(",","")
+	cabbr = cabbr.replace(",","")
+	carr = city.split(" ")
+	cabbrarr = cabbr.split(" ")
+	cnamearr = cname.split(" ")
 #cities = cities[0].split("\r")
 
 unis = {}
@@ -87,7 +119,8 @@ def query(query):
 	for u,l in unis.iteritems():
 		for a in l:
 			if " " + a.lower() + " " in query:
-				schools.append(u)
+				if u not in schools:
+					schools.append(u)
 	for abbr, st in state.iteritems():
 		if re.search(r"\b" + abbr + r"\b", query):
 			query = re.sub(r"\b" + abbr + r"\b", st, query)
@@ -97,12 +130,14 @@ def query(query):
 	for c in cities:
 		temp = " " + c.replace(",", "").lower() + " "
 		if(temp in query):
-			locations.append(c)
+			if c not in locations:
+				locations.append(c)
 		if(" " + c.lower() + " " in query):
-			locations.append(c)
+			if c not in locations:
+				locations.append(c)
 		cname = " " + c[:c.index(",")].lower() + " "
-		if(cname in query):
-			if(c not in locations):
+		if cname in query:
+			if c not in locations:
 				locations.append(c)
 	#tokens = nltk.word_tokenize(query)
 	for s in commands:
