@@ -76,11 +76,7 @@ ms = requests.Session()
 ms.verify = False
 mresp = ms.send(mprep)
 
-print mresp.text.to_a
-
 majs = json.loads(mresp.text)
-
-print majs
 
 for c in cities:
 	for a, s in state.iteritems():
