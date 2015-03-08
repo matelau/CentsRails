@@ -133,6 +133,8 @@ def query(query):
 		if re.search(r"\b" + abbr + r"\b", query):
 			query = re.sub(r"\b" + abbr + r"\b", c, query)
 	for m in majs:
+		print m.lower()
+		print query
 		if " " + m.lower() + " " in query:
 			majors.append(m)
 	for c in cities:
