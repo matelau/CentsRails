@@ -66,9 +66,9 @@ mprep = r.prepare()
 ms = requests.Session()
 ms.verify = False
 mresp = ms.send(mprep)
-majors = json.loads(mresp.text)
+majs = json.loads(mresp.text)
 
-print majors
+print majs
 
 for c in cities:
 	for a, s in states.iteritems():
@@ -105,6 +105,7 @@ def query(query):
 	ops = []
 	locations = []
 	schools = []
+	majors = []
 	command = ""
 	package = {}
 	sent_query = query
@@ -127,6 +128,9 @@ def query(query):
 	for abbr, c in common_abbrs.iteritems():
 		if re.search(r"\b" + abbr + r"\b", query):
 			query = re.sub(r"\b" + abbr + r"\b", c, query)
+	for m in majs:
+		if " " + m.lower() + " " in query:
+			majors.append(m)
 	for c in cities:
 		temp = " " + c.replace(",", "").lower() + " "
 		if(temp in query):
@@ -216,6 +220,43 @@ def query(query):
 			package["school_"+`i+1`+"_name"] = schools[i]
 		package["query"] = sent_query
 		package["query_type"] = "school"
+		resp = json.dumps(package)
+		return resp
+	elif len(majors) >= 1:
+		package = {
+			"operation":command,
+			"query":query,
+			"majors":[]
+		}
+		for m in majors:
+			package["majors"].append({"name":s})
+		#url = "https://%s/api/v1/schools/" % (ip)
+		url = "https://trycents.com/api/v1/majors/"
+		payload = json.dumps(package)
+		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
+		prep = r.prepare()
+		s = requests.Session()
+		s.verify = False
+		resp = s.send(prep)
+		if(resp.status_code == 400):
+			package = {
+				"operation":"undefined",
+				"query":sent_query
+			}
+			resp = json.dumps(package)
+			return resp
+		package = json.loads(resp.text)
+		if(package["operation"] == "undefined"):
+			package = {
+				"operation":"undefined",
+				"query":sent_query
+			}
+			resp = json.dumps(package)
+			return resp
+		for i in range(0, len(schools)):
+			package["major_"+`i+1`+"_name"] = schools[i]
+		package["query"] = sent_query
+		package["query_type"] = "major"
 		resp = json.dumps(package)
 		return resp
 	elif len(locations) >= 1:
