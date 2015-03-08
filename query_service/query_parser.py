@@ -61,7 +61,8 @@ mpac = {
 }
 
 mpayload = json.dumps(mpac)
-r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=mpayload)
+murl = "https://trycents.com/api/v1/majors/"
+r = requests.Request("POST",murl,headers={'Content-Type':'application/json','Accept':'application/json'},data=mpayload)
 mprep = r.prepare()
 ms = requests.Session()
 ms.verify = False
