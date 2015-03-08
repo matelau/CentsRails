@@ -184,7 +184,6 @@ def query(query):
 	if command == "" and len(majors) > 1:
 		command = "compare"
 
-	print len(majors)
 	if len(schools) == 0 and len(locations) == 0 and len(majors) == 0:
 		package = {
 			"operation":"undefined",
@@ -192,7 +191,6 @@ def query(query):
 		}
 		resp = json.dumps(package)
 		return resp
-	print "here"
 	if len(schools) >= 1:
 		package = {
 			"operation":command,
@@ -237,7 +235,7 @@ def query(query):
 			"majors":[]
 		}
 		for m in majors:
-			package["majors"].append({"name":s})
+			package["majors"].append(m)
 		#url = "https://%s/api/v1/schools/" % (ip)
 		url = "https://trycents.com/api/v1/majors/"
 		payload = json.dumps(package)
