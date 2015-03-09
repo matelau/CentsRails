@@ -7,8 +7,13 @@ class SessionsController < ApplicationController
 	def create
 		@user = User.find_by_email(params[:email])
 
+		Rails.logger = Logger.new(STDOUT)
+		Rails.logger.level = 0
+		logger.debug "user: #{@user.attributes.inspect}"
+
 		# Check that the user passes the model's tests.
-		if @user && user.authenticate(params[:password])
+		if @user && @user.authenticate(params[:password])
+			logger.debug "user: #{@user.attributes.inspect}"
 
 			# Check that the user is in the MailChimp list.
 			# cents_members is a hash with 'total' and 'data' fields.
