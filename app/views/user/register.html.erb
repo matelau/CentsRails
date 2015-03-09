@@ -30,7 +30,9 @@
 
 		<!-- Terms and conditions checkbox. -->
 		<%= check_box_tag :terms %>
-		<%= label_tag :terms, 'I accept the terms and conditions' %>
+		<label for="terms"> 
+			I accept the <%= link_to 'term and conditions', '/user/terms', target: '_blank' %>
+		</label>
 		<label id="terms-error" class="error" for="terms"></label>
 
 		<button style="margin-top:20px" class="btn btn-primary">REGISTER</button>

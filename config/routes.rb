@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get 'user/logout' => 'sessions#destroy'
   get 'search/results'
   get 'search/getPartial'
+  get 'user/terms'
   root 'search#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
