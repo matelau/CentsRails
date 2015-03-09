@@ -7,13 +7,8 @@ class SessionsController < ApplicationController
 	def create
 		user = User.find_by_email(params[:email])
 
-		Rails.logger = Logger.new("login.log")
-		Rails.logger.level = 0
-		logger.debug "user: #{user.attributes.inspect}"
-
 		# Check that the user passes the model's tests.
 		if user && user.authenticate(params[:password])
-			logger.debug "user: #{user.attributes.inspect}"
 
 			# Check that the user is in the MailChimp list.
 			# cents_members is a hash with 'total' and 'data' fields.
@@ -29,6 +24,8 @@ class SessionsController < ApplicationController
 			if in_list
 				session[:user_id] = user.id
 				redirect_to '/'
+			else
+				redirect_to user_login_path
 			end
 		else
     	# If the user can't be authenticated, send them back to the same form.

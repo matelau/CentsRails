@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   get 'user/registered', as: 'registered'
   post 'user/register' => 'user#create', as: 'register'
   get 'user/login' => 'sessions#new', as: 'user_login'
-  post 'user/login' => 'sessions#new'
+  post 'user/login' => 'sessions#create'
   get 'user/logout' => 'sessions#destroy'
   get 'search/results'
   get 'search/getPartial'
