@@ -20,8 +20,6 @@ class Api::V1::ColiController < ApplicationController
 			return render json: result, status: 400
 		end
 
-		puts params
-
 		locations = params[:locations]
 
 		# Create a string of the form '(city = c1 AND state = s1) OR
@@ -37,32 +35,6 @@ class Api::V1::ColiController < ApplicationController
 			where_params << location[:state]
 		end
 		where_string = where_string[0..-5]	# Strip off the last ' OR '.
-
-=begin
-		# Query the database.
-		records = Coli.joins(
-						"LEFT OUTER JOIN weather_records ON colis.id = weather_records.coli_id")
-						.select(:cost_of_living,
-								:transportation,
-								:groceries,
-								:goods,
-								:health_care,
-								:utilities,
-								:housing,
-								:city,
-								:unemp_rate,
-								:sales_tax,
-								:property_tax,
-								:state,
-								:income_tax_max,
-								:income_tax_min,
-								:income_per_capita,
-								:economic_growth,
-								:month,
-								:high,
-								:low)
-						.where([where_string, *where_params])
-=end
 
 		records = Coli.find_by_sql [
 				"SELECT cost_of_living,

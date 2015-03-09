@@ -9,7 +9,7 @@ class UserController < ApplicationController
 		end
 
 		# Subscribe with MailChimp's API.
-		@@mc.lists.subscribe(@@list_id, 
+		@@mailchimp.lists.subscribe(@@mc_list_id, 
                    {"email" => user_params[:email]},
                    {"FNAME" => user_params[:first_name],
                    	"LNAME" => user_params[:last_name],
