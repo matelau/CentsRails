@@ -124,6 +124,8 @@ class Api::V1::ColiController < ApplicationController
 			index += 1
 		end
 
+		result[:count] = index - 1
+
 		labor_avg = Array.new
 		labor_avg << @averages[0][:avg_unemp_rate].to_f
 		labor_avg << @averages[0][:avg_income].to_f
