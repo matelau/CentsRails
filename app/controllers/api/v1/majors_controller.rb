@@ -19,7 +19,18 @@ class Api::V1::MajorsController < ApplicationController
 			return render json: result, status: 400
 		end
 
-		majors = params[:majors]
+		# Order the majors.
+		majors = Array.new
+		params[:majors].each do |major|
+			if major[:order] == 1
+				majors << major[:name]
+			end
+		end
+		params[:majors].each do |major|
+			if major[:order] == 2
+				majors << major[:name]
+			end
+		end
 
 		# Create a string of the form 'd.name = ? OR ... ' and a list of major names.
 		# This string and list will be used to dynamically create the where clause
