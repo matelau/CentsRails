@@ -18,4 +18,6 @@ class User < ActiveRecord::Base
   validates :email, uniqueness: true,
 										presence: true
 
+	validates :email_type, presence: true
+
 end
