@@ -307,6 +307,8 @@ def data(data):
 	#query = cgi.parse_qs(data)
 	query = urlparse.parse_qs(data)
 
+	print query
+
 	if(query['type'][0] == 'city'):
 		package  = {
 			"locations":[]
