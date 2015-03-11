@@ -2,7 +2,6 @@ from flask import Flask, make_response, request, current_app
 import nltk
 import json
 import csv
-import cgi
 import urlparse
 import requests
 import re
@@ -307,6 +306,7 @@ def data(data):
 	#query = cgi.parse_qs(data)
 	query = urlparse.parse_qs(data)
 
+	print data
 	print query
 
 	if(query['type'][0] == 'city'):
