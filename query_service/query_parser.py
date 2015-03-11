@@ -301,9 +301,10 @@ def query(query):
 		resp = json.dumps(package)
 		return resp
 
-@app.route('/data/<string:data>', methods=['GET'])
+@app.route('/data/<data>', methods=['GET'])
 def data(data):
 	#query = cgi.parse_qs(data)
+
 	query = urlparse.parse_qs(data)
 
 	print data
