@@ -78,6 +78,9 @@ function changeMade() {
 function school_api_request(query) {
 	field1 = document.getElementById("search_1_name").value;
 	field2 = document.getElementById("search_2_name").value;
+
+	field1 = field1.replace("&","%26");
+	field2 = field2.replace("&","%26");
 	url = "";
 
 	type = "school"

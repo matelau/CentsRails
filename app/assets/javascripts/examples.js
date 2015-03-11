@@ -238,6 +238,9 @@ function dataRequest(type)
 		field2 = "";
 	url = "";
 
+	field1 = field1.replace("&","%26");
+	field2 = field2.replace("&","%26");
+
 	if(field1 == "" && field2 == ""){
 		return;
 	}
