@@ -3,6 +3,7 @@ import nltk
 import json
 import csv
 import cgi
+import urlparse
 import requests
 import re
 import string
@@ -303,7 +304,8 @@ def query(query):
 
 @app.route('/data/<string:data>', methods=['GET'])
 def data(data):
-	query = cgi.parse_qs(data)
+	#query = cgi.parse_qs(data)
+	query = urlparse.parse_qs(data)
 
 	if(query['type'][0] == 'city'):
 		package  = {
