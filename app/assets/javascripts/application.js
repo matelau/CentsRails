@@ -70,6 +70,7 @@ function api_request(query) {
       			data = jQuery.parseJSON(xhr.responseText);
 
 				if(data["operation"] == "undefined") {
+					localStorage.setItem("stored_query",data["query"])
 					window.location = "/info/examples/";
 				}
 				else {
