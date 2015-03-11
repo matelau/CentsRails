@@ -306,6 +306,10 @@ def query(query):
 def data(data):
 	#query = cgi.parse_qs(data)
 
+	parser = reqparse.RequestParser()
+
+	reqs = parser.parse_args()
+
 	query = urlparse.parse_qs(data)
 
 	if(query['type'][0] == 'city'):
