@@ -306,15 +306,7 @@ def query(query):
 def data(data):
 	#query = cgi.parse_qs(data)
 
-	data1 = urllib.urlencode(data)
-
-
-	print data1
-
 	query = urlparse.parse_qs(data)
-
-	print data
-	print query
 
 	if(query['type'][0] == 'city'):
 		package  = {
