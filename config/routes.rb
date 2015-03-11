@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'info/examples'
   get 'info/help'
   get 'info/about'
+  get 'info/down'
   get 'wizard/start'
   get 'wizard/education'
   get 'wizard/career'
