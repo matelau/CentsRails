@@ -2,7 +2,8 @@
 	<script>
 		var qError = localStorage.getItem("stored_query");
 		if(qError != null){
-			document.getElementById("error").value = "Your question '" + qError + "' hasn't returned any data. Here are some categories you can use to search for something more specific. Click on an image and type in some names!"
+			document.getElementById("error").innerHTML = "Your question '" + qError + "' hasn't returned any data. Here are some categories you can use to search for something more specific. Click on an image and type in some names!"
+			localStorage.removeItem("stored_query");
 		}
 	</script>
 	<p id="error"></p> <!-- error message -->
