@@ -7,6 +7,7 @@ import requests
 import re
 import string
 import urllib2
+import urllib
 from datetime import timedelta
 from functools import update_wrapper
 import sys
@@ -305,9 +306,11 @@ def query(query):
 def data(data):
 	#query = cgi.parse_qs(data)
 
-	query = urlparse.parse_qs(data)
+	data1 = urllib.encode(data)
 
-	print data
+	query = urlparse.parse_qs(data1)
+
+	print data1
 	print query
 
 	if(query['type'][0] == 'city'):
