@@ -1,6 +1,6 @@
 <div style="width : 1090px; margin : 60px auto 0 auto; text-align: center;">
 	<div id="erModal" style="display:none" class="alert alert-dismissable alert-info">
-    	<button type="button" class="close" data-dismiss="alert">×</button>
+    	<button type="button" class="close" onclick="clear_alert();">×</button>
     	<p id="error"></p>
 	</div>
 	<script>
@@ -9,6 +9,12 @@
 			document.getElementById("erModal").style.display = "block";
 			document.getElementById("error").innerHTML = "Your question '" + qError + "' hasn't returned any data. Here are some categories you can use to search for something more specific."
 			localStorage.removeItem("stored_query");
+		}
+
+		function clear_alert(){
+			$( "#erModal" ).slideUp( "slow", function() {
+			    // Animation complete.
+			  });
 		}
 	</script>
 	<h4>CHECK OUT THE CATEGORIES, HOVER OVER THE IMAGES TO ADD YOUR OWN SEARCH.</h4>
