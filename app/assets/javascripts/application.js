@@ -81,7 +81,7 @@ function api_request(query) {
 				}
       		}
   		}
-  	}
+  	};
 
   	xhr.onerror = function() {
   		window.location = "/info/down/";
