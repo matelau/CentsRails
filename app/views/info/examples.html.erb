@@ -1,4 +1,5 @@
 <div style="width : 1090px; margin : 60px auto 0 auto; text-align: center;">
+	<p id="error"></p> <!-- error message -->
 	<script>
 		var qError = localStorage.getItem("stored_query");
 		if(qError != null){
@@ -6,7 +7,6 @@
 			localStorage.removeItem("stored_query");
 		}
 	</script>
-	<p id="error"></p> <!-- error message -->
 	<h4>CHECK OUT THE CATEGORIES, HOVER OVER THE IMAGES TO ADD YOUR OWN SEARCH.</h4>
 	<div class="examples-img-left" id="city_container" onmouseover="showSearch('city');" onmouseleave="resort('city'); leftDiv();" style="background-image: url(/assets/examples/city.png); background-position: right;">
 		<btn class='btn btn-default' id="city_clear" onclick="clearFields('city');" style='float: right; visibility: hidden'>X</btn>
