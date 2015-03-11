@@ -86,6 +86,10 @@ function api_request(query) {
   	xhr.onerror = function() {
   		window.location = "/info/down/";
   	};
+
+  	xhr.ontimeout = function() {
+  		window.location = "/info/down/";
+  	};
   	
   	xhr.send(null);
 
