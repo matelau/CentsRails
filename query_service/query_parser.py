@@ -306,9 +306,10 @@ def query(query):
 def data(data):
 	#query = cgi.parse_qs(data)
 
-	data1 = urllib.urlencode(data)
+	#data1 = urllib.urlencode(data)
+	print request.query_string
 
-	query = urlparse.parse_qs(data1)
+	query = urlparse.parse_qs(data)
 
 	print data1
 	print query
