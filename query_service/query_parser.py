@@ -311,7 +311,7 @@ def data(data):
 
 	query = urlparse.parse_qs(data)
 
-	print data1
+	print data
 	print query
 
 	if(query['type'][0] == 'city'):
