@@ -308,8 +308,6 @@ def data():
 
 	query = json.loads(request.data)
 
-	print query
-
 	if(query['type'] == 'city'):
 		package  = {
 			"locations":[]
