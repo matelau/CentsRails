@@ -310,7 +310,7 @@ def data():
 
 	print query
 
-	if(query['type'][0] == 'city'):
+	if(query['type'] == 'city'):
 		package  = {
 			"locations":[]
 		}
@@ -332,7 +332,7 @@ def data():
 		resp = s.send(prep)
 		return resp.text
 
-	if(query['type'][0] == 'school'):
+	if(query['type'] == 'school'):
 		package  = {
 			"schools":[]
 		}
@@ -368,7 +368,7 @@ def data():
 			package["school_"+`i+1`+"_name"] = scarr[i]
 		return json.dumps(package)
 
-	if(query['type'][0] == 'major'):
+	if(query['type'] == 'major'):
 		package = {
 			"majors":[]
 		}
@@ -395,7 +395,7 @@ def data():
 			package["major_"+`i+1`+"_name"] = query['option'][i].title()
 		return json.dumps(package)
 
-	if(query['type'][0] == 'career'):
+	if(query['type'] == 'career'):
 		package = {
 			"careers":[]
 		}
