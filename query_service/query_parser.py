@@ -10,7 +10,6 @@ import urllib2
 import urllib
 from datetime import timedelta
 from functools import update_wrapper
-from flask.ext.restful import reqparse
 import sys
 
 try:
@@ -303,17 +302,13 @@ def query(query):
 		resp = json.dumps(package)
 		return resp
 
-@app.route('/data/<data>', methods=['GET'])
-def data(data):
+@app.route('/data', methods=['POST'])
+def data():
 	#query = cgi.parse_qs(data)
-	
-	parser = reqparse.RequestParser()
 
-	reqs = parser.parse_args()
+	query = json.loads(request.data)
 
-	print reqs
-
-	query = urlparse.parse_qs(data)
+	print query
 
 	if(query['type'][0] == 'city'):
 		package  = {
