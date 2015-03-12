@@ -10,6 +10,7 @@ import urllib2
 import urllib
 from datetime import timedelta
 from functools import update_wrapper
+from flask.ext.restful import reqparse
 import sys
 
 try:
@@ -305,10 +306,12 @@ def query(query):
 @app.route('/data/<data>', methods=['GET'])
 def data(data):
 	#query = cgi.parse_qs(data)
-
+	
 	parser = reqparse.RequestParser()
 
 	reqs = parser.parse_args()
+
+	print reqs
 
 	query = urlparse.parse_qs(data)
 
