@@ -255,7 +255,7 @@ function dataRequest(type)
 	var data = new Object();
 	var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "POST", url, true );
-    xmlHttp.setRequestHeader("Content-Type","application/json");
+    //xmlHttp.setRequestHeader("Content-Type","application/json");
 
     xmlHttp.onreadystatechange = function() {
     	if (xmlHttp.readyState === 4) { 
