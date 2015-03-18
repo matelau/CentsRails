@@ -44,6 +44,8 @@ function getPosition(event) {
 
 function applyColor() {
 	//save to local storage
+	//document.getElementByClass("navbar-cents").style.backgroundColor = document.getElementById("new_div").style.backgroundColor;
+	$('.navbar-cents').css({"background-color":document.getElementById("new_div").style.backgroundColor});
 };
 
 function resetColor() {
