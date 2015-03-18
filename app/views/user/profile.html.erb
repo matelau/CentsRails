@@ -1,1 +1,100 @@
-<p>profile page</p>
+
+
+
+<script type="text/javascript" src="/assets/modernizr.custom.29473.js"></script>
+
+
+<div style="padding-top:15px;" class="center">
+<h2>Profile and Preferences</h2>
+<h5>Click below to view or change your preferences.</h5>
+
+	<section class="ac-container">
+		<div>
+			<input id="ac-1" name="accordion-1" type="checkbox" />
+			<label for="ac-1">Your account information.</label>
+			<article class="ac-small">
+				<p>Lots of account info.</p>
+			</article>
+		</div>
+		<div>
+			<input id="ac-2" name="accordion-1" type="checkbox" />
+			<label for="ac-2">Recent searches.</label>
+			<article class="ac-small">
+				<p>List of recent searches.</p>
+			</article>
+		</div>
+		<div>
+			<input id="ac-3" name="accordion-1" type="checkbox" />
+			<label for="ac-3">Color Preferences.</label>
+			<article class="ac-colors">
+				<div style="width: 750px; height:400px;">
+					<div style="width: 350px; float:left; height:400px; box-shadow: none;">
+						<canvas id="color_picker" width="350" height="400" onclick="getPixels()" style="box-shadow: none;"></canvas>
+					</div>
+					<div style="width: 400px; float:left; height:400px; box-shadow: none;">
+						<div style="width: 400px; float:left; height:50px; box-shadow: none;">
+							<a id="primary_btn" onclick="primaryShow()" class="btn btn-color_select" style="width: 190px;">PRIMARY COLOR</a>
+							<a id="secondary_btn" onclick="secondaryShow()" class="btn btn-color_not_select" style="width: 190px;">SECONDARY COLOR</a>
+						</div>
+						<div style="width: 400px; float:left; height:30px; box-shadow: none;">
+							<div style="width:200px; float:left; box-shadow: none;"><p style="color:black; padding: 0px; text-align:center; font-style:normal;">OLD COLOR</p></div>
+							<div style="width:200px; float:left; box-shadow: none;"><p style="color:black; padding: 0px; text-align:center; font-style:normal;">NEW COLOR</p></div>
+						</div>
+						<div style="width: 400px; float:left; height:70px; box-shadow: none;">
+							<div id="old_div" style="width:180px; height:50px; float:left; margin:10px; box-shadow: none;"></div>
+							<div id="new_div" style="width:180px; height:50px; float:left; margin:10px; box-shadow: none;"></div>
+						</div>
+						<div style="width: 400px; float:left; height:20px; box-shadow: none; text-align:center; margin: 0px;">
+						<p style="padding: 0px; font-style:normal !important; color:black;">Clicking on a color below will recalibrate the scale.</p>
+						</div>
+						<div style="width: 400px; float:left; height:50px; box-shadow: none;">
+							<div style="width: 360px; float:left; height:20px; box-shadow: none; margin: 30px 10px 0px 20px;">
+								<div id="scale_1" onclick="updateScale(1)" style="width: 24px; float:left; height:20px; box-shadow: none;"></div>
+								<div id="scale_2" onclick="updateScale(2)" style="width: 24px; float:left; height:20px; box-shadow: none;"></div>
+								<div id="scale_3" onclick="updateScale(3)" style="width: 24px; float:left; height:20px; box-shadow: none;"></div>
+								<div id="scale_4" onclick="updateScale(4)" style="width: 24px; float:left; height:20px; box-shadow: none;"></div>
+								<div id="scale_5" onclick="updateScale(5)" style="width: 24px; float:left; height:20px; box-shadow: none;"></div>
+								<div id="scale_6" onclick="updateScale(6)" style="width: 24px; float:left; height:20px; box-shadow: none;"></div>
+								<div id="scale_7" onclick="updateScale(7)" style="width: 24px; float:left; height:20px; box-shadow: none;"></div>
+								<div id="scale_8" onclick="updateScale(8)" style="width: 24px; float:left; height:20px; box-shadow: none;"></div>
+								<div id="scale_9" onclick="updateScale(9)" style="width: 24px; float:left; height:20px; box-shadow: none;"></div>
+								<div id="scale_10" onclick="updateScale(10)" style="width: 24px; float:left; height:20px; box-shadow: none;"></div>
+								<div id="scale_11" onclick="updateScale(11)" style="width: 24px; float:left; height:20px; box-shadow: none;"></div>
+								<div id="scale_12" onclick="updateScale(12)" style="width: 24px; float:left; height:20px; box-shadow: none;"></div>
+								<div id="scale_13" onclick="updateScale(13)" style="width: 24px; float:left; height:20px; box-shadow: none;"></div>
+								<div id="scale_14" onclick="updateScale(14)" style="width: 24px; float:left; height:20px; box-shadow: none;"></div>
+								<div id="scale_15" onclick="updateScale(15)" style="width: 24px; float:left; height:20px; box-shadow: none;"></div>
+							</div>
+						</div>
+						<div style="width: 400px; float:left; height:80px; box-shadow: none;">
+							<div style="width: 360px; float:left; height:20px; box-shadow: none; margin: 15px 10px 0px 20px; text-align:center;">							
+      							<input type="range" id="color_points" value="8" min="1" max="15" step="1" onchange="sliderChange()">
+      							<p style="padding: 0px; font-style:normal !important; color:black;">Using the slider will change color without recalibration.</p>
+    						</div>
+    					</div>
+						<div style="width: 400px; float:left; height:70px; box-shadow: none;">
+							<div style="width: 400px; float:left; height:50px; box-shadow: none; margin-top:10px;">
+								<a onclick="applyColor()" class="btn btn-color_select" style="width: 190px;">APPLY COLOR</a>
+								<a onclick="resetColor()" class="btn btn-color_select" style="width: 190px;">RESET COLOR</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</article>
+		</div>
+		<div>
+			<input id="ac-4" name="accordion-1" type="checkbox" />
+			<label for="ac-4">Custom home pages.</label>
+			<article class="ac-small">
+				<p>Examples or main search.</p>
+			</article>
+		</div>
+		
+	</section>
+</div>
+
+
+
+
+
+<script src="/assets/profile.js"></script>

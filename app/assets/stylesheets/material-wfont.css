@@ -471,7 +471,12 @@ canvas {
   border-bottom: 2px solid #884412;
   text-align: right;
 }
-
+.btn-color_select {
+  color: black !important;
+}
+.btn-color_not_select {
+  color: darkgray !important;
+}
 .tax_spend {
   width: 85px;
   height: 20px;
