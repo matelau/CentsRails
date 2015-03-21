@@ -34,8 +34,8 @@ function getPosition(event) {
 
 	var offset = $("#color_picker").offset();
 
-	x -= offset.left;
-	y -= offset.top;
+	x -= (offset.left - $(window).scrollLeft());
+	y -= (offset.top - $(window).scrollTop());
 	//x -= 45;
 	//y += 68;
 
@@ -46,6 +46,8 @@ function applyColor() {
 	//save to local storage
 	//document.getElementByClass("navbar-cents").style.backgroundColor = document.getElementById("new_div").style.backgroundColor;
 	$('.navbar-cents').css({"background-color":document.getElementById("new_div").style.backgroundColor});
+	$('.dropdown-menu').css({"background-color":document.getElementById("new_div").style.backgroundColor});
+	document.getElementById("old_div").style.backgroundColor = document.getElementById("new_div").style.backgroundColor;
 };
 
 function resetColor() {
