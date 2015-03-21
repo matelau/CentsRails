@@ -32,6 +32,12 @@ function getPosition(event) {
 	x = event.x;
 	y = event.y;
 
+	if (isNaN(x) || isNaN(y))
+	{
+		x = event.clientX;
+		y = event.clientY;
+	}
+
 	var offset = $("#color_picker").offset();
 
 	x -= (offset.left - $(window).scrollLeft());
