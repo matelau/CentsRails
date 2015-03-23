@@ -26,6 +26,17 @@
 			<li><a class="btn btn-default">SUMMARY</a></li>
 		</ul></li>
 	</ul>
+	<br>
+
+	<script>
+    if (localStorage.getItem("colors"))
+    {
+        var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+        $('.error_msg').css({"color":c["p_hex"]});
+        $('.search_1').css({"border-color":c["p_hex"]});
+        $('.btn-default').css({"color":c["p_hex"]});
+    }
+	</script>
 	<!-- 
 	<br>s
 	<form>

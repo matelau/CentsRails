@@ -69,6 +69,8 @@ canvas {
   margin-right: auto;
 }
 .viz_objects {
+  float: left;
+  margin-top: 20px;
   display: -webkit-flex;
   display: flex;
   list-style-type: none;
@@ -468,7 +470,8 @@ canvas {
   border: 0;
   outline: 0;
   background: transparent;
-  border-bottom: 2px solid #884412;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
   text-align: right;
 }
 .btn-color_select {
@@ -485,7 +488,8 @@ canvas {
   border: 0;
   outline: 0;
   background: transparent;
-  border-bottom: 2px solid #884412;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
   text-align: right;
 }
 

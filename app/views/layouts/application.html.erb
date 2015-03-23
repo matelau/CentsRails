@@ -7,7 +7,7 @@
     <link href="/assets/bootstrap.css" rel="stylesheet">
     <link href="/assets/ripples.min.css" rel="stylesheet">
     <link href="/assets/material-wfont.css" rel="stylesheet">
-    <link href='//fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Roboto:400' rel='stylesheet' type='text/css'>
 
     <script src="/assets/jquery-1.11.2.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
@@ -19,7 +19,7 @@
 <!--Navigation Bar -->
 
 <div class="navbar navbar-cents">
-    <!--<script> $('.navbar-cents').css({"background-color":"#33cc33"}); </script>-->
+   
     <div class="navbar-header">
         <a href="/"><img class="cents-logo" src="/assets/logo trans white.png" height="109" width="259"></a>
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
@@ -56,6 +56,15 @@
         </ul>
     </div>
 </div>
+
+<script>
+    if (localStorage.getItem("colors"))
+    {
+        var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+        $('.navbar-cents').css({"background-color":c["p_hex"]});
+        $('.dropdown-menu').css({"background-color":c["p_hex"]});
+    }
+</script>
 
 
 <%= yield %>

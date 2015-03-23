@@ -24,7 +24,19 @@
 			<!-- <li><a class="btn btn-default" onclick="update_tab(2)">TOP JOBS</a></li> -->
 		</ul></li>
 	</ul>
-	<br> <!--errors will go here -->
+	<br>
+
+<script>
+    if (localStorage.getItem("colors"))
+    {
+        var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+        $('.error_msg').css({"color":c["p_hex"]});
+        $('.search_1').css({"border-color":c["p_hex"]});
+        $('.btn-default').css({"color":c["p_hex"]});
+    }
+</script>
+
+	 <!--errors will go here -->
 	<!--<form>
 		 <ul class="search_objects">
 			<li><input type="button" onclick="hide_toggle(1)" id="search_1_button" class="btn btn-default" value="HIDE" style="width:100px"></li>

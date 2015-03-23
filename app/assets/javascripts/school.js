@@ -265,8 +265,17 @@ function sketchProc(processing) {
 	
 	processing.setup = function() {
 		console.log("loaded school.js successfully");
-		main = processing.color(136, 68, 18);
-		gray = processing.color(138, 136, 137);
+		if (localStorage.getItem("colors"))
+		{
+			var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+			main = processing.color(c["p_rgb"][0], c["p_rgb"][1], c["p_rgb"][2]);
+			gray = processing.color(c["s_rgb"][0], c["s_rgb"][1], c["s_rgb"][2]);
+		}
+		else
+		{
+			main = processing.color(136, 68, 18);
+			gray = processing.color(138, 136, 137);
+		}
 
 		processing.size(655,375);
 		hide_1 = false;
