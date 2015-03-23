@@ -20,7 +20,7 @@ class Api::V1::ColiController < ApplicationController
 			return render json: result, status: 400
 		end
 
-		# Order the majors.
+		# Order the locations.
 		locations = Array.new
 		params[:locations].each do |location|
 			if location[:order] == 1
@@ -102,7 +102,7 @@ class Api::V1::ColiController < ApplicationController
 				if record[:city]  == location[:city]  and 
 					record[:state] == location[:state] then
 					match = true
-					result = extract_coli_data(location, index, record, result)
+					result["location_#{index}"] = extract_coli_data(location, index, record)
 					break
 				end
 			end
@@ -173,10 +173,11 @@ class Api::V1::ColiController < ApplicationController
 
 private
 
-	def extract_coli_data(location, i, record, result)
+	def extract_coli_data(location, i, record)
 		# Store each locations's data in result.
+		data = Hash.new
 		# Name each location.
-		result["location_#{i}"] = "#{location[:city]}, #{location[:state]}"
+		data["name"] = "#{location[:city]}, #{location[:state]}"
 
 		##### ---------------- COST OF LIVING ---------------- #####
 		coli_stats = Array.new	# For formatting the eventual JSON object.
@@ -196,7 +197,7 @@ private
 		coli_stats << coli_stats.compact.max
 
 		# Add the data to the result.
-		result["cli_#{i}"] = coli_stats
+		data["cli_#{i}"] = coli_stats
 
 
 		##### -------------------- LABOR --------------------- #####
@@ -216,7 +217,7 @@ private
 		labor_stats << labor_stats.compact.min
 		labor_stats << labor_stats.compact.max
 
-		result["labor_#{i}"] = labor_stats
+		data["labor_#{i}"] = labor_stats
 
 		
 		##### -------------------- TAXES --------------------- #####
@@ -235,9 +236,9 @@ private
 		tax_stats << tax_stats.compact.min
 		tax_stats << tax_stats.compact.max
 
-		result["taxes_#{i}"] = tax_stats
+		data["taxes_#{i}"] = tax_stats
 
-		return result
+		return data
 	end
 
 	def extract_weather_data(location, records, result)

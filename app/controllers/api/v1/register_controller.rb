@@ -63,10 +63,11 @@ class Api::V1::RegisterController < ApplicationController
 		cents_members['data'].each do |member|
 			if member['email'] == user.email
 				in_list = true
+				break
 			end
 		end
 		if in_list
-			return render json: "User is already registered", status: 400
+			return render json: 'User is already registered', status: 400
 		end
 
 		# Attempt to save the user and finish.
