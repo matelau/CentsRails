@@ -20,7 +20,20 @@ class Api::V1::ColiController < ApplicationController
 			return render json: result, status: 400
 		end
 
-		locations = params[:locations]
+		# Order the majors.
+		locations = Array.new
+		params[:locations].each do |location|
+			if location[:order] == 1
+				locations << location
+			end
+		end
+		params[:locations].each do |location|
+			if location[:order] == 2
+				locations << location
+			end
+		end
+
+		# locations = params[:locations]
 
 		# Create a string of the form '(city = c1 AND state = s1) OR
 		# (city = c2 AND state = s2) ... ' and a list of city, state pairs.
