@@ -53,10 +53,6 @@ function getPosition(event) {
 
 	x -= (offset.left - $(window).scrollLeft());
 	y -= (offset.top - $(window).scrollTop());
-	//x -= 45;
-	//y += 68;
-
-	//console.log(x, y, offset.left, offset.top);
 };
 
 function hex(x) {
@@ -67,8 +63,6 @@ function hex(x) {
 function applyColor() {
 	//save to local storage
 	//document.getElementByClass("navbar-cents").style.backgroundColor = document.getElementById("new_div").style.backgroundColor;
-	$('.navbar-cents').css({"background-color":document.getElementById("new_div").style.backgroundColor});
-	$('.dropdown-menu').css({"background-color":document.getElementById("new_div").style.backgroundColor});
 	document.getElementById("old_div").style.backgroundColor = document.getElementById("new_div").style.backgroundColor;
 	color_array = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
 	new_colors = {};
@@ -77,6 +71,8 @@ function applyColor() {
 		//set all hex and rgb for both primary and secondary
 		if (primary)
 		{
+			$('.navbar-cents').css({"background-color":document.getElementById("new_div").style.backgroundColor});
+			$('.dropdown-menu').css({"background-color":document.getElementById("new_div").style.backgroundColor});
 			var rgb = c[2] | (c[1] << 8) | (c[0] << 16); 
 			new_colors["p_hex"] = "#" + hex(c[0]) + hex(c[1]) + hex(c[2]);
 			new_colors["p_rgb"] = [c[0], c[1], c[2]];
@@ -85,18 +81,19 @@ function applyColor() {
 		}
 		else
 		{
-			//not implemented
-			// var rgb = c[2] | (c[1] << 8) | (c[0] << 16); 
-			// new_colors["s_hex"] = "#" + rgb;
-			// new_colors["s_rgb"] = [c[0], c[1], c[2]];
-			// new_colors["p_hex"] = "#884412";
-			// new_colors["p_rgb"] = [136, 68, 18];
+			var rgb = c[2] | (c[1] << 8) | (c[0] << 16); 
+			new_colors["p_hex"] = "#884412";
+			new_colors["p_rgb"] = [136, 68, 18];
+			new_colors["s_hex"] = "#" + hex(c[0]) + hex(c[1]) + hex(c[2]);
+			new_colors["s_rgb"] = [c[0], c[1], c[2]];
 		}
 	}
 	else
 	{
 		if (primary)
 		{
+			$('.navbar-cents').css({"background-color":document.getElementById("new_div").style.backgroundColor});
+			$('.dropdown-menu').css({"background-color":document.getElementById("new_div").style.backgroundColor});
 			var rgb = c[2] | (c[1] << 8) | (c[0] << 16); 
 			new_colors["p_hex"] = "#" + hex(c[0]) + hex(c[1]) + hex(c[2]);
 			new_colors["p_rgb"] = [c[0], c[1], c[2]];
@@ -105,7 +102,11 @@ function applyColor() {
 		}
 		else
 		{
-
+			var rgb = c[2] | (c[1] << 8) | (c[0] << 16); 
+			new_colors["p_hex"] = color_array["p_hex"];
+			new_colors["p_rgb"] = color_array["p_rgb"];
+			new_colors["s_hex"] = "#" + hex(c[0]) + hex(c[1]) + hex(c[2]);
+			new_colors["s_rgb"] = [c[0], c[1], c[2]];
 		}
 	}
 	localStorage.setItem("colors", JSON.stringify(new_colors));
@@ -114,11 +115,34 @@ function applyColor() {
 
 function resetColor() {
 	//reset to cents orange
-	document.getElementById("new_div").style.backgroundColor = "rgb(136, 68, 18)";
-	$('.navbar-cents').css({"background-color":document.getElementById("new_div").style.backgroundColor});
-	$('.dropdown-menu').css({"background-color":document.getElementById("new_div").style.backgroundColor});
-	document.getElementById("old_div").style.backgroundColor = document.getElementById("new_div").style.backgroundColor;
-	localStorage.removeItem("colors");
+	new_colors = {};
+	color_array = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+	if (primary)
+	{
+		document.getElementById("new_div").style.backgroundColor = "rgb(136, 68, 18)";
+		$('.navbar-cents').css({"background-color":document.getElementById("new_div").style.backgroundColor});
+		$('.dropdown-menu').css({"background-color":document.getElementById("new_div").style.backgroundColor});
+		document.getElementById("old_div").style.backgroundColor = document.getElementById("new_div").style.backgroundColor;
+		var rgb = c[2] | (c[1] << 8) | (c[0] << 16); 
+		new_colors["p_hex"] = "#884412";
+		new_colors["p_rgb"] = [136, 68, 18];
+		new_colors["s_hex"] = color_array["s_hex"];
+		new_colors["s_rgb"] = color_array["s_rgb"];
+		c = [136, 68, 18];
+	}
+	else
+	{
+		document.getElementById("new_div").style.backgroundColor = "rgb(138, 136, 137)";
+		document.getElementById("old_div").style.backgroundColor = document.getElementById("new_div").style.backgroundColor;
+		var rgb = c[2] | (c[1] << 8) | (c[0] << 16); 
+		new_colors["p_hex"] = color_array["p_hex"];
+		new_colors["p_rgb"] = color_array["p_rgb"];
+		new_colors["s_hex"] = "#8A8889";
+		new_colors["s_rgb"] = [138, 136, 137];
+		c = [138, 136, 137];
+	}
+	localStorage.setItem("colors", JSON.stringify(new_colors));
+	colorScale();
 };
 
 function sliderChange() {
@@ -136,11 +160,43 @@ function sliderChange() {
 function primaryShow() {
 	$("#primary_btn").attr("class", "btn btn-color_select");
 	$("#secondary_btn").attr("class", "btn btn-color_not_select");
+	primary = true;
+	//set c to primary color in local storage or default, set new and old color divs
+	if (localStorage.getItem("colors"))
+	{
+		var c_store = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+		document.getElementById("new_div").style.backgroundColor = c_store["p_hex"];
+		document.getElementById("old_div").style.backgroundColor = c_store["p_hex"];
+		c = c_store["p_rgb"];
+	}
+	else
+	{
+		document.getElementById("new_div").style.backgroundColor = "#884412";
+		document.getElementById("old_div").style.backgroundColor = "#884412";
+		c = [136, 68, 18];
+	}
+	colorScale();
 };
 
 function secondaryShow() {
 	$("#primary_btn").attr("class", "btn btn-color_not_select");
 	$("#secondary_btn").attr("class", "btn btn-color_select");
+	primary = false;
+	//set c to secondary color in local storage or default, set new and old color divs
+	if (localStorage.getItem("colors"))
+	{
+		var c_store = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+		document.getElementById("new_div").style.backgroundColor = c_store["s_hex"];
+		document.getElementById("old_div").style.backgroundColor = c_store["s_hex"];
+		c = c_store["s_rgb"];
+	}
+	else
+	{
+		document.getElementById("new_div").style.backgroundColor = "#8A8889";
+		document.getElementById("old_div").style.backgroundColor = "#8A8889";
+		c = [138, 136, 137];
+	}
+	colorScale();
 };
 
 function updateScale(index) {
@@ -154,7 +210,6 @@ function updateScale(index) {
 	c[2] = parseInt(color[2]);
 	$("#color_points").val(8);
 	colorScale();
-	
 };
 
 function colorScale() {

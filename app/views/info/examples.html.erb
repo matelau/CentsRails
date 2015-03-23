@@ -147,6 +147,7 @@
     {
         var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
         $('.search_1_examples').css({"border-color":c["p_hex"]});
+        $('.search_2_examples').css({"border-color":c["s_hex"]});
         $('.search_1_examples_suggest').css({"border-color":c["p_hex"]});
         $('.suggest_1').css({"border-color":c["p_hex"]});
         $('.btn-default').css({"color":c["p_hex"]});

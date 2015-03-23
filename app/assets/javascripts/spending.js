@@ -341,9 +341,18 @@ function addCategoryField() {
 		var add = "<ul id='new_category' style='list-style-type: none; padding: 0; width:270px; height:30px;''>";
 		add += "<li style='display:inline;'><input id='category_name' onkeyup='enterHit(event, &quot;btn1&quot;)' maxlength='15' type='text' style='width:140px; float:left;'></li>";
 		add += "<li style='display:inline;'><a onclick='addCategory()'><img src='/assets/check-color.png' height='12' width='14' style='margin-top:7px; margin-left:10px; margin-right:30px'></a></li>";
-		add += "<li style='display:inline;'><a onclick='cancelCategory()'><img src='/assets/delete-color.png' height='12' width='12'></a></li></ul>";
+		//add += "<li style='display:inline;'><a onclick='cancelCategory()'><img src='/assets/delete-color.png' height='12' width='12'></a></li></ul>";
+		add += "<li style='display:inline;'>";
+		add += "<svg onclick='cancelCategory()' height='15px' width='15px' style='padding-left:3px; padding-top:3px'>";
+		add += "<path class='fil0' d='M 0.49824641,11.476595 0.25881484,11.239868 C 0.01938328,11.003141 0.13639403,10.645347 0.25476126,10.52563 L 4.8709305,5.8567194 0.20201913,1.2405466 C -0.03741244,1.0038201 0.0795983,0.64602507 0.19796555,0.52630955 L 0.43469208,0.28687796 C 0.67141861,0.04744637 1.0292137,0.16445708 1.1489292,0.28282415 L 5.817841,4.8989948 10.434013,0.23008298 c 0.236727,-0.23943145 0.594522,-0.12242048 0.714237,-0.004058 l 0.239432,0.23672664 c 0.239432,0.23672651 0.122421,0.59452151 0.0041,0.71423711 L 6.7755632,5.8459011 11.444475,10.462074 c 0.239431,0.236726 0.12242,0.594521 0.0041,0.714237 l -0.236731,0.239431 c -0.236727,0.239432 -0.594522,0.122418 -0.714237,0.004 L 5.8286561,6.8036266 1.2124836,11.472538 c -0.23672656,0.239432 -0.59452167,0.122418 -0.71423719,0.004 z'";
+		add += " id='path10' style='fill-opacity:1'/>";
+		add += "</svg></li></ul>";
 		$(add).appendTo( "#category_list" );
 		document.getElementById("category_name").focus();
+		if (localStorage.getItem("colors"))
+			$('.fil0').css({"fill":c["p_hex"]});
+		else
+			$('.fil0').css({"fill":"#884412"});
 	}
 };	
 
