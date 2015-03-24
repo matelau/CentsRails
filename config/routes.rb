@@ -114,7 +114,7 @@ Rails.application.routes.draw do
       post 'careers' => 'careers#show_two'									# Get career data.
 
       # Users.
-    	get 'users/new' => '/user#create'											# Go to the register form.
+    	get 'users/new' => '/user#register'										# Go to the register form.
       post 'users' => 'users#create'												# Register a new user.
       get 'users/:email' => 'users#show'										# Confirm that a user exists.
       post 'users/:email' => 'users#validate'								# Validate a username and password.
@@ -122,6 +122,7 @@ Rails.application.routes.draw do
      	# Spending breakdown. 
      	get 'spending_breakdown/:id' => 'spending_breakdown#show'
       put 'spending_breakdown/:id' => 'spending_breakdown#update'
+      patch 'spending_breakdown/:id' => 'spending_breakdown#update'
     end
   end
 end
