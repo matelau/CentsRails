@@ -43,6 +43,18 @@
 
 <% end %>
 
+<script>
+    if (localStorage.getItem("colors"))
+    {
+        var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+        // $('.error_msg').css({"color":c["p_hex"]});
+        // $('.search_1').css({"border-color":c["p_hex"]});
+        $('input').css({"border-color":c["p_hex"]});
+        $('.error').css({"color":c["p_hex"]});
+        $('.btn-primary').css({"background-color":c["p_hex"]});
+    }
+</script>
+
 
 <!-- <script src="/assets/jquery.validate.min.js"></script>
 <script src="/assets/additional-methods.min.js"></script> -->
