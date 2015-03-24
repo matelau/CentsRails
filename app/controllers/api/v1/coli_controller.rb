@@ -20,20 +20,7 @@ class Api::V1::ColiController < ApplicationController
 			return render json: result, status: 400
 		end
 
-		# Order the locations.
-		locations = Array.new
-		params[:locations].each do |location|
-			if location[:order] == 1
-				locations << location
-			end
-		end
-		params[:locations].each do |location|
-			if location[:order] == 2
-				locations << location
-			end
-		end
-
-		# locations = params[:locations]
+		locations = params[:locations]
 
 		# Create a string of the form '(city = c1 AND state = s1) OR
 		# (city = c2 AND state = s2) ... ' and a list of city, state pairs.
@@ -102,7 +89,7 @@ class Api::V1::ColiController < ApplicationController
 				if record[:city]  == location[:city]  and 
 					record[:state] == location[:state] then
 					match = true
-					result["location_#{index}"] = extract_coli_data(location, index, record)
+					result = extract_coli_data(location, index, record, result)
 					break
 				end
 			end
@@ -173,11 +160,10 @@ class Api::V1::ColiController < ApplicationController
 
 private
 
-	def extract_coli_data(location, i, record)
+	def extract_coli_data(location, i, record, result)
 		# Store each locations's data in result.
-		data = Hash.new
 		# Name each location.
-		data["name"] = "#{location[:city]}, #{location[:state]}"
+		result["location_#{i}"] = "#{location[:city]}, #{location[:state]}"
 
 		##### ---------------- COST OF LIVING ---------------- #####
 		coli_stats = Array.new	# For formatting the eventual JSON object.
@@ -197,7 +183,7 @@ private
 		coli_stats << coli_stats.compact.max
 
 		# Add the data to the result.
-		data["cli_#{i}"] = coli_stats
+		result["cli_#{i}"] = coli_stats
 
 
 		##### -------------------- LABOR --------------------- #####
@@ -211,6 +197,35 @@ private
 			stat = stat ? stat.to_f : nil
 			labor_stats << stat
 		end
+
+
+		# Add max and min. The compact method removes nils.
+		labor_stats << labor_stats.compact.min
+		labor_stats << labor_stats.compact.max
+
+		result["labor_#{i}"] = labor_stats
+
+		
+		##### -------------------- TAXES --------------------- #####
+		tax_stats = Array.new	# For formatting the eventual JSON object.			
+
+		fields = [:sales_tax, :income_tax_min, :income_tax_max, :property_tax]
+
+		# Collect the value of each non-nil field in tax_stats.
+		fields.each do |field|
+			stat = record[field]
+			stat = stat ? stat.to_f : nil
+			tax_stats << stat
+		end
+
+		# Add max and min.
+		tax_stats << tax_stats.compact.min
+		tax_stats << tax_stats.compact.max
+
+		result["taxes_#{i}"] = tax_stats
+
+		return result
+	end
 
 
 		# Add max and min. The compact method removes nils.

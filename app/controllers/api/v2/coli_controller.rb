@@ -49,46 +49,50 @@ class Api::V2::ColiController < ApplicationController
 
 	# Get cost of living data by state.
 	def show_state
+		location = Coli.where(state: params[:state])
+		if location.present?
+			return render json: location, status: 200
+		else
+			return render json: [], status: 404
+		end
 	end
 
 	# Get cost of living data by state and city.
 	def show_city
+		location = Coli.where(state: params[:state], city: params[:city])
+		if location.present?
+			return render json: location, status: 200
+		else
+			return render json: [], status: 404
+		end
 	end
 
 	# Get cost of living data for two locations.
 	def show_two
 		result = Hash.new
-		error_list = []
 
 		# Check for the required fields, and return an appropriate message if
 		# they are not present.
 		unless params[:locations].present?
-			error_list << 'No objects were in the locations array.'
-		end
-
-		unless params[:operation].present?
-			error_list << 'The operation field was empty.'
-		end
-
-		unless error_list.empty?
-			result[:errors] = error_list
-			return render json: result, status: 400
+			return render json: 'No objects were in the locations array.', status: 400
 		end
 
 		# Order the locations.
 		locations = Array.new
-		params[:locations].each do |location|
-			if location[:order] == 1
-				locations << location
+		if params[:locations][0][:order] and params[:locations][1][:order]
+			params[:locations].each do |location|
+				if location[:order] == 1
+					locations << location
+				end
 			end
-		end
-		params[:locations].each do |location|
-			if location[:order] == 2
-				locations << location
+			params[:locations].each do |location|
+				if location[:order] == 2
+					locations << location
+				end
 			end
+		else
+			locations = params[:locations]
 		end
-
-		# locations = params[:locations]
 
 		# Create a string of the form '(city = c1 AND state = s1) OR
 		# (city = c2 AND state = s2) ... ' and a list of city, state pairs.
@@ -158,6 +162,7 @@ class Api::V2::ColiController < ApplicationController
 					record[:state] == location[:state] then
 					match = true
 					result["location_#{index}"] = extract_coli_data(location, index, record)
+					result["location_#{index}"][:name] = "#{location[:city]}, #{location[:state]}"
 					break
 				end
 			end
@@ -168,7 +173,8 @@ class Api::V2::ColiController < ApplicationController
 					if record[:city]  == nil and 
 						 record[:state] == location[:state] then
 						state_match = true
-						result = extract_coli_data(location, index, record, result)
+						result["location_#{index}"] = extract_coli_data(location, index, record)
+						result["location_#{index}"][:name] = location[:state]
 						break
 					end
 				end
@@ -176,8 +182,8 @@ class Api::V2::ColiController < ApplicationController
 
 			# Add the weather data for this location.
 			weather_data = extract_weather_data(location, records, result)
-			result["weather_#{index}"] = weather_data[:weather_high_stats]
-			result["weatherlow_#{index}"] = weather_data[:weather_low_stats]
+			result["location_#{index}"]["weather_#{index}"] = weather_data[:weather_high_stats]
+			result["location_#{index}"]["weatherlow_#{index}"] = weather_data[:weather_low_stats]
 
 			# Keep track of which states we substituted state data for.
 			if state_match
@@ -231,8 +237,6 @@ class Api::V2::ColiController < ApplicationController
 	def extract_coli_data(location, i, record)
 		# Store each locations's data in result.
 		data = Hash.new
-		# Name each location.
-		data["name"] = "#{location[:city]}, #{location[:state]}"
 
 		##### ---------------- COST OF LIVING ---------------- #####
 		coli_stats = Array.new	# For formatting the eventual JSON object.
