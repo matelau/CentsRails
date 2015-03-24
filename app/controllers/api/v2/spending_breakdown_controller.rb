@@ -14,7 +14,7 @@ class Api::V2::SpendingBreakdownController < ApplicationController
 			 INNER JOIN amounts AS a
 			 ON u.id = a.user_id
 			 WHERE a.user_id = ?',
-			 params[:user_id]
+			 params[:id]
 		]
 
 		records.each do |record|
