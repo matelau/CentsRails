@@ -100,7 +100,7 @@ Rails.application.routes.draw do
 
       # Schools.
       get 'schools' => 'schools#index'											# Get school record names for autocomplete.
-      get 'schools/:state/:name' => 'schools#show'					# Get school by state and name.
+      get 'schools/:name' => 'schools#show'									# Get school by name.
       post 'schools' => 'schools#show_two'									# Get school data.
 
       # Majors.

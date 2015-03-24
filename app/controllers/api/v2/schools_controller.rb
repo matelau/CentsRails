@@ -1,6 +1,8 @@
 class Api::V2::SchoolsController < ApplicationController
 	# Get school record names for autocomplete.
 	def index
+		result = Array.new
+
 		if params[:where] and not params[:select]
 			records = University.select('DISTINCT name').where(['state LIKE ?', "%#{params[:where]}"])
 			records.each do |record|
@@ -25,33 +27,53 @@ class Api::V2::SchoolsController < ApplicationController
 				result << record[:state]
 			end
 		end
+
+		# Check if there are no records.
+		if records.blank?
+			return render json: 'No records found', status: 404
+		end
+
+		# Return the record names as a JSON object.
+		result.sort!
+		return render json: result, status: 200
 	end
 
 	# Get school by state and name.
 	def show
+		school = University.where(name: params[:name])
+		if school.present?
+			return render json: school, status: 200
+		else
+			return render json: [], status: 404
+		end
 	end
 
 	# Get school data for two schools.
 	def show_two
 		result = Hash.new
-		error_list = []
 
 		# Check for the required fields, and return an appropriate message if
 		# they are not present.
 		unless params[:schools].present?
-			error_list << 'No schools were in the schools array'
+			return render json: 'No schools were in the schools array', status: 400
 		end
 
-		unless params[:operation].present?
-			error_list << 'The operation field was empty'
+		# Order the schools.
+		schools = Array.new
+		if params[:schools][0][:order] and params[:schools][1][:order]
+			params[:schools].each do |school|
+				if school[:order] == 1
+					schools << school
+				end
+			end
+			params[:schools].each do |school|
+				if school[:order] == 2
+					schools << school
+				end
+			end
+		else
+			schools = params[:schools]
 		end
-
-		unless error_list.empty?
-			result[:errors] = error_list
-			return render json: result, status: 400
-		end
-
-		schools = params[:schools]
 
 		# Create a string of the form 'name = n1 OR name = n2 ...' and a list of 
 		# names. This string and list will be used to dynamically create the where 
