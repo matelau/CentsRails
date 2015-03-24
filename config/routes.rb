@@ -118,8 +118,6 @@ Rails.application.routes.draw do
       post 'users' => 'users#create'												# Register a new user.
       get 'users/:email' => 'users#show'										# Confirm that a user exists.
       post 'users/:email' => 'users#validate'								# Validate a username and password.
-      post 'users/:email/login' => 'users#login'						# Log in a user.
-      post 'users/:email/logout' => 'users#logout'					# Log out a user.
      	
      	# Spending breakdown. 
      	get 'spending_breakdown/:id' => 'spending_breakdown#show'
