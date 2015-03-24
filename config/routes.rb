@@ -14,13 +14,12 @@ Rails.application.routes.draw do
   get 'user/register'
   get 'user/registered', as: 'registered'
   post 'user/register' => 'user#create', as: 'register'
-  get 'user/login' => 'sessions#new'
+  get 'user/login' => 'sessions#new', as: 'user_login'
   post 'user/login' => 'sessions#create'
   get 'user/logout' => 'sessions#destroy'
-  get 'user/confirm' => 'to_be_validated_users#confirm'
-  get 'user/confirmed'
   get 'search/results'
   get 'search/getPartial'
+  get 'user/terms'
   root 'search#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

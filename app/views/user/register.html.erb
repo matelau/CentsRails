@@ -1,141 +1,59 @@
+<%- title "Register" %>
 
-<%= form_for(:user, html: { class: "form-horizontal", 'id' => 'register-form'}) do |f| %>
-<div style="text-align:center" id="stylized" class="myform" >
-	<h2>Create a free account today.</h2><br>
-    <form>
+<%= form_for :user, html: {class: "form-horizontal", id: 'register-form'} do |f| %>
+	<div style="text-align:center" id="stylized" class="myform" >
+		<h2>Create a free account today.</h2><br>
 
-	    <label>FIRST NAME
-	    <span class="small">Only letters allowed.</span>
-	    </label>
-	    <%= f.text_field :first_name, html: {'placeholder' => "", class: "input-xlarge"} %>
-	    <label id="user_first_name-error" class="error" for="user_first_name"></label>
+		<label>FIRST NAME</label>
+		<%= f.text_field :first_name, html: {placeholder: '', class: 'input-xlarge'} %>
+		<label id="user_first_name-error" class="error" for="user_first_name"></label>
 
-	    <label>LAST NAME
-	    <span class="small">Only letters allowed.</span>
-	    </label>
-	    <%= f.text_field :last_name, html: {'placeholder' => "", class: "input-xlarge"} %>
-	    <label id="user_last_name-error" class="error" for="user_last_name"></label>
+		<label>LAST NAME</label>
+		<%= f.text_field :last_name, html: {placeholder: '', class: 'input-xlarge'} %>
+		<label id="user_last_name-error" class="error" for="user_last_name"></label>
 
-	    <label>EMAIL
-	    <span class="small">Enter a valid address.</span>
-	    </label>
-	    <%= f.email_field :email, html: {'placeholder' => '', class: 'input-xlarge'} %>
-	    <label id="user_email-error" class="error" for="user_email"></label>
+		<label>EMAIL</label>
+		<%= f.email_field :email, html: {placeholder: '', class: 'input-xlarge'} %>
+		<label id="user_email-error" class="error" for="user_email"></label>
 
-	    <label>PASSWORD
-	    <span class="small">Must be at least 6 characters.</span>
-	    </label>
-	    <%= f.password_field :password, html: {'placeholder' => "", class: "input-xlarge"} %>
-	    <label id="user_password-error" class="error" for="user_password"></label>
+		<label>PASSWORD</label>
+		<%= f.password_field :password, html: {placeholder: '', class: 'input-xlarge'} %>
+		<label id="user_password-error" class="error" for="user_password"></label>
 
-	    <label>PASSWORD (CONFIRM)
-	    <span class="small">Must match password above.</span>
-	    </label>
-	    <%= f.password_field :password_confirmation, html: {'placeholder' => "", class: "input-xlarge"} %>
-	    <label id="user_password_confirmation-error" class="error" for="user_password_confirmation"></label>
+		<label>PASSWORD (CONFIRM)</label>
+		<%= f.password_field :password_confirmation, html: {placeholder: '', class: 'input-xlarge'} %>
+		<label id="user_password_confirmation-error" class="error" for="user_password_confirmation"></label>
 
+		<!-- Radio buttons that determine what kind of confirmation email to send. -->
+		<% ['HTML', 'text'].each do |type| %>
+			<%= f.radio_button :email_type, type, checked: type == 'HTML'%>
+			<%= label_tag "email_type_html[#{type}]", type %>
+		<% end %>
+
+		<!-- Terms and conditions checkbox. -->
+		<%= check_box_tag :terms %>
+		<label for="terms"> 
+			I accept the <%= link_to 'term and conditions', '/user/terms', target: '_blank' %>
+		</label>
+		<label id="terms-error" class="error" for="terms"></label>
 
 		<button style="margin-top:20px" class="btn btn-primary">REGISTER</button>
-
-    </form>
-</div>
-
-
+	</div>
 <% end %>
 
 <script>
     if (localStorage.getItem("colors"))
     {
         var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
-        // $('.error_msg').css({"color":c["p_hex"]});
-        // $('.search_1').css({"border-color":c["p_hex"]});
         $('input').css({"border-color":c["p_hex"]});
         $('.error').css({"color":c["p_hex"]});
         $('.btn-primary').css({"background-color":c["p_hex"]});
     }
 </script>
-
-
-<!-- <script src="/assets/jquery.validate.min.js"></script>
-<script src="/assets/additional-methods.min.js"></script> -->
-
-<script>
-(function($,W,document)
-{
-	var validator = {};
  
-	validator.UTIL =
-	{
-		setupFormValidation: function()
-		{
-			$("#register-form").validate({
-					onfocusout: function(element, event) {
-						this.element(element);
-					},
-					success: function(label)
-					{
-						label.text("");
-					},
+<!-- Include the jQuery Validation plugin. -->
+<script src="/assets/jquery.validate.min.js" ></script>
+<script src="/assets/additional-methods.min.js"></script>
 
-					// Set the requirements for the fields here.
-					rules: {
-						"user[first_name]": {
-							required: true,
-							lettersonly: true
-						},
-						"user[last_name]": {
-							required: true,
-							lettersonly: true
-						},
-						"user[email]": {
-							required: true,
-							email: true
-						},
-						"user[password]": {
-							required: true,
-							minlength: 6
-						},
-						"user[password_confirmation]": {
-							required: true,
-							minlength: 6,
-							equalTo: "#user_password"
-						}
-					},
-					
-					// Set the error message here.
-					messages: {
-						"user[first_name]": {
-							required: "Required",
-							lettersonly: "First name can only contain letters."
-						},
-						"user[last_name]": {
-							required: "Required",
-							lettersonly: "Last name can only contain letters."
-						},
-						"user[password]": {
-							required: "Required",
-							minlength: "Must be at least 6 characters long."
-						},
-						"user[email]": "Enter a valid email address.",
-						"user[password_confirmation]": {
-							required: "Required",
-							equalTo: "Password must match.",
-							minlength: "Must be at least 6 characters long."
-						}
-					},
-					submitHandler: function(form) {
-						form.submit();
-					}
-				});
-			}
-		}
- 
-	// Activate the rules on keyup.
-	$(document).ready(function($) {				
-		$('#register-form').bind('keyup', function(){
-       validator.UTIL.setupFormValidation();
-    });
-	});
- 
-})(jQuery, window, document);
-</script>
+<!-- Include the form validation rules. -->
+<script src="/assets/validate_register_form.js"></script>
