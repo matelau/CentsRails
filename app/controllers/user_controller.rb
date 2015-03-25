@@ -7,21 +7,23 @@ class UserController < ApplicationController
 		cents_members = @@mailchimp.lists.members(@@mc_list_id)
 		cents_members['data'].each do |member|
 			if member['email'] == user.email
+				flash[:error] = "You've already registered with this email."
 				redirect_to '/search/index' and return
 			end
 		end
 
 		# Subscribe with MailChimp's API.
 		@@mailchimp.lists.subscribe(@@mc_list_id, 
-                   {"email" => user_params[:email]},
-                   {"FNAME" => user_params[:first_name],
-                   	"LNAME" => user_params[:last_name],
-                   	"EMAIL" => user_params[:email]},
-                   	user_params[:email_type])
+				{"email" => user_params[:email]},
+				{"FNAME" => user_params[:first_name],
+					"LNAME" => user_params[:last_name],
+					"EMAIL" => user_params[:email]},
+					user_params[:email_type])
 
 		if user.save
 			redirect_to registered_path
 		else
+			flash[:error] = "Your account couldn't be created."
 			redirect_to '/search/index'
 		end
 	end

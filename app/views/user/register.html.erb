@@ -38,6 +38,10 @@
 		<label id="terms-error" class="error" for="terms"></label>
 
 		<button style="margin-top:20px" class="btn btn-primary">REGISTER</button>
+
+		<% flash.each do |k, v| %>
+			<div id="<%= k %>"><p><%= v %></p></div>
+		<% end %>
 	</div>
 <% end %>
  
