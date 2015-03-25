@@ -1,6 +1,22 @@
 <div style="width : 1090px; margin : 60px auto 0 auto; text-align: center;">
-	<p></p> <!-- error message -->
+	<div id="erModal" style="display:none" class="alert alert-dismissable alert-info">
+    	<button type="button" class="close" onclick="clear_alert();">×</button>
+    	<p id="error"></p>
+	</div>
+	<script>
+		var qError = localStorage.getItem("stored_query");
+		if(qError != null){
+			document.getElementById("erModal").style.display = "block";
+			document.getElementById("error").innerHTML = "Your question '" + qError + "' hasn't returned any data. Here are some categories you can use to search for something more specific."
+			localStorage.removeItem("stored_query");
+		}
+
+		function clear_alert(){
+			$( "#erModal" ).slideUp();
+		}
+	</script>
 	<h4>Check out the categories, hover over the images to add your own search.</h4>
+
 	<div class="examples-img-left" id="city_container" onmouseover="showSearch('city');" onmouseleave="resort('city'); leftDiv();" style="background-image: url(/assets/examples/city.png); background-position: right;">
 		<btn class='btn btn-default' id="city_clear" onclick="clearFields('city');" style='float: right; visibility: hidden'>X</btn>
 		<form onsubmit="dataRequest('city'); return false;">

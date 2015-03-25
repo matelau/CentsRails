@@ -1,35 +1,61 @@
-class Api::V1::MajorsController < ApplicationController
+class Api::V2::MajorsController < ApplicationController
 
+	# Get major record names for autocomplete.
+	def index
+		result = Array.new
+		records = Degree.select('DISTINCT name')
+
+		# Retrieve only the name field.
+		records.each do |record|
+			result << record[:name]
+		end
+
+		# Check if there are no records.
+		if records.blank?
+			return render json: 'No records found', status: 404
+		end
+
+		# Return the record names as a JSON object.
+		result.sort!
+		return render json: result, status: 200
+	end
+
+	# Get major by name.
 	def show
+		degree = Degree.where(name: params[:name])
+		if degree.present?
+			return render json: degree, status: 200
+		else
+			return render json: [], status: 404
+		end
+	end
+
+	# Get major data for two majors.
+	def show_two
 		result = Hash.new
-		error_list = []
 
 		# Check for the required fields, and return an appropriate message if
 		# they are not present.
 		unless params[:majors].present?
-			error_list << 'No objects were in the majors array.'
-		end
-
-		unless params[:operation].present?
-			error_list << 'The operation field was empty.'
-		end
-
-		unless error_list.empty?
-			result[:errors] = error_list
-			return render json: result, status: 400
+			return render json: 'No objects were in the majors array.', status: 400
 		end
 
 		# Order the majors.
 		majors = Array.new
-		params[:majors].each do |major|
-			if major[:order] == 1
-				majors << major[:name]
+		if params[:majors][0][:order] and params[:majors][1][:order]
+			params[:majors].each do |major|
+				if major[:order] == 1
+					majors << major[:name]
+				end
 			end
-		end
-		params[:majors].each do |major|
-			if major[:order] == 2
-				majors << major[:name]
+			params[:majors].each do |major|
+				if major[:order] == 2
+					majors << major[:name]
+				end
 			end
+		else
+			majors << params[:majors][0][:name]
+			majors << params[:majors][1][:name]
 		end
 
 		# Create a string of the form 'd.name = ? OR ... ' and a list of major names.

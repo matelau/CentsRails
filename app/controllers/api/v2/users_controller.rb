@@ -1,35 +1,34 @@
-class Api::V1::RegisterController < ApplicationController
+class Api::V2::UsersController < ApplicationController
 
-	#force_ssl
-
-  def create
+	# Register a new user.
+	def create
   	result = Hash.new
   	error_list = []
   	
   	# Check for the required fields, and return an appropriate message if
 		# they are not present.
 		unless params[:first_name].present?
-			error_list.append "first_name was missing"
+			error_list.append 'first_name was missing'
 		end
 
 		unless params[:last_name].present?
-			error_list.append "last_name was missing"
+			error_list.append 'last_name was missing'
 		end
 
 		unless params[:email].present?
-			error_list.append "email was missing"
+			error_list.append 'email was missing'
 		end
 
 		unless params[:password].present?
-			error_list.append "password was missing"
+			error_list.append 'password was missing'
 		end
 
 		unless params[:password_confirmation].present?
-			error_list.append "password_confirmation was missing"
+			error_list.append 'password_confirmation was missing'
 		end
 
 		unless params[:email_type].present?
-			error_list.append "email_type was missing"
+			error_list.append 'email_type was missing'
 		end
 
 		unless error_list.empty?
@@ -80,4 +79,36 @@ class Api::V1::RegisterController < ApplicationController
 		end
 	end
 
+	# Confirm that a user exists.
+	def show
+		# Search for the user.
+		user = User.find_by_email(params[:email])
+
+		if user
+			return render json: 'User found', status: 200
+		else
+			return render json: 'No such user found', status: 404
+		end
+	end
+
+	# Validate a username and password.
+	def validate
+		result = Hash.new
+
+		unless params[:password].present?
+			return render json: 'password was missing', status: 400
+		end
+
+		# Search for the user.
+		user = User.find_by_email(params[:email])
+
+		# Try to authenticate the user and finish.
+		if user && user.authenticate(params[:password])
+			return render json: result, status: 200
+		else
+			error_list.append 'authentication failed'
+			result[:errors] = error_list
+			return render json: result, status: 400
+		end
+	end
 end
