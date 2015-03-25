@@ -115,34 +115,37 @@ function applyColor() {
 
 function resetColor() {
 	//reset to cents orange
-	new_colors = {};
-	color_array = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
-	if (primary)
+	if (localStorage.getItem("colors"))
 	{
-		document.getElementById("new_div").style.backgroundColor = "rgb(136, 68, 18)";
-		$('.navbar-cents').css({"background-color":document.getElementById("new_div").style.backgroundColor});
-		$('.dropdown-menu').css({"background-color":document.getElementById("new_div").style.backgroundColor});
-		document.getElementById("old_div").style.backgroundColor = document.getElementById("new_div").style.backgroundColor;
-		var rgb = c[2] | (c[1] << 8) | (c[0] << 16); 
-		new_colors["p_hex"] = "#884412";
-		new_colors["p_rgb"] = [136, 68, 18];
-		new_colors["s_hex"] = color_array["s_hex"];
-		new_colors["s_rgb"] = color_array["s_rgb"];
-		c = [136, 68, 18];
+		new_colors = {};
+		color_array = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+		if (primary)
+		{
+			document.getElementById("new_div").style.backgroundColor = "rgb(136, 68, 18)";
+			$('.navbar-cents').css({"background-color":document.getElementById("new_div").style.backgroundColor});
+			$('.dropdown-menu').css({"background-color":document.getElementById("new_div").style.backgroundColor});
+			document.getElementById("old_div").style.backgroundColor = document.getElementById("new_div").style.backgroundColor;
+			var rgb = c[2] | (c[1] << 8) | (c[0] << 16); 
+			new_colors["p_hex"] = "#884412";
+			new_colors["p_rgb"] = [136, 68, 18];
+			new_colors["s_hex"] = color_array["s_hex"];
+			new_colors["s_rgb"] = color_array["s_rgb"];
+			c = [136, 68, 18];
+		}
+		else
+		{
+			document.getElementById("new_div").style.backgroundColor = "rgb(138, 136, 137)";
+			document.getElementById("old_div").style.backgroundColor = document.getElementById("new_div").style.backgroundColor;
+			var rgb = c[2] | (c[1] << 8) | (c[0] << 16); 
+			new_colors["p_hex"] = color_array["p_hex"];
+			new_colors["p_rgb"] = color_array["p_rgb"];
+			new_colors["s_hex"] = "#8A8889";
+			new_colors["s_rgb"] = [138, 136, 137];
+			c = [138, 136, 137];
+		}
+		localStorage.setItem("colors", JSON.stringify(new_colors));
+		colorScale();
 	}
-	else
-	{
-		document.getElementById("new_div").style.backgroundColor = "rgb(138, 136, 137)";
-		document.getElementById("old_div").style.backgroundColor = document.getElementById("new_div").style.backgroundColor;
-		var rgb = c[2] | (c[1] << 8) | (c[0] << 16); 
-		new_colors["p_hex"] = color_array["p_hex"];
-		new_colors["p_rgb"] = color_array["p_rgb"];
-		new_colors["s_hex"] = "#8A8889";
-		new_colors["s_rgb"] = [138, 136, 137];
-		c = [138, 136, 137];
-	}
-	localStorage.setItem("colors", JSON.stringify(new_colors));
-	colorScale();
 };
 
 function sliderChange() {
