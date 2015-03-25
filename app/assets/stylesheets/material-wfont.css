@@ -39,6 +39,24 @@ a:link, a:visited, a:hover, a:active {
 canvas {
   outline: none;
 }
+.ui-helper-hidden-accessible { 
+  display:none; 
+}
+.ui-autocomplete {
+  list-style: none;
+  max-height: 120px;
+  width: 300px;
+  padding-left: 10px;
+  margin-bottom: 0px;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  cursor: pointer;
+  background: white;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.23), 0 3px 10px rgba(0, 0, 0, 0.16);
+}
+
+
 .arrow-button {
   background: none;
   border: none;
@@ -54,9 +72,9 @@ canvas {
   display: -webkit-flex;
   display: flex;
   list-style-type: none;
-  padding-top: 25px;
+  padding-top: 0px;
   padding-left: 0px;
-  height: 430px;
+  height: 410px;
   -webkit-align-items: center;
   align-items: center;
 }
@@ -70,15 +88,32 @@ canvas {
   -webkit-align-items: center;
   align-items: center;
 }
+.error_msg {
+  width: 220px;
+  color: red;
+  text-align: center;
+}
 .search_objects {
+  display: -webkit-flex;
+  display: flex;
+  list-style-type: none;
+  padding-top: 5px;
+  padding-left: 0px;
+  width: 850px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.error_objects {
   display: -webkit-flex;
   display: flex;
   list-style-type: none;
   padding-top: 25px;
   padding-left: 0px;
-  width: 850px;
+  width: 600px;
+  height: 65px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 0px
 }
 .toggle_objects {
   display: -webkit-flex;
@@ -285,32 +320,31 @@ canvas {
     width: 200px;
     margin: 2px 0 10px 10px;
 }
-
-
-.examples_center{
-  width: 1100px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
+.examples-img-left{
+  float : left; 
+  height : 300px; 
+  width : 540px;
+  margin-right: 5px;
+  box-shadow: -5px 5px 3px #CDCDCD;
 }
-.examples_center_items{
-  margin-left: auto;
-  margin-right: auto;
-  display: -webkit-flex;
-  display: flex;
-  list-style-type: none;
-  padding-left: 0px;
-  height: 325px;
-  margin-bottom: 0px;
-  -webkit-align-items: center;
-  align-items: center;
+.examples-img-right{
+  float : left; 
+  height : 300px; 
+  width : 540px;
+  margin-left: 5px;
+  box-shadow: -5px 5px 3px #CDCDCD;
 }
-.examples_center_desc{
-  text-align: center;
-  display: -webkit-flex;
-  display: flex;
-  list-style-type: none;
-  padding-left: 0px;
+.examples-desc-left{
+  float : left; 
+  height : 125px; 
+  width : 545px;
+  padding-right: 5px;
+}
+.examples-desc-right{
+  float : left; 
+  height : 125px; 
+  width : 545px;
+  padding-left: 5px;
 }
 .examples_search{
   list-style: none;

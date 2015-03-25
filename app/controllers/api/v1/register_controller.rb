@@ -28,17 +28,22 @@ class Api::V1::RegisterController < ApplicationController
 			error_list.append "password_confirmation was missing"
 		end
 
+		unless params[:email_type].present?
+			error_list.append "email_type was missing"
+		end
+
 		unless error_list.empty?
 			result[:errors] = error_list
 			return render json: result, status: 400
 		end
 
 		# Create a new user.
-		user = User.new(:first_name => params[:first_name],
-										:last_name => params[:last_name],
-										:email => params[:email],
-										:password => params[:password],
-										:password_confirmation => params[:password_confirmation])
+		user = User.new(first_name: params[:first_name],
+										last_name: params[:last_name],
+										email: params[:email],
+										password: params[:password],
+										password_confirmation: params[:password_confirmation],
+										email_type: params[:email_type])
 
 		# Check that the first name, last name, etc., meet the User model's requirements.
 		unless user.valid?
@@ -47,6 +52,22 @@ class Api::V1::RegisterController < ApplicationController
 			end
 			result[:errors] = error_list
 			return render json: result, status: 400
+		end
+
+		# Check that the user is not already registered.
+		# Create a MailChimp API object and the list ID for the New Cents Users list.
+		mc = Mailchimp::API.new('96bf81c0c618d011dfe85bc9b312d1c5-us10')
+		list_id = '2f68e3af0f'
+		in_list = false
+		cents_members = mc.lists.members(list_id)
+		cents_members['data'].each do |member|
+			if member['email'] == user.email
+				in_list = true
+				break
+			end
+		end
+		if in_list
+			return render json: 'User is already registered', status: 400
 		end
 
 		# Attempt to save the user and finish.

@@ -1,33 +1,165 @@
-var data, hide_1, hide_2, main, gray, font, active_tab;
+$(document).ready(function() {
+	$.post("/api/v1/record_names", {operation: 'get', tables: ['majors']}, function(response) { 
+		auto_majors = response;
+		$( "#search_1_name" ).autocomplete({
+	  		source: function(req, responseFn) {
+	  			var re = $.ui.autocomplete.escapeRegex(req.term);
+	  			var pattern1 = new RegExp("^"+re, "i");
+	  			var a = $.grep(auto_majors, function(item, index){return pattern1.test(item);});
+	  			var b = $.grep(auto_majors, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
+	  			responseFn(a.concat(b));
+	  		},
+	  		response: function(e, u) {
+	  			//if match list isnt empty, save the first match
+	  			if (u.content.length != 0)
+	  				auto_1 = u.content[0].value;
+	  			else
+	  				auto_1 = "";
+	  		},
+	  		close: function(e, u) {
+	  			//when leaving, replace with first match
+	  			temp1 = document.getElementById("search_1_name").value;
+	  			if (temp1 == "")
+	  				auto_1 = "";
+	  			else if (auto_majors.indexOf(temp1) < 0 && auto_1)
+					document.getElementById("search_1_name").value = auto_1;
+				else if (auto_1)
+					auto_1 = temp1;
+	  		},
+	  		delay: 0
+		});
+		$( "#search_2_name" ).autocomplete({
+	  		source: function(req, responseFn) {
+	  			var re = $.ui.autocomplete.escapeRegex(req.term);
+	  			var pattern1 = new RegExp("^"+re, "i");
+	  			var a = $.grep(auto_majors, function(item, index){return pattern1.test(item);});
+	  			var b = $.grep(auto_majors, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
+	  			responseFn(a.concat(b));
+	  		},
+	  		response: function(e, u) {
+	  			if (u.content.length != 0)
+	  				auto_2 = u.content[0].value;
+	  			else
+	  				auto_2 = "";
+	  		},
+	  		close: function(e, u) {
+	  			//when leaving, replace with first match
+	  			temp2 = document.getElementById("search_2_name").value;
+	  			if (temp2 == "")
+	  				auto_2 = "";
+	  			else if (auto_majors.indexOf(temp2) < 0 && auto_2)
+					document.getElementById("search_2_name").value = auto_2;
+				else if (auto_2)
+					auto_2 = temp2;
+	  		},
+	  		delay: 0
+		});
+	});	
+});
+
+var data, hide_1, hide_2, main, gray, font, active_tab, auto_1, auto_2, sent1, sent2, nochanges, old1, old2, canvas, processingInstance;
+
+canvas = document.getElementById("main_viz");
+if (canvas != null)
+	processingInstance = new Processing(canvas, sketchProc);
+
+sent1 = true;
+sent2 = true;
 
 var sketch = new Processing.Sketch();
 
+function changeMade() {
+	if (old1 != document.getElementById("search_1_name").value)
+	{
+		old1 = document.getElementById("search_1_name").value;
+		nochanges = false;
+	}
+	if (old2 != document.getElementById("search_2_name").value)
+	{
+		old2 = document.getElementById("search_2_name").value;
+		nochanges = false;
+	}
+};
+
 function major_api_request(query) {
-	field1 = document.getElementById("search_1_name").value;
-	field2 = document.getElementById("search_2_name").value;
-	url = "";
+	if (nochanges)
+	{
+		return;
+	}
 
+	var field1, field2;
+	field1 = "";
+	field2 = "";
+
+	$("#error_1").empty();
+	$('#search_1_name').autocomplete('close');
+	//check to see if any of the fields are empty
+	if (document.getElementById("search_1_name").value != "")
+	{
+		if (auto_1 == "")
+			$("#error_1").append("Invalid major.");
+		if (auto_1 != "" && auto_1)
+			field1 = auto_1;		
+		else if (auto_1 == undefined)
+		{
+			if (auto_majors.indexOf(document.getElementById("search_1_name").value) < 0)
+				$("#error_1").append("Invalid major.");
+			else
+				field1 = document.getElementById("search_1_name").value;	
+		}	
+	}
+	$("#error_2").empty();
+	$('#search_2_name').autocomplete('close');
+	if (document.getElementById("search_2_name").value != "")
+	{
+		if (auto_2 == "")
+			$("#error_2").append("Invalid major.");
+		if (auto_2 != "" && auto_2)
+			field2 = auto_2;		
+		else if (auto_2 == undefined)
+		{
+			if (auto_majors.indexOf(document.getElementById("search_2_name").value) < 0)
+				$("#error_2").append("Invalid major.");
+			else
+				field2 = document.getElementById("search_2_name").value;	
+		}	
+	}
+
+	url = "https://trycents.com:6001/data";
 	type = "major"
+	body = ""
 
-	if(field1 == "" && field2 == ""){
+	if((field1 == "" && field2 == "")){
+		sent1 = false;
+		sent2 = false;
 		return;
 	}
 	else if(field2 == ""){
-		url = "https://trycents.com:6001/data/type="+type+"&option="+field1;
+		body = JSON.stringify({type:type,option:[field1]});
+		sent2 = false;
+		sent1 = true;
+		processingInstance.noLoop();
+		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
 	}
 	else if(field1 == ""){
-		url = "https://trycents.com:6001/data/type="+type+"&option="+field2;
+		body = JSON.stringify({type:type,option:[field2]});
+		sent1 = false;
+		sent2 = true;
+		processingInstance.noLoop();
+		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
 	}
 	else{
-		url = "https://trycents.com:6001/data/type="+type+"&option="+field1+"&option="+field2;
+		body = JSON.stringify({type:type,option:[field1,field2]});
+		sent1 = true;
+		sent2 = true;
+		processingInstance.noLoop();
+		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
 	}
 
-	var data = new Object();
 	var xmlHttp = null;
 
     xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", url, true );
-
+    xmlHttp.open( "POST", url, true );
     xmlHttp.onreadystatechange = function() {
     	if (xmlHttp.readyState === 4) { 
       		if (xmlHttp.status === 200) {
@@ -36,11 +168,49 @@ function major_api_request(query) {
 				localStorage.setItem("query_type", type);
 				localStorage.setItem("data_store",JSON.stringify(data));
 
-				location.reload();
+				auto_1 = undefined;
+				auto_2 = undefined;
+
+	  			if (sent1 && sent2)
+	  			{
+	  				hide_1 = false; 
+	  				hide_2 = false;
+		  	 		document.getElementById("search_1_button").value = "HIDE";
+		  	 		$("#search_1_button").removeAttr("disabled");
+		  	 		document.getElementById("search_2_button").value = "HIDE";
+		  	 		$("#search_2_button").removeAttr("disabled");
+	  			}
+	  			else if (!sent1 && sent2)
+	  			{
+	  				hide_1 = true;
+	  				document.getElementById("search_1_button").value = "SHOW";
+		  	 		$("#search_1_button").attr("disabled", "true");
+		  	 		hide_2 = false;
+		  	 		document.getElementById("search_2_button").value = "HIDE";
+		  	 		$("#search_2_button").removeAttr("disabled");
+		  	 		//need to flip data to _2 arrays
+					data["major_2"] = $.extend(true, [], data["major_1"]);
+					data["major_1"] = null;
+					data["jobs_2"] = $.extend(true, [], data["jobs_1"]);
+					data["jobs_1"] = null;
+					data["major_2_name"] = data["major_1_name"];
+					data["major_1_name"] = null;
+
+	  			}
+	  			else if (sent1 && !sent2)
+	  			{
+	  				hide_2 = true;
+	  				document.getElementById("search_2_button").value = "SHOW";
+		  	 		$("#search_2_button").attr("disabled", "true");
+		  	 		hide_1 = false;
+		  	 		document.getElementById("search_1_button").value = "HIDE";
+		  	 		$("#search_1_button").removeAttr("disabled");
+	  			}
+	  			nochanges = true;
       		}
       	}
     }
-    xmlHttp.send( null );
+    xmlHttp.send(body);
 };
 
 function sketchProc(processing) {
@@ -64,8 +234,9 @@ function sketchProc(processing) {
 		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));
   		//localStorage.removeItem("data_store");
 
-  		if (data == null)
+  		if (!data || (!data["major_1"] && !data["major_2"]))
   		{
+  			console.log("in here");
   			data = new Array();
 			//salary, major recommendation, major satisfaction, cents major rating
 			data["major_1"] = [95000, 89, 77, 4.8];
@@ -89,6 +260,9 @@ function sketchProc(processing) {
   		{
   			document.getElementById("search_2_name").value = data["major_2_name"];
   		}
+  		old1 = document.getElementById("search_1_name").value;
+		old2 = document.getElementById("search_2_name").value;
+		nochanges = true;
 
 	};
 
@@ -129,10 +303,20 @@ function sketchProc(processing) {
 				offset = 90;
 			processing.textFont(font, 30);
 			processing.fill(main);
-			processing.text("$" + (data["major_1"][0]).toLocaleString(), 360+offset, 70);
-			processing.text(data["major_1"][1], 360+offset, 140);
-			processing.text(data["major_1"][2], 360+offset, 220);
+			if (data["major_1"][0])
+				processing.text("$" + (data["major_1"][0]).toLocaleString(), 360+offset, 70);
+			else
+				processing.text("N/A", 360+offset, 70);
+			if (data["major_1"][1])
+				processing.text(data["major_1"][1], 360+offset, 140);
+			else
+				processing.text("N/A", 360+offset, 140);
+			if (data["major_1"][2])
+				processing.text(data["major_1"][2], 360+offset, 220);
+			else
+				processing.text("N/A", 360+offset, 220);
 			processing.text((data["major_1"][3]).toFixed(1), 360+offset, 300);
+
 
 			processing.textFont(font, 12);
 			processing.text("OUT OF 100", 360+offset, 155);
@@ -145,9 +329,18 @@ function sketchProc(processing) {
 				offset = -90;
 			processing.textFont(font, 30);
 			processing.fill(gray);
-			processing.text("$" + (data["major_2"][0]).toLocaleString(), 540+offset, 70);
-			processing.text(data["major_2"][1], 540+offset, 140);
-			processing.text(data["major_2"][2], 540+offset, 220);
+			if (data["major_2"][0])
+				processing.text("$" + (data["major_2"][0]).toLocaleString(), 540+offset, 70);
+			else
+				processing.text("N/A", 540+offset, 70);
+			if (data["major_2"][1])
+				processing.text(data["major_2"][1], 540+offset, 140);
+			else
+				processing.text("N/A", 540+offset, 140);
+			if (data["major_2"][2])
+				processing.text(data["major_2"][2], 540+offset, 220);
+			else
+				processing.text("N/A", 540+offset, 220);
 			processing.text((data["major_2"][3]).toFixed(1), 540+offset, 300);
 
 			processing.textFont(font, 12);
@@ -254,14 +447,27 @@ function sketchProc(processing) {
 };
 
 function update_tab(name) {
-	active_tab = name;
-	hide_1 = false;
-	hide_2 = false;
-	document.getElementById("search_1_button").value = "HIDE";
-	document.getElementById("search_2_button").value = "HIDE";
+	// if (name != active_tab)
+	// {
+	// 	processingInstance.noLoop();
+	// 	$("#main_viz").fadeTo(500, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(700, 1);});
+	// 	active_tab = name;
+	// 	if(data["location_1"])
+	// 	{
+	// 		hide_1 = false;
+	// 		document.getElementById("search_1_button").value = "HIDE";
+	// 	}
+	// 	if(data["location_2"])
+	// 	{
+	// 		hide_2 = false;
+	// 		document.getElementById("search_2_button").value = "HIDE";
+	// 	}
+	// }
 };
 
 function hide_toggle(num) {
+	processingInstance.noLoop();
+	$("#main_viz").fadeTo(500, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(700, 1);});
 	if (num == 1)
 	{
 		if (document.getElementById("search_1_button").value == "HIDE") { 
@@ -283,7 +489,3 @@ function hide_toggle(num) {
 		hide_2 = !hide_2;
 	}
 };
-
-var canvas = document.getElementById("main_viz");
-if (canvas != null)
-	var processingInstance = new Processing(canvas, sketchProc);

@@ -18,11 +18,17 @@
 //= require material
 //= require ripples
 
+
+
+
+//forward declaration
+function changeMade(){};
+
 //determine which js file to load
 var path = window.location.pathname.split('/');
 if (path[1] == "wizard" && path[2] != "start" && path[2] != "education")
 {
-	localStorage.removeItem("data_store");
+	//localStorage.removeItem("data_store");
 	var script = document.createElement("script");
 	script.type = "application/javascript";
 	script.src = "../assets/" + path[2] + ".js";
@@ -64,6 +70,7 @@ function api_request(query) {
       			data = jQuery.parseJSON(xhr.responseText);
 
 				if(data["operation"] == "undefined") {
+					localStorage.setItem("stored_query",data["query"])
 					window.location = "/info/examples/";
 				}
 				else {
@@ -74,7 +81,15 @@ function api_request(query) {
 				}
       		}
   		}
-  	}
+  	};
+
+  	xhr.onerror = function() {
+  		window.location = "/info/down/";
+  	};
+
+  	xhr.ontimeout = function() {
+  		window.location = "/info/down/";
+  	};
   	
   	xhr.send(null);
 

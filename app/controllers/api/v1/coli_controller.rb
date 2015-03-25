@@ -20,8 +20,6 @@ class Api::V1::ColiController < ApplicationController
 			return render json: result, status: 400
 		end
 
-		puts params
-
 		locations = params[:locations]
 
 		# Create a string of the form '(city = c1 AND state = s1) OR
@@ -37,32 +35,6 @@ class Api::V1::ColiController < ApplicationController
 			where_params << location[:state]
 		end
 		where_string = where_string[0..-5]	# Strip off the last ' OR '.
-
-=begin
-		# Query the database.
-		records = Coli.joins(
-						"LEFT OUTER JOIN weather_records ON colis.id = weather_records.coli_id")
-						.select(:cost_of_living,
-								:transportation,
-								:groceries,
-								:goods,
-								:health_care,
-								:utilities,
-								:housing,
-								:city,
-								:unemp_rate,
-								:sales_tax,
-								:property_tax,
-								:state,
-								:income_tax_max,
-								:income_tax_min,
-								:income_per_capita,
-								:economic_growth,
-								:month,
-								:high,
-								:low)
-						.where([where_string, *where_params])
-=end
 
 		records = Coli.find_by_sql [
 				"SELECT cost_of_living,
@@ -152,6 +124,8 @@ class Api::V1::ColiController < ApplicationController
 			index += 1
 		end
 
+		result[:count] = index - 1
+
 		labor_avg = Array.new
 		labor_avg << @averages[0][:avg_unemp_rate].to_f
 		labor_avg << @averages[0][:avg_income].to_f
@@ -226,6 +200,31 @@ private
 			labor_stats << stat
 		end
 
+
+		# Add max and min. The compact method removes nils.
+		labor_stats << labor_stats.compact.min
+		labor_stats << labor_stats.compact.max
+
+		result["labor_#{i}"] = labor_stats
+
+		
+		##### -------------------- TAXES --------------------- #####
+		tax_stats = Array.new	# For formatting the eventual JSON object.			
+
+		fields = [:sales_tax, :income_tax_min, :income_tax_max, :property_tax]
+
+		# Collect the value of each non-nil field in tax_stats.
+		fields.each do |field|
+			stat = record[field]
+			stat = stat ? stat.to_f : nil
+			tax_stats << stat
+		end
+
+		# Add max and min.
+		tax_stats << tax_stats.compact.min
+		tax_stats << tax_stats.compact.max
+
+		result["taxes_#{i}"] = tax_stats
 
 		# Add max and min. The compact method removes nils.
 		labor_stats << labor_stats.compact.min

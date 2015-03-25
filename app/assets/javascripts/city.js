@@ -1,33 +1,167 @@
-var data, hide_1, hide_2, main, gray, font, active_tab, axis_location, horz_locs;
+$(document).ready(function() {
+	$.post("/api/v1/record_names", {operation: 'get', tables: ['coli']}, function(response) { 
+		auto_cities = response;
+		$( "#search_1_name" ).autocomplete({
+	  		source: function(req, responseFn) {
+	  			var re = $.ui.autocomplete.escapeRegex(req.term);
+	  			var pattern1 = new RegExp("^"+re, "i");
+	  			var a = $.grep(auto_cities, function(item, index){return pattern1.test(item);});
+	  			var b = $.grep(auto_cities, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
+	  			responseFn(a.concat(b));
+	  		},
+	  		response: function(e, u) {
+	  			//if match list isnt empty, save the first match
+	  			if (u.content.length != 0)
+	  				auto_1 = u.content[0].value;
+	  			else
+	  				auto_1 = "";
+	  		},
+	  		close: function(e, u) {
+	  			//when leaving, replace with first match
+	  			temp1 = document.getElementById("search_1_name").value;
+	  			if (temp1 == "")
+	  				auto_1 = "";
+	  			else if (auto_cities.indexOf(temp1) < 0 && auto_1)
+					document.getElementById("search_1_name").value = auto_1;
+				else if (auto_1)
+					auto_1 = temp1;
+	  		},
+	  		delay: 0
+		});
+		$( "#search_2_name" ).autocomplete({
+	  		source: function(req, responseFn) {
+	  			var re = $.ui.autocomplete.escapeRegex(req.term);
+	  			var pattern1 = new RegExp("^"+re, "i");
+	  			var a = $.grep(auto_cities, function(item, index){return pattern1.test(item);});
+	  			var b = $.grep(auto_cities, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
+	  			responseFn(a.concat(b));
+	  		},
+	  		response: function(e, u) {
+
+	  			if (u.content.length != 0)
+	  				auto_2 = u.content[0].value;
+	  			else
+	  				auto_2 = "";
+	  		},
+	  		close: function(e, u) {
+	  			//when leaving, replace with first match
+	  			temp2 = document.getElementById("search_2_name").value;
+	  			if (temp2 == "")
+	  				auto_2 = "";
+	  			else if (auto_cities.indexOf(temp2) < 0 && auto_2)
+					document.getElementById("search_2_name").value = auto_2;
+				else if (auto_2)
+					auto_2 = temp2;
+	  		},
+	  		delay: 0
+		});
+	});	
+});
+
+var data, hide_1, hide_2, main, gray, font, active_tab, axis_location, horz_locs, auto_1, auto_2, sent1, sent2, nochanges, old1, old2, auto_cities, canvas, processingInstance;
+
+canvas = document.getElementById("main_viz");
+if (canvas != null)
+	processingInstance = new Processing(canvas, sketchProc);
+
+sent1 = true;
+sent2 = true;
 
 var sketch = new Processing.Sketch();
 
+function changeMade() {
+	if (old1 != document.getElementById("search_1_name").value)
+	{
+		old1 = document.getElementById("search_1_name").value;
+		nochanges = false;
+	}
+	if (old2 != document.getElementById("search_2_name").value)
+	{
+		old2 = document.getElementById("search_2_name").value;
+		nochanges = false;
+	}
+};
+
 function city_api_request(query) {
-	field1 = document.getElementById("search_1_name").value;
-	field2 = document.getElementById("search_2_name").value;
-	url = "";
+	if (nochanges)
+	{
+		return;
+	}
 
+	var field1, field2;
+	field1 = "";
+	field2 = "";
+
+	$("#error_1").empty();
+	$('#search_1_name').autocomplete('close');
+	//check to see if any of the fields are empty
+	if (document.getElementById("search_1_name").value != "")
+	{
+		if (auto_1 == "")
+			$("#error_1").append("Invalid city.");
+		if (auto_1 != "" && auto_1)
+			field1 = auto_1;		
+		else if (auto_1 == undefined)
+		{
+			if (auto_cities.indexOf(document.getElementById("search_1_name").value) < 0)
+				$("#error_1").append("Invalid city.");
+			else
+				field1 = document.getElementById("search_1_name").value;	
+		}
+	}
+	$("#error_2").empty();
+	$('#search_2_name').autocomplete('close');
+	if (document.getElementById("search_2_name").value != "")
+	{
+		if (auto_2 == "")
+			$("#error_2").append("Invalid city.");
+		if (auto_2 != "" && auto_2)
+			field2 = auto_2;		
+		else if (auto_2 == undefined)
+		{
+			if (auto_cities.indexOf(document.getElementById("search_2_name").value) < 0)
+				$("#error_2").append("Invalid city.");
+			else
+				field2 = document.getElementById("search_2_name").value;	
+		}
+	}
+
+	url = "https://trycents.com:6001/data";
 	type = "city"
+	body = ""
 
-	if(field1 == "" && field2 == ""){
+	if((field1 == "" && field2 == "")){
+		sent1 = false;
+		sent2 = false;
 		return;
 	}
 	else if(field2 == ""){
-		url = "https://trycents.com:6001/data/type="+type+"&option="+field1;
+		body = JSON.stringify({type:type,option:[field1]});
+		sent2 = false;
+		sent1 = true;
+		processingInstance.noLoop();
+		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
 	}
 	else if(field1 == ""){
-		url = "https://trycents.com:6001/data/type="+type+"&option="+field2;
+		body = JSON.stringify({type:type,option:[field2]});
+		sent1 = false;
+		sent2 = true;
+		processingInstance.noLoop();
+		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
 	}
 	else{
-		url = "https://trycents.com:6001/data/type="+type+"&option="+field1+"&option="+field2;
+		body = JSON.stringify({type:type,option:[field1,field2]});
+		sent1 = true;
+		sent2 = true;
+		processingInstance.noLoop();
+		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
 	}
 
 	//data = new Object();
 	var xmlHttp = null;
 
     xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", url, true );
-
+    xmlHttp.open( "POST", url, true );
     xmlHttp.onreadystatechange = function() {
     	if (xmlHttp.readyState === 4) { 
       		if (xmlHttp.status === 200) {
@@ -36,25 +170,56 @@ function city_api_request(query) {
 				localStorage.setItem("query_type", type);
 				localStorage.setItem("data_store",JSON.stringify(data));
 
-				//location.reload();
-				if (!data["location_2"])
-  				{
-		  			hide_2 = true;
-		  			document.getElementById("search_2_button").value = "SHOW";
-		  			$("#search_2_button").attr("disabled", "true");
-  				}
-  				else
-  				{
-  					hide_2 = false;
-  					document.getElementById("search_2_button").value = "SHOW";
-		  			$("#search_2_button").removeAttr("disabled");
-		  			document.getElementById("search_2_name").value = data["location_2"];
+				auto_1 = undefined;
+				auto_2 = undefined;
 
-  				}
+	  			if (sent1 && sent2)
+	  			{
+	  				hide_1 = false; 
+	  				hide_2 = false;
+		  	 		document.getElementById("search_1_button").value = "HIDE";
+		  	 		$("#search_1_button").removeAttr("disabled");
+		  	 		document.getElementById("search_2_button").value = "HIDE";
+		  	 		$("#search_2_button").removeAttr("disabled");
+	  			}
+	  			else if (!sent1 && sent2)
+	  			{
+	  				hide_1 = true;
+	  				document.getElementById("search_1_button").value = "SHOW";
+		  	 		$("#search_1_button").attr("disabled", "true");
+		  	 		hide_2 = false;
+		  	 		document.getElementById("search_2_button").value = "HIDE";
+		  	 		$("#search_2_button").removeAttr("disabled");
+		  	 		//need to flip data to _2 arrays
+		  	 		data["weather_2"] = $.extend(true, [], data["weather_1"]);
+					data["weatherlow_2"] = $.extend(true, [], data["weatherlow_1"]);
+					data["cli_2"] = $.extend(true, [], data["cli_1"])
+					data["labor_2"] = $.extend(true, [], data["labor_1"])
+					data["taxes_2"] = $.extend(true, [], data["taxes_1"])
+					data["location_2"] = data["location_1"];
+					data["weather_1"] = null;
+					data["weatherlow_1"] = null;
+					data["cli_1"] = null;
+					data["labor_1"] = null;
+					data["taxes_1"] = null;
+					data["location_1"] = null;
+
+	  			}
+	  			else if (sent1 && !sent2)
+	  			{
+	  				hide_2 = true;
+	  				document.getElementById("search_2_button").value = "SHOW";
+		  	 		$("#search_2_button").attr("disabled", "true");
+		  	 		hide_1 = false;
+		  	 		document.getElementById("search_1_button").value = "HIDE";
+		  	 		$("#search_1_button").removeAttr("disabled");
+	  			}
+	  			nochanges = true;
+	  			
       		}
       	}
     }
-    xmlHttp.send( null );
+    xmlHttp.send(body);
 };
 
 function sketchProc(processing) {
@@ -64,9 +229,6 @@ function sketchProc(processing) {
 		console.log("loaded city.js successfully");
 		main = processing.color(136, 68, 18);
 		gray = processing.color(138, 136, 137);
-
-
-
 		processing.size(655,375);
 		//always set the initial tab to the first one
 		active_tab = 1;
@@ -75,7 +237,6 @@ function sketchProc(processing) {
 		//load font
 		font = processing.loadFont("Roboto");
 		processing.textFont(font, 12);
-
 		horz_locs = [87, 145, 215, 308, 389, 488, 577];
 
 		//var to hold all data relevant to a given category
@@ -86,9 +247,11 @@ function sketchProc(processing) {
 		data = new Array();
 
   		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));
+
+  		//console.log(data["location_1"]);
   		//localStorage.removeItem("data_store");
 
-  		if (data == null)
+  		if (!data || (!data["location_1"] && !data["location_2"]))
   		{
   			data = new Array();
 
@@ -97,8 +260,8 @@ function sketchProc(processing) {
 			data["weather_2"]    = [67.0, 71.0, 77.0, 85.0, 95.0, 104.0, 106.0, 104.0, 100.0, 89.0, 76.0, 66.0, 66.0, 106.0];
 			data["weatherlow_2"] = [46.0, 49.0, 53.0, 60.0, 69.0, 78.0, 83.0, 83.0, 77.0, 65.0, 53.0, 45.0, 45.0, 83.0];
 
-			data["location_1"] = "Salt Lake City, UT";
-			data["location_2"] = "Phoenix, AZ";
+			data["location_1"] = "Salt Lake City, Utah";
+			data["location_2"] = "Phoenix, Arizona";
 
 			data["cli_1"] = [102, 94, 95, 95, 119, 105, 92, 92, 119];
 			data["cli_2"] = [96, 92, 100, 106, 97, 101, 99, 92, 106];
@@ -108,9 +271,9 @@ function sketchProc(processing) {
 			data["labor_3"] = [5.8, 44800, 4.6];
 
 			//sales, income min, income max, property
-			data["taxes_1"] = [6.85, 5.0, 5.0, 0.67];
-			data["taxes_2"] = [8.3, 2.59, 4.54, 1.59];
-			data["taxes_3"] = [8.25, 3.5, 7.8, 1.15];
+			data["taxes_1"] = [6.85, 5.0, 5.0, 1407];
+			data["taxes_2"] = [8.3, 2.59, 4.54, 1427];
+			data["taxes_3"] = [8.25, 3.5, 7.8, 2065];
   		}
   		//console.log(data["location_2"]);
   		if (!data["location_2"])
@@ -125,6 +288,9 @@ function sketchProc(processing) {
   		}
 
 		document.getElementById("search_1_name").value = data["location_1"];
+		old1 = document.getElementById("search_1_name").value;
+		old2 = document.getElementById("search_2_name").value;
+		nochanges = true;
 	};
 
 
@@ -457,7 +623,7 @@ function sketchProc(processing) {
 				}
 				else
 				{
-					processing.rect(horz_locs[i], axis_location - 15, 16, -5);
+					processing.rect(horz_locs[i]-16, axis_location-15, 16, -5);
 					above_1[i] = axis_location-25;
 				}
 			}
@@ -548,6 +714,7 @@ function sketchProc(processing) {
 		}
 		else
 		{
+			
 			if (data["location_2"])
 			{
 				var temp_max_1 = processing.max(data["labor_1"][0], data["labor_2"][0], data["labor_3"][0]);
@@ -608,9 +775,12 @@ function sketchProc(processing) {
 		processing.text("NATIONAL", (axis_location[1]+axis_location[2])/2, (line_2+line_3)/2-9);
 		processing.text("AVERAGES", (axis_location[1]+axis_location[2])/2, (line_2+line_3)/2+8);
 
-		var height_1 = (graph_top - graph_bot)*((data["labor_1"][0] -  min_1)/(max_1 - min_1));
-		var height_2 = (graph_top - graph_bot)*((data["labor_1"][2] -  min_1)/(max_1 - min_1));
-		var height_3 = (graph_top - graph_bot)*((data["labor_1"][1] -  min_2)/(max_2 - min_2));
+		if (!hide_1)
+		{
+			var height_1 = (graph_top - graph_bot)*((data["labor_1"][0] -  min_1)/(max_1 - min_1));
+			var height_2 = (graph_top - graph_bot)*((data["labor_1"][2] -  min_1)/(max_1 - min_1));
+			var height_3 = (graph_top - graph_bot)*((data["labor_1"][1] -  min_2)/(max_2 - min_2));
+		}
 		if (!hide_2)
 		{
 			var height_4 = (graph_top - graph_bot)*((data["labor_2"][0] -  min_1)/(max_1 - min_1));
@@ -741,7 +911,7 @@ function sketchProc(processing) {
 			processing.textAlign(processing.RIGHT);
 			processing.text(String(processing.round(min_1 + per_scale * i * 10)/10) + "%", graph_left-5, h+5);
 			processing.textAlign(processing.LEFT);
-			processing.text("$" + String(processing.round(min_2 + money_scale * i * 100)/100), graph_right+5, h+5);
+			processing.text("$" + String((min_2 + money_scale * i).toFixed(0)), graph_right+5, h+5);
 		}
 
 		//draw NATIONAL AVERAGE rectangle and data
@@ -768,10 +938,13 @@ function sketchProc(processing) {
 		processing.text("NATIONAL", (axis_location[2]+axis_location[3])/2, (line_3+line_4)/2-9);
 		processing.text("AVERAGES", (axis_location[2]+axis_location[3])/2, (line_3+line_4)/2+8);
 
-		var height_1 = (graph_top - graph_bot)*((data["taxes_1"][0] -  min_1)/(max_1 - min_1));
-		var height_2 = (graph_top - graph_bot)*((data["taxes_1"][1] -  min_1)/(max_1 - min_1));
-		var height_3 = (graph_top - graph_bot)*((data["taxes_1"][2] -  min_1)/(max_1 - min_1));
-		var height_4 = (graph_top - graph_bot)*((data["taxes_1"][3] -  min_2)/(max_2 - min_2));
+		if (!hide_1)
+		{
+			var height_1 = (graph_top - graph_bot)*((data["taxes_1"][0] -  min_1)/(max_1 - min_1));
+			var height_2 = (graph_top - graph_bot)*((data["taxes_1"][1] -  min_1)/(max_1 - min_1));
+			var height_3 = (graph_top - graph_bot)*((data["taxes_1"][2] -  min_1)/(max_1 - min_1));
+			var height_4 = (graph_top - graph_bot)*((data["taxes_1"][3] -  min_2)/(max_2 - min_2));
+		}
 		if (!hide_2)
 		{
 			var height_5 = (graph_top - graph_bot)*((data["taxes_2"][0] -  min_1)/(max_1 - min_1));
@@ -953,21 +1126,30 @@ function sketchProc(processing) {
 		processing.text("HIGHS", 557, 62);
 		processing.text("LOWS", 558, 83);
 	};
-
 };
 
 function update_tab(name) {
-	active_tab = name;
-	hide_1 = false;
-	document.getElementById("search_1_button").value = "HIDE";
-	if(data["location_2"])
+	if (name != active_tab)
 	{
-		hide_2 = false;
-		document.getElementById("search_2_button").value = "HIDE";
+		processingInstance.noLoop();
+		$("#main_viz").fadeTo(500, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(700, 1);});
+		active_tab = name;
+		if(data["location_1"])
+		{
+			hide_1 = false;
+			document.getElementById("search_1_button").value = "HIDE";
+		}
+		if(data["location_2"])
+		{
+			hide_2 = false;
+			document.getElementById("search_2_button").value = "HIDE";
+		}
 	}
 };
 
 function hide_toggle(num) {
+	processingInstance.noLoop();
+	$("#main_viz").fadeTo(500, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(700, 1);});
 	if (num == 1)
 	{
 		if (document.getElementById("search_1_button").value == "HIDE") { 
@@ -990,8 +1172,5 @@ function hide_toggle(num) {
 	}
 };
 
-var canvas = document.getElementById("main_viz");
-if (canvas != null)
-	var processingInstance = new Processing(canvas, sketchProc);
 
 

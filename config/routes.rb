@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'info/examples'
   get 'info/help'
   get 'info/about'
+  get 'info/down'
   get 'wizard/start'
   get 'wizard/education'
   get 'wizard/career'
@@ -14,13 +15,12 @@ Rails.application.routes.draw do
   get 'user/register'
   get 'user/registered', as: 'registered'
   post 'user/register' => 'user#create', as: 'register'
-  get 'user/login' => 'sessions#new'
+  get 'user/login' => 'sessions#new', as: 'user_login'
   post 'user/login' => 'sessions#create'
   get 'user/logout' => 'sessions#destroy'
-  get 'user/confirm' => 'to_be_validated_users#confirm'
-  get 'user/confirmed'
   get 'search/results'
   get 'search/getPartial'
+  get 'user/terms'
   root 'search#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -91,6 +91,40 @@ Rails.application.routes.draw do
       post 'spending_breakdown' => 'spending_breakdown#save'
       get 'spending_breakdown/:user_id' => 'spending_breakdown#load'
       delete 'spending_breakdown/:user_id' => 'spending_breakdown#delete'
+    end
+
+    namespace :v2 do
+    	# Cost of living.
+    	get 'cost_of_living' => 'coli#index'									# Get coli record names for autocomplete.
+    	get 'cost_of_living/:state' => 'coli#show_state'			# Get cost of living data by state.
+    	get 'cost_of_living/:state/:city' => 'coli#show_city'	# Get cost of living data by state and city.
+    	post 'cost_of_living' => 'coli#show_two'							# Get cost of living data.
+
+      # Schools.
+      get 'schools' => 'schools#index'											# Get school record names for autocomplete.
+      get 'schools/:name' => 'schools#show'									# Get school by name.
+      post 'schools' => 'schools#show_two'									# Get school data.
+
+      # Majors.
+      get 'majors' => 'majors#index'												# Get major record names for autocomplete.
+      get 'majors/:name' => 'majors#show'										# Get major by name.
+      post 'majors' => 'majors#show_two'										# Get major data.
+
+      # Careers.
+      get 'careers' => 'careers#index'											# Get career record names for autocomplete.
+      get 'careers/:name' => 'careers#show'									# Get career by name.
+      post 'careers' => 'careers#show_two'									# Get career data.
+
+      # Users.
+    	get 'users/new' => '/user#register'										# Go to the register form.
+      post 'users' => 'users#create'												# Register a new user.
+      get 'users/:email' => 'users#show'										# Confirm that a user exists.
+      post 'users/:email' => 'users#validate'								# Validate a username and password.
+     	
+     	# Spending breakdown. 
+     	get 'spending_breakdown/:id' => 'spending_breakdown#show'
+      put 'spending_breakdown/:id' => 'spending_breakdown#update'
+      patch 'spending_breakdown/:id' => 'spending_breakdown#update'
     end
   end
 end

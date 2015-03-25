@@ -2,11 +2,12 @@ from flask import Flask, make_response, request, current_app
 import nltk
 import json
 import csv
-import cgi
+import urlparse
 import requests
 import re
 import string
 import urllib2
+import urllib
 from datetime import timedelta
 from functools import update_wrapper
 import sys
@@ -46,11 +47,12 @@ state = {}
 #conflicts right now between Louisiana(LA) and Los Angeles(LA) and Indiana(IN) and the word 'in'
 commands = {"compare":"compare","vs.":"compare","vs":"compare","get":"get","find":"get","difference between":"compare"}
 common_abbrs = {"nyc":"new york, new york","slc":"salt lake city, utah","la":"los angeles, california"}
+supers = {"best":"","worst":"","cheapest":"","expensive":"","priciest":""}
+datasets = {"schools":"school","universities":"university","cities":"city","majors":"degree","degrees":"degrees"}
 
 states = open("states.csv", "rU")
 
 cities = [line.strip() for line in open("city_state.txt")]
-#cities = cities[0].split("\r")
 
 unis = {}
 for line in open("universities.csv"):
@@ -60,15 +62,52 @@ for line in open("universities.csv"):
 for line in csv.reader(states):
 	state[line[0].lower()] = line[1].lower()
 
+mpac = {
+	"operation":"get",
+	"tables":[
+		"majors"
+	]
+}
+
+mpayload = json.dumps(mpac)
+murl = "https://trycents.com/api/v1/record_names/"
+r = requests.Request("POST",murl,headers={'Content-Type':'application/json','Accept':'application/json'},data=mpayload)
+mprep = r.prepare()
+ms = requests.Session()
+ms.verify = False
+mresp = ms.send(mprep)
+
+majs = json.loads(mresp.text)
+
+# for c in cities:
+# 	cabbr = ""
+# 	for a, s in state.iteritems():
+# 		if s in c:
+# 			li = c.rsplit(s, 1)
+# 			cabbr = a.join(li)
+
+# 	cname = c[:c.index(",")]
+# 	city = c.replace(",","")
+# 	cabbr = cabbr.replace(",","")
+# 	carr = city.split(" ")
+# 	cabbrarr = cabbr.split(" ")
+# 	cnamearr = cname.split(" ")
+#cities = cities[0].split("\r")
+
 app = Flask(__name__)
 cors = CORS(app)
 
 @app.route('/query/<string:query>', methods=['GET'])
 def query(query):
+
+	with open("../data/queries.txt", "a") as logfile:
+		logfile.write(query + "\n")
+
 	object = []
 	ops = []
 	locations = []
 	schools = []
+	majors = []
 	command = ""
 	package = {}
 	sent_query = query
@@ -83,22 +122,29 @@ def query(query):
 	for u,l in unis.iteritems():
 		for a in l:
 			if " " + a.lower() + " " in query:
-				schools.append(u)
+				if u not in schools:
+					schools.append(u)
 	for abbr, st in state.iteritems():
 		if re.search(r"\b" + abbr + r"\b", query):
 			query = re.sub(r"\b" + abbr + r"\b", st, query)
 	for abbr, c in common_abbrs.iteritems():
 		if re.search(r"\b" + abbr + r"\b", query):
 			query = re.sub(r"\b" + abbr + r"\b", c, query)
+	for m in majs:
+		if " " + m.lower() + " " in query:
+			majors.append(m)
+			print majors
 	for c in cities:
 		temp = " " + c.replace(",", "").lower() + " "
 		if(temp in query):
-			locations.append(c)
+			if c not in locations:
+				locations.append(c)
 		if(" " + c.lower() + " " in query):
-			locations.append(c)
+			if c not in locations:
+				locations.append(c)
 		cname = " " + c[:c.index(",")].lower() + " "
-		if(cname in query):
-			if(c not in locations):
+		if cname in query:
+			if c not in locations:
 				locations.append(c)
 	#tokens = nltk.word_tokenize(query)
 	for s in commands:
@@ -134,14 +180,18 @@ def query(query):
 		command = "get"
 	if command == "" and len(locations) > 1:
 		command = "compare"
-	if len(schools) == 0 and len(locations) == 0:
+	if command == "" and len(majors) == 1:
+		command = "get"
+	if command == "" and len(majors) > 1:
+		command = "compare"
+
+	if len(schools) == 0 and len(locations) == 0 and len(majors) == 0:
 		package = {
 			"operation":"undefined",
 			"query":sent_query
 		}
 		resp = json.dumps(package)
 		return resp
-
 	if len(schools) >= 1:
 		package = {
 			"operation":command,
@@ -177,6 +227,43 @@ def query(query):
 			package["school_"+`i+1`+"_name"] = schools[i]
 		package["query"] = sent_query
 		package["query_type"] = "school"
+		resp = json.dumps(package)
+		return resp
+	elif len(majors) >= 1:
+		package = {
+			"operation":command,
+			"query":query,
+			"majors":[]
+		}
+		for m in majors:
+			package["majors"].append(m)
+		#url = "https://%s/api/v1/schools/" % (ip)
+		url = "https://trycents.com/api/v1/majors/"
+		payload = json.dumps(package)
+		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
+		prep = r.prepare()
+		s = requests.Session()
+		s.verify = False
+		resp = s.send(prep)
+		if(resp.status_code == 400):
+			package = {
+				"operation":"undefined",
+				"query":sent_query
+			}
+			resp = json.dumps(package)
+			return resp
+		package = json.loads(resp.text)
+		if(package["operation"] == "undefined"):
+			package = {
+				"operation":"undefined",
+				"query":sent_query
+			}
+			resp = json.dumps(package)
+			return resp
+		for i in range(0, len(majors)):
+			package["major_"+`i+1`+"_name"] = majors[i]
+		package["query"] = sent_query
+		package["query_type"] = "major"
 		resp = json.dumps(package)
 		return resp
 	elif len(locations) >= 1:
@@ -215,11 +302,13 @@ def query(query):
 		resp = json.dumps(package)
 		return resp
 
-@app.route('/data/<string:data>', methods=['GET'])
-def data(data):
-	query = cgi.parse_qs(data)
+@app.route('/data', methods=['POST'])
+def data():
+	#query = cgi.parse_qs(data)
 
-	if(query['type'][0] == 'city'):
+	query = json.loads(request.data)
+
+	if(query['type'] == 'city'):
 		package  = {
 			"locations":[]
 		}
@@ -241,7 +330,7 @@ def data(data):
 		resp = s.send(prep)
 		return resp.text
 
-	if(query['type'][0] == 'school'):
+	if(query['type'] == 'school'):
 		package  = {
 			"schools":[]
 		}
@@ -277,7 +366,7 @@ def data(data):
 			package["school_"+`i+1`+"_name"] = scarr[i]
 		return json.dumps(package)
 
-	if(query['type'][0] == 'major'):
+	if(query['type'] == 'major'):
 		package = {
 			"majors":[]
 		}
@@ -288,9 +377,7 @@ def data(data):
 			package['operation'] = "compare"
 
 		for o in query['option']:
-			package["majors"].append(o)
-
-		print package
+			package["majors"].append(o.title())
 
 		url = "https://trycents.com/api/v1/majors/"
 
@@ -301,14 +388,12 @@ def data(data):
 		s.verify = False
 		resp = s.send(prep)
 
-		print resp
-
 		package = json.loads(resp.text)
 		for i in range(0, len(query['option'])):
-			package["major_"+`i+1`+"_name"] = query['option'][i]
+			package["major_"+`i+1`+"_name"] = query['option'][i].title()
 		return json.dumps(package)
 
-	if(query['type'][0] == 'career'):
+	if(query['type'] == 'career'):
 		package = {
 			"careers":[]
 		}
@@ -337,4 +422,4 @@ def data(data):
 #app.config['SERVER_NAME'] = "trycents.com"
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0',port=6001,debug=True,processes=5,ssl_context=('/etc/ssl/certs/ssl-bundle.crt','../.ssl/myserver.key'))
+	app.run(host='0.0.0.0',port=6001,debug=True,processes=10,ssl_context=('/etc/ssl/certs/ssl-bundle.crt','../.ssl/myserver.key'))

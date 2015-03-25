@@ -1,46 +1,119 @@
-<div class="center">
-	<br><br>
-	<p></p>
+<div style="width : 1090px; margin : 60px auto 0 auto; text-align: center;">
+	<div id="erModal" style="display:none" class="alert alert-dismissable alert-info">
+    	<button type="button" class="close" onclick="clear_alert();">×</button>
+    	<p id="error"></p>
+	</div>
+	<script>
+		var qError = localStorage.getItem("stored_query");
+		if(qError != null){
+			document.getElementById("erModal").style.display = "block";
+			document.getElementById("error").innerHTML = "Your question '" + qError + "' hasn't returned any data. Here are some categories you can use to search for something more specific."
+			localStorage.removeItem("stored_query");
+		}
+
+		function clear_alert(){
+			$( "#erModal" ).slideUp();
+		}
+	</script>
 	<h4>CHECK OUT THE CATEGORIES, HOVER OVER THE IMAGES TO ADD YOUR OWN SEARCH.</h4>
-</div>
-
-
-	<div class="examples_center">
-	<ul class="examples_center_items">
-		<li id="city_container"><div height='300px' width='540px' onmouseover="showSearch('city', 'right')" style='display:inline; box-shadow: -5px 5px 3px #CDCDCD; float:left; background-image: url(/assets/city_compare.jpeg); height: 300px; width: 540px; margin-right: 10px'></div></li>
-		<li id="major_container"><div height='300px' width='540px' onmouseover="showSearch('major', 'left')" style='display:inline; box-shadow: -5px 5px 3px #CDCDCD; float:left; background-image: url(/assets/major_compare.jpeg); height: 300px; width: 540px; margin-left: 10px'></div></li>
-	</ul>
-
-	<ul class="examples_center_desc">
-		<li style='width:540px; margin-right:10px;'><h4>CITY STATS AND COMPARISON</h4><p>Considering moving to a different location or do you want to know how your current city compares? Get cost of living information, tax information, average weather breakdown by month, and labor statistics for a specific city or compare two.</p></li>
-		<li style='width:540px; margin-left:10px;'><h4>MAJOR STATS AND COMPARISON</h4><p>Curious to see what the top jobs are for what you are studying? or want to compare potential majors based on potential salaries, recommendations and satisfaction?</p></li>
-	</ul></div>
-
-	<div class="examples_center">
-	<ul class="examples_center_items">
-		<li id="school_container"><div height='300px' width='540px' onmouseover="showSearch('school', 'right')" style='display:inline; box-shadow: -5px 5px 3px #CDCDCD; float:left; background-image: url(/assets/school_compare.jpeg); height: 300px; width: 540px; margin-right: 10px'></div></li>
-		<li id="spend_container"><div height='300px' width='540px' onmouseover="showSearch('spend', 'left')" style='display:inline; box-shadow: -5px 5px 3px #CDCDCD; float:left; background-image: url(/assets/spend_compare.jpeg); height: 300px; width: 540px; margin-left: 10px'></div></li>
-	</ul>
-
-	<ul class="examples_center_desc">
-		<li style='width:540px; margin-right:10px;'><h4>COLLEGE STATS AND COMPARISON</h4><p>Researching potential schools, or do you want to see how your school stacks up? Compare tuition rates, undergrad enrollment rates and the school's graduation rate.</p></li>
-		<li style='width:540px; margin-left:10px;'><h4>MONTHLY SPENDING BREAKDOWN</h4><p>Want to compare your spending to the spending trends of others or do you want to setup a monthly budget? Create a spending breakdown that matches your needs here.</p></li>
-	</ul></div>
-
-
-
-	<div class="examples_center">
-	<ul class="examples_center_items">
-		<li id="career_container"><div height='300px' width='540px' onmouseover="showSearch('career', 'right')" style='display:inline; box-shadow: -5px 5px 3px #CDCDCD; float:left; background-image: url(/assets/career_compare.jpeg); height: 300px; width: 540px; margin-right: 10px'></div></li>
-		<li id="suggest_container"><div height='300px' width='540px' onmouseover="showSuggest()" style='display:inline; box-shadow: -5px 5px 3px #CDCDCD; float:left; background-image: url(/assets/suggest.jpeg); height: 300px; width: 540px; margin-left: 10px'></div></li>
-	</ul>
-
-	<ul class="examples_center_desc">
-		<li style='width:540px; margin-right:10px;'><h4>CAREER STATS AND COMPARISON</h4><p>Want to see the job outlook for a career you are considering? Check in to see what your prospective careers have to offer in terms of salary, demand, and unemployment.</p></li>
-		<li style='width:540px; margin-left:10px;'><h4>MORE!</h4><p>Want to see some other search categories? Let us know.</p></li>
-	</ul></div>
-	
-	<br><br>
+	<div class="examples-img-left" id="city_container" onmouseover="showSearch('city');" onmouseleave="resort('city'); leftDiv();" style="background-image: url(/assets/examples/city.png); background-position: right;">
+		<btn class='btn btn-default' id="city_clear" onclick="clearFields('city');" style='float: right; visibility: hidden'>X</btn>
+		<form onsubmit="dataRequest('city'); return false;">
+			<ul class='examples_search' id="city_form" hidden>
+				<li><input class='search_1_examples' id='search_1_city' type='text'></li>
+				<li><p class='versus'>VS.</p></li>
+				<li><input class='search_2_examples' id='search_2_city' type='text'></li>
+				<li><button class='circle-arrow-examples'><img src='/assets/circle arrow.png' height='38px' width='38px'></button></li>
+			</ul>
+		</form>
 	</div>
 
+	<div class="examples-img-right" id="major_container" onmouseover="showSearch('major');" onmouseleave="resort('major'); leftDiv();" style="background-image: url(/assets/examples/major.png);">
+		<btn class='btn btn-default' id="major_clear" onclick="clearFields('major');" style='float: right; visibility: hidden'>X</btn>
+		<form onsubmit="dataRequest('major'); return false;">
+			<ul class='examples_search' id="major_form" hidden>
+				<li><input class='search_1_examples' id='search_1_major' type='text'></li>
+				<li><p class='versus'>VS.</p></li>
+				<li><input class='search_2_examples' id='search_2_major' type='text'></li>
+				<li><button class='circle-arrow-examples'><img src='/assets/circle arrow.png' height='38px' width='38px'></button></li>
+			</ul>
+		</form>
+	</div>
+
+	<div class="examples-desc-left">
+		<h4>CITY STATS AND COMPARISON</h4>
+		<p>Considering moving to a different location or do you want to know how your current city compares? Get cost of living information, tax information, average weather breakdown by month, and labor statistics for a specific city or compare two.</p>
+	</div>
+
+	<div class="examples-desc-right">
+		<h4>MAJOR STATS AND COMPARISON</h4>
+		<p>Curious to see what the top jobs are for what you are studying? or want to compare potential majors based on potential salaries, recommendations and satisfaction?</p>
+	</div>
+
+	<div class="examples-img-left" id="school_container" onmouseover="showSearch('school');" onmouseleave="resort('school'); leftDiv();" style="background-image: url(/assets/examples/school.png);">
+		<btn class='btn btn-default' id="school_clear" onclick="clearFields('school');" style='float: right; visibility: hidden'>X</btn>
+		<form onsubmit="dataRequest('school'); return false;">
+			<ul class='examples_search' id="school_form" hidden>
+				<li><input class='search_1_examples' id='search_1_school' type='text'></li>
+				<li><p class='versus'>VS.</p></li>
+				<li><input class='search_2_examples' id='search_2_school' type='text'></li>
+				<li><button class='circle-arrow-examples'><img src='/assets/circle arrow.png' height='38px' width='38px'></button></li>
+			</ul>
+		</form>
+	</div>
+
+	<div class="examples-img-right" id="spending_container" onmouseover="showSearch('spending');" onmouseleave="resort('spending'); leftDiv();" style="background-image: url(/assets/examples/spending.png);">
+		<btn class='btn btn-default' id="spending_clear" onclick="clearFields('spending');" style='float: right; visibility: hidden'>X</btn>
+		<form onsubmit="onsubmit=spendingRedirect(); return false;">
+			<ul class='examples_search' id="spending_form" hidden>
+				<li><input class='search_1_examples_suggest' id='search_1_spending' type='text'></li>
+				<li><button class='circle-arrow-examples'><img src='/assets/circle arrow.png' height='38px' width='38px'></button></li>
+			</ul>
+		</form>
+	</div>
+
+	<div class="examples-desc-left">
+		<h4>COLLEGE STATS AND COMPARISON</h4>
+		<p>Researching potential schools, or do you want to see how your school stacks up? Compare tuition rates, undergrad enrollment rates and the school's graduation rate.</p>
+	</div>
+
+	<div class="examples-desc-right">
+		<h4>MONTHLY SPENDING BREAKDOWN</h4>
+		<p>Want to compare your spending to the spending trends of others or do you want to setup a monthly budget? Create a spending breakdown that matches your needs here.</p>
+	</div>
+
+	<div class="examples-img-left" id="career_container" onmouseover="showSearch('career');" onmouseleave="resort('career'); leftDiv();" style="background-image: url(/assets/examples/career.png);">
+		<btn class='btn btn-default' id="career_clear" onclick="clearFields('career');" style='float: right; visibility: hidden'>X</btn>
+		<form onsubmit="window.alert('Career data coming soon.'); return false;">
+			<ul class='examples_search' id="career_form" hidden>
+				<li><input class='search_1_examples' id='search_1_career' type='text'></li>
+				<li><p class='versus'>VS.</p></li>
+				<li><input class='search_2_examples' id='search_2_career' type='text'></li>
+				<li><button class='circle-arrow-examples'><img src='/assets/circle arrow.png' height='38px' width='38px'></button></li>
+			</ul>
+		</form>
+	</div>
+
+	<div class="examples-img-right" id="suggest_container" onmouseover="showSearch('suggest');" onmouseleave="resort('suggest'); leftDiv();" style="background-image: url(/assets/examples/suggest.png);">
+		<btn class='btn btn-default' id="suggest_clear" onclick="clearFields('suggest');" style='float: right; visibility: hidden'>X</btn>
+		<form onsubmit="suggestSubmit(); return false;">
+			<ul class='examples_search' id="suggest_form" hidden>
+				<li><textarea maxlength='465' class='suggest_1' id='search_1_suggest'></textarea></li>
+				<li><button class='circle-arrow-examples'><img src='/assets/circle arrow.png' height='38px' width='38px'></button></li>
+			</ul>
+		</form>
+	</div>
+
+	<div class="examples-desc-left">
+		<h4>CAREER STATS AND COMPARISON</h4>
+		<p>Want to see the job outlook for a career you are considering? Check in to see what your prospective careers have to offer in terms of salary, demand, and unemployment.</p>
+	</div>
+
+	<div class="examples-desc-right">
+		<h4>MORE!</h4>
+		<p>Want to see some other search categories? Let us know.</p>
+	</div>
+</div>
+
 <script src="/assets/examples.js"></script>
+
