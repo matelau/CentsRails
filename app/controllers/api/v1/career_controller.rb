@@ -8,7 +8,7 @@ class Api::V1::CareerController < ApplicationController
 		# Check for the required fields, and return an appropriate message if
 		# they are not present.
 		unless params[:careers].present?
-			error_list << 'No schools were in the schools array'
+			error_list << 'No careers were in the schools array'
 		end
 
 		unless params[:operation].present?
@@ -39,7 +39,7 @@ class Api::V1::CareerController < ApplicationController
 						.order('careers.id ASC')
 
 		# Iterate over each career, keeping track of the career's index.
-		# (The index is needed because that's how the view tracks career.)
+		# (The index is needed because that's how the view tracks careers.)
 		index = 1
 		careers.each do |career|
 			result["jobs_#{index}"] = Array.new
@@ -70,7 +70,7 @@ class Api::V1::CareerController < ApplicationController
 				end
 			end
 
-			# Keep track of which majors had neither exact nor state data.
+			# Keep track of which careers had neither exact nor state data.
 			if not match
 				no_data_for << career
 			end
