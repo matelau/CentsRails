@@ -15,8 +15,7 @@ class User < ActiveRecord::Base
 		message: 'must be letters' }
 
   # Ensure that the email is unique.
-  validates :email, uniqueness: true,
-										presence: true
+  validates :email, uniqueness: true, presence: true
 
 	validates :email_type, presence: true
 

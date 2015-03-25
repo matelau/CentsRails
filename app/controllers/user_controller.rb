@@ -23,7 +23,7 @@ class UserController < ApplicationController
 		if user.save
 			redirect_to registered_path
 		else
-			flash[:error] = "Your account couldn't be created."
+			flash[:error] = user.errors.values[0]
 			redirect_to '/search/index'
 		end
 	end
