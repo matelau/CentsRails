@@ -369,7 +369,7 @@ function enterHit(event) {
     }
     else if (event.keyCode == 27)
     	cancelCategory();
-    else if (!(/^[a-zA-Z0-9 ]+$/.test(document.getElementById("category_name").value)))
+    else if (!(/^[a-zA-Z0-9 ]+$/.test(document.getElementById("category_name").value)) && document.getElementById("category_name").value != "")
     {
     	window.alert("Only letters, numbers and spaces allowed.");
     	cancelCategory();
