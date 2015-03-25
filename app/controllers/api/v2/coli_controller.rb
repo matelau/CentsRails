@@ -1,26 +1,98 @@
-class Api::V1::ColiController < ApplicationController
+class Api::V2::ColiController < ApplicationController
 	
-	# Retrieve all location data by location name.
-	def show
+	# Get coli record names for autocomplete.
+	def index
+		result = Array.new
+
+		if params[:where] and not params[:select]
+			records = Coli.select('DISTINCT city').where(['state = ? and city IS NOT NULL', params[:where]])
+
+			# Format the location name as a single string.
+			records.each do |record|
+				result << record[:city]
+			end
+
+		elsif params[:select] and not params[:where]
+			records = Coli.select('DISTINCT state')
+			records.each do |record|
+				result << record[:state]
+			end
+
+		elsif (not params[:select]) and (not params[:where])
+			records = Coli.select('DISTINCT city, state')
+			
+			# Format the location name as a single string.
+			records.each do |record|
+				if not record[:city]
+					result << record[:state]
+				else
+					result << "#{record[:city]}, #{record[:state]}"
+				end
+			end
+
+		else
+			records = Coli.select('DISTINCT state').where(state: params[:where])
+			records.each do |record|
+				result << record[:state]
+			end
+		end
+
+		# Check if there are no records.
+		if records.blank?
+			return render json: 'No records found', status: 404
+		end
+
+		# Return the record names as a JSON object.
+		result.sort!
+		return render json: result, status: 200
+	end
+
+	# Get cost of living data by state.
+	def show_state
+		location = Coli.where(state: params[:state])
+		if location.present?
+			return render json: location, status: 200
+		else
+			return render json: [], status: 404
+		end
+	end
+
+	# Get cost of living data by state and city.
+	def show_city
+		location = Coli.where(state: params[:state], city: params[:city])
+		if location.present?
+			return render json: location, status: 200
+		else
+			return render json: [], status: 404
+		end
+	end
+
+	# Get cost of living data for two locations.
+	def show_two
 		result = Hash.new
-		error_list = []
 
 		# Check for the required fields, and return an appropriate message if
 		# they are not present.
 		unless params[:locations].present?
-			error_list << 'No objects were in the locations array.'
+			return render json: 'No objects were in the locations array.', status: 400
 		end
 
-		unless params[:operation].present?
-			error_list << 'The operation field was empty.'
+		# Order the locations.
+		locations = Array.new
+		if params[:locations][0][:order] and params[:locations][1][:order]
+			params[:locations].each do |location|
+				if location[:order] == 1
+					locations << location
+				end
+			end
+			params[:locations].each do |location|
+				if location[:order] == 2
+					locations << location
+				end
+			end
+		else
+			locations = params[:locations]
 		end
-
-		unless error_list.empty?
-			result[:errors] = error_list
-			return render json: result, status: 400
-		end
-
-		locations = params[:locations]
 
 		# Create a string of the form '(city = c1 AND state = s1) OR
 		# (city = c2 AND state = s2) ... ' and a list of city, state pairs.
@@ -89,7 +161,8 @@ class Api::V1::ColiController < ApplicationController
 				if record[:city]  == location[:city]  and 
 					record[:state] == location[:state] then
 					match = true
-					result = extract_coli_data(location, index, record, result)
+					result["location_#{index}"] = extract_coli_data(location, index, record)
+					result["location_#{index}"][:name] = "#{location[:city]}, #{location[:state]}"
 					break
 				end
 			end
@@ -100,7 +173,8 @@ class Api::V1::ColiController < ApplicationController
 					if record[:city]  == nil and 
 						 record[:state] == location[:state] then
 						state_match = true
-						result = extract_coli_data(location, index, record, result)
+						result["location_#{index}"] = extract_coli_data(location, index, record)
+						result["location_#{index}"][:name] = location[:state]
 						break
 					end
 				end
@@ -108,8 +182,8 @@ class Api::V1::ColiController < ApplicationController
 
 			# Add the weather data for this location.
 			weather_data = extract_weather_data(location, records, result)
-			result["weather_#{index}"] = weather_data[:weather_high_stats]
-			result["weatherlow_#{index}"] = weather_data[:weather_low_stats]
+			result["location_#{index}"]["weather_#{index}"] = weather_data[:weather_high_stats]
+			result["location_#{index}"]["weatherlow_#{index}"] = weather_data[:weather_low_stats]
 
 			# Keep track of which states we substituted state data for.
 			if state_match
@@ -123,8 +197,6 @@ class Api::V1::ColiController < ApplicationController
 			# Increment for next object.
 			index += 1
 		end
-
-		result[:count] = index - 1
 
 		labor_avg = Array.new
 		labor_avg << @averages[0][:avg_unemp_rate].to_f
@@ -160,12 +232,11 @@ class Api::V1::ColiController < ApplicationController
 		render json: result, status: 200
 	end
 
-private
+	private
 
-	def extract_coli_data(location, i, record, result)
+	def extract_coli_data(location, i, record)
 		# Store each locations's data in result.
-		# Name each location.
-		result["location_#{i}"] = "#{location[:city]}, #{location[:state]}"
+		data = Hash.new
 
 		##### ---------------- COST OF LIVING ---------------- #####
 		coli_stats = Array.new	# For formatting the eventual JSON object.
@@ -185,7 +256,7 @@ private
 		coli_stats << coli_stats.compact.max
 
 		# Add the data to the result.
-		result["cli_#{i}"] = coli_stats
+		data["cli_#{i}"] = coli_stats
 
 
 		##### -------------------- LABOR --------------------- #####
@@ -205,7 +276,7 @@ private
 		labor_stats << labor_stats.compact.min
 		labor_stats << labor_stats.compact.max
 
-		result["labor_#{i}"] = labor_stats
+		data["labor_#{i}"] = labor_stats
 
 		
 		##### -------------------- TAXES --------------------- #####
@@ -224,34 +295,9 @@ private
 		tax_stats << tax_stats.compact.min
 		tax_stats << tax_stats.compact.max
 
-		result["taxes_#{i}"] = tax_stats
+		data["taxes_#{i}"] = tax_stats
 
-		# Add max and min. The compact method removes nils.
-		labor_stats << labor_stats.compact.min
-		labor_stats << labor_stats.compact.max
-
-		result["labor_#{i}"] = labor_stats
-
-		
-		##### -------------------- TAXES --------------------- #####
-		tax_stats = Array.new	# For formatting the eventual JSON object.			
-
-		fields = [:sales_tax, :income_tax_min, :income_tax_max, :property_tax]
-
-		# Collect the value of each non-nil field in tax_stats.
-		fields.each do |field|
-			stat = record[field]
-			stat = stat ? stat.to_f : nil
-			tax_stats << stat
-		end
-
-		# Add max and min.
-		tax_stats << tax_stats.compact.min
-		tax_stats << tax_stats.compact.max
-
-		result["taxes_#{i}"] = tax_stats
-
-		return result
+		return data
 	end
 
 	def extract_weather_data(location, records, result)
