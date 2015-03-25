@@ -6,7 +6,7 @@
 When you begin you will see a progress bar at the top. At any point during this wizard you may skip ahead or go back to different sections.
 This wizard is meant to help you understand the basics of the cents financial decision engine so that you can start using this system the way you
 would like. There is a search button in the top right that allows you to submit a question at any time, if you would like to skip our
-wizard and just see some standard questions, see our <a href="/info/examples">examples</a>.</p><br>
+wizard and just see some standard questions, see our <a class="help-nav" href="/info/examples">examples</a>.</p><br>
 
 <div  class="center">
 <h3>What best describes your current situation?</h3>
@@ -21,3 +21,12 @@ wizard and just see some standard questions, see our <a href="/info/examples">ex
 </div>
 
 </div>
+
+<script>
+    if (localStorage.getItem("colors"))
+    {
+        var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+        $('.btn-info').css({"color":c["p_hex"]});
+        $('.help-nav').css({"color":c["p_hex"]});
+    }
+</script>

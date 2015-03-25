@@ -1,4 +1,4 @@
-var data, hide_1, hide_2, main, gray, font, spending_sum, spending_income;
+var data, hide_1, hide_2, main, gray, font, spending_sum, spending_income, tab_color, c;
 
 var sketch = new Processing.Sketch();
 
@@ -6,8 +6,20 @@ function sketchProc(processing) {
 	
 	processing.setup = function() {
 		//console.log("loaded spending.js successfully");
-		main = processing.color(136, 68, 18);
-		gray = processing.color(138, 136, 137);
+		if (localStorage.getItem("colors"))
+		{
+			c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+			main = processing.color(c["p_rgb"][0], c["p_rgb"][1], c["p_rgb"][2]);
+			gray = processing.color(c["s_rgb"][0], c["s_rgb"][1], c["s_rgb"][2]);
+			tab_color = c["p_rgb"];
+		}
+		else
+		{
+
+			main = processing.color(136, 68, 18);
+			gray = processing.color(138, 136, 137);
+			tab_color = [136, 68, 18];
+		}
 
 
 		processing.size(655,375);
@@ -150,6 +162,7 @@ function shuffle(o){
     return o;
 };
 
+
 function buildCategories() {
 	//build field and labels for all currently selected spending categories
 	for (key in spending_categories[spending_selected])
@@ -158,7 +171,13 @@ function buildCategories() {
 		if (key != "Taxes")
 		{	
 			add += "<li style='display:inline;'><input class='update_spend' id='" + key + "_field' oninput='spendingVal(&quot;" + key +"&quot;)' type='text'/></li>";
-			add += "<li style='display:inline;'><a style='padding-left:5px' onclick='deleteCategory(&quot;" + key + "&quot;)'><img src='/assets/delete-color.png' height='9' width='9'></a></li>";
+			//add += "<li style='display:inline;'><a style='padding-left:5px' onclick='deleteCategory(&quot;" + key + "&quot;)'><img src='/assets/svg/x.svg' height='10' width='10'></a></li>";
+			//add += "<li style='display:inline;'><a style='padding-left:5px' onclick='deleteCategory(&quot;" + key + "&quot;)'>";
+			add += "<li style='display:inline;'>";
+			add += "<svg onclick='deleteCategory(&quot;" + key + "&quot;)' height='15px' width='15px' style='padding-left:3px; padding-top:3px'>";
+			add += "<path class='fil0' d='M 0.49824641,11.476595 0.25881484,11.239868 C 0.01938328,11.003141 0.13639403,10.645347 0.25476126,10.52563 L 4.8709305,5.8567194 0.20201913,1.2405466 C -0.03741244,1.0038201 0.0795983,0.64602507 0.19796555,0.52630955 L 0.43469208,0.28687796 C 0.67141861,0.04744637 1.0292137,0.16445708 1.1489292,0.28282415 L 5.817841,4.8989948 10.434013,0.23008298 c 0.236727,-0.23943145 0.594522,-0.12242048 0.714237,-0.004058 l 0.239432,0.23672664 c 0.239432,0.23672651 0.122421,0.59452151 0.0041,0.71423711 L 6.7755632,5.8459011 11.444475,10.462074 c 0.239431,0.236726 0.12242,0.594521 0.0041,0.714237 l -0.236731,0.239431 c -0.236727,0.239432 -0.594522,0.122418 -0.714237,0.004 L 5.8286561,6.8036266 1.2124836,11.472538 c -0.23672656,0.239432 -0.59452167,0.122418 -0.71423719,0.004 z'";
+			add += " id='path10' style='fill-opacity:1'/>";
+			add += "</svg></li>";
 			add += "<li style='display:inline;'><a style='padding-left:5px' onclick='lockToggle(&quot;" + key + "&quot;)'><img src='/assets/unlock-gray.png' value='false' id='" + key + "_lock' height='15' width='11'></a></li>";
 		}
 		//if it is the taxes field, dont allow changes/delete or locking
@@ -171,6 +190,18 @@ function buildCategories() {
 			document.getElementById(key + "_field").value = (0).toFixed(2);
 		else
 			document.getElementById(key + "_field").value = ((spending_categories[spending_selected][key]/100)*(spending_income/12)).toFixed(2);
+	}
+	if (localStorage.getItem("colors"))
+	{
+		$('.update_spend').css({"border-bottom-color":c["p_hex"]});
+		$('.tax_spend').css({"border-bottom-color":c["p_hex"]});
+		$('.fil0').css({"fill":c["p_hex"]});
+	}
+	else
+	{
+		$('.update_spend').css({"border-bottom-color":"#884412"});
+		$('.tax_spend').css({"border-bottom-color":"#884412"});
+		$('.fil0').css({"fill":"#884412"});
 	}
 };
 
@@ -281,10 +312,16 @@ function lockToggle(category) {
 	if ($("#" + category + "_lock").attr("value") == "false")
 	{
 		$("#" + category + "_lock").attr("value", "true");
-		$("#" + category + "_lock").attr("src", "/assets/lock-color.png");
+		$('<img/>').attr('src', '/assets/locks.png').load(function() {
+			$("#" + category + "_lock").attr("src", "/assets/locks.png");
+    		$("#" + category + "_lock").css("background-color", tab_color);
+		});
+		
+		
 	}
 	else
 	{
+		$("#" + category + "_lock").css("background-color", "#EEEEEE");
 		$("#" + category + "_lock").attr("value", "false");
 		$("#" + category + "_lock").attr("src", "/assets/unlock-gray.png");
 	}
@@ -303,10 +340,23 @@ function addCategoryField() {
 	{
 		var add = "<ul id='new_category' style='list-style-type: none; padding: 0; width:270px; height:30px;''>";
 		add += "<li style='display:inline;'><input id='category_name' onkeyup='enterHit(event, &quot;btn1&quot;)' maxlength='15' type='text' style='width:140px; float:left;'></li>";
-		add += "<li style='display:inline;'><a onclick='addCategory()'><img src='/assets/check-color.png' height='12' width='14' style='margin-top:7px; margin-left:10px; margin-right:30px'></a></li>";
-		add += "<li style='display:inline;'><a onclick='cancelCategory()'><img src='/assets/delete-color.png' height='12' width='12'></a></li></ul>";
+		//add += "<li style='display:inline;'><a onclick='addCategory()'><img src='/assets/check-color.png' height='12' width='14' style='margin-top:7px; margin-left:10px; margin-right:30px'></a></li>";
+		//add += "<li style='display:inline;'><a onclick='cancelCategory()'><img src='/assets/delete-color.png' height='12' width='12'></a></li></ul>";
+		add += "<li style='display:inline;'>";
+		add += "<svg onclick='addCategory()' height='25px' width='15px' style='margin-right:25px; padding-top:7px'>";
+		add += "<path d='M 12.848645,0.99652876 5.278586,10.541384 C 5.1140195,10.870517 4.6203201,11.19965 4.291187,10.705951 2.3031607,8.4106732 1.299973,7.1449481 0.17702515,5.7689568 c -0.1645665,-0.1645665 -0.1645665,-0.4936995 0,-0.658266 l 0.1645665,-0.1645665 c 0.1645665,-0.1645664 0.4936994,-0.1645664 0.6582659,0 L 4.6203201,9.2248532 11.696679,0.17369636 c 0.247294,-0.2266123 0.6302,-0.1562937 0.831994,-0.0124092 0.231524,0.1211298 0.579694,0.5170965 0.319972,0.8352416 z' class='fil0'/>";
+		add += "</svg></li>";
+		add += "<li style='display:inline;'>";
+		add += "<svg onclick='cancelCategory()' height='25px' width='15px' style='padding-left:3px; padding-top:7px'>";
+		add += "<path class='fil0' d='M 0.49824641,11.476595 0.25881484,11.239868 C 0.01938328,11.003141 0.13639403,10.645347 0.25476126,10.52563 L 4.8709305,5.8567194 0.20201913,1.2405466 C -0.03741244,1.0038201 0.0795983,0.64602507 0.19796555,0.52630955 L 0.43469208,0.28687796 C 0.67141861,0.04744637 1.0292137,0.16445708 1.1489292,0.28282415 L 5.817841,4.8989948 10.434013,0.23008298 c 0.236727,-0.23943145 0.594522,-0.12242048 0.714237,-0.004058 l 0.239432,0.23672664 c 0.239432,0.23672651 0.122421,0.59452151 0.0041,0.71423711 L 6.7755632,5.8459011 11.444475,10.462074 c 0.239431,0.236726 0.12242,0.594521 0.0041,0.714237 l -0.236731,0.239431 c -0.236727,0.239432 -0.594522,0.122418 -0.714237,0.004 L 5.8286561,6.8036266 1.2124836,11.472538 c -0.23672656,0.239432 -0.59452167,0.122418 -0.71423719,0.004 z'";
+		add += " id='path10' style='fill-opacity:1'/>";
+		add += "</svg></li></ul>";
 		$(add).appendTo( "#category_list" );
 		document.getElementById("category_name").focus();
+		if (localStorage.getItem("colors"))
+			$('.fil0').css({"fill":c["p_hex"]});
+		else
+			$('.fil0').css({"fill":"#884412"});
 	}
 };	
 
@@ -319,7 +369,7 @@ function enterHit(event) {
     }
     else if (event.keyCode == 27)
     	cancelCategory();
-    else if (!(/^[a-zA-Z0-9 ]+$/.test(document.getElementById("category_name").value)))
+    else if (!(/^[a-zA-Z0-9 ]+$/.test(document.getElementById("category_name").value)) && document.getElementById("category_name").value != "")
     {
     	window.alert("Only letters, numbers and spaces allowed.");
     	cancelCategory();
@@ -391,6 +441,8 @@ function cancelCategory() {
 };
 
 function updateTemplate(template) {
+	$('#' + spending_selected + "-button").css("cssText", "background-color: rgb(" + (tab_color[0]) + "," + (tab_color[1]) + "," + (tab_color[2]) + ")");
+	$('#' + template + "-button").css("cssText", "background-color: rgb(" + (tab_color[0]-5) + "," + (tab_color[1]-5) + "," + (tab_color[2]-5) + ") !important");
 	var temp_sum = 0;
 	for (key in spending_categories[template])
 		temp_sum += spending_categories[template][key];
@@ -400,6 +452,7 @@ function updateTemplate(template) {
 	$("#category_list").empty();
 	shuffle(pie_colors);
 	buildCategories();
+	
 };
 
 function resetCategories() {

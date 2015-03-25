@@ -24,18 +24,24 @@
 		<%= f.password_field :password_confirmation, html: {placeholder: '', class: 'input-xlarge'} %>
 		<label id="user_password_confirmation-error" class="error" for="user_password_confirmation"></label>
 
-		<!-- Radio buttons that determine what kind of confirmation email to send. -->
-		<% ['HTML', 'text'].each do |type| %>
-			<%= f.radio_button :email_type, type, checked: type == 'HTML'%>
-			<%= label_tag "email_type_html[#{type}]", type %>
-		<% end %>
+		<div style="margin:auto; float:left; width: 400px; height:40px;">
+			<!-- Radio buttons that determine what kind of confirmation email to send. -->
+			<label style="width:235px">EMAIL DELIVERY PREFERENCE</label>
+			<% ['HTML', 'text'].each do |type| %>
+				<%= f.radio_button :email_type, type, checked: type == 'HTML' %>
+				<%= label_tag "email_type_html[#{type}]", type, class: 'email_label' %>
+			<% end %>
+		</div>
 
-		<!-- Terms and conditions checkbox. -->
-		<%= check_box_tag :terms %>
-		<label for="terms"> 
-			I accept the <%= link_to 'term and conditions', '/user/terms', target: '_blank' %>
-		</label>
-		<label id="terms-error" class="error" for="terms"></label>
+		<div style="padding-left:120px; margin:auto; float:left; height:30px;">
+			
+			<label for="terms" class="label_terms"> 
+				I accept the <%= link_to 'term and conditions', '/user/terms', target: '_blank', class: 'terms_link' %>
+			</label>
+			<%= check_box_tag :terms %>
+			
+		</div>
+		<label id="terms-error" class="error" for="terms" style="width:350px;"></label>
 
 		<button style="margin-top:20px" class="btn btn-primary">REGISTER</button>
 
@@ -44,6 +50,17 @@
 		<% end %>
 	</div>
 <% end %>
+
+<script>
+    if (localStorage.getItem("colors"))
+    {
+        var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+        $('input').css({"border-color":c["p_hex"]});
+        $('.error').css({"color":c["p_hex"]});
+        $('.terms_link').css({"color":c["p_hex"]});
+        $('.btn-primary').css({"background-color":c["p_hex"]});
+    }
+</script>
  
 <!-- Include the jQuery Validation plugin. -->
 <script src="/assets/jquery.validate.min.js" ></script>
