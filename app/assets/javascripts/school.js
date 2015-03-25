@@ -78,9 +78,10 @@ function changeMade() {
 function school_api_request(query) {
 	field1 = document.getElementById("search_1_name").value;
 	field2 = document.getElementById("search_2_name").value;
-	url = "";
 
+	url = "https://trycents.com:6001/data";
 	type = "school"
+	body = ""
 
 	if(field1 == "" && field2 == ""){
 		sent1 = false;
@@ -90,21 +91,21 @@ function school_api_request(query) {
 	else if(field2 == ""){
 		sent2 = false;
 		sent1 = true;
-		url = "https://trycents.com:6001/data/type="+type+"&option="+field1;
+		body = JSON.stringify({type:type,option:[field1]});
 		processingInstance.noLoop();
 		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
 	}
 	else if(field1 == ""){
 		sent1 = false;
 		sent2 = true;
-		url = "https://trycents.com:6001/data/type="+type+"&option="+field2;
+		body = JSON.stringify({type:type,option:[field2]});
 		processingInstance.noLoop();
 		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
 	}
 	else{
 		sent1 = true;
 		sent2 = true;
-		url = "https://trycents.com:6001/data/type="+type+"&option="+field1+"&option="+field2;
+		body = JSON.stringify({type:type,option:[field1,field2]});
 		processingInstance.noLoop();
 		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
 	}
@@ -113,7 +114,7 @@ function school_api_request(query) {
 	var xmlHttp = null;
 
     xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", url, true );
+    xmlHttp.open( "POST", url, true );
 
     xmlHttp.onreadystatechange = function() {
     	if (xmlHttp.readyState === 4) { 
@@ -258,7 +259,7 @@ function school_api_request(query) {
       		}
       	}
     }
-    xmlHttp.send( null );
+    xmlHttp.send(body);
 };
 
 function sketchProc(processing) {

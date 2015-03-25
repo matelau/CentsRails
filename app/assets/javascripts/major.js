@@ -125,8 +125,9 @@ function major_api_request(query) {
 		}	
 	}
 
-	url = "";
+	url = "https://trycents.com:6001/data";
 	type = "major"
+	body = ""
 
 	if((field1 == "" && field2 == "")){
 		sent1 = false;
@@ -134,21 +135,21 @@ function major_api_request(query) {
 		return;
 	}
 	else if(field2 == ""){
-		url = "https://trycents.com:6001/data/type="+type+"&option="+field1;
+		body = JSON.stringify({type:type,option:[field1]});
 		sent2 = false;
 		sent1 = true;
 		processingInstance.noLoop();
 		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
 	}
 	else if(field1 == ""){
-		url = "https://trycents.com:6001/data/type="+type+"&option="+field2;
+		body = JSON.stringify({type:type,option:[field2]});
 		sent1 = false;
 		sent2 = true;
 		processingInstance.noLoop();
 		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
 	}
 	else{
-		url = "https://trycents.com:6001/data/type="+type+"&option="+field1+"&option="+field2;
+		body = JSON.stringify({type:type,option:[field1,field2]});
 		sent1 = true;
 		sent2 = true;
 		processingInstance.noLoop();
@@ -158,7 +159,7 @@ function major_api_request(query) {
 	var xmlHttp = null;
 
     xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", url, true );
+    xmlHttp.open( "POST", url, true );
     xmlHttp.onreadystatechange = function() {
     	if (xmlHttp.readyState === 4) { 
       		if (xmlHttp.status === 200) {
@@ -209,7 +210,7 @@ function major_api_request(query) {
       		}
       	}
     }
-    xmlHttp.send( null );
+    xmlHttp.send(body);
 };
 
 function sketchProc(processing) {

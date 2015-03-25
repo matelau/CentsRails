@@ -236,25 +236,26 @@ function dataRequest(type)
 	field2 = document.getElementById("search_2_" + type).value;
 	if (type == "city" && auto_cities.indexOf(field2) < 0)
 		field2 = "";
-	url = "";
+
+	var url = "https://trycents.com:6001/data"
+	var body = ""
 
 	if(field1 == "" && field2 == ""){
 		return;
 	}
 	else if(field2 == ""){
-		url = "https://trycents.com:6001/data/type="+type+"&option="+field1;
+		body = JSON.stringify({type:type,option:[field1]});
 	}
 	else if(field1 == ""){
-		url = "https://trycents.com:6001/data/type="+type+"&option="+field2;
+		body = JSON.stringify({type:type,option:[field2]});
 	}
 	else{
-		url = "https://trycents.com:6001/data/type="+type+"&option="+field1+"&option="+field2;
+		body = JSON.stringify({type:type,option:[field1,field2]});
 	}
 	var data = new Object();
-	var xmlHttp = null;
-
-    xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", url, true );
+	var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "POST", url, true );
+    //xmlHttp.setRequestHeader("Content-Type","application/json");
 
     xmlHttp.onreadystatechange = function() {
     	if (xmlHttp.readyState === 4) { 
@@ -267,5 +268,5 @@ function dataRequest(type)
       		}
       	}
     }
-    xmlHttp.send( null );
+    xmlHttp.send(body);
 }

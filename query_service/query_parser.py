@@ -2,11 +2,12 @@ from flask import Flask, make_response, request, current_app
 import nltk
 import json
 import csv
-import cgi
+import urlparse
 import requests
 import re
 import string
 import urllib2
+import urllib
 from datetime import timedelta
 from functools import update_wrapper
 import sys
@@ -301,11 +302,13 @@ def query(query):
 		resp = json.dumps(package)
 		return resp
 
-@app.route('/data/<string:data>', methods=['GET'])
-def data(data):
-	query = cgi.parse_qs(data)
+@app.route('/data', methods=['POST'])
+def data():
+	#query = cgi.parse_qs(data)
 
-	if(query['type'][0] == 'city'):
+	query = json.loads(request.data)
+
+	if(query['type'] == 'city'):
 		package  = {
 			"locations":[]
 		}
@@ -327,7 +330,7 @@ def data(data):
 		resp = s.send(prep)
 		return resp.text
 
-	if(query['type'][0] == 'school'):
+	if(query['type'] == 'school'):
 		package  = {
 			"schools":[]
 		}
@@ -363,7 +366,7 @@ def data(data):
 			package["school_"+`i+1`+"_name"] = scarr[i]
 		return json.dumps(package)
 
-	if(query['type'][0] == 'major'):
+	if(query['type'] == 'major'):
 		package = {
 			"majors":[]
 		}
@@ -390,7 +393,7 @@ def data(data):
 			package["major_"+`i+1`+"_name"] = query['option'][i].title()
 		return json.dumps(package)
 
-	if(query['type'][0] == 'career'):
+	if(query['type'] == 'career'):
 		package = {
 			"careers":[]
 		}
