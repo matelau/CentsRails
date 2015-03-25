@@ -1,11 +1,14 @@
 class UserController < ApplicationController
 
 	def create
-		new_user = User.new(user_params)
+		user = User.new(user_params)
 
-		# Run the model's validations.
-		unless new_user.valid?
-			redirect_to 'user/registered'
+		# Check that the user is not already registered.
+		cents_members = @@mailchimp.lists.members(@@mc_list_id)
+		cents_members['data'].each do |member|
+			if member['email'] == user.email
+				redirect_to '/search/index' and return
+			end
 		end
 
 		# Subscribe with MailChimp's API.
@@ -16,10 +19,10 @@ class UserController < ApplicationController
                    	"EMAIL" => user_params[:email]},
                    	user_params[:email_type])
 
-		if new_user.save
-			redirect_to '/user/registered'
+		if user.save
+			redirect_to registered_path
 		else
-			redirect_to '/user/register'
+			redirect_to '/search/index'
 		end
 	end
 
