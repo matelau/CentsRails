@@ -294,6 +294,7 @@ canvas {
     float: left;
 }
 
+
 #stylized label.error {
     float: right;
     font-size: 12px;
@@ -321,6 +322,15 @@ canvas {
     border-radius: 10px;
     width: 200px;
     margin: 2px 0 10px 10px;
+}
+#stylized input[type="radio"], input[type="checkbox"] {
+  width: 25px !important;
+}
+.email_label {
+  width: 35px !important;
+}
+.label_terms {
+  width: 220px !important;
 }
 .examples-img-left{
   float : left; 
