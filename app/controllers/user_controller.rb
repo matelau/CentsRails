@@ -8,7 +8,7 @@ class UserController < ApplicationController
 		cents_members['data'].each do |member|
 			if member['email'] == user.email
 				flash[:error] = "You've already registered with this email."
-				redirect_to '/search/index' and return
+				redirect_to '/user/register' and return
 			end
 		end
 
@@ -23,8 +23,8 @@ class UserController < ApplicationController
 		if user.save
 			redirect_to registered_path
 		else
-			flash[:error] = user.errors.values[0]
-			redirect_to '/search/index'
+			flash[:error] = "That email address #{user.errors.values[0][0]}."
+			redirect_to '/user/register'
 		end
 	end
 

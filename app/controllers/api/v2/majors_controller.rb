@@ -3,11 +3,14 @@ class Api::V2::MajorsController < ApplicationController
 	# Get major record names for autocomplete.
 	def index
 		result = Array.new
-		records = Degree.select('DISTINCT name')
+		records = Degree.select('DISTINCT name, level')
 
-		# Retrieve only the name field.
 		records.each do |record|
-			result << record[:name]
+			if not record[:name]
+				result << record[:level]
+			else
+				result << "#{record[:name]} (#{record[:level]})"
+			end
 		end
 
 		# Check if there are no records.
