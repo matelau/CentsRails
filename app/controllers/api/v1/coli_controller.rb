@@ -224,15 +224,11 @@ private
 
 		result["taxes_#{i}"] = tax_stats
 
-		return result
-	end
-
-
 		# Add max and min. The compact method removes nils.
 		labor_stats << labor_stats.compact.min
 		labor_stats << labor_stats.compact.max
 
-		data["labor_#{i}"] = labor_stats
+		result["labor_#{i}"] = labor_stats
 
 		
 		##### -------------------- TAXES --------------------- #####
@@ -251,9 +247,9 @@ private
 		tax_stats << tax_stats.compact.min
 		tax_stats << tax_stats.compact.max
 
-		data["taxes_#{i}"] = tax_stats
+		result["taxes_#{i}"] = tax_stats
 
-		return data
+		return result
 	end
 
 	def extract_weather_data(location, records, result)
