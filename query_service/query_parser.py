@@ -393,7 +393,7 @@ def data():
 
 		package = json.loads(resp.text)
 		for i in range(0, len(query['option'])):
-			package["major_"+`i+1`+"_name"] = query['option'][i].title()
+			package["major_"+`i+1`+"_name"] = query['option'][i]
 		return json.dumps(package)
 
 	if(query['type'] == 'career'):
