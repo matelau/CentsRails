@@ -17,6 +17,18 @@
 	</div>
 <% end %>
 
+
+<script>
+    if (localStorage.getItem("colors"))
+    {
+        var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+        $('input').css({"border-color":c["p_hex"]});
+        $('.error').css({"color":c["p_hex"]});
+        $('.btn-primary').css({"background-color":c["p_hex"]});
+        $('.btn-default').css({"color":c["p_hex"]});
+    }
+</script>
+
 <!-- Include the jQuery Validation plugin. -->
 <script src="/assets/jquery.validate.min.js" ></script>
 <script src="/assets/additional-methods.min.js"></script>

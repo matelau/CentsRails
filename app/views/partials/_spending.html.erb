@@ -15,18 +15,34 @@
 	</ul>
 	<br>
 	<br>
-	<p style="display:inline; color:#884412; font-size:16px" >ANNUAL INCOME:  $</p> <input class="main-search" id="income_value" oninput="updateIncome()" type="text" style="margin-left:10px; margin-right:60px; width:280px; height:36px"></input>
-		<div class="btn-group" data-toggle="buttons" style="float:right; margin-top:0px">
-    		<label class="btn btn-primary active" onclick="updateTemplate('default')">
+	<p id="income-text" style="display:inline; font-size:16px" >ANNUAL INCOME:  $</p> <input class="main-search" id="income_value" oninput="updateIncome()" type="text" style="margin-left:10px; margin-right:60px; width:280px; height:36px"></input>
+		<div class="btn-group" data-toggle="buttons" style="float:right; margin-top:35px">
+    		<label id="default-button" class="btn btn-primary active" onclick="updateTemplate('default')">
         		<input type="radio" name="template"> DEFAULT
     		</label>
-    		<label class="btn btn-primary" onclick="updateTemplate('student')">
+    		<label id="student-button" class="btn btn-primary" onclick="updateTemplate('student')">
         		<input type="radio" name="template"> STUDENT
     		</label>
-    		<label class="btn btn-primary" onclick="updateTemplate('custom')">
+    		<label id="custom-button" class="btn btn-primary" onclick="updateTemplate('custom')">
         		<input type="radio" name="template"> CUSTOM
     		</label>
 		</div>
 	<!-- <a class="btn btn-default" onclick="addCategoryField()" style="margin-left:40px">ADD CATEGORY</a> -->
 	<br></br> 
 	<br>
+
+	<script>
+    if (localStorage.getItem("colors"))
+    {
+    	var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+        $('.btn-default').css({"color":c["p_hex"]});
+        $('.main-search').css({"border-color":c["p_hex"]});
+        $('#income-text').css({"color":c["p_hex"]});
+        $('.btn-primary').css({"background-color":c["p_hex"]});
+        $('#default-button').css("cssText", "background-color: rgb(" + (c["p_rgb"][0]-5) + "," + (c["p_rgb"][1]-5) + "," + (c["p_rgb"][2]-5) + ") !important");
+    }
+    else
+    {
+        $('#default-button').css("cssText", "background-color: rgb(" + (138-5) + "," + (68-5) + "," + (18-5) + ") !important");
+    }
+	</script>

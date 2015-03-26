@@ -70,10 +70,14 @@ class Api::V1::RecordNamesController < ApplicationController
 			# Get the degree names.
 			elsif table == 'major' or table == 'majors' or table == 'degree' or 
 				table == 'degrees'
-				records = Degree.select('DISTINCT name')
+				records = Degree.select('DISTINCT name, level')
 
 				records.each do |record|
-					result << record[:name]
+					if not record[:name]
+						result << record[:level]
+					else
+						result << "#{record[:name]} (#{record[:level]})"
+					end
 				end
 
 			# Get the university names.
@@ -118,6 +122,7 @@ class Api::V1::RecordNamesController < ApplicationController
 		end
 
 		# Return the record names as a JSON object.
+		result = result.compact
 		result.sort!
 		return render json: result, status: 200
 	end
