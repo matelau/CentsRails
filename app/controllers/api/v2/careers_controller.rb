@@ -43,17 +43,17 @@ class Api::V2::CareersController < ApplicationController
 		if params[:careers][0][:order] and params[:careers][1][:order]
 			params[:careers].each do |career|
 				if career[:order] == 1
-					careers << career[:name]
+					careers << career
 				end
 			end
 			params[:careers].each do |career|
 				if career[:order] == 2
-					careers << career[:name]
+					careers << career
 				end
 			end
 		else
-			careers << params[:careers][0][:name]
-			careers << params[:careers][1][:name]
+			careers << params[:careers][0]
+			careers << params[:careers][1]
 		end
 
 		# Create a string of the form 'name = n1 OR name = n2 ...' and a list of 
@@ -73,29 +73,27 @@ class Api::V2::CareersController < ApplicationController
 		#@averages = Career.find_by_sql "SELECT AVG(unemp_rate) AS avg_unemp_rate, 
 		#										FROM colis"
 
+		no_data_for = Array.new
+
 		# Iterate over each career, keeping track of the career's index.
 		# (The index is needed because that's how the view tracks careers.)
 		index = 1
 		careers.each do |career|
-			result["jobs_#{index}"] = Array.new
 			match = false
 
 			# Search through the retrieved records for a match.
 			records.each do |record|
 				if record[:name] == career[:name]
 					match = true
-
-					result["career_salary_#{index}"] = [career[:salary], 0, 0, 0] # year 1, year 2, year 3, year 4
+					result["career_#{index}"] = record[:name]
+					result["career_salary_#{index}"] = [record[:salary].to_f, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 					result["career_satisfaction_#{index}"] = 0.0
 					result["career_demand_#{index}"] = [0, 0, 0] # three values
 					break
 				end
 			end
 
-			#mystery
-			result["career_unemploy_1"] = [0, 0] # two values
-			result["career_unemploy_2"] = [0, 0] # two values
-			result["career_unemploy_3"] = [0, 0] # two values national average
+			result["jobs_#{index}"] = Array.new
 
 			# Keep track of which careers had neither exact nor state data.
 			if not match
@@ -105,5 +103,22 @@ class Api::V2::CareersController < ApplicationController
 			# Increment for next object.
 			index += 1
 		end
+
+		result["career_unemploy_1"] = [0, 0] # two values
+		result["career_unemploy_2"] = [0, 0] # two values
+		result["career_unemploy_3"] = [0, 0] # two values national average
+
+		# If there is no data for a career, send an error message.
+		unless no_data_for.empty?
+			result[:error] = 'No data on some career'
+			result[:no_data_for] = no_data_for
+			result[:operation] = 'undefined' # Needed for the query parser.
+			return render json: result, status: 404
+		end
+
+		result[:operation] = params[:operation]
+
+		# Return the result, formatted as JSON, and with a 200 OK HTTP code.
+		render json: result, status: 200
 	end
 end
