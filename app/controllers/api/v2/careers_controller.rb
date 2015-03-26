@@ -68,7 +68,10 @@ class Api::V2::CareersController < ApplicationController
 		where_string = where_string[0..-5]	# Strip off the last ' OR '.
 
 		# Query the database.
-		records = Career.select(:name).where([where_string, *where_params])
+		records = Career.select(:name, :salary).where([where_string, *where_params])
+
+		#@averages = Career.find_by_sql "SELECT AVG(unemp_rate) AS avg_unemp_rate, 
+		#										FROM colis"
 
 		# Iterate over each career, keeping track of the career's index.
 		# (The index is needed because that's how the view tracks careers.)
@@ -77,22 +80,22 @@ class Api::V2::CareersController < ApplicationController
 			result["jobs_#{index}"] = Array.new
 			match = false
 
-			# Search through the retrieved records for an exact match.
+			# Search through the retrieved records for a match.
 			records.each do |record|
-				if record[:name] == career
+				if record[:name] == career[:name]
 					match = true
 
-					result["career_salary_#{index}"] = [] # year 1, year 2, year 3, year 4
+					result["career_salary_#{index}"] = [career[:salary], 0, 0, 0] # year 1, year 2, year 3, year 4
 					result["career_satisfaction_#{index}"] = 0.0
-					result["career_demand_#{index}"] = [] # three values
-					
-					#mystery
-					result["career_unemploy_1"] = [] # two values
-					result["career_unemploy_2"] = [] # two values
-					result["career_unemploy_3"] = [] # two values national average
+					result["career_demand_#{index}"] = [0, 0, 0] # three values
 					break
 				end
 			end
+
+			#mystery
+			result["career_unemploy_1"] = [0, 0] # two values
+			result["career_unemploy_2"] = [0, 0] # two values
+			result["career_unemploy_3"] = [0, 0] # two values national average
 
 			# Keep track of which careers had neither exact nor state data.
 			if not match
