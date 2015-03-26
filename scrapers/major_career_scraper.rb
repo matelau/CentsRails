@@ -22,6 +22,15 @@ doc.css("table").css("tr").each do |p|
 	m_names = node.text.split(",")
 
 	m_names[0].gsub!(%r[ \(.*\)],"")
+	m_names[0].strip!
+	begin
+		m_names[1].gsub!(%r[ \(.*\)],"")
+		m_names[1].strip!
+	rescue StandardError => e
+		m_names << nil
+	end
+
+	puts m_names
 
 	d_url = "http://www.payscale.com" + node.attribute("href").value.gsub("Hourly_Rate","Salary")
 
@@ -56,12 +65,25 @@ doc.css("table").css("tr").each do |p|
 		jobs[j] = [j,j_salaries[i]]
 	end
 
-	m_s_avg = j_salaries.inject{ |sum, el| sum + el }.to_f / j_salaries.size
+	m_s_avg = j_salaries.inject(0) { |sum, el| sum + el.to_f }.to_f / j_salaries.size
 
-	m_names << m_s_avg
+	begin
+		m_names << m_s_avg.to_i
+
+		Degree.find_or_create_by(level: m_names[0], name: m_names[1]).update(salary: m_s_avg.to_i)
+	rescue StandardError => e
+		next
+	end
+
+	major = Degree.where(name: m_names[1], level: m_names[0])
+
+	j_names.each_with_index do |j,i|
+		TopJob.find_or_create_by(degree_id: major[0]["id"], name: j).update(salary: j_salaries[i])
+	end
 
 	majors[m_names[1]] = m_names
 end
 
-puts majors
-puts jobs
+jobs.each do |k,v|
+	Career.find_or_create_by(name: k).update(salary: v[1])
+end
