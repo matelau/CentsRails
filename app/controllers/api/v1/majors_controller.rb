@@ -74,7 +74,7 @@ class Api::V1::MajorsController < ApplicationController
 					# Cents rating goes here
 					cents_rating = 0
 
-					result[:name] = "#{record[:degree_name]} (#{record[:level]})"
+					result["name_#{index}"] = "#{record[:degree_name]} (#{record[:level]})"
 					result["major_#{index}"] = [salary, recommended, meaningful, cents_rating]
 					result["jobs_#{index}"] = Array.new
 					result["jobs_#{index}"].concat [job_name, job_salary]
