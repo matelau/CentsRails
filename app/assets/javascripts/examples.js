@@ -1,4 +1,4 @@
-var prefill = {'city':['City 1', 'City 2 (Optional)'], 'major':['Major 1', 'Major 2 (Optional'], 
+var prefill = {'city':['City 1', 'City 2 (Optional)'], 'major':['Major 1', 'Major 2 (Optional)'], 
 				'school':['College 1', 'College 2 (Optional)'], 'spending':['Annual Income ($)'],
 				'career':['Career 1', 'Career 2 (Optional)'], 'suggest':['What else would you like to search for?']};
 
