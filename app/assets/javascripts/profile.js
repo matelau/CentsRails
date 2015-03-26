@@ -13,7 +13,7 @@ $(document).ready(function() {
 	imageObj.onload = function() {
 	context.drawImage(imageObj, 45, 45);
 	};
-	imageObj.src = '/assets/color wheel tiny 2.png';
+	imageObj.src = '/assets/color wheel.png';
 	//get color from local storage if it exists, set old and new to that stored color
 	if (localStorage.getItem("colors"))
 	{

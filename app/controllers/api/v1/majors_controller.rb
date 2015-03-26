@@ -2,33 +2,29 @@ class Api::V1::MajorsController < ApplicationController
 
 	def show
 		result = Hash.new
-		error_list = []
 
 		# Check for the required fields, and return an appropriate message if
 		# they are not present.
 		unless params[:majors].present?
-			error_list << 'No objects were in the majors array.'
-		end
-
-		unless params[:operation].present?
-			error_list << 'The operation field was empty.'
-		end
-
-		unless error_list.empty?
-			result[:errors] = error_list
-			return render json: result, status: 400
+			return render json: 'No objects were in the majors array.', status: 400
 		end
 
 		# Order the majors.
 		majors = Array.new
-		params[:majors].each do |major|
-			if major[:order] == 1
-				majors << major[:name]
+		if params[:majors][0][:order] and params[:majors][1][:order]
+			params[:majors].each do |major|
+				if major[:order] == 1
+					majors << major
+				end
 			end
-		end
-		params[:majors].each do |major|
-			if major[:order] == 2
-				majors << major[:name]
+			params[:majors].each do |major|
+				if major[:order] == 2
+					majors << major
+				end
+			end
+		else
+			params[:majors].each do |major|
+				majors << major
 			end
 		end
 
@@ -39,12 +35,13 @@ class Api::V1::MajorsController < ApplicationController
 		where_params = Array.new
 		majors.each do |major|
 			where_string += 'd.name = ? OR '
-			where_params << major
+			where_params << major[:name]
 		end
 		where_string = where_string[0..-5]	# Strip off the last ' OR '.
 
 		records = Degree.find_by_sql [
 			"SELECT d.name AS degree_name,
+							d.level,
 							d.salary AS degree_salary,
 							d.recommend,
 							d.meaningful,
@@ -63,14 +60,12 @@ class Api::V1::MajorsController < ApplicationController
 		# (The index is needed because that's how the view tracks majors.)
 		index = 1
 		majors.each do |major|
-			result["jobs_#{index}"] = Array.new
 			match = false
 
 			# Search through the retrieved records for an exact match.
 			records.each do |record|
-				if record[:degree_name]  == major
+				if record[:degree_name]  == major[:name] and record[:level] == major[:level]
 					match = true
-
 					salary = record[:degree_salary] ? record[:degree_salary].to_f : nil
 					recommended = record[:recommend] ? record[:recommend].to_f : nil
 					meaningful = record[:meaningful] ? record[:meaningful].to_f : nil
@@ -79,7 +74,9 @@ class Api::V1::MajorsController < ApplicationController
 					# Cents rating goes here
 					cents_rating = 0
 
+					result["name_#{index}"] = "#{record[:degree_name]} (#{record[:level]})"
 					result["major_#{index}"] = [salary, recommended, meaningful, cents_rating]
+					result["jobs_#{index}"] = Array.new
 					result["jobs_#{index}"].concat [job_name, job_salary]
 					break
 				end
@@ -87,7 +84,7 @@ class Api::V1::MajorsController < ApplicationController
 
 			# Keep track of which majors had neither exact nor state data.
 			if not match
-				no_data_for << major
+				no_data_for << "#{major[:degree_name]} (#{major[:level]})"
 			end
 
 			# Increment for next object.

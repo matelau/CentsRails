@@ -44,6 +44,16 @@
 		<label id="terms-error" class="error" for="terms" style="width:350px;"></label>
 
 		<button style="margin-top:20px" class="btn btn-primary">REGISTER</button>
+
+		<!-- Registration error messages. -->
+		<% flash.each do |k, v| %>
+			<div id="<%= k %>">
+				<p>
+					<b><%= v %></b>
+				</p>
+			</div>
+		<% end %>
+
 	</div>
 <% end %>
 
