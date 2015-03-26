@@ -69,7 +69,7 @@ class Api::V2::MajorsController < ApplicationController
 		where_params = Array.new
 		majors.each do |major|
 			where_string += 'd.name = ? OR '
-			where_params << major[:name]
+			where_params << major[:name].strip
 		end
 		where_string = where_string[0..-5]	# Strip off the last ' OR '.
 
@@ -98,7 +98,7 @@ class Api::V2::MajorsController < ApplicationController
 
 			# Search through the retrieved records for an exact match.
 			records.each do |record|
-				if record[:degree_name]  == major[:name] and record[:level] == major[:level]
+				if record[:degree_name] == major[:name].strip and record[:level] == major[:level]
 					match = true
 					salary = record[:degree_salary] ? record[:degree_salary].to_f : nil
 					recommended = record[:recommend] ? record[:recommend].to_f : nil

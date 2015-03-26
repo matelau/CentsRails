@@ -64,7 +64,7 @@ class Api::V1::MajorsController < ApplicationController
 
 			# Search through the retrieved records for an exact match.
 			records.each do |record|
-				if record[:degree_name]  == major[:name] and record[:level] == major[:level]
+				if record[:degree_name] == major[:name] and record[:level] == major[:level]
 					match = true
 					salary = record[:degree_salary] ? record[:degree_salary].to_f : nil
 					recommended = record[:recommend] ? record[:recommend].to_f : nil
