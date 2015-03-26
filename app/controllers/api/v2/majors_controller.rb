@@ -48,17 +48,17 @@ class Api::V2::MajorsController < ApplicationController
 		if params[:majors][0][:order] and params[:majors][1][:order]
 			params[:majors].each do |major|
 				if major[:order] == 1
-					majors << major[:name]
+					majors << major
 				end
 			end
 			params[:majors].each do |major|
 				if major[:order] == 2
-					majors << major[:name]
+					majors << major
 				end
 			end
 		else
 			params[:majors].each do |major|
-				majors << major[:name]
+				majors << major
 			end
 		end
 
@@ -69,7 +69,7 @@ class Api::V2::MajorsController < ApplicationController
 		where_params = Array.new
 		majors.each do |major|
 			where_string += 'd.name = ? OR '
-			where_params << major
+			where_params << major[:name]
 		end
 		where_string = where_string[0..-5]	# Strip off the last ' OR '.
 
@@ -98,7 +98,7 @@ class Api::V2::MajorsController < ApplicationController
 
 			# Search through the retrieved records for an exact match.
 			records.each do |record|
-				if record[:degree_name]  == major
+				if record[:degree_name]  == major[:name] and record[:level] == major[:level]
 					match = true
 					salary = record[:degree_salary] ? record[:degree_salary].to_f : nil
 					recommended = record[:recommend] ? record[:recommend].to_f : nil
@@ -118,7 +118,7 @@ class Api::V2::MajorsController < ApplicationController
 
 			# Keep track of which majors had neither exact nor state data.
 			if not match
-				no_data_for << major
+				no_data_for << "#{major[:degree_name]} (#{major[:level]})"
 			end
 
 			# Increment for next object.
