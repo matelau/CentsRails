@@ -57,8 +57,9 @@ class Api::V2::MajorsController < ApplicationController
 				end
 			end
 		else
-			majors << params[:majors][0][:name]
-			majors << params[:majors][1][:name]
+			params[:majors].each do |major|
+				majors << major[:name]
+			end
 		end
 
 		# Create a string of the form 'd.name = ? OR ... ' and a list of major names.
@@ -74,6 +75,7 @@ class Api::V2::MajorsController < ApplicationController
 
 		records = Degree.find_by_sql [
 			"SELECT d.name AS degree_name,
+							d.level,
 							d.salary AS degree_salary,
 							d.recommend,
 							d.meaningful,
@@ -92,14 +94,12 @@ class Api::V2::MajorsController < ApplicationController
 		# (The index is needed because that's how the view tracks majors.)
 		index = 1
 		majors.each do |major|
-			result["jobs_#{index}"] = Array.new
 			match = false
 
 			# Search through the retrieved records for an exact match.
 			records.each do |record|
 				if record[:degree_name]  == major
 					match = true
-
 					salary = record[:degree_salary] ? record[:degree_salary].to_f : nil
 					recommended = record[:recommend] ? record[:recommend].to_f : nil
 					meaningful = record[:meaningful] ? record[:meaningful].to_f : nil
@@ -108,7 +108,9 @@ class Api::V2::MajorsController < ApplicationController
 					# Cents rating goes here
 					cents_rating = 0
 
+					result[:name] = "#{record[:degree_name]} (#{record[:level]})"
 					result["major_#{index}"] = [salary, recommended, meaningful, cents_rating]
+					result["jobs_#{index}"] = Array.new
 					result["jobs_#{index}"].concat [job_name, job_salary]
 					break
 				end
