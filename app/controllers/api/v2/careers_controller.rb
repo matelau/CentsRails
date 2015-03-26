@@ -35,7 +35,7 @@ class Api::V2::CareersController < ApplicationController
 		result = Hash.new
 
 		unless params[:careers].present?
-			return render json: 'No careers were in the careers array', status: 404
+			return render json: 'No careers were in the careers array', status: 400
 		end
 
 		# Order the careers.
@@ -52,8 +52,9 @@ class Api::V2::CareersController < ApplicationController
 				end
 			end
 		else
-			careers << params[:careers][0]
-			careers << params[:careers][1]
+			params[:careers].each do |career|
+				careers << career
+			end
 		end
 
 		# Create a string of the form 'name = n1 OR name = n2 ...' and a list of 
