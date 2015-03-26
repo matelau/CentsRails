@@ -316,7 +316,10 @@ def data():
 			"locations":[]
 		}
 		for o in query['option']:
-			package["locations"].append({"city":o[:o.index(",")],"state":o[o.index(", ")+2:]})
+			if "," in o:
+				package["locations"].append({"city":o[:o.index(",")],"state":o[o.index(", ")+2:]})
+			else:
+				package["locations"].append({"state":o})
 
 		if(len(query['option']) == 1):
 			package['operation'] = "get"
