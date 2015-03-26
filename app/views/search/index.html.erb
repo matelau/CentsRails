@@ -1,8 +1,5 @@
 
 
-</script>
-<!-- Search Field -->
-
 <div class="search-bar" id="search-bar">
 
 	
@@ -26,6 +23,29 @@
 	<br>
 	<p class="help-text">NEW HERE? CHECK OUT OUR <a class="help-nav" href="/wizard/start">WIZARD</a> OR SOME <a class="help-nav" href="/info/examples">EXAMPLES</a>.</p>
 	</form>
+
+<link rel="stylesheet" href="/assets/ideal-image-slider.css">
+<link rel="stylesheet" href="/assets/default.css">
+
+
+	<div id="examples_slider" style="height:240px; width:432px; margin-left:auto; margin-right:auto; margin-top:60px;">
+        <img src="/assets/examples/career_blur.jpeg" alt="">
+        <img data-src="/assets/examples/city_blur.jpeg" src="" alt="">
+        <img data-src="/assets/examples/major_blur.jpeg" src="" alt="">
+        <img data-src="/assets/examples/spending_blur.jpeg" src="" alt="">
+        <img data-src="/assets/examples/school_blur.jpeg" src="" alt="">
+    </div>
+    <!-- Include slider JS file -->
+    <script src="/assets/ideal-image-slider.js"></script>
+    <!-- Create your slider -->
+    <script>
+    	var slider = new IdealImageSlider.Slider('#examples_slider');
+    	slider.start();
+    </script>
+
+
+
+
 </div>
 
 <div id="loading" hidden="hidden">
@@ -46,5 +66,10 @@
         $('.main-search').css({"border-color":c["p_hex"]});
         $('.help-nav').css({"color":c["p_hex"]});
         $('.fill_circle').css({"fill": c["p_hex"]});
+        $('#examples_slider').css({"background-color": c["p_hex"]});
+    }
+    else
+    {
+    	$('#examples_slider').css({"background-color": "#884412"});
     }
 </script>
