@@ -108,6 +108,7 @@ def query(query):
 	locations = []
 	schools = []
 	majors = []
+	maj_names = []
 	command = ""
 	package = {}
 	sent_query = query
@@ -135,6 +136,7 @@ def query(query):
 		mlev = m.split("(")[1].replace(")","").strip()
 		if " " + mname.lower() + " " in query:
 			majors.append({"name":mname,"level":mlev})
+			maj_names.append(m)
 	for c in cities:
 		temp = " " + c.replace(",", "").lower() + " "
 		if(temp in query):
@@ -262,7 +264,7 @@ def query(query):
 			resp = json.dumps(package)
 			return resp
 		for i in range(0, len(majors)):
-			package["major_"+`i+1`+"_name"] = majors[i]
+			package["major_"+`i+1`+"_name"] = maj_names[i]
 		package["query"] = sent_query
 		package["query_type"] = "major"
 		resp = json.dumps(package)
@@ -314,7 +316,10 @@ def data():
 			"locations":[]
 		}
 		for o in query['option']:
-			package["locations"].append({"city":o[:o.index(",")],"state":o[o.index(", ")+2:]})
+			if "," in o:
+				package["locations"].append({"city":o[:o.index(",")],"state":o[o.index(", ")+2:]})
+			else:
+				package["locations"].append({"state":o})
 
 		if(len(query['option']) == 1):
 			package['operation'] = "get"
@@ -393,7 +398,7 @@ def data():
 
 		package = json.loads(resp.text)
 		for i in range(0, len(query['option'])):
-			package["major_"+`i+1`+"_name"] = query['option'][i].title()
+			package["major_"+`i+1`+"_name"] = query['option'][i]
 		return json.dumps(package)
 
 	if(query['type'] == 'career'):
