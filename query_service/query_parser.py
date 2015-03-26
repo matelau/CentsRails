@@ -131,9 +131,10 @@ def query(query):
 		if re.search(r"\b" + abbr + r"\b", query):
 			query = re.sub(r"\b" + abbr + r"\b", c, query)
 	for m in majs:
-		if " " + m.lower() + " " in query:
-			majors.append(m)
-			print majors
+		mname = m.split("(")[0].strip()
+		mlev = m.split("(")[1].replace(")","").strip()
+		if " " + mname.lower() + " " in query:
+			majors.append({"name":mname,"level":mlev})
 	for c in cities:
 		temp = " " + c.replace(",", "").lower() + " "
 		if(temp in query):
@@ -377,7 +378,9 @@ def data():
 			package['operation'] = "compare"
 
 		for o in query['option']:
-			package["majors"].append(o.title())
+			mname = o.split("(")[0].strip()
+			mlev = o.split("(")[1].replace(")","").strip()
+			package["majors"].append({"name":mname,"level":mlev})
 
 		url = "https://trycents.com/api/v1/majors/"
 
