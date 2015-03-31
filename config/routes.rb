@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   get 'search/results'
   get 'search/getPartial'
   get 'user/terms'
+  #get 'swagger/dist/index.html'
   root 'search#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -77,6 +78,8 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+	get '/api' => redirect('/swagger-ui/dist/index.html?url=/apidocs/api-docs.json')
+
   namespace :api do
     namespace :v1 do
       post 'coli' => 'coli#show'

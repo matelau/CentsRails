@@ -1,6 +1,4 @@
 class Api::V2::ColiController < ApplicationController
-	
-	# Get coli record names for autocomplete.
 	def index
 		result = Array.new
 
@@ -45,7 +43,7 @@ class Api::V2::ColiController < ApplicationController
 		# Return the record names as a JSON object.
 		result.sort!
 		return render json: result, status: 200
-	end
+  end
 
 	# Get cost of living data by state.
 	def show_state
