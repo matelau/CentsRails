@@ -184,8 +184,10 @@ class Api::V2::ColiController < ApplicationController
 
 			# Add the weather data for this location.
 			weather_data = extract_weather_data(location, records, result)
-			result["location_#{index}"]["weather_#{index}"] = weather_data[:weather_high_stats]
-			result["location_#{index}"]["weatherlow_#{index}"] = weather_data[:weather_low_stats]
+			if result["location_#{index}"]
+				result["location_#{index}"]["weather_#{index}"] = weather_data[:weather_high_stats]
+				result["location_#{index}"]["weatherlow_#{index}"] = weather_data[:weather_low_stats]
+			end
 
 			# Keep track of which states we substituted state data for.
 			if state_match

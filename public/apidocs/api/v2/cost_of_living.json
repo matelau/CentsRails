@@ -11,7 +11,7 @@
     }
   },
   "basePath":"http://localhost:3000/api/v2",
-  "resourcePath":"Cost of Living",
+  "resourcePath":"/cost_of_living",
   "apis":[  
     {  
       "path":"/cost_of_living",
@@ -28,7 +28,8 @@
               "description":"a US state name",
               "required":false,
               "type":"boolean",
-              "paramType":"query"
+              "paramType":"query",
+              "defaultValue":false
             },
             {  
               "name":"state",
@@ -133,7 +134,8 @@
               "description":"object with array of location objects and optional operation",
               "required":true,
               "paramType":"body",
-              "type":"Coli"
+              "type":"Cost_of_living_body",
+              "defaultValue":"{\n  \"operation\": \"compare\",\n  \"locations\": [\n    {\n      \"city\": \"San Francisco\",\n      \"state\": \"California\",\n      \"order\": 2\n    }, \n    {\n      \"city\": \"Salt Lake City\",\n      \"state\": \"Utah\",\n      \"order\": 1\n    }\n  ]\n}"
             }
           ],
           "responseMessages":[  
@@ -155,8 +157,8 @@
     }
   ],
   "models":{  
-    "Coli":{  
-      "id":"Coli",
+    "Cost_of_living_body":{  
+      "id":"Cost_of_living_body",
       "type":"object",
       "properties":{  
         "operation":{  
