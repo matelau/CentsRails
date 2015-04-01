@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150325210355) do
+ActiveRecord::Schema.define(version: 20150330193412) do
 
   create_table "amounts", force: true do |t|
     t.integer  "user_id"
@@ -31,6 +31,8 @@ ActiveRecord::Schema.define(version: 20150325210355) do
     t.integer  "job_openings"
     t.string   "name"
     t.string   "salary"
+    t.float    "unemp11",                   limit: 24
+    t.float    "unemp12",                   limit: 24
   end
 
   create_table "coli_weather", id: false, force: true do |t|
