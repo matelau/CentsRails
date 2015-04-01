@@ -1,6 +1,9 @@
 @font-face {
   font-family: 'Roboto', sans-serif;
 }
+.navbar{
+ font-family: "Roboto",sans-serif;
+}
 .ac-container{
 	width: 750px;
 	margin: 10px auto 30px auto;
