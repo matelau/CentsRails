@@ -1,7 +1,6 @@
 {
   "apiVersion": "v2",
-  "swaggerVersion": "1.2",
-  "basePath": "/",
+  "swaggerVersion": "2.0",
   "apis": [
     {
       "path": "https://localhost:3000/apidocs/api/v2/cost_of_living.{format}",

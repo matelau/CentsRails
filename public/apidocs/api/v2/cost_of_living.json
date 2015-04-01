@@ -1,11 +1,20 @@
 {
   "apiVersion": "v2",
-  "swaggerVersion": "1.2",
-  "basePath": "/",
-  "resourcePath": "cost_of_living",
+  "swaggerVersion": "2.0",
+  "info": {
+    "version": "2.0.0",
+    "title": "Cents API",
+    "description": "The API for Cents.", 
+    "contact": {
+      "name": "Team FDE",
+      "url": "admin@trycents.com"
+    }
+  },
+  "basePath": "http://localhost:3000/api/v2",
+  "resourcePath": "Cost of Living",
   "apis": [
     {
-      "path": "/api/v2/cost_of_living",
+      "path": "/cost_of_living",
       "operations": [
         {
           "method": "GET",
@@ -16,7 +25,7 @@
       ]
     },
     {
-      "path": "/api/v2/cost_of_living/{state}",
+      "path": "/cost_of_living/{state}",
       "operations": [
         {
           "method": "GET",
@@ -36,7 +45,7 @@
       ]
     },
     {
-      "path": "/api/v2/cost_of_living/{state}/{city}",
+      "path": "/cost_of_living/{state}/{city}",
       "operations": [
         {
           "method": "GET",
@@ -61,6 +70,45 @@
           ]
         }
       ]
+    },
+    {
+      "path": "/cost_of_living",
+      "operations": [
+        {
+          "method": "POST",
+          "summary": "Returns cost of living information for two locations.",
+          "type": "string",
+	  "nickname": "Api::V2::Coli#show_two",
+          "parameters": [
+            {
+              "name": "body",
+              "description": "array of location objects",
+              "required": true,
+              "paramType": "body",
+              "type": "array",
+              "items": {
+                "$ref": "Location"
+              }
+            }
+          ]
+	}
+      ]
     }
-  ]
+  ],
+  "models": {
+    "Location": {
+      "required": [
+        "city", 
+        "state"
+      ],
+      "properties": {
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        }
+      }
+    }
+  }
 }
