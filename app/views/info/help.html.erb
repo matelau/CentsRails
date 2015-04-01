@@ -73,5 +73,16 @@
 			an auto complete feature on the <a href="/info/examples">examples</a> page to help.</p>
 		</article>
 	</div>
+		<div>
+		<input id="ac-8" name="accordion-1" type="checkbox" />
+		<label for="ac-8">Where can I learn about your API?</label>
+		<article class="ac-small">
+			<% if current_user %>
+				<p>You can learn how to access our API through our <a href="/api">documentation</a>.</p>
+			<% else %>
+				<p>We have a public API that's open to registered users. Visit this page again after <a href="/register">registering</a> or <a href="/user/login">logging in</a>.</p>
+			<% end %>
+		</article>
+	</div>
 </section>
 </div>
