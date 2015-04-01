@@ -18,14 +18,14 @@
       "operations":[  
         {  
           "method":"GET",
-          "summary":"Returns names of all locations.",
+          "summary":"Returns names of all majors.",
           "notes": "You can fetch a list of all location (city, state) names simply by calling 'https://trycents.com/api/v2/cost_of_living', since both parameters are optional.",
           "type":"string",
           "nickname":"Api::V2::Coli#index",
           "parameters":[  
             {  
               "name":"only_state_names",
-              "description":"a US state name",
+              "description":"whether to show state names",
               "required":false,
               "type":"boolean",
               "paramType":"query",

@@ -5,7 +5,6 @@ class Api::V2::ColiController < ApplicationController
 		if params[:state] and not (params[:only_state_names] == 'true')
 			records = Coli.select('DISTINCT city').where(['state = ? and city IS NOT NULL', params[:state]])
 
-			# Format the location name as a single string.
 			records.each do |record|
 				result << record[:city]
 			end
