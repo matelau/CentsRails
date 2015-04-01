@@ -2,21 +2,21 @@ class Api::V2::ColiController < ApplicationController
 	def index
 		result = Array.new
 
-		if params[:where] and not params[:select]
-			records = Coli.select('DISTINCT city').where(['state = ? and city IS NOT NULL', params[:where]])
+		if params[:state] and not (params[:only_state_names] == 'true')
+			records = Coli.select('DISTINCT city').where(['state = ? and city IS NOT NULL', params[:state]])
 
 			# Format the location name as a single string.
 			records.each do |record|
 				result << record[:city]
 			end
 
-		elsif params[:select] and not params[:where]
+		elsif params[:only_state_names] == 'true' and not params[:state]
 			records = Coli.select('DISTINCT state')
 			records.each do |record|
 				result << record[:state]
 			end
 
-		elsif (not params[:select]) and (not params[:where])
+		elsif (not (params[:only_state_names] == 'true')) and (not params[:state])
 			records = Coli.select('DISTINCT city, state')
 			
 			# Format the location name as a single string.
@@ -29,7 +29,7 @@ class Api::V2::ColiController < ApplicationController
 			end
 
 		else
-			records = Coli.select('DISTINCT state').where(state: params[:where])
+			records = Coli.select('DISTINCT state').where(state: params[:state])
 			records.each do |record|
 				result << record[:state]
 			end
