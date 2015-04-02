@@ -355,6 +355,7 @@ var IdealImageSlider = (function() {
 				}
 
 				if(href) slideEl.setAttribute('href', href);
+				slideEl.setAttribute('onclick', 'popular_populate("' + slide.getAttribute('id') + '")');
 				if(target) slideEl.setAttribute('target', target);
 				if(slide.getAttribute('className')) _addClass(slideEl, slide.getAttribute('className'));
 				if(slide.getAttribute('id')) slideEl.setAttribute('id', slide.getAttribute('id'));
