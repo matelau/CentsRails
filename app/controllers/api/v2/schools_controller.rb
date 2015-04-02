@@ -3,26 +3,26 @@ class Api::V2::SchoolsController < ApplicationController
 	def index
 		result = Array.new
 
-		if params[:where] and not params[:select]
-			records = University.select('DISTINCT name').where(['state LIKE ?', "%#{params[:where]}"])
+		if params[:location] and not (params[:only_location_names] == 'true')
+			records = University.select('DISTINCT name').where(['state LIKE ?', "%#{params[:location]}%"])
 			records.each do |record|
 				result << record[:name]
 			end
 
-		elsif params[:select] and not params[:where]
+		elsif params[:only_location_names] == 'true' and not params[:location]
 			records = University.select('DISTINCT state')
 			records.each do |record|
 				result << record[:state]
 			end
 
-		elsif (not params[:select]) and (not params[:where])
+		elsif (not (params[:only_location_names] == 'true')) and (not params[:location])
 			records = University.select('DISTINCT name, state')
 			records.each do |record|
 				result << record[:name]
 			end
 
 		else
-			records = University.select('DISTINCT state').where(['state LIKE ?', "%#{params[:where]}"])
+			records = University.select('DISTINCT state').where(['state LIKE ?', "%#{params[:location]}%"])
 			records.each do |record|
 				result << record[:state]
 			end
@@ -38,9 +38,19 @@ class Api::V2::SchoolsController < ApplicationController
 		return render json: result, status: 200
 	end
 
-	# Get school by state and name.
+	# Get school by name.
 	def show
-		school = University.where(name: params[:name])
+		school = University.where(['name LIKE ?', "#{params[:name]}%"])
+		if school.present?
+			return render json: school, status: 200
+		else
+			return render json: [], status: 404
+		end
+	end
+
+	# Get school by location.
+	def show_location
+		school = University.where(['state LIKE ?', "%#{params[:location]}%"])
 		if school.present?
 			return render json: school, status: 200
 		else

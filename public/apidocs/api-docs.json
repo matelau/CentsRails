@@ -8,7 +8,11 @@
     },
     {
       "path": "https://localhost:3000/apidocs/api/v2/degrees.{format}",
-      "description": "Majors"
+      "description": "Degrees"
+    },
+    {
+      "path": "https://localhost:3000/apidocs/api/v2/schools.{format}",
+      "description": "Schools"
     }
   ]
 }
