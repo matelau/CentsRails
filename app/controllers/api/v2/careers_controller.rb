@@ -22,7 +22,7 @@ class Api::V2::CareersController < ApplicationController
 
 	# Get career by name.
 	def show
-		career = Career.where(career: params[:career])
+		career = Career.where(name: params[:name])
 		if career.present?
 			return render json: career, status: 200
 		else
@@ -43,17 +43,17 @@ class Api::V2::CareersController < ApplicationController
 		if params[:careers][0][:order] and params[:careers][1][:order]
 			params[:careers].each do |career|
 				if career[:order] == 1
-					careers << career[:name]
+					careers << career
 				end
 			end
 			params[:careers].each do |career|
 				if career[:order] == 2
-					careers << career[:name]
+					careers << career
 				end
 			end
 		else
-			careers << params[:careers][0][:name]
-			careers << params[:careers][1][:name]
+			careers << params[:careers][0]
+			careers << params[:careers][1]
 		end
 
 		# Create a string of the form 'name = n1 OR name = n2 ...' and a list of 
@@ -68,10 +68,15 @@ class Api::V2::CareersController < ApplicationController
 		where_string = where_string[0..-5]	# Strip off the last ' OR '.
 
 		# Query the database.
-		records = Career.select(:name, :salary).where([where_string, *where_params])
-
-		#@averages = Career.find_by_sql "SELECT AVG(unemp_rate) AS avg_unemp_rate, 
-		#										FROM colis"
+		records = Career.find_by_sql [
+							"SELECT name,
+											salary,
+											unemp11,
+											unemp12
+				FROM careers
+				WHERE #{where_string};",
+				*where_params
+			]
 
 		# Iterate over each career, keeping track of the career's index.
 		# (The index is needed because that's how the view tracks careers.)
@@ -85,17 +90,14 @@ class Api::V2::CareersController < ApplicationController
 				if record[:name] == career[:name]
 					match = true
 
-					result["career_salary_#{index}"] = [career[:salary], 0, 0, 0] # year 1, year 2, year 3, year 4
+					result["career_salary_#{index}"] = [record[:salary], 
+						0, 0, 0, 0, 0, 0, 0, 0, 0]
 					result["career_satisfaction_#{index}"] = 0.0
 					result["career_demand_#{index}"] = [0, 0, 0] # three values
+					result["career_unemploy_#{index}"] = [record[:unemp11], record[:unemp12]]
 					break
 				end
 			end
-
-			#mystery
-			result["career_unemploy_1"] = [0, 0] # two values
-			result["career_unemploy_2"] = [0, 0] # two values
-			result["career_unemploy_3"] = [0, 0] # two values national average
 
 			# Keep track of which careers had neither exact nor state data.
 			if not match
@@ -105,5 +107,9 @@ class Api::V2::CareersController < ApplicationController
 			# Increment for next object.
 			index += 1
 		end
+
+		result["career_unemploy_3"] = [8.9, 8.1] # two values national average
+
+		return render json: result, status: 200
 	end
 end

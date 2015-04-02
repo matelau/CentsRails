@@ -1,0 +1,138 @@
+{  
+  "apiVersion":"v2",
+  "swaggerVersion":"2.0",
+  "info":{  
+    "version":"2.0.0",
+    "title":"Cents API",
+    "description":"The API for Cents.",
+    "contact":{  
+      "name":"Team FDE",
+      "url":"admin@trycents.com"
+    }
+  },
+  "basePath":"http://localhost:3000/api/v2",
+  "resourcePath":"/careers",
+  "apis":[  
+    {  
+      "path":"/careers",
+      "operations":[  
+        {  
+          "method":"GET",
+          "summary":"Returns names of all available careers.",
+          "type":"string",
+          "nickname":"Api::V2::CareersController#index",
+          "responseMessages":[  
+            {  
+              "code":200,
+              "message":"Records were found."
+            },
+            {  
+              "code":404,
+              "message":"No records were found."
+            }
+          ]
+        }
+      ]
+    },
+    {  
+      "path":"/careers/{name}",
+      "operations":[  
+        {  
+          "method":"GET",
+          "summary":"Returns data for a career.",
+          "type":"string",
+          "nickname":"Api::V2::CareersController#show",
+          "parameters":[  
+            {  
+              "name":"name",
+              "description":"a career name",
+              "required":true,
+              "type":"string",
+              "paramType":"path"
+            }
+          ],
+          "responseMessages":[  
+            {  
+              "code":200,
+              "message":"Records were found."
+            },
+            {  
+              "code":404,
+              "message":"School does not exist."
+            }
+          ]
+        }
+      ]
+    },
+    {  
+      "path":"/careers",
+      "operations":[  
+        {  
+          "method":"POST",
+          "summary":"Returns data on two careers.",
+          "notes":"The order parameter is optional, but if you use it, you must use it for both careers. The value of the order parameter must be either 1 or 2.",
+          "type":"string",
+          "nickname":"Api::V2::CareersController#show_two",
+          "parameters":[  
+            {  
+              "name":"body",
+              "description":"object with array of career objects and optional operation",
+              "required":true,
+              "paramType":"body",
+              "type":"Career_body",
+              "defaultValue":"{\n  \"operation\": \"compare\",\n  \"careers\": [\n    {\n      \"name\": \"Account Coordinator\",\n      \"order\": 2\n    }, \n    {\n      \"name\": \"Aerospace Engineer\",\n      \"order\": 1\n    }\n  ]\n}"
+            }
+          ],
+          "responseMessages":[  
+            {  
+              "code":200,
+              "message":"Records were found."
+            },
+            {  
+              "code":400,
+              "message":"No careers were in the careers array."
+            },
+            {  
+              "code":404,
+              "message":"No data on some schools."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "models":{  
+    "Career_body":{  
+      "id":"Career_body",
+      "type":"object",
+      "properties":{  
+        "operation":{  
+          "type":"string"
+        },
+        "careers":{  
+          "type":"array",
+          "items":{  
+            "$ref":"Career"
+          }
+        }
+      },
+      "required":[  
+        "careers"
+      ]
+    },
+    "Career":{  
+      "required":[  
+        "name"
+      ],
+      "id":"Career",
+      "properties":{  
+        "name":{  
+          "type":"string"
+        },
+        "order":{  
+          "type":"integer"
+        }
+      }
+    }
+  }
+}

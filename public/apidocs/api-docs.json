@@ -3,6 +3,10 @@
   "swaggerVersion": "2.0",
   "apis": [
     {
+      "path": "https://localhost:3000/apidocs/api/v2/careers.{format}",
+      "description": "Careers"
+    },
+    {
       "path": "https://localhost:3000/apidocs/api/v2/cost_of_living.{format}",
       "description": "Cost of living"
     },
