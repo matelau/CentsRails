@@ -72,7 +72,8 @@ class Api::V2::UsersController < ApplicationController
 		# Attempt to save the user and finish.
 		if user.save
 			session[:user_id] = user.id
-			result[:user] = "#{params[:first_name]} #{params[:last_name]}"
+			result[:name] = "#{params[:first_name]} #{params[:last_name]}"
+			result[:id] = user.id
 			return render json: result, status: 200
 		else
 			return render json: result, status: 400
@@ -104,10 +105,11 @@ class Api::V2::UsersController < ApplicationController
 
 		# Try to authenticate the user and finish.
 		if user && user.authenticate(params[:password])
+			result[:name] = "#{params[:first_name]} #{params[:last_name]}"
+			result[:id] = user.id
 			return render json: result, status: 200
 		else
-			error_list.append 'authentication failed'
-			result[:errors] = error_list
+			result[:errors] = 'authentication failed'
 			return render json: result, status: 400
 		end
 	end

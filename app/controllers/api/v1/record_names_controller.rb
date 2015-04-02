@@ -20,8 +20,7 @@ class Api::V1::RecordNamesController < ApplicationController
 		# Also uses optional params[:select] and params[:where].
 
 		unless error_list.empty?
-			result[:errors] = error_list
-			return render json: result, status: 400
+			return render json: error_list, status: 400
 		end
 
 		tables = params[:tables]
@@ -53,9 +52,7 @@ class Api::V1::RecordNamesController < ApplicationController
 					
 					# Format the location name as a single string.
 					records.each do |record|
-						if not record[:city]
-							result << record[:state]
-						else
+						if record[:city]
 							result << "#{record[:city]}, #{record[:state]}"
 						end
 					end

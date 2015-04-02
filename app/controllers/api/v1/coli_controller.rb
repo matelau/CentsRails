@@ -165,7 +165,11 @@ private
 	def extract_coli_data(location, i, record, result)
 		# Store each locations's data in result.
 		# Name each location.
-		result["location_#{i}"] = "#{location[:city]}, #{location[:state]}"
+		if location[:city].present?
+			result["location_#{i}"] = "#{location[:city]}, #{location[:state]}"
+		else
+			result["location_#{i}"] = "#{location[:state]}"
+		end
 
 		##### ---------------- COST OF LIVING ---------------- #####
 		coli_stats = Array.new	# For formatting the eventual JSON object.
