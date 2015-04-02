@@ -46,7 +46,7 @@ city = []
 state = {}
 #conflicts right now between Louisiana(LA) and Los Angeles(LA) and Indiana(IN) and the word 'in'
 commands = {"compare":"compare","vs.":"compare","vs":"compare","get":"get","find":"get","difference between":"compare"}
-common_abbrs = {"nyc":"new york, new york","slc":"salt lake city, utah","la":"los angeles, california"}
+common_abbrs = {"sf":"san francisco, california","nyc":"new york, new york","slc":"salt lake city, utah","la":"los angeles, california"}
 supers = {"best":"","worst":"","cheapest":"","expensive":"","priciest":""}
 datasets = {"schools":"school","universities":"university","cities":"city","majors":"degree","degrees":"degrees"}
 
@@ -79,6 +79,23 @@ mresp = ms.send(mprep)
 
 majs = json.loads(mresp.text)
 
+cpac = {
+	"operation":"get",
+	"tables":[
+		"cost of living"
+	]
+}
+
+cpayload = json.dumps(cpac)
+murl = "https://trycents.com/api/v1/record_names/"
+r = requests.Request("POST",murl,headers={'Content-Type':'application/json','Accept':'application/json'},data=cpayload)
+cprep = r.prepare()
+cs = requests.Session()
+cs.verify = False
+cresp = cs.send(cprep)
+
+cities = json.loads(cresp.text)
+
 # for c in cities:
 # 	cabbr = ""
 # 	for a, s in state.iteritems():
@@ -108,6 +125,7 @@ def query(query):
 	locations = []
 	schools = []
 	majors = []
+	careers = []
 	command = ""
 	package = {}
 	sent_query = query
