@@ -80,15 +80,19 @@ class Api::V2::UsersController < ApplicationController
 		end
 	end
 
-	# Confirm that a user exists.
+	# Get profile data.
 	def show
+		result = Hash.new
+
 		# Search for the user.
 		user = User.find_by_email(params[:email])
 
+		# Try to authenticate the user and finish.
 		if user
-			return render json: 'User found', status: 200
+			return render json: user, status: 200
 		else
-			return render json: 'No such user found', status: 404
+			result[:errors] = 'authentication failed'
+			return render json: result, status: 400
 		end
 	end
 
@@ -105,7 +109,7 @@ class Api::V2::UsersController < ApplicationController
 
 		# Try to authenticate the user and finish.
 		if user && user.authenticate(params[:password])
-			result[:name] = "#{params[:first_name]} #{params[:last_name]}"
+			result[:name] = "#{user.first_name} #{user.last_name}"
 			result[:id] = user.id
 			return render json: result, status: 200
 		else

@@ -17,6 +17,10 @@
     {
       "path": "https://localhost:3000/apidocs/api/v2/schools.{format}",
       "description": "Schools"
+    },
+    {
+      "path": "https://localhost:3000/apidocs/api/v2/users.{format}",
+      "description": "Users"
     }
   ]
 }

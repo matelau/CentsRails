@@ -53,7 +53,9 @@ class Api::V2::CareersController < ApplicationController
 			end
 		else
 			careers << params[:careers][0]
-			careers << params[:careers][1]
+			if params[:careers][1]
+				careers << params[:careers][1]
+			end
 		end
 
 		# Create a string of the form 'name = n1 OR name = n2 ...' and a list of 
