@@ -85,10 +85,10 @@ class Api::V2::UsersController < ApplicationController
 		result = Hash.new
 
 		# Search for the user.
-		user = User.find_by_email(params[:email])
+		user = User.find(params[:id])
 
 		# Try to authenticate the user and finish.
-		if user
+		if user && user.authenticate(params[:password])
 			return render json: user, status: 200
 		else
 			result[:errors] = 'authentication failed'
