@@ -35,9 +35,17 @@
 		<label for="ac-4">About us.</label>
 		<article class="ac-small">
 			<p>We are four students finishing our bachelors degree in computer science and the University of Utah. We saw a need for
-			a tool like this and have been working hard ever since. We love feedback, <a href="mailto:admin@trycents.com">tell us </a> what we are doing good, need to improve, or anything else you can think of. Thanks for visiting!</p>
+			a tool like this and have been working hard ever since. We love feedback, <a id="color-link" href="mailto:admin@trycents.com">tell us </a> what we are doing good, need to improve, or anything else you can think of. Thanks for visiting!</p>
 		</article>
 	</div>
 	
 </section>
 </div>
+
+<script>
+if (localStorage.getItem("colors"))
+    {
+        var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+        $('#color-link').css({"color":c["p_hex"]});
+    }
+</script>
