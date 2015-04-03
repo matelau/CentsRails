@@ -25,6 +25,9 @@
 	background-position: 50% 50%;
 	background-size: cover;
 	text-indent: -9999px;
+	background-color: #EEEEEE;
+	border-style: solid;
+	border-color: #EEEEEE;
 }
 
 /* Slide effect */
@@ -183,7 +186,7 @@
 	bottom: 0%;
   	position: absolute;*/
 
-  	padding-top: 220px;
+  	padding-top: 50px;
 }
 .iis-has-bullet-nav .iis-caption { max-width: 42%; }
 .iis-caption .iis-caption-title { font-weight: bold; }
@@ -191,6 +194,9 @@
 	line-height: 1.6em;
 	color: black;
 	text-align: center;
+	font-size: medium;
+	padding-left: 365px;
+	width: 575px;
 }
 .iis-caption:hover, .iis-caption-content:hover, .iis-slide:hover {
 	text-decoration: none !important;

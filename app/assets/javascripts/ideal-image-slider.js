@@ -268,9 +268,9 @@ var IdealImageSlider = (function() {
 		// Defaults
 		this.settings = {
 			selector: '',
-			height: 240, // Required but can be set by CSS
-			interval: 3000,
-			transitionDuration: 700,
+			height: 130, // Required but can be set by CSS
+			interval: 3500,
+			transitionDuration: 800,
 			effect: 'slide',
 			disableNav: false,
 			keyboardNav: true,
