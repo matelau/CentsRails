@@ -122,13 +122,12 @@ Rails.application.routes.draw do
       # Users.
     	get 'users/new' => '/user#register'											# Go to the register form.
       post 'users' => 'users#create'													# Register a new user.
-      post 'users/:id' => 'users#show'												# Get user profile data.
+     	get 'users/:id/spending_breakdown' => 'spending_breakdown#show'
+      put 'users/:id/spending_breakdown' => 'spending_breakdown#update'
+      patch 'users/:id/spending_breakdown' => 'spending_breakdown#update'
+      delete 'users/:id/spending_breakdown/:category/:name' => 'spending_breakdown#destroy'
       post 'users/validate' => 'users#validate'								# Validate a username and password.
-     	
-     	# Spending breakdown. 
-     	get 'spending_breakdown/:id' => 'spending_breakdown#show'
-      put 'spending_breakdown/:id' => 'spending_breakdown#update'
-      patch 'spending_breakdown/:id' => 'spending_breakdown#update'
+      post 'users/:id' => 'users#show'												# Get user profile data.
     end
   end
 end

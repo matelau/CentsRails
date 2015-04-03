@@ -141,6 +141,176 @@
           ]
         }
       ]
+    },
+    {  
+      "path":"/users/{id}/spending_breakdown",
+      "operations":[  
+        {  
+          "method":"GET",
+          "summary":"Loads spending breakdown data for a user.",
+          "type":"string",
+          "nickname":"Api::V2::SpendingBreakdownController#show",
+          "parameters":[  
+            {  
+              "name":"id",
+              "description":"a user id",
+              "required":true,
+              "paramType":"path",
+              "type":"Integer"
+            }
+          ],
+          "responseMessages":[  
+            {  
+              "code":200,
+              "message":"User was found."
+            },
+            {  
+              "code":404,
+              "message":"No such user ID was found."
+            }
+          ]
+        }
+      ]
+    },
+    {  
+      "path":"/users/{id}/spending_breakdown",
+      "operations":[  
+        {  
+          "method":"PUT",
+          "summary":"Saves spending breakdown data for a user.",
+          "type":"string",
+          "nickname":"Api::V2::SpendingBreakdownController#update",
+          "parameters":[  
+            {  
+              "name":"id",
+              "description":"a user id",
+              "required":true,
+              "paramType":"path",
+              "type":"Integer"
+            },
+            {  
+              "name":"body",
+              "description":"object with array of spending breakdown data",
+              "required":true,
+              "paramType":"body",
+              "type":"SB_body",
+              "defaultValue":"{\n  \"fields\": [\n    {\n      \"name\": \"Taxes\",\n      \"value\": 1113.02,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Food\",\n      \"value\": 427.51,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Housing\",\n      \"value\": 641.27,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Utilities\",\n      \"value\": 183.22,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Transportation\",\n      \"value\": 366.44,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Tuition\",\n      \"value\": 763.41,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Books\",\n      \"value\": 183.22,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Savings\",\n      \"value\": 249.29,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Misc\",\n      \"value\": 249.29,\n      \"category\": \"student\"\n    }\n  ]\n}"
+            }
+          ],
+          "responseMessages":[  
+            {  
+              "code":200,
+              "message":"Data was saved."
+            },
+            {  
+              "code":400,
+              "message":"The fields param was not an array or was empty."
+            },
+            {  
+              "code":400,
+              "message":"Each field object must have a name, value and category."
+            },
+            {  
+              "code":404,
+              "message":"No such user was found."
+            },
+            {  
+              "code":500,
+              "message":"Server error while saving."
+            }
+          ]
+        }
+      ]
+    },
+    {  
+      "path":"/users/{id}/spending_breakdown",
+      "operations":[  
+        {  
+          "method":"PATCH",
+          "summary":"Saves spending breakdown data for a user.",
+          "type":"string",
+          "nickname":"Api::V2::SpendingBreakdownController#update",
+          "parameters":[  
+            {  
+              "name":"id",
+              "description":"a user id",
+              "required":true,
+              "paramType":"path",
+              "type":"Integer"
+            },
+            {  
+              "name":"body",
+              "description":"object with array of spending breakdown data",
+              "required":true,
+              "paramType":"body",
+              "type":"SB_body",
+              "defaultValue":"{\n  \"fields\": [\n    {\n      \"name\": \"Taxes\",\n      \"value\": 1113.02,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Food\",\n      \"value\": 427.51,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Housing\",\n      \"value\": 641.27,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Utilities\",\n      \"value\": 183.22,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Transportation\",\n      \"value\": 366.44,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Tuition\",\n      \"value\": 763.41,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Books\",\n      \"value\": 183.22,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Savings\",\n      \"value\": 249.29,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Misc\",\n      \"value\": 249.29,\n      \"category\": \"student\"\n    }\n  ]\n}"
+            }
+          ],
+          "responseMessages":[  
+            {  
+              "code":200,
+              "message":"Data was deleted."
+            },
+            {  
+              "code":400,
+              "message":"The fields param was not an array or was empty."
+            },
+            {  
+              "code":400,
+              "message":"Each field object must have a name, value and category."
+            },
+            {  
+              "code":404,
+              "message":"No such user was found."
+            },
+            {  
+              "code":500,
+              "message":"Server error while saving."
+            }
+          ]
+        }
+      ]
+    },
+    {  
+      "path":"/users/{id}/spending_breakdown/{category}/{name}",
+      "operations":[  
+        {  
+          "method":"DELETE",
+          "summary":"Deletes a single spending breakdown item.",
+          "type":"string",
+          "nickname":"Api::V2::SpendingBreakdownController#destroy",
+          "parameters":[  
+            {  
+              "name":"id",
+              "description":"a user id",
+              "required":true,
+              "paramType":"path",
+              "type":"Integer"
+            },
+            {  
+              "name":"category",
+              "description":"default, student or custom",
+              "required":true,
+              "paramType":"path",
+              "type":"string"
+            },
+            {  
+              "name":"name",
+              "description":"the name of the spending breakdown item",
+              "required":true,
+              "paramType":"path",
+              "type":"string"
+            }
+          ],
+          "responseMessages":[  
+            {  
+              "code":200,
+              "message":"Data was deleted."
+						}
+          ]
+        }
+      ]
     }
   ],
   "models":{  
@@ -210,6 +380,40 @@
         },
         "id":{  
           "type":"integer"
+        }
+      }
+    },
+    "SB_body":{  
+      "id":"SB_body",
+      "type":"object",
+      "properties":{  
+        "fields":{  
+          "type":"array",
+          "items":{  
+            "$ref":"Field"
+          }
+        }
+      },
+      "required":[  
+        "fields"
+      ]
+    },
+    "Field":{  
+      "required":[  
+        "name",
+        "amount",
+        "category"
+      ],
+      "id":"Field",
+      "properties":{  
+        "name":{  
+          "type":"string"
+        },
+        "amount":{  
+          "type":"integer"
+        },
+        "cateory":{  
+          "type":"string"
         }
       }
     }

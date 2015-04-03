@@ -31,10 +31,6 @@ class Api::V2::SpendingBreakdownController < ApplicationController
 
 		# Check for the required fields, and return an appropriate message if
 		# they are not present.
-		unless params[:id].present?
-			error_list << 'No user ID was present'
-		end
-
 		unless params[:fields].present? and params[:fields].kind_of?(Array)
 			error_list << 'The fields param was not an array or was empty'
 			result[:errors] = error_list
@@ -60,14 +56,36 @@ class Api::V2::SpendingBreakdownController < ApplicationController
 
 		# Save the data.
 		params[:fields].each do |field|
-			amount = Amount.new
+
+			# Check if this item already exists.
+			amount = Amount.where(user_id: params[:id])
+										.where(category: field[:category])
+										.where(name: field[:name])
+										.first
+			unless amount.present?
+				amount = Amount.new
+				puts "got here"
+			end
+
 			amount.user_id = params[:id]
 			amount.name = field[:name]
 			amount.value = field[:value]
 			amount.category = field[:category]
+			
 			return render json: result, status: 500 unless amount.save
 		end
 
 		return render json: result, status: 200
+	end
+
+  # Remove a single item of spending breakdown data.
+	def destroy
+		Amount.where(
+			user_id: params[:id], 
+			category: params[:category], 
+			name: params[:name]
+			).destroy_all
+
+		return render json: Hash.new, status: 200
 	end
 end
