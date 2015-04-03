@@ -1,5 +1,4 @@
-
-
+<% if current_user %>
 
 <script type="text/javascript" src="/assets/modernizr.custom.29473.js"></script>
 
@@ -93,8 +92,8 @@
 	</section>
 </div>
 
-
-
-
-
 <script src="/assets/profile.js"></script>
+
+<% else %>
+	<script> window.location = "/user/login/";</script>
+<% end %>
