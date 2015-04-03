@@ -147,7 +147,7 @@
       "operations":[  
         {  
           "method":"GET",
-          "summary":"Loads spending breakdown data for a user.",
+          "summary":"Loads all spending breakdown data for a user.",
           "type":"string",
           "nickname":"Api::V2::SpendingBreakdownController#show",
           "parameters":[  
@@ -173,11 +173,49 @@
       ]
     },
     {  
-      "path":"/users/{id}/spending_breakdown",
+      "path":"/users/{id}/spending_breakdown/{category}",
+      "operations":[  
+        {  
+          "method":"GET",
+          "summary":"Loads spending breakdown data by category.",
+          "type":"string",
+          "nickname":"Api::V2::SpendingBreakdownController#show_category",
+          "parameters":[  
+            {  
+              "name":"id",
+              "description":"a user id",
+              "required":true,
+              "paramType":"path",
+              "type":"integer"
+            },
+            {  
+              "name":"category",
+              "description":"default, student or custom",
+              "required":true,
+              "paramType":"path",
+              "type":"string"
+            }
+          ],
+          "responseMessages":[  
+            {  
+              "code":200,
+              "message":"User was found."
+            },
+            {  
+              "code":404,
+              "message":"No such user was found."
+            }
+          ]
+        }
+      ]
+    },
+    {  
+      "path":"/users/{id}/spending_breakdown/{category}",
       "operations":[  
         {  
           "method":"PUT",
-          "summary":"Saves spending breakdown data for a user.",
+          "summary":"Updates all spending breakdown data by category.",
+          "notes":"This API will replace all data in this category with the new data from the body. Use it if you want to restore a category's data to a default.",
           "type":"string",
           "nickname":"Api::V2::SpendingBreakdownController#update",
           "parameters":[  
@@ -189,12 +227,19 @@
               "type":"Integer"
             },
             {  
+              "name":"category",
+              "description":"default, student or custom",
+              "required":true,
+              "paramType":"path",
+              "type":"string"
+            },
+            {  
               "name":"body",
               "description":"object with array of spending breakdown data",
               "required":true,
               "paramType":"body",
               "type":"SB_body",
-              "defaultValue":"{\n  \"fields\": [\n    {\n      \"name\": \"Taxes\",\n      \"value\": 1113.02,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Food\",\n      \"value\": 427.51,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Housing\",\n      \"value\": 641.27,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Utilities\",\n      \"value\": 183.22,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Transportation\",\n      \"value\": 366.44,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Tuition\",\n      \"value\": 763.41,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Books\",\n      \"value\": 183.22,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Savings\",\n      \"value\": 249.29,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Misc\",\n      \"value\": 249.29,\n      \"category\": \"student\"\n    }\n  ]\n}"
+              "defaultValue":"{\n  \"fields\": [\n    {\n      \"name\": \"Taxes\",\n      \"value\": 1113.02\n    },\n    {\n      \"name\": \"Food\",\n      \"value\": 427.51\n    },\n    {\n      \"name\": \"Housing\",\n      \"value\": 641.27\n    },\n    {\n      \"name\": \"Utilities\",\n      \"value\": 183.22\n    },\n    {\n      \"name\": \"Transportation\",\n      \"value\": 366.44\n    },\n    {\n      \"name\": \"Tuition\",\n      \"value\": 763.41\n    },\n    {\n      \"name\": \"Books\",\n      \"value\": 183.22\n    },\n    {\n      \"name\": \"Savings\",\n      \"value\": 249.29\n    },\n    {\n      \"name\": \"Misc\",\n      \"value\": 249.29\n    }\n  ]\n}"
             }
           ],
           "responseMessages":[  
@@ -208,7 +253,7 @@
             },
             {  
               "code":400,
-              "message":"Each field object must have a name, value and category."
+              "message":"Each field object must have a name and value."
             },
             {  
               "code":404,
@@ -223,11 +268,12 @@
       ]
     },
     {  
-      "path":"/users/{id}/spending_breakdown",
+      "path":"/users/{id}/spending_breakdown/{category}",
       "operations":[  
         {  
           "method":"PATCH",
-          "summary":"Saves spending breakdown data for a user.",
+          "summary":"Saves new spending breakdown data.",
+          "notes":"This API will insert new (name, value) pairs if the name doesn't exist or overwrite them if it does. Use it when you want to insert or update a few fields.",
           "type":"string",
           "nickname":"Api::V2::SpendingBreakdownController#update",
           "parameters":[  
@@ -239,12 +285,19 @@
               "type":"Integer"
             },
             {  
+              "name":"category",
+              "description":"default, student or custom",
+              "required":true,
+              "paramType":"path",
+              "type":"string"
+            },
+            {  
               "name":"body",
               "description":"object with array of spending breakdown data",
               "required":true,
               "paramType":"body",
               "type":"SB_body",
-              "defaultValue":"{\n  \"fields\": [\n    {\n      \"name\": \"Taxes\",\n      \"value\": 1113.02,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Food\",\n      \"value\": 427.51,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Housing\",\n      \"value\": 641.27,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Utilities\",\n      \"value\": 183.22,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Transportation\",\n      \"value\": 366.44,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Tuition\",\n      \"value\": 763.41,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Books\",\n      \"value\": 183.22,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Savings\",\n      \"value\": 249.29,\n      \"category\": \"student\"\n    },\n    {\n      \"name\": \"Misc\",\n      \"value\": 249.29,\n      \"category\": \"student\"\n    }\n  ]\n}"
+              "defaultValue":"{\n  \"fields\": [\n    {\n      \"name\": \"Day Care\",\n      \"value\": 1200.00\n    }\n  ]\n}"
             }
           ],
           "responseMessages":[  
@@ -258,7 +311,7 @@
             },
             {  
               "code":400,
-              "message":"Each field object must have a name, value and category."
+              "message":"Each field object must have a name and value."
             },
             {  
               "code":404,
@@ -401,8 +454,7 @@
     "Field":{  
       "required":[  
         "name",
-        "amount",
-        "category"
+        "amount"
       ],
       "id":"Field",
       "properties":{  
@@ -411,9 +463,6 @@
         },
         "amount":{  
           "type":"integer"
-        },
-        "cateory":{  
-          "type":"string"
         }
       }
     }
