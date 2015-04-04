@@ -298,6 +298,35 @@
         ]
       }
     },
+    "/users": {
+      "post": {
+       	"tags": [
+    			"users"
+  			],
+        "responses": {
+          "200": {
+            "description": "User was registered."
+          },
+          "400": {
+            "description": "The user data didn't meet the requirements."
+          }
+        },
+        "description": "",
+        "summary": "Registers a new user.",
+        "operationId": "Api::V2::UsersController#create",
+        "parameters": [
+          {
+            "in": "body",
+            "description": "object with array of career objects and optional operation",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User_body"
+            }
+          }
+        ]
+      }
+    },
     "/users/new": {
       "get": {
        	"tags": [
@@ -406,35 +435,6 @@
         "description": "",
         "summary": "Loads spending breakdown data by category.",
         "operationId": "Api::V2::UsersController#show_category"
-      }
-    },
-    "/users": {
-      "post": {
-       	"tags": [
-    			"users"
-  			],
-        "responses": {
-          "200": {
-            "description": "User was registered."
-          },
-          "400": {
-            "description": "The user data didn't meet the requirements."
-          }
-        },
-        "description": "",
-        "summary": "Registers a new user.",
-        "operationId": "Api::V2::UsersController#create",
-        "parameters": [
-          {
-            "in": "body",
-            "description": "object with array of career objects and optional operation",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/User_body"
-            }
-          }
-        ]
       }
     },
     "/users/{id}": {
