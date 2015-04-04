@@ -602,7 +602,7 @@
   "host": "trycents.com",
   "basePath": "/api/v2",
   "schemes": [
-    "http"
+    "https"
   ],
   "definitions": {
     "Career_body": {
