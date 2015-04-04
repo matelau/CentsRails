@@ -219,10 +219,10 @@
       }
     },
     "/degrees/{level}/{name}": {
-      	"tags": [
-    			"degrees"
-  			],
       "get": {
+       	"tags": [
+    			"career"
+  			],
         "responses": {
           "200": {
             "description": "Records were found."
