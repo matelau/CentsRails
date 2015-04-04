@@ -100,10 +100,9 @@
         "parameters": [
           {
             "in": "query",
-            "description": "whether to show only state name",
+            "description": "whether to show only state names",
             "name": "only_state_names",
             "required": false,
-            "default": false,
             "type": "boolean"
           },
           {
@@ -130,7 +129,7 @@
             "description": "No data on city or state for some locations."
           }
         },
-        "description": "",
+        "description": "This route is intended for internal use. The order parameter is optional, but if you use it, you must use it in exactly two location objects. Its value is either 1 or 2.",
         "summary": "Returns cost of living information for two locations.",
         "operationId": "Api::V2::Coli#show_two",
         "parameters": [
@@ -223,7 +222,7 @@
             "description": "No data for some degrees."
           }
         },
-        "description": "",
+        "description": "This route is intended for internal use. The order parameter is optional, but if you use it, you must use it in exactly two degree objects. Its value is either 1 or 2.",
         "summary": "Returns degree information for two degrees.",
         "operationId": "Api::V2::DegreesController#show_two",
         "parameters": [
@@ -250,8 +249,24 @@
             "description": "No records were found."
           }
         },
-        "description": "",
-        "summary": "Returns information on all degrees of all levels with that name."     
+        "description": "Get a list of all available degrees at https://trycents.com/api/v2/degrees; both parameters are optional. If you don't know the exact name of the level you want (Bachelor of Arts? Bachelor's of Arts?), enter the first part of the name. The API will return a list of substring matches.",
+        "summary": "Returns a list of all available degrees.",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "whether to show only bachelor, masters, etc., degrees",
+            "name": "only_level_names",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "description": "bachelor, masters, etc.",
+            "name": "level",
+            "required": false,
+            "type": "string"
+          }
+        ]   
       }
     },
     "/degrees/{name}": {
@@ -315,7 +330,39 @@
         ]
       }
     },
-        "/schools": {
+    "/schools": {
+    	"get": {
+    		"tags": [
+    		  "schools"
+    		],
+    		"responses": {
+          "200": {
+            "description": "Records were found."
+          },
+          "404": {
+            "description": "No records were found."
+         	}
+        },
+        "description": "Get a list of all available schools at https://trycents.com/api/v2/schools; both parameters are optional. If you don't know the exact name of the school you want (Harvard? Harvard University?), enter part of the name. The API will return a list of substring matches.",
+        "summary": "Returns a list of all available schools.",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "whether to show only available school locations",
+            "name": "only_location_names",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "description": "city or postal abbreviation for US state",
+            "name": "location",
+            "required": false,
+            "type": "string"
+          }
+        ]   
+      }
+    	},
       "post": {
        	"tags": [
     			"schools"
@@ -331,7 +378,7 @@
             "description": "No data on some schools."
           }
         },
-        "description": "",
+        "description": "This route is intended for internal use. The order parameter is optional, but if you use it, you must use it in exactly two school objects. Its value is either 1 or 2.",
         "summary": "Returns data on two schools.",
         "operationId": "Api::V2::SchoolsController#show_two",
         "parameters": [
@@ -366,7 +413,7 @@
         "parameters": [
           {
             "in": "path",
-            "description": "city or postal abbreviation for state in the US",
+            "description": "city or postal abbreviation for US state",
             "name": "location",
             "required": true,
             "type": "string",
@@ -587,10 +634,13 @@
           },
           {
             "in": "path",
-            "description": "default, student or custom",
+            "description": "a spending breakdown category",
             "name": "category",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "default", "student", "custom"
+            ]
           },
           {
             "in": "body",
@@ -835,7 +885,10 @@
           "type": "string"
         },
         "order": {
-          "type": "integer"
+          "type": "integer",
+          "enum": [
+            "1", "2"
+          ]
         }
       }
     },
@@ -869,7 +922,10 @@
           "type": "string"
         },
         "order": {
-          "type": "integer"
+          "type": "integer",
+          "enum": [
+            "1", "2"
+          ]
         }
       }
     },
@@ -1003,7 +1059,10 @@
           "type": "string"
         },
         "order": {
-          "type": "integer"
+          "type": "integer",
+          "enum": [
+            "1", "2"
+          ]
         }
       }
     }
