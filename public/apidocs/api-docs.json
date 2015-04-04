@@ -377,9 +377,7 @@
             "description": "a user id",
             "name": "id",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/Integer"
-            }
+            "type":"integer"
           }
         ]
       }
@@ -409,9 +407,7 @@
             "description": "a user id",
             "name": "id",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/Integer"
-            }
+            "type":"integer"
           },
           {
             "in": "path",
@@ -448,9 +444,7 @@
             "description": "a user id",
             "name": "id",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/Integer"
-            }
+            "type":"integer"
           },
           {
             "in": "path",
