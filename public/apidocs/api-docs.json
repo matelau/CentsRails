@@ -298,6 +298,93 @@
         ]
       }
     },
+        "/schools": {
+      "post": {
+       	"tags": [
+    			"schools"
+  			],
+        "responses": {
+          "200": {
+            "description": "Records were found."
+          },
+          "400": {
+            "description": "No schools were in the schools array."
+          },
+          "404": {
+            "description": "No data on some schools."
+          }
+        },
+        "description": "",
+        "summary": "Returns data on two schools.",
+        "operationId": "Api::V2::SchoolsController#show_two",
+        "parameters": [
+          {
+            "in": "body",
+            "description": "object with array of school objects and optional operation",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/School_body"
+            }
+          }
+        ]
+      }
+    },
+    "/schools/location/{location}": {
+      "get": {
+       	"tags": [
+    			"schools"
+  			],
+        "responses": {
+          "200": {
+            "description": "Records were found."
+          },
+          "404": {
+            "description": "Location does not exist."
+          }
+        },
+        "description": "",
+        "summary": "Returns information on all available schools for a location.",
+        "operationId": "Api::V2::SchoolsController#show_location",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "city or postal abbreviation for state in the US",
+            "name": "location",
+            "required": true,
+            "type": "string",
+            "default": "Princeton, NJ"
+          }
+        ]
+      }
+    },
+    "/schools/{name}": {
+      "get": {
+       	"tags": [
+    			"schools"
+  			],
+        "responses": {
+          "200": {
+            "description": "Records were found."
+          },
+          "404": {
+            "description": "School does not exist."
+          }
+        },
+        "description": "",
+        "summary": "Returns data for a school.",
+        "operationId": "Api::V2::SchoolsController#show_state_name",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "a school name",
+            "name": "name",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },
     "/users": {
       "post": {
        	"tags": [
@@ -327,19 +414,40 @@
         ]
       }
     },
-    "/users/new": {
-      "get": {
+    "/users/{id}": {
+      "post": {
        	"tags": [
     			"users"
   			],
         "responses": {
           "200": {
-            "description": "The form was returned."
+            "description": "There is a user with that ID."
+          },
+          "404": {
+            "description": "There is no user with that ID."
           }
         },
         "description": "",
-        "summary": "Redirects to a form that registers new users.",
-        "operationId": "Api::V2::UsersController#register"
+        "summary": "Gets profile data for a user.",
+        "operationId": "Api::V2::UsersController#show",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "a user id",
+            "name": "id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "description": "object with password field",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Password_body"
+            }
+          }
+        ]
       }
     },
     "/users/{id}/completed": {
@@ -398,105 +506,6 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/Completed_body"
-            }
-          }
-        ]
-      }
-    },
-    "/users/{id}/spending_breakdown/{category}": {
-      "get": {
-       	"tags": [
-    			"users"
-  			],
-        "responses": {
-          "200": {
-            "description": "The user was found."
-          },
-          "404": {
-          	"description": "No such user was found."
-          }
-        },
-        "parameters": [
-          {
-            "in": "path",
-            "description": "a user id",
-            "name": "id",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "in": "path",
-            "description": "default, student or custom",
-            "name": "category",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "description": "",
-        "summary": "Loads spending breakdown data by category.",
-        "operationId": "Api::V2::UsersController#show_category"
-      }
-    },
-    "/users/{id}": {
-      "post": {
-       	"tags": [
-    			"users"
-  			],
-        "responses": {
-          "200": {
-            "description": "There is a user with that ID."
-          },
-          "404": {
-            "description": "There is no user with that ID."
-          }
-        },
-        "description": "",
-        "summary": "Gets profile data for a user.",
-        "operationId": "Api::V2::UsersController#show",
-        "parameters": [
-          {
-            "in": "path",
-            "description": "a user id",
-            "name": "id",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "in": "body",
-            "description": "object with password field",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Password_body"
-            }
-          }
-        ]
-      }
-    },
-    "/users/validate": {
-      "post": {
-       	"tags": [
-    			"users"
-  			],
-        "responses": {
-          "200": {
-            "description": "Authentication successful."
-          },
-          "400": {
-            "description": "Authentication failed."
-          }
-        },
-        "description": "",
-        "summary": "Validate a username and password.",
-        "operationId": "Api::V2::UsersController#validate",
-        "parameters": [
-          {
-            "in": "body",
-            "description": "object with password field",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Validate_body"
             }
           }
         ]
@@ -695,89 +704,46 @@
         ]
       }
     },
-    "/schools": {
-      "post": {
+    "/users/new": {
+      "get": {
        	"tags": [
-    			"schools"
+    			"users"
   			],
         "responses": {
           "200": {
-            "description": "Records were found."
-          },
-          "400": {
-            "description": "No schools were in the schools array."
-          },
-          "404": {
-            "description": "No data on some schools."
+            "description": "The form was returned."
           }
         },
         "description": "",
-        "summary": "Returns data on two schools.",
-        "operationId": "Api::V2::SchoolsController#show_two",
+        "summary": "Redirects to a form that registers new users.",
+        "operationId": "Api::V2::UsersController#register"
+      }
+    },
+    "/users/validate": {
+      "post": {
+       	"tags": [
+    			"users"
+  			],
+        "responses": {
+          "200": {
+            "description": "Authentication successful."
+          },
+          "400": {
+            "description": "Authentication failed."
+          }
+        },
+        "description": "",
+        "summary": "Validate a username and password.",
+        "operationId": "Api::V2::UsersController#validate",
         "parameters": [
           {
             "in": "body",
-            "description": "object with array of school objects and optional operation",
+            "description": "object with password field",
             "name": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/School_body"
+              "$ref": "#/definitions/Validate_body"
             }
-          }
-        ]
-      }
-    },
-    "/schools/location/{location}": {
-      "get": {
-       	"tags": [
-    			"schools"
-  			],
-        "responses": {
-          "200": {
-            "description": "Records were found."
-          },
-          "404": {
-            "description": "Location does not exist."
-          }
-        },
-        "description": "",
-        "summary": "Returns information on all available schools for a location.",
-        "operationId": "Api::V2::SchoolsController#show_location",
-        "parameters": [
-          {
-            "in": "path",
-            "description": "city or postal abbreviation for state in the US",
-            "name": "location",
-            "required": true,
-            "type": "string",
-            "default": "Princeton, NJ"
-          }
-        ]
-      }
-    },
-    "/schools/{name}": {
-      "get": {
-       	"tags": [
-    			"schools"
-  			],
-        "responses": {
-          "200": {
-            "description": "Records were found."
-          },
-          "404": {
-            "description": "School does not exist."
-          }
-        },
-        "description": "",
-        "summary": "Returns data for a school.",
-        "operationId": "Api::V2::SchoolsController#show_state_name",
-        "parameters": [
-          {
-            "in": "path",
-            "description": "a school name",
-            "name": "name",
-            "required": true,
-            "type": "string"
           }
         ]
       }
