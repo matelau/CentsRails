@@ -1,6 +1,6 @@
 {
   "apiVersion": "v2",
-  "swaggerVersion": "2.0",
+  "swaggerVersion": "1.2",
   "apis": [
     {
       "path": "https://trycents.com/apidocs/api/v2/careers.{format}",

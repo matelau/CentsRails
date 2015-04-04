@@ -1,6 +1,6 @@
 {  
   "apiVersion":"v2",
-  "swaggerVersion":"2.0",
+  "swaggerVersion":"1.2",
   "info":{  
     "version":"2.0.0",
     "title":"Cents API",
