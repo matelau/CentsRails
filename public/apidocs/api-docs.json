@@ -545,7 +545,10 @@
   			],
         "responses": {
           "200": {
-            "description": "User was found."
+            "description": "User was found.",
+            "schema": {
+            	"$ref": "#definitions/IDReponse"
+            }
           },
           "404": {
             "description": "No such user was found."
@@ -1073,6 +1076,11 @@
           ]
         }
       }
+    },
+    "IDReponse": {
+    	"properties": {
+    		"id": "integer"
+    	}
     }
   }
 }

@@ -72,7 +72,6 @@ class Api::V2::UsersController < ApplicationController
 		# Attempt to save the user and finish.
 		if user.save
 			session[:user_id] = user.id
-			result[:name] = "#{params[:first_name]} #{params[:last_name]}"
 			result[:id] = user.id
 			return render json: result, status: 200
 		else
