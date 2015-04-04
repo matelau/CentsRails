@@ -18,7 +18,8 @@
       "operations":[  
         {  
           "method":"GET",
-          "summary":"Returns a form that registers new users.",
+          "summary":"Redirects to a form that registers new users.",
+          "notes":"See the form at https://trycents.com/api/v2/users/new. This page will not redirect you.",
           "type":"string",
           "nickname":"Api::V2::UsersController#register",
           "responseMessages":[  
@@ -283,7 +284,7 @@
         {  
           "method":"PUT",
           "summary":"Updates all spending breakdown data by category.",
-          "notes":"This API will replace all data in this category with the new data from the body. Use it if you want to restore a category's data to a default.",
+          "notes":"This route will replace all data in this category with the new data from the body. Use it if you want to restore a category's data to a default.",
           "type":"string",
           "nickname":"Api::V2::SpendingBreakdownController#update",
           "parameters":[  
@@ -341,7 +342,7 @@
         {  
           "method":"PATCH",
           "summary":"Saves new spending breakdown data.",
-          "notes":"This API will insert new (name, value) pairs if the name doesn't exist or overwrite them if it does. Use it when you want to insert or update a few fields.",
+          "notes":"This route will insert new (name, value) pairs if the name doesn't exist or overwrite them if it does. Use it when you want to insert or update a few fields.",
           "type":"string",
           "nickname":"Api::V2::SpendingBreakdownController#update",
           "parameters":[  

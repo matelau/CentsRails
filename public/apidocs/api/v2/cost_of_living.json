@@ -125,7 +125,7 @@
         {  
           "method":"POST",
           "summary":"Returns cost of living information for two locations.",
-          "notes": "The order parameter is optional, but if you use it, you must use it for both cities. The value of the order parameter must be either 1 or 2.",
+          "notes": "<p>This route is intended for internal use.</p><p>The order parameter is optional, but if you use it, you must use it for both cities. The value of the order parameter must be either 1 or 2.</p>",
           "type":"string",
           "nickname":"Api::V2::Coli#show_two",
           "parameters":[  
