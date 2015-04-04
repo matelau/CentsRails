@@ -1,9 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 albert:
   id: 1
-  debt: 33
-  books: 34
-  savings: 35
   email: albert.t.aldridge@gmail.com
   first_name: Albert
   last_name: Aldridge
@@ -11,9 +8,6 @@ albert:
 
 alice:
   id: 2
-  debt: 44
-  books: 45
-  savings: 46
   email: alice.t.albertson@gmail.com
   first_name: Alice
   last_name: Albertson
