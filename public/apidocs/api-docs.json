@@ -455,7 +455,11 @@
   			],
         "responses": {
           "200": {
-            "description": "User was registered."
+            "description": "User was registered.",
+            "schema": {
+            	"type": "object",
+            	"$ref": "#definitions/IDReponse"
+            }
           },
           "400": {
             "description": "The user data didn't meet the requirements."
@@ -545,10 +549,7 @@
   			],
         "responses": {
           "200": {
-            "description": "User was found.",
-            "schema": {
-            	"$ref": "#definitions/IDReponse"
-            }
+            "description": "User was found."
           },
           "404": {
             "description": "No such user was found."
