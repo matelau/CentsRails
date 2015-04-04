@@ -94,7 +94,7 @@
             "description": "No record were found."
           }
         },
-        "description": "",
+        "description": "Get a list of all available locations at https://trycents.com/api/v2/cost_of_living; both parameters are optional.",
         "summary": "Returns cost of living information for a city.",
         "operationId": "Api::V2::Coli#index",
         "parameters": [
@@ -103,6 +103,7 @@
             "description": "whether to show only state name",
             "name": "only_state_names",
             "required": false,
+            "default": false,
             "type": "boolean"
           },
           {
