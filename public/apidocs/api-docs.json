@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Title was not specified"
+    "title": "Cents API"
   },
   "paths": {
     "/careers": {
@@ -554,7 +554,6 @@
   ],
   "definitions": {
     "Career_body": {
-      "id": "Career_body",
       "type": "object",
       "properties": {
         "operation": {
@@ -575,7 +574,6 @@
       "required": [
         "name"
       ],
-      "id": "Career",
       "properties": {
         "name": {
           "type": "string"
@@ -586,7 +584,6 @@
       }
     },
     "Cost_of_living_body": {
-      "id": "Cost_of_living_body",
       "type": "object",
       "properties": {
         "operation": {
@@ -608,7 +605,6 @@
         "city",
         "state"
       ],
-      "id": "Location",
       "properties": {
         "city": {
           "type": "string"
@@ -622,7 +618,6 @@
       }
     },
     "Degree_body": {
-      "id": "Degree_body",
       "type": "object",
       "properties": {
         "operation": {
@@ -644,7 +639,6 @@
         "name",
         "level"
       ],
-      "id": "Degree",
       "properties": {
         "name": {
           "type": "string"
@@ -658,7 +652,6 @@
       }
     },
     "User_body": {
-      "id": "User_body",
       "type": "object",
       "properties": {
         "first_name": {
@@ -694,7 +687,6 @@
         "email",
         "password"
       ],
-      "id": "Validate_body",
       "properties": {
         "email": {
           "type": "string"
@@ -708,7 +700,6 @@
       "required": [
         "password"
       ],
-      "id": "Password_body",
       "properties": {
         "password": {
           "type": "string"
@@ -716,7 +707,6 @@
       }
     },
     "Validate_response": {
-      "id": "Validate_response",
       "properties": {
         "name": {
           "type": "string"
@@ -727,7 +717,6 @@
       }
     },
     "SB_body": {
-      "id": "SB_body",
       "type": "object",
       "properties": {
         "fields": {
@@ -746,7 +735,6 @@
         "name",
         "amount"
       ],
-      "id": "Field",
       "properties": {
         "name": {
           "type": "string"
@@ -757,7 +745,6 @@
       }
     },
     "Completed_body": {
-      "id": "Completed_body",
       "type": "object",
       "properties": {
         "section": {
@@ -769,7 +756,6 @@
       ]
     },
     "School_body": {
-      "id": "School_body",
       "type": "object",
       "properties": {
         "operation": {
@@ -790,7 +776,6 @@
       "required": [
         "name"
       ],
-      "id": "School",
       "properties": {
         "name": {
           "type": "string"
