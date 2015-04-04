@@ -344,9 +344,7 @@
             "description": "a user id",
             "name": "id",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/Integer"
-            }
+            "type": "integer"
           },
           {
             "in": "body",
