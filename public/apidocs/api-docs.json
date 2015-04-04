@@ -1,957 +1,961 @@
-{
-  "swagger": "2.0",
-  "info": {
-    "title": "Cents API",
-    "description": "An API to examine the impact of your financial decisions",
-    "version": "2.0"
+{  
+  "swagger":"2.0",
+  "info":{  
+    "title":"Cents API",
+    "description":"An API to examine the impact of your financial decisions",
+    "version":"2.0"
   },
-  "paths": {
-    "/careers": {
-      "post": {
-      	"tags": [
-    			"career"
-  			],
-        "responses": {
-          "200": {
-            "description": "Records were found."
-          },
-          "400": {
-            "description": "No careers were in the careers array."
-          },
-          "404": {
-            "description": "No data on some schools."
-          }
-        },
-        "description": "This route is intended for internal use. The order parameter is optional, but if you use it, you must use it in exactly two career objects. Its value is either 1 or 2.",
-        "summary": "Returns data on two careers.",
-        "operationId": "Api::V2::CareersController#show_two",
-        "parameters": [
-          {
-            "in": "body",
-            "description": "object with array of career objects and optional operation",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Career_body"
-            }
-          }
-        ]
-      },
-      "get": {
-      	"tags": [
-    			"career"
-  			],
-        "responses": {
-          "200": {
-            "description": "Records were found."
-          },
-          "404": {
-            "description": "No records were found."
-          }
-        },
-        "description": "",
-        "summary": "Returns names of all available careers.",
-        "operationId": "Api::V2::CareersController#show_two"
-      }
-    },
-    "/careers/{name}": {
-      "get": {
-      	"tags": [
-    			"career"
-  			],
-        "responses": {
-          "200": {
-            "description": "Records were found."
-          },
-          "404": {
-            "description": "School does not exist."
-          }
-        },
-        "description": "",
-        "summary": "Returns data for a career.",
-        "operationId": "Api::V2::CareersController#show",
-        "parameters": [
-          {
-            "in": "path",
-            "description": "a career name",
-            "name": "name",
-            "required": true,
-            "type": "string"
-          }
-        ]
-      }
-    },
-    "/cost_of_living": {
-      "get": {
-       	"tags": [
-    			"cost of living"
-  			],
-        "responses": {
-          "200": {
-            "description": "Records were found."
-          },
-          "404": {
-            "description": "No record were found."
-          }
-        },
-        "description": "Get a list of all available locations at https://trycents.com/api/v2/cost_of_living; both parameters are optional.",
-        "summary": "Returns cost of living information for a city.",
-        "operationId": "Api::V2::Coli#index",
-        "parameters": [
-          {
-            "in": "query",
-            "description": "whether to show only state names",
-            "name": "only_state_names",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "in": "query",
-            "description": "a US state name",
-            "name": "state",
-            "required": false,
-            "type": "string"
-          }
-        ]
-      },
-      "post": {
-      	 "tags": [
-    			"cost of living"
-  			],
-        "responses": {
-          "200": {
-            "description": "Records were found."
-          },
-          "400": {
-            "description": "No objects were in the locations array."
-          },
-          "404": {
-            "description": "No data on city or state for some locations."
-          }
-        },
-        "description": "This route is intended for internal use. The order parameter is optional, but if you use it, you must use it in exactly two location objects. Its value is either 1 or 2.",
-        "summary": "Returns cost of living information for two locations.",
-        "operationId": "Api::V2::Coli#show_two",
-        "parameters": [
-          {
-            "in": "body",
-            "description": "object with array of location objects and optional operation",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Cost_of_living_body"
-            }
-          }
-        ]
-      }
-    },
-    "/cost_of_living/{state}": {
-      "get": {
-      	"tags": [
-    			"cost of living"
-  			],
-        "responses": {
-          "200": {
-            "description": "Records were found."
-          },
-          "404": {
-            "description": "State does not exist."
-          }
-        },
-        "description": "",
-        "summary": "Returns information on all available locations for a state.",
-        "operationId": "Api::V2::Coli#show_state",
-        "parameters": [
-          {
-            "in": "path",
-            "description": "a US state",
-            "name": "state",
-            "required": true,
-            "type": "string"
-          }
-        ]
-      }
-    },
-    "/cost_of_living/{state}/{city}": {
-      "get": {
-       	"tags": [
-    			"cost of living"
-  			],
-        "responses": {
-          "200": {
-            "description": "Records were found."
-          },
-          "404": {
-            "description": "State or city does not exist."
-          }
-        },
-        "description": "",
-        "summary": "Returns cost of living information for a city.",
-        "operationId": "Api::V2::Coli#show_city",
-        "parameters": [
-          {
-            "in": "path",
-            "description": "a US state name",
-            "name": "state",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "path",
-            "description": "the name of a city in the state",
-            "name": "city",
-            "required": true,
-            "type": "string"
-          }
-        ]
-      }
-    },
-    "/degrees": {
-      "post": {
-       	"tags": [
-    			"degrees"
-  			],
-        "responses": {
-          "200": {
-            "description": "Records were found."
-          },
-          "400": {
-            "description": "No objects were in the degrees array."
-          },
-          "404": {
-            "description": "No data for some degrees."
-          }
-        },
-        "description": "This route is intended for internal use. The order parameter is optional, but if you use it, you must use it in exactly two degree objects. Its value is either 1 or 2.",
-        "summary": "Returns degree information for two degrees.",
-        "operationId": "Api::V2::DegreesController#show_two",
-        "parameters": [
-          {
-            "in": "body",
-            "description": "object with array of degree objects and optional operation",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Degree_body"
-            }
-          }
-        ]
-      },
-      "get": {
-       	"tags": [
-    			"degrees"
-  			],
-        "responses": {
-          "200": {
-            "description": "Records were found."
-          },
-          "404": {
-            "description": "No records were found."
-          }
-        },
-        "description": "Get a list of all available degrees at https://trycents.com/api/v2/degrees; both parameters are optional. If you don't know the exact name of the level you want (Bachelor of Arts? Bachelor's of Arts?), enter the first part of the name. The API will return a list of substring matches.",
-        "summary": "Returns a list of all available degrees.",
-        "parameters": [
-          {
-            "in": "query",
-            "description": "whether to show only bachelor, masters, etc., degrees",
-            "name": "only_level_names",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "in": "query",
-            "description": "bachelor, masters, etc.",
-            "name": "level",
-            "required": false,
-            "type": "string"
-          }
-        ]   
-      }
-    },
-    "/degrees/{name}": {
-      "get": {
-       	"tags": [
-    			"degrees"
-  			],
-        "responses": {
-          "200": {
-            "description": "Records were found."
-          },
-          "404": {
-            "description": "Degree does not exist."
-          }
-        },
-        "description": "",
-        "summary": "Returns information on all degrees of all levels with that name.",
-        "operationId": "Api::V2::DegreesController#show",
-        "parameters": [
-          {
-            "in": "path",
-            "description": "a degree name",
-            "name": "name",
-            "required": true,
-            "type": "string"
-          }
-        ]
-      }
-    },
-    "/degrees/{level}/{name}": {
-      "get": {
-       	"tags": [
-    			"degrees"
-  			],
-        "responses": {
-          "200": {
-            "description": "Records were found."
-          },
-          "404": {
-            "description": "Degree does not exist."
-          }
-        },
-        "description": "",
-        "summary": "Returns information on all degrees of all levels that start with {level} and have the name {name}.",
-        "operationId": "Api::V2::DegreesController#show_level_name",
-        "parameters": [
-          {
-            "in": "path",
-            "description": "a degree level",
-            "name": "level",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "path",
-            "description": "a degree name",
-            "name": "name",
-            "required": true,
-            "type": "string"
-          }
-        ]
-      }
-    },
-    "/schools": {
-    	"get": {
-    		"tags": [
-    		  "schools"
-    		],
-    		"responses": {
-          "200": {
-            "description": "Records were found."
-          },
-          "404": {
-            "description": "No records were found."
-         	}
-        },
-        "description": "Get a list of all available schools at https://trycents.com/api/v2/schools; both parameters are optional. If you don't know the exact name of the school you want (Harvard? Harvard University?), enter part of the name. The API will return a list of substring matches.",
-        "summary": "Returns a list of all available schools.",
-        "parameters": [
-          {
-            "in": "query",
-            "description": "whether to show only available school locations",
-            "name": "only_location_names",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "in": "query",
-            "description": "city or postal abbreviation for US state",
-            "name": "location",
-            "required": false,
-            "type": "string"
-          }
-        ]   
-      }
-    	},
-      "post": {
-       	"tags": [
-    			"schools"
-  			],
-        "responses": {
-          "200": {
-            "description": "Records were found."
-          },
-          "400": {
-            "description": "No schools were in the schools array."
-          },
-          "404": {
-            "description": "No data on some schools."
-          }
-        },
-        "description": "This route is intended for internal use. The order parameter is optional, but if you use it, you must use it in exactly two school objects. Its value is either 1 or 2.",
-        "summary": "Returns data on two schools.",
-        "operationId": "Api::V2::SchoolsController#show_two",
-        "parameters": [
-          {
-            "in": "body",
-            "description": "object with array of school objects and optional operation",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/School_body"
-            }
-          }
-        ]
-      }
-    },
-    "/schools/location/{location}": {
-      "get": {
-       	"tags": [
-    			"schools"
-  			],
-        "responses": {
-          "200": {
-            "description": "Records were found."
-          },
-          "404": {
-            "description": "Location does not exist."
-          }
-        },
-        "description": "",
-        "summary": "Returns information on all available schools for a location.",
-        "operationId": "Api::V2::SchoolsController#show_location",
-        "parameters": [
-          {
-            "in": "path",
-            "description": "city or postal abbreviation for US state",
-            "name": "location",
-            "required": true,
-            "type": "string",
-            "default": "Princeton, NJ"
-          }
-        ]
-      }
-    },
-    "/schools/{name}": {
-      "get": {
-       	"tags": [
-    			"schools"
-  			],
-        "responses": {
-          "200": {
-            "description": "Records were found."
-          },
-          "404": {
-            "description": "School does not exist."
-          }
-        },
-        "description": "",
-        "summary": "Returns data for a school.",
-        "operationId": "Api::V2::SchoolsController#show_state_name",
-        "parameters": [
-          {
-            "in": "path",
-            "description": "a school name",
-            "name": "name",
-            "required": true,
-            "type": "string"
-          }
-        ]
-      }
-    },
-    "/users": {
-      "post": {
-       	"tags": [
-    			"users"
-  			],
-        "responses": {
-          "200": {
-            "description": "User was registered."
-          },
-          "400": {
-            "description": "The user data didn't meet the requirements."
-          }
-        },
-        "description": "",
-        "summary": "Registers a new user.",
-        "operationId": "Api::V2::UsersController#create",
-        "parameters": [
-          {
-            "in": "body",
-            "description": "object with array of career objects and optional operation",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/User_body"
-            }
-          }
-        ]
-      }
-    },
-    "/users/{id}": {
-      "post": {
-       	"tags": [
-    			"users"
-  			],
-        "responses": {
-          "200": {
-            "description": "There is a user with that ID."
-          },
-          "404": {
-            "description": "There is no user with that ID."
-          }
-        },
-        "description": "",
-        "summary": "Gets profile data for a user.",
-        "operationId": "Api::V2::UsersController#show",
-        "parameters": [
-          {
-            "in": "path",
-            "description": "a user id",
-            "name": "id",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "in": "body",
-            "description": "object with password field",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Password_body"
-            }
-          }
-        ]
-      }
-    },
-    "/users/{id}/completed": {
-      "get": {
-       	"tags": [
-    			"users"
-  			],
-        "responses": {
-          "200": {
-            "description": "The user was found."
-          },
-          "404": {
-          	"description": "No such user was found."
-          }
-        },
-        "parameters": [
-          {
-            "in": "path",
-            "description": "a user id",
-            "name": "id",
-            "required": true,
-            "type": "integer"
-          }
+  "paths":{  
+    "/careers":{  
+      "post":{  
+        "tags":[  
+          "career"
         ],
-        "description": "",
-        "summary": "Shows which sections a user has completed.",
-        "operationId": "Api::V2::UsersController#show_completed"
-      },
-      "post": {
-       	"tags": [
-    			"users"
-  			],
-        "responses": {
-          "200": {
-            "description": "User was found."
+        "responses":{  
+          "200":{  
+            "description":"Records were found."
           },
-          "404": {
-            "description": "No such user was found."
+          "400":{  
+            "description":"No careers were in the careers array."
+          },
+          "404":{  
+            "description":"No data on some schools."
           }
         },
-        "description": "",
-        "summary": "Record that a user has completed a section.",
-        "operationId": "Api::V2::UserController#create_completed",
-        "parameters": [
-          {
-            "in": "path",
-            "description": "a user id",
-            "name": "id",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "in": "body",
-            "description": "object with section field",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Completed_body"
-            }
-          }
-        ]
-      }
-    },
-    "/users/{id}/spending_breakdown": {
-      "get": {
-       	"tags": [
-    			"users"
-  			],
-        "responses": {
-          "200": {
-            "description": "User was found."
-          },
-          "404": {
-            "description": "No such user ID was found."
-          }
-        },
-        "description": "",
-        "summary": "Loads all spending breakdown data for a user.",
-        "operationId": "Api::V2::SpendingBreakdownController#show",
-        "parameters": [
-          {
-            "in": "path",
-            "description": "a user id",
-            "name": "id",
-            "required": true,
-            "type":"integer"
-          }
-        ]
-      }
-    },
-    "/users/{id}/spending_breakdown/{category}": {
-      "patch": {
-       	"tags": [
-    			"users"
-  			],
-        "responses": {
-          "200": {
-            "description": "Data was deleted."
-          },
-          "400": {
-            "description": "Each field object must have a name and value."
-          },
-          "404": {
-            "description": "No such user was found."
-          },
-          "500": {
-            "description": "Server error while saving."
-          }
-        },
-        "description": "",
-        "summary": "Saves new spending breakdown data.",
-        "operationId": "Api::V2::SpendingBreakdownController#update",
-        "parameters": [
-          {
-            "in": "path",
-            "description": "a user id",
-            "name": "id",
-            "required": true,
-            "type":"integer"
-          },
-          {
-            "in": "path",
-            "description": "a spending breakdown category",
-            "name": "category",
-            "required": true,
-            "type": "string",
-            "enum": [
-              "default", "student", "custom"
-            ]
-          },
-          {
-            "in": "body",
-            "description": "object with array of spending breakdown data",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/SB_body"
+        "description":"This route is intended for internal use. The order parameter is optional, but if you use it, you must use it in exactly two career objects. Its value is either 1 or 2.",
+        "summary":"Returns data on two careers.",
+        "operationId":"Api::V2::CareersController#show_two",
+        "parameters":[  
+          {  
+            "in":"body",
+            "description":"object with array of career objects and optional operation",
+            "name":"body",
+            "required":true,
+            "schema":{  
+              "$ref":"#/definitions/Career_body"
             }
           }
         ]
       },
-      "put": {
-       	"tags": [
-    			"users"
-  			],
-        "responses": {
-          "200": {
-            "description": "Data was deleted."
+      "get":{  
+        "tags":[  
+          "career"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Records were found."
           },
-          "400": {
-            "description": "Each field object must have a name and value."
-          },
-          "404": {
-            "description": "No such user was found."
-          },
-          "500": {
-            "description": "Server error while saving."
+          "404":{  
+            "description":"No records were found."
           }
         },
-        "description": "",
-        "summary": "Updates all spending breakdown data by category.",
-        "operationId": "Api::V2::SpendingBreakdownController#update_all",
-        "parameters": [
-          {
-            "in": "path",
-            "description": "a user id",
-            "name": "id",
-            "required": true,
-            "type":"integer"
+        "description":"",
+        "summary":"Returns names of all available careers.",
+        "operationId":"Api::V2::CareersController#show_two"
+      }
+    },
+    "/careers/{name}":{  
+      "get":{  
+        "tags":[  
+          "career"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Records were found."
           },
-          {
-            "in": "path",
-            "description": "default, student or custom",
-            "name": "category",
-            "required": true,
-            "type": "string"
+          "404":{  
+            "description":"School does not exist."
+          }
+        },
+        "description":"",
+        "summary":"Returns data for a career.",
+        "operationId":"Api::V2::CareersController#show",
+        "parameters":[  
+          {  
+            "in":"path",
+            "description":"a career name",
+            "name":"name",
+            "required":true,
+            "type":"string"
+          }
+        ]
+      }
+    },
+    "/cost_of_living":{  
+      "get":{  
+        "tags":[  
+          "cost of living"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Records were found."
           },
-          {
-            "in": "body",
-            "description": "object with array of spending breakdown data",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/SB_body"
+          "404":{  
+            "description":"No record were found."
+          }
+        },
+        "description":"Get a list of all available locations at https://trycents.com/api/v2/cost_of_living; both parameters are optional.",
+        "summary":"Returns cost of living information for a city.",
+        "operationId":"Api::V2::Coli#index",
+        "parameters":[  
+          {  
+            "in":"query",
+            "description":"whether to show only state names",
+            "name":"only_state_names",
+            "required":false,
+            "type":"boolean"
+          },
+          {  
+            "in":"query",
+            "description":"a US state name",
+            "name":"state",
+            "required":false,
+            "type":"string"
+          }
+        ]
+      },
+      "post":{  
+        "tags":[  
+          "cost of living"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Records were found."
+          },
+          "400":{  
+            "description":"No objects were in the locations array."
+          },
+          "404":{  
+            "description":"No data on city or state for some locations."
+          }
+        },
+        "description":"This route is intended for internal use. The order parameter is optional, but if you use it, you must use it in exactly two location objects. Its value is either 1 or 2.",
+        "summary":"Returns cost of living information for two locations.",
+        "operationId":"Api::V2::Coli#show_two",
+        "parameters":[  
+          {  
+            "in":"body",
+            "description":"object with array of location objects and optional operation",
+            "name":"body",
+            "required":true,
+            "schema":{  
+              "$ref":"#/definitions/Cost_of_living_body"
+            }
+          }
+        ]
+      }
+    },
+    "/cost_of_living/{state}":{  
+      "get":{  
+        "tags":[  
+          "cost of living"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Records were found."
+          },
+          "404":{  
+            "description":"State does not exist."
+          }
+        },
+        "description":"",
+        "summary":"Returns information on all available locations for a state.",
+        "operationId":"Api::V2::Coli#show_state",
+        "parameters":[  
+          {  
+            "in":"path",
+            "description":"a US state",
+            "name":"state",
+            "required":true,
+            "type":"string"
+          }
+        ]
+      }
+    },
+    "/cost_of_living/{state}/{city}":{  
+      "get":{  
+        "tags":[  
+          "cost of living"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Records were found."
+          },
+          "404":{  
+            "description":"State or city does not exist."
+          }
+        },
+        "description":"",
+        "summary":"Returns cost of living information for a city.",
+        "operationId":"Api::V2::Coli#show_city",
+        "parameters":[  
+          {  
+            "in":"path",
+            "description":"a US state name",
+            "name":"state",
+            "required":true,
+            "type":"string"
+          },
+          {  
+            "in":"path",
+            "description":"the name of a city in the state",
+            "name":"city",
+            "required":true,
+            "type":"string"
+          }
+        ]
+      }
+    },
+    "/degrees":{  
+      "post":{  
+        "tags":[  
+          "degrees"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Records were found."
+          },
+          "400":{  
+            "description":"No objects were in the degrees array."
+          },
+          "404":{  
+            "description":"No data for some degrees."
+          }
+        },
+        "description":"This route is intended for internal use. The order parameter is optional, but if you use it, you must use it in exactly two degree objects. Its value is either 1 or 2.",
+        "summary":"Returns degree information for two degrees.",
+        "operationId":"Api::V2::DegreesController#show_two",
+        "parameters":[  
+          {  
+            "in":"body",
+            "description":"object with array of degree objects and optional operation",
+            "name":"body",
+            "required":true,
+            "schema":{  
+              "$ref":"#/definitions/Degree_body"
             }
           }
         ]
       },
-      "get": {
-      	"tags": [
-      	  "users"
-      	],
-      	"responses": {
-          "200": {
-            "description": "Records were found."
+      "get":{  
+        "tags":[  
+          "degrees"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Records were found."
           },
-          "404": {
-            "description": "No records were found."
+          "404":{  
+            "description":"No records were found."
           }
         },
-        "description": "",
-        "summary": "Gets spending breakdown data by category.",
-        "operationId": "Api::V2::SpendingBreakdownController#show_category",
-        "parameters": [
-          {
-            "in": "path",
-            "description": "a user id",
-            "name": "id",
-            "required": true,
-            "type":"integer"
+        "description":"Get a list of all available degrees at https://trycents.com/api/v2/degrees; both parameters are optional. If you don't know the exact name of the level you want (Bachelor of Arts? Bachelor's of Arts?), enter the first part of the name. The API will return a list of substring matches.",
+        "summary":"Returns a list of all available degrees.",
+        "parameters":[  
+          {  
+            "in":"query",
+            "description":"whether to show only bachelor, masters, etc., degrees",
+            "name":"only_level_names",
+            "required":false,
+            "type":"boolean"
           },
-          {
-            "in": "path",
-            "description": "default, student or custom",
-            "name": "category",
-            "required": true,
-            "type": "string"
+          {  
+            "in":"query",
+            "description":"bachelor, masters, etc.",
+            "name":"level",
+            "required":false,
+            "type":"string"
           }
         ]
       }
     },
-    "/users/{id}/spending_breakdown/{category}/{name}": {
-      "delete": {
-       	"tags": [
-    			"users"
-  			],
-        "responses": {
-          "200": {
-            "description": "Data was deleted."
+    "/degrees/{name}":{  
+      "get":{  
+        "tags":[  
+          "degrees"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Records were found."
+          },
+          "404":{  
+            "description":"Degree does not exist."
           }
         },
-        "description": "",
-        "summary": "Deletes a single spending breakdown item.",
-        "operationId": "Api::V2::SpendingBreakdownController#destroy",
-        "parameters": [
-          {
-            "in": "path",
-            "description": "a user id",
-            "name": "id",
-            "required": true,
-            "type":"integer"
-          },
-          {
-            "in": "path",
-            "description": "default, student or custom",
-            "name": "category",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "path",
-            "description": "the name of the spending breakdown item",
-            "name": "name",
-            "required": true,
-            "type": "string"
+        "description":"",
+        "summary":"Returns information on all degrees of all levels with that name.",
+        "operationId":"Api::V2::DegreesController#show",
+        "parameters":[  
+          {  
+            "in":"path",
+            "description":"a degree name",
+            "name":"name",
+            "required":true,
+            "type":"string"
           }
         ]
       }
     },
-    "/users/new": {
-      "get": {
-       	"tags": [
-    			"users"
-  			],
-        "responses": {
-          "200": {
-            "description": "The form was returned."
-          }
-        },
-        "description": "",
-        "summary": "Redirects to a form that registers new users.",
-        "operationId": "Api::V2::UsersController#register"
-      }
-    },
-    "/users/validate": {
-      "post": {
-       	"tags": [
-    			"users"
-  			],
-        "responses": {
-          "200": {
-            "description": "Authentication successful."
+    "/degrees/{level}/{name}":{  
+      "get":{  
+        "tags":[  
+          "degrees"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Records were found."
           },
-          "400": {
-            "description": "Authentication failed."
+          "404":{  
+            "description":"Degree does not exist."
           }
         },
-        "description": "",
-        "summary": "Validate a username and password.",
-        "operationId": "Api::V2::UsersController#validate",
-        "parameters": [
-          {
-            "in": "body",
-            "description": "object with password field",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Validate_body"
-            }
+        "description":"",
+        "summary":"Returns information on all degrees of all levels that start with {level} and have the name {name}.",
+        "operationId":"Api::V2::DegreesController#show_level_name",
+        "parameters":[  
+          {  
+            "in":"path",
+            "description":"a degree level",
+            "name":"level",
+            "required":true,
+            "type":"string"
+          },
+          {  
+            "in":"path",
+            "description":"a degree name",
+            "name":"name",
+            "required":true,
+            "type":"string"
           }
         ]
       }
+    },
+    "/schools":{  
+      "get":{  
+        "tags":[  
+          "schools"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Records were found."
+          },
+          "404":{  
+            "description":"No records were found."
+          }
+        },
+        "description":"Get a list of all available schools at https://trycents.com/api/v2/schools; both parameters are optional. If you don't know the exact name of the school you want (Harvard? Harvard University?), enter part of the name. The API will return a list of substring matches.",
+        "summary":"Returns a list of all available schools.",
+        "parameters":[  
+          {  
+            "in":"query",
+            "description":"whether to show only available school locations",
+            "name":"only_location_names",
+            "required":false,
+            "type":"boolean"
+          },
+          {  
+            "in":"query",
+            "description":"city or postal abbreviation for US state",
+            "name":"location",
+            "required":false,
+            "type":"string"
+          }
+        ]
+      }
+    },
+    "post":{  
+      "tags":[  
+        "schools"
+      ],
+      "responses":{  
+        "200":{  
+          "description":"Records were found."
+        },
+        "400":{  
+          "description":"No schools were in the schools array."
+        },
+        "404":{  
+          "description":"No data on some schools."
+        }
+      },
+      "description":"This route is intended for internal use. The order parameter is optional, but if you use it, you must use it in exactly two school objects. Its value is either 1 or 2.",
+      "summary":"Returns data on two schools.",
+      "operationId":"Api::V2::SchoolsController#show_two",
+      "parameters":[  
+        {  
+          "in":"body",
+          "description":"object with array of school objects and optional operation",
+          "name":"body",
+          "required":true,
+          "schema":{  
+            "$ref":"#/definitions/School_body"
+          }
+        }
+      ]
     }
   },
-  "host": "trycents.com",
-  "basePath": "/api/v2",
-  "schemes": [
+  "/schools/location/{location}":{  
+    "get":{  
+      "tags":[  
+        "schools"
+      ],
+      "responses":{  
+        "200":{  
+          "description":"Records were found."
+        },
+        "404":{  
+          "description":"Location does not exist."
+        }
+      },
+      "description":"",
+      "summary":"Returns information on all available schools for a location.",
+      "operationId":"Api::V2::SchoolsController#show_location",
+      "parameters":[  
+        {  
+          "in":"path",
+          "description":"city or postal abbreviation for US state",
+          "name":"location",
+          "required":true,
+          "type":"string",
+          "default":"Princeton, NJ"
+        }
+      ]
+    }
+  },
+  "/schools/{name}":{  
+    "get":{  
+      "tags":[  
+        "schools"
+      ],
+      "responses":{  
+        "200":{  
+          "description":"Records were found."
+        },
+        "404":{  
+          "description":"School does not exist."
+        }
+      },
+      "description":"",
+      "summary":"Returns data for a school.",
+      "operationId":"Api::V2::SchoolsController#show_state_name",
+      "parameters":[  
+        {  
+          "in":"path",
+          "description":"a school name",
+          "name":"name",
+          "required":true,
+          "type":"string"
+        }
+      ]
+    }
+  },
+  "/users":{  
+    "post":{  
+      "tags":[  
+        "users"
+      ],
+      "responses":{  
+        "200":{  
+          "description":"User was registered."
+        },
+        "400":{  
+          "description":"The user data didn't meet the requirements."
+        }
+      },
+      "description":"",
+      "summary":"Registers a new user.",
+      "operationId":"Api::V2::UsersController#create",
+      "parameters":[  
+        {  
+          "in":"body",
+          "description":"object with array of career objects and optional operation",
+          "name":"body",
+          "required":true,
+          "schema":{  
+            "$ref":"#/definitions/User_body"
+          }
+        }
+      ]
+    }
+  },
+  "/users/{id}":{  
+    "post":{  
+      "tags":[  
+        "users"
+      ],
+      "responses":{  
+        "200":{  
+          "description":"There is a user with that ID."
+        },
+        "404":{  
+          "description":"There is no user with that ID."
+        }
+      },
+      "description":"",
+      "summary":"Gets profile data for a user.",
+      "operationId":"Api::V2::UsersController#show",
+      "parameters":[  
+        {  
+          "in":"path",
+          "description":"a user id",
+          "name":"id",
+          "required":true,
+          "type":"integer"
+        },
+        {  
+          "in":"body",
+          "description":"object with password field",
+          "name":"body",
+          "required":true,
+          "schema":{  
+            "$ref":"#/definitions/Password_body"
+          }
+        }
+      ]
+    }
+  },
+  "/users/{id}/completed":{  
+    "get":{  
+      "tags":[  
+        "users"
+      ],
+      "responses":{  
+        "200":{  
+          "description":"The user was found."
+        },
+        "404":{  
+          "description":"No such user was found."
+        }
+      },
+      "parameters":[  
+        {  
+          "in":"path",
+          "description":"a user id",
+          "name":"id",
+          "required":true,
+          "type":"integer"
+        }
+      ],
+      "description":"",
+      "summary":"Shows which sections a user has completed.",
+      "operationId":"Api::V2::UsersController#show_completed"
+    },
+    "post":{  
+      "tags":[  
+        "users"
+      ],
+      "responses":{  
+        "200":{  
+          "description":"User was found."
+        },
+        "404":{  
+          "description":"No such user was found."
+        }
+      },
+      "description":"",
+      "summary":"Record that a user has completed a section.",
+      "operationId":"Api::V2::UserController#create_completed",
+      "parameters":[  
+        {  
+          "in":"path",
+          "description":"a user id",
+          "name":"id",
+          "required":true,
+          "type":"integer"
+        },
+        {  
+          "in":"body",
+          "description":"object with section field",
+          "name":"body",
+          "required":true,
+          "schema":{  
+            "$ref":"#/definitions/Completed_body"
+          }
+        }
+      ]
+    }
+  },
+  "/users/{id}/spending_breakdown":{  
+    "get":{  
+      "tags":[  
+        "users"
+      ],
+      "responses":{  
+        "200":{  
+          "description":"User was found."
+        },
+        "404":{  
+          "description":"No such user ID was found."
+        }
+      },
+      "description":"",
+      "summary":"Loads all spending breakdown data for a user.",
+      "operationId":"Api::V2::SpendingBreakdownController#show",
+      "parameters":[  
+        {  
+          "in":"path",
+          "description":"a user id",
+          "name":"id",
+          "required":true,
+          "type":"integer"
+        }
+      ]
+    }
+  },
+  "/users/{id}/spending_breakdown/{category}":{  
+    "patch":{  
+      "tags":[  
+        "users"
+      ],
+      "responses":{  
+        "200":{  
+          "description":"Data was deleted."
+        },
+        "400":{  
+          "description":"Each field object must have a name and value."
+        },
+        "404":{  
+          "description":"No such user was found."
+        },
+        "500":{  
+          "description":"Server error while saving."
+        }
+      },
+      "description":"",
+      "summary":"Saves new spending breakdown data.",
+      "operationId":"Api::V2::SpendingBreakdownController#update",
+      "parameters":[  
+        {  
+          "in":"path",
+          "description":"a user id",
+          "name":"id",
+          "required":true,
+          "type":"integer"
+        },
+        {  
+          "in":"path",
+          "description":"a spending breakdown category",
+          "name":"category",
+          "required":true,
+          "type":"string",
+          "enum":[  
+            "default",
+            "student",
+            "custom"
+          ]
+        },
+        {  
+          "in":"body",
+          "description":"object with array of spending breakdown data",
+          "name":"body",
+          "required":true,
+          "schema":{  
+            "$ref":"#/definitions/SB_body"
+          }
+        }
+      ]
+    },
+    "put":{  
+      "tags":[  
+        "users"
+      ],
+      "responses":{  
+        "200":{  
+          "description":"Data was deleted."
+        },
+        "400":{  
+          "description":"Each field object must have a name and value."
+        },
+        "404":{  
+          "description":"No such user was found."
+        },
+        "500":{  
+          "description":"Server error while saving."
+        }
+      },
+      "description":"",
+      "summary":"Updates all spending breakdown data by category.",
+      "operationId":"Api::V2::SpendingBreakdownController#update_all",
+      "parameters":[  
+        {  
+          "in":"path",
+          "description":"a user id",
+          "name":"id",
+          "required":true,
+          "type":"integer"
+        },
+        {  
+          "in":"path",
+          "description":"default, student or custom",
+          "name":"category",
+          "required":true,
+          "type":"string"
+        },
+        {  
+          "in":"body",
+          "description":"object with array of spending breakdown data",
+          "name":"body",
+          "required":true,
+          "schema":{  
+            "$ref":"#/definitions/SB_body"
+          }
+        }
+      ]
+    },
+    "get":{  
+      "tags":[  
+        "users"
+      ],
+      "responses":{  
+        "200":{  
+          "description":"Records were found."
+        },
+        "404":{  
+          "description":"No records were found."
+        }
+      },
+      "description":"",
+      "summary":"Gets spending breakdown data by category.",
+      "operationId":"Api::V2::SpendingBreakdownController#show_category",
+      "parameters":[  
+        {  
+          "in":"path",
+          "description":"a user id",
+          "name":"id",
+          "required":true,
+          "type":"integer"
+        },
+        {  
+          "in":"path",
+          "description":"default, student or custom",
+          "name":"category",
+          "required":true,
+          "type":"string"
+        }
+      ]
+    }
+  },
+  "/users/{id}/spending_breakdown/{category}/{name}":{  
+    "delete":{  
+      "tags":[  
+        "users"
+      ],
+      "responses":{  
+        "200":{  
+          "description":"Data was deleted."
+        }
+      },
+      "description":"",
+      "summary":"Deletes a single spending breakdown item.",
+      "operationId":"Api::V2::SpendingBreakdownController#destroy",
+      "parameters":[  
+        {  
+          "in":"path",
+          "description":"a user id",
+          "name":"id",
+          "required":true,
+          "type":"integer"
+        },
+        {  
+          "in":"path",
+          "description":"default, student or custom",
+          "name":"category",
+          "required":true,
+          "type":"string"
+        },
+        {  
+          "in":"path",
+          "description":"the name of the spending breakdown item",
+          "name":"name",
+          "required":true,
+          "type":"string"
+        }
+      ]
+    }
+  },
+  "/users/new":{  
+    "get":{  
+      "tags":[  
+        "users"
+      ],
+      "responses":{  
+        "200":{  
+          "description":"The form was returned."
+        }
+      },
+      "description":"",
+      "summary":"Redirects to a form that registers new users.",
+      "operationId":"Api::V2::UsersController#register"
+    }
+  },
+  "/users/validate":{  
+    "post":{  
+      "tags":[  
+        "users"
+      ],
+      "responses":{  
+        "200":{  
+          "description":"Authentication successful."
+        },
+        "400":{  
+          "description":"Authentication failed."
+        }
+      },
+      "description":"",
+      "summary":"Validate a username and password.",
+      "operationId":"Api::V2::UsersController#validate",
+      "parameters":[  
+        {  
+          "in":"body",
+          "description":"object with password field",
+          "name":"body",
+          "required":true,
+          "schema":{  
+            "$ref":"#/definitions/Validate_body"
+          }
+        }
+      ]
+    }
+  },
+  "host":"trycents.com",
+  "basePath":"/api/v2",
+  "schemes":[  
     "https"
   ],
-  "definitions": {
-    "Career_body": {
-      "type": "object",
-      "properties": {
-        "operation": {
-          "type": "string"
+  "definitions":{  
+    "Career_body":{  
+      "type":"object",
+      "properties":{  
+        "operation":{  
+          "type":"string"
         },
-        "careers": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Career"
+        "careers":{  
+          "type":"array",
+          "items":{  
+            "$ref":"#/definitions/Career"
           }
         }
       },
-      "required": [
+      "required":[  
         "careers"
       ]
     },
-    "Career": {
-      "required": [
+    "Career":{  
+      "required":[  
         "name"
       ],
-      "properties": {
-        "name": {
-          "type": "string"
+      "properties":{  
+        "name":{  
+          "type":"string"
         },
-        "order": {
-          "type": "integer",
-          "enum": [
-            "1", "2"
+        "order":{  
+          "type":"integer",
+          "enum":[  
+            "1",
+            "2"
           ]
         }
       }
     },
-    "Cost_of_living_body": {
-      "type": "object",
-      "properties": {
-        "operation": {
-          "type": "string"
+    "Cost_of_living_body":{  
+      "type":"object",
+      "properties":{  
+        "operation":{  
+          "type":"string"
         },
-        "locations": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Location"
+        "locations":{  
+          "type":"array",
+          "items":{  
+            "$ref":"#/definitions/Location"
           }
         }
       },
-      "required": [
+      "required":[  
         "locations"
       ]
     },
-    "Location": {
-      "required": [
+    "Location":{  
+      "required":[  
         "city",
         "state"
       ],
-      "properties": {
-        "city": {
-          "type": "string"
+      "properties":{  
+        "city":{  
+          "type":"string"
         },
-        "state": {
-          "type": "string"
+        "state":{  
+          "type":"string"
         },
-        "order": {
-          "type": "integer",
-          "enum": [
-            "1", "2"
+        "order":{  
+          "type":"integer",
+          "enum":[  
+            "1",
+            "2"
           ]
         }
       }
     },
-    "Degree_body": {
-      "type": "object",
-      "properties": {
-        "operation": {
-          "type": "string"
+    "Degree_body":{  
+      "type":"object",
+      "properties":{  
+        "operation":{  
+          "type":"string"
         },
-        "degrees": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Degree"
+        "degrees":{  
+          "type":"array",
+          "items":{  
+            "$ref":"#/definitions/Degree"
           }
         }
       },
-      "required": [
+      "required":[  
         "degrees"
       ]
     },
-    "Degree": {
-      "required": [
+    "Degree":{  
+      "required":[  
         "name",
         "level"
       ],
-      "properties": {
-        "name": {
-          "type": "string"
+      "properties":{  
+        "name":{  
+          "type":"string"
         },
-        "level": {
-          "type": "string"
+        "level":{  
+          "type":"string"
         },
-        "order": {
-          "type": "integer",
-          "enum": [
-            "1", "2"
+        "order":{  
+          "type":"integer",
+          "enum":[  
+            "1",
+            "2"
           ]
         }
       }
     },
-    "User_body": {
-      "type": "object",
-      "properties": {
-        "first_name": {
-          "type": "string"
+    "User_body":{  
+      "type":"object",
+      "properties":{  
+        "first_name":{  
+          "type":"string"
         },
-        "last_name": {
-          "type": "string"
+        "last_name":{  
+          "type":"string"
         },
-        "email": {
-          "type": "string"
+        "email":{  
+          "type":"string"
         },
-        "password": {
-          "type": "string"
+        "password":{  
+          "type":"string"
         },
-        "password_confirmation": {
-          "type": "string"
+        "password_confirmation":{  
+          "type":"string"
         },
-        "email_type": {
-          "type": "string"
+        "email_type":{  
+          "type":"string"
         }
       },
-      "required": [
+      "required":[  
         "first_name",
         "last_name",
         "email",
@@ -960,108 +964,109 @@
         "email_type"
       ]
     },
-    "Validate_body": {
-      "required": [
+    "Validate_body":{  
+      "required":[  
         "email",
         "password"
       ],
-      "properties": {
-        "email": {
-          "type": "string"
+      "properties":{  
+        "email":{  
+          "type":"string"
         },
-        "password": {
-          "type": "string"
+        "password":{  
+          "type":"string"
         }
       }
     },
-    "Password_body": {
-      "required": [
+    "Password_body":{  
+      "required":[  
         "password"
       ],
-      "properties": {
-        "password": {
-          "type": "string"
+      "properties":{  
+        "password":{  
+          "type":"string"
         }
       }
     },
-    "Validate_response": {
-      "properties": {
-        "name": {
-          "type": "string"
+    "Validate_response":{  
+      "properties":{  
+        "name":{  
+          "type":"string"
         },
-        "id": {
-          "type": "integer"
+        "id":{  
+          "type":"integer"
         }
       }
     },
-    "SB_body": {
-      "type": "object",
-      "properties": {
-        "fields": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Field"
+    "SB_body":{  
+      "type":"object",
+      "properties":{  
+        "fields":{  
+          "type":"array",
+          "items":{  
+            "$ref":"#/definitions/Field"
           }
         }
       },
-      "required": [
+      "required":[  
         "fields"
       ]
     },
-    "Field": {
-      "required": [
+    "Field":{  
+      "required":[  
         "name",
         "amount"
       ],
-      "properties": {
-        "name": {
-          "type": "string"
+      "properties":{  
+        "name":{  
+          "type":"string"
         },
-        "amount": {
-          "type": "integer"
+        "amount":{  
+          "type":"integer"
         }
       }
     },
-    "Completed_body": {
-      "type": "object",
-      "properties": {
-        "section": {
-          "type": "string"
+    "Completed_body":{  
+      "type":"object",
+      "properties":{  
+        "section":{  
+          "type":"string"
         }
       },
-      "required": [
+      "required":[  
         "section"
       ]
     },
-    "School_body": {
-      "type": "object",
-      "properties": {
-        "operation": {
-          "type": "string"
+    "School_body":{  
+      "type":"object",
+      "properties":{  
+        "operation":{  
+          "type":"string"
         },
-        "schools": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/School"
+        "schools":{  
+          "type":"array",
+          "items":{  
+            "$ref":"#/definitions/School"
           }
         }
       },
-      "required": [
+      "required":[  
         "schools"
       ]
     },
-    "School": {
-      "required": [
+    "School":{  
+      "required":[  
         "name"
       ],
-      "properties": {
-        "name": {
-          "type": "string"
+      "properties":{  
+        "name":{  
+          "type":"string"
         },
-        "order": {
-          "type": "integer",
-          "enum": [
-            "1", "2"
+        "order":{  
+          "type":"integer",
+          "enum":[  
+            "1",
+            "2"
           ]
         }
       }
