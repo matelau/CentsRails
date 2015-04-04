@@ -10,7 +10,7 @@
       "url":"admin@trycents.com"
     }
   },
-  "basePath":"http://localhost:3000/api/v2",
+  "basePath":"http://trycents.com/api/v2",
   "resourcePath":"/schools",
   "apis":[  
     {  

@@ -3,23 +3,23 @@
   "swaggerVersion": "2.0",
   "apis": [
     {
-      "path": "https://localhost:3000/apidocs/api/v2/careers.{format}",
+      "path": "https://trycents.com/apidocs/api/v2/careers.{format}",
       "description": "Careers"
     },
     {
-      "path": "https://localhost:3000/apidocs/api/v2/cost_of_living.{format}",
+      "path": "https://trycents.com/apidocs/api/v2/cost_of_living.{format}",
       "description": "Cost of living"
     },
     {
-      "path": "https://localhost:3000/apidocs/api/v2/degrees.{format}",
+      "path": "https://trycents.com/apidocs/api/v2/degrees.{format}",
       "description": "Degrees"
     },
     {
-      "path": "https://localhost:3000/apidocs/api/v2/schools.{format}",
+      "path": "https://trycents.com/apidocs/api/v2/schools.{format}",
       "description": "Schools"
     },
     {
-      "path": "https://localhost:3000/apidocs/api/v2/users.{format}",
+      "path": "https://trycents.com/apidocs/api/v2/users.{format}",
       "description": "Users"
     }
   ]
