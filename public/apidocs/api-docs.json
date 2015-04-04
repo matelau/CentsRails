@@ -96,7 +96,23 @@
         },
         "description": "",
         "summary": "Returns cost of living information for a city.",
-        "operationId": "Api::V2::Coli#index"
+        "operationId": "Api::V2::Coli#index",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "whether to show only state name",
+            "name": "only_state_names",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "description": "a US state name",
+            "name": "state",
+            "required": false,
+            "type": "string"
+          }
+        ]
       },
       "post": {
       	 "tags": [
