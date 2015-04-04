@@ -453,17 +453,6 @@
        	"tags": [
     			"users"
   			],
-        "responses": {
-          "200": {
-            "description": "User was registered.",
-            "schema": {
-            	"$ref": "#/definitions/IDReponse"
-            }
-          },
-          "400": {
-            "description": "The user data didn't meet the requirements."
-          }
-        },
         "description": "",
         "summary": "Registers a new user.",
         "operationId": "Api::V2::UsersController#create",
@@ -477,7 +466,18 @@
               "$ref": "#/definitions/User_body"
             }
           }
-        ]
+        ],
+        "responses": {
+          "200": {
+            "description": "User was registered.",
+            "schema": {
+            	"$ref": "#/definitions/IDReponse"
+            }
+          },
+          "400": {
+            "description": "The user data didn't meet the requirements."
+          }
+        }
       }
     },
     "/users/{id}": {
@@ -1078,8 +1078,11 @@
       }
     },
     "IDReponse": {
+    	"type": "object",
     	"properties": {
-    		"id": "integer"
+    		"id": {
+    			"integer"
+    		}
     	}
     }
   }
