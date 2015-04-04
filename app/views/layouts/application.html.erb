@@ -32,17 +32,17 @@
         <ul class="nav navbar-nav navbar-right">
         <!--check session variables to see if logged in -->
             <% if current_user %>
-                <li><a href="/user/profile"><%= current_user.first_name.upcase %></a></li>
-                <li><a href="/user/logout">LOGOUT</a></li>
+                <li><a id="profile_nav" href="/user/profile"><%= current_user.first_name.upcase %></a></li>
+                <li><a id="logout_nav" href="/user/logout">LOGOUT</a></li>
             <% else %>
-                <li><a href="/user/login">LOG IN</a></li>
-                <li><a href="/user/register">REGISTER</a></li>
+                <li><a id="login_nav" href="/user/login">LOG IN</a></li>
+                <li><a id="register_nav" href="/user/register">REGISTER</a></li>
             <% end %>
-            <li><a href="/">HOME</a></li>
-            <li><a href="/info/examples">EXAMPLES</a></li>
-            <li><a href="/wizard/start">WIZARD</a></li>
-            <li><a href="/info/help">HELP</a></li>
-            <li><a href="/info/about">ABOUT</a></li>
+            <li><a id="home_nav" href="/">HOME</a></li>
+            <li><a id="examples_nav" href="/info/examples">EXAMPLES</a></li>
+            <li><a id="wizard_nav" href="/wizard/start">WIZARD</a></li>
+            <li><a id="help_nav" href="/info/help">HELP</a></li>
+            <li><a id="about_nav" href="/info/about">ABOUT</a></li>
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" ><img src="/assets/search white.png" height="15" width="15"></a>
                 <ul class="dropdown-menu">
