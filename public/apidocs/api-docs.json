@@ -683,10 +683,13 @@
           },
           {
             "in": "path",
-            "description": "default, student or custom",
+            "description": "a spending breakdown category",
             "name": "category",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "default", "student", "custom"
+            ]
           },
           {
             "in": "body",
@@ -724,11 +727,14 @@
           },
           {
             "in": "path",
-            "description": "default, student or custom",
+            "description": "a spending breakdown category",
             "name": "category",
             "required": true,
-            "type": "string"
-          }
+            "type": "string",
+            "enum": [
+              "default", "student", "custom"
+            ]
+          },
         ]
       }
     },
@@ -755,10 +761,13 @@
           },
           {
             "in": "path",
-            "description": "default, student or custom",
+            "description": "a spending breakdown category",
             "name": "category",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "default", "student", "custom"
+            ]
           },
           {
             "in": "path",
@@ -780,7 +789,7 @@
             "description": "The form was returned."
           }
         },
-        "description": "",
+        "description": "Find the form at https://trycents.com/api/v2/users/new. This widget won't redirect you.",
         "summary": "Redirects to a form that registers new users.",
         "operationId": "Api::V2::UsersController#register"
       }
