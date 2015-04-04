@@ -45,6 +45,31 @@ class Api::V2::DegreesController < ApplicationController
 		return render json: result, status: 200
 	end
 
+	# Rate a degree.
+	def rate
+		degree = Degree.where(['level like ? AND name like ?', "#{params[:level]}%", "#{params[:name]}"]).first
+		rating = RatesMajor.where(user_id: params[:id], degree_id: degree.id)
+
+		if rating.present?
+			rating.rating = params[:rating]
+			if rating.save
+				return render json: 'Rating saved.', status: 200
+			else
+				return render json: rating.errors, status: 400
+			end
+		else
+			rating = RatesMajor.new
+			rating.rating = params[:rating]
+			rating.user_id = params[:id]
+			rating.degree_id = degree.id
+			if rating.save
+				return render json: 'Rating saved.', status: 200
+			else
+				return render json: rating.errors, status: 400
+			end
+		end
+	end
+
 	# Get degree by name.
 	def show
 		records = Degree.where(name: params[:name])
