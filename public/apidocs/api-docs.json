@@ -8,6 +8,9 @@
   "paths": {
     "/careers": {
       "post": {
+      	"tags": [
+    			"career"
+  			],
       	"description": "something",
         "responses": {
           "200": {
