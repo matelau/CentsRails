@@ -22,7 +22,7 @@
             "description": "No data on some schools."
           }
         },
-        "description": "",
+        "description": "Does this do anything",
         "summary": "Returns data on two careers.",
         "operationId": "Api::V2::CareersController#show_two",
         "parameters": [
