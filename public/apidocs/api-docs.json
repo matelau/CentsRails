@@ -457,8 +457,7 @@
           "200": {
             "description": "User was registered.",
             "schema": {
-            	"type": "object",
-            	"$ref": "#definitions/IDReponse"
+            	"$ref": "#/definitions/IDReponse"
             }
           },
           "400": {
