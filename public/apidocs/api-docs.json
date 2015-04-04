@@ -22,7 +22,9 @@
             "description": "No data on some schools."
           }
         },
-        "description": "Does this do anything",
+        "description": "This route is intended for internal use.
+
+        The order parameter is optional, but if you use it, you must use it in exactly two career objects. Its value is either 1 or 2.",
         "summary": "Returns data on two careers.",
         "operationId": "Api::V2::CareersController#show_two",
         "parameters": [
