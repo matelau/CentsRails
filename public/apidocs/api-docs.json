@@ -41,6 +41,9 @@
     },
     "/careers/{name}": {
       "get": {
+      	"tags": [
+    			"career"
+  			],
         "responses": {
           "200": {
             "description": "Records were found."
@@ -65,6 +68,9 @@
     },
     "/cost_of_living": {
       "post": {
+      	 "tags": [
+    			"cost of living"
+  			],
         "responses": {
           "200": {
             "description": "Records were found."
@@ -94,6 +100,9 @@
     },
     "/cost_of_living/{state}": {
       "get": {
+      	"tags": [
+    			"cost of living"
+  			],
         "responses": {
           "200": {
             "description": "Records were found."
@@ -118,6 +127,9 @@
     },
     "/cost_of_living/{state}/{city}": {
       "get": {
+       	"tags": [
+    			"cost of living"
+  			],
         "responses": {
           "200": {
             "description": "Records were found."
@@ -149,6 +161,9 @@
     },
     "/degrees": {
       "post": {
+       	"tags": [
+    			"degrees"
+  			],
         "responses": {
           "200": {
             "description": "Records were found."
@@ -178,6 +193,9 @@
     },
     "/degrees/{name}": {
       "get": {
+       	"tags": [
+    			"degrees"
+  			],
         "responses": {
           "200": {
             "description": "Records were found."
@@ -201,6 +219,9 @@
       }
     },
     "/degrees/{level}/{name}": {
+      	"tags": [
+    			"degrees"
+  			],
       "get": {
         "responses": {
           "200": {
@@ -233,6 +254,9 @@
     },
     "/users/new": {
       "get": {
+       	"tags": [
+    			"users"
+  			],
         "responses": {
           "200": {
             "description": "The form was returned."
@@ -245,6 +269,9 @@
     },
     "/users": {
       "post": {
+       	"tags": [
+    			"users"
+  			],
         "responses": {
           "200": {
             "description": "User was registered."
@@ -271,6 +298,9 @@
     },
     "/users/{id}": {
       "post": {
+       	"tags": [
+    			"users"
+  			],
         "responses": {
           "200": {
             "description": "There is a user with that ID."
@@ -304,6 +334,9 @@
     },
     "/users/validate": {
       "post": {
+       	"tags": [
+    			"users"
+  			],
         "responses": {
           "200": {
             "description": "Authentication successful."
@@ -330,6 +363,9 @@
     },
     "/users/{id}/completed": {
       "post": {
+       	"tags": [
+    			"users"
+  			],
         "responses": {
           "200": {
             "description": "User was found."
@@ -363,6 +399,9 @@
     },
     "/users/{id}/spending_breakdown": {
       "get": {
+       	"tags": [
+    			"users"
+  			],
         "responses": {
           "200": {
             "description": "User was found."
@@ -387,6 +426,9 @@
     },
     "/users/{id}/spending_breakdown/{category}": {
       "patch": {
+       	"tags": [
+    			"users"
+  			],
         "responses": {
           "200": {
             "description": "Data was deleted."
@@ -433,6 +475,9 @@
     },
     "/users/{id}/spending_breakdown/{category}/{name}": {
       "delete": {
+       	"tags": [
+    			"users"
+  			],
         "responses": {
           "200": {
             "description": "Data was deleted."
@@ -468,6 +513,9 @@
     },
     "/schools": {
       "post": {
+       	"tags": [
+    			"schools"
+  			],
         "responses": {
           "200": {
             "description": "Records were found."
@@ -497,6 +545,9 @@
     },
     "/schools/location/{location}": {
       "get": {
+       	"tags": [
+    			"schools"
+  			],
         "responses": {
           "200": {
             "description": "Records were found."
@@ -522,6 +573,9 @@
     },
     "/schools/{name}": {
       "get": {
+       	"tags": [
+    			"schools"
+  			],
         "responses": {
           "200": {
             "description": "Records were found."
