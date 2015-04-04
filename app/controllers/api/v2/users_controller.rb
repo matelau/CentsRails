@@ -101,7 +101,13 @@ class Api::V2::UsersController < ApplicationController
 		result = Hash.new
 
 		if User.exists? params[:id]
-			completed_sections = Completed.where(user_id: params[:id])
+			completed_sections = Array.new
+			records = Completed.where(user_id: params[:id])
+
+			records.each do |record|
+				completed_sections << record[:completed]
+			end
+
 			return render json: completed_sections, status: 200
 		else
 			result[:errors] = 'No such user found.'
