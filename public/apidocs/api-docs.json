@@ -11,7 +11,6 @@
       	"tags": [
     			"career"
   			],
-      	"description": "something",
         "responses": {
           "200": {
             "description": "Records were found."
@@ -37,6 +36,24 @@
             }
           }
         ]
+      }
+    },
+    "/careers": {
+      "get": {
+      	"tags": [
+    			"career"
+  			],
+        "responses": {
+          "200": {
+            "description": "Records were found."
+          },
+          "404": {
+            "description": "No records were found."
+          }
+        },
+        "description": "",
+        "summary": "Returns names of all available careers.",
+        "operationId": "Api::V2::CareersController#show_two",
       }
     },
     "/careers/{name}": {
@@ -159,6 +176,24 @@
         ]
       }
     },
+    "/cost_of_living": {
+      "get": {
+       	"tags": [
+    			"cost of living"
+  			],
+        "responses": {
+          "200": {
+            "description": "Records were found."
+          },
+          "404": {
+            "description": "No record were found."
+          }
+        },
+        "description": "",
+        "summary": "Returns cost of living information for a city.",
+        "operationId": "Api::V2::Coli#index"
+      }
+    },
     "/degrees": {
       "post": {
        	"tags": [
@@ -221,7 +256,7 @@
     "/degrees/{level}/{name}": {
       "get": {
        	"tags": [
-    			"career"
+    			"degrees"
   			],
         "responses": {
           "200": {
@@ -252,6 +287,24 @@
         ]
       }
     },
+    "/degrees": {
+      "get": {
+       	"tags": [
+    			"degrees"
+  			],
+        "responses": {
+          "200": {
+            "description": "Records were found."
+          },
+          "404": {
+            "description": "No records were found."
+          }
+        },
+        "description": "",
+        "summary": "Returns information on all degrees of all levels with that name.",
+        "operationId": "Api::V2::DegreesController#index",
+      }
+    },
     "/users/new": {
       "get": {
        	"tags": [
@@ -265,6 +318,67 @@
         "description": "",
         "summary": "Redirects to a form that registers new users.",
         "operationId": "Api::V2::UsersController#register"
+      }
+    },
+    "/users/{id}/completed": {
+      "get": {
+       	"tags": [
+    			"users"
+  			],
+        "responses": {
+          "200": {
+            "description": "The user was found."
+          },
+          "404": {
+          	"description": "No such user was found."
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "description": "a user id",
+            "name": "id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "description": "",
+        "summary": "Shows which sections a user has completed.",
+        "operationId": "Api::V2::UsersController#show_completed"
+      }
+    },
+    "/users/{id}/spending_breakdown/{category}": {
+      "get": {
+       	"tags": [
+    			"users"
+  			],
+        "responses": {
+          "200": {
+            "description": "The user was found."
+          },
+          "404": {
+          	"description": "No such user was found."
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "description": "a user id",
+            "name": "id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "path",
+            "description": "default, student or custom",
+            "name": "category",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "description": "",
+        "summary": "Loads spending breakdown data by category.",
+        "operationId": "Api::V2::UsersController#show_category"
       }
     },
     "/users": {
@@ -446,6 +560,55 @@
         "description": "",
         "summary": "Saves new spending breakdown data.",
         "operationId": "Api::V2::SpendingBreakdownController#update",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "a user id",
+            "name": "id",
+            "required": true,
+            "type":"integer"
+          },
+          {
+            "in": "path",
+            "description": "default, student or custom",
+            "name": "category",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "description": "object with array of spending breakdown data",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SB_body"
+            }
+          }
+        ]
+      }
+    },
+    "/users/{id}/spending_breakdown/{category}": {
+      "put": {
+       	"tags": [
+    			"users"
+  			],
+        "responses": {
+          "200": {
+            "description": "Data was deleted."
+          },
+          "400": {
+            "description": "Each field object must have a name and value."
+          },
+          "404": {
+            "description": "No such user was found."
+          },
+          "500": {
+            "description": "Server error while saving."
+          }
+        },
+        "description": "",
+        "summary": "Updates all spending breakdown data by category.",
+        "operationId": "Api::V2::SpendingBreakdownController#update_all",
         "parameters": [
           {
             "in": "path",
