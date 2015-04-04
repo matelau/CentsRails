@@ -1,465 +1,284 @@
-{  
-  "apiVersion":"v2",
-  "swaggerVersion":"2.0",
-  "info":{  
-    "version":"2.0.0",
-    "title":"Cents API",
-    "description":"The API for Cents.",
-    "contact":{  
-      "name":"Team FDE",
-      "url":"admin@trycents.com"
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v2",
+    "title": "Title was not specified"
+  },
+  "paths": {
+    "/users/new": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "The form was returned."
+          }
+        },
+        "description": "",
+        "summary": "Redirects to a form that registers new users.",
+        "operationId": "Api::V2::UsersController#register"
+      }
+    },
+    "/users": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "User was registered."
+          },
+          "400": {
+            "description": "The user data didn't meet the requirements."
+          }
+        },
+        "description": "",
+        "summary": "Registers a new user.",
+        "operationId": "Api::V2::UsersController#create",
+        "parameters": [
+          {
+            "in": "body",
+            "description": "object with array of career objects and optional operation",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User_body"
+            }
+          }
+        ]
+      }
+    },
+    "/users/{id}": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "There is a user with that ID."
+          },
+          "404": {
+            "description": "There is no user with that ID."
+          }
+        },
+        "description": "",
+        "summary": "Gets profile data for a user.",
+        "operationId": "Api::V2::UsersController#show",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "a user id",
+            "name": "id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "description": "object with password field",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Password_body"
+            }
+          }
+        ]
+      }
+    },
+    "/users/validate": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Authentication successful."
+          },
+          "400": {
+            "description": "Authentication failed."
+          }
+        },
+        "description": "",
+        "summary": "Validate a username and password.",
+        "operationId": "Api::V2::UsersController#validate",
+        "parameters": [
+          {
+            "in": "body",
+            "description": "object with password field",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Validate_body"
+            }
+          }
+        ]
+      }
+    },
+    "/users/{id}/completed": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "User was found."
+          },
+          "404": {
+            "description": "No such user was found."
+          }
+        },
+        "description": "",
+        "summary": "Record that a user has completed a section.",
+        "operationId": "Api::V2::UserController#create_completed",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "a user id",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Integer"
+            }
+          },
+          {
+            "in": "body",
+            "description": "object with section field",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Completed_body"
+            }
+          }
+        ]
+      }
+    },
+    "/users/{id}/spending_breakdown": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "User was found."
+          },
+          "404": {
+            "description": "No such user ID was found."
+          }
+        },
+        "description": "",
+        "summary": "Loads all spending breakdown data for a user.",
+        "operationId": "Api::V2::SpendingBreakdownController#show",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "a user id",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Integer"
+            }
+          }
+        ]
+      }
+    },
+    "/users/{id}/spending_breakdown/{category}": {
+      "patch": {
+        "responses": {
+          "200": {
+            "description": "Data was deleted."
+          },
+          "400": {
+            "description": "Each field object must have a name and value."
+          },
+          "404": {
+            "description": "No such user was found."
+          },
+          "500": {
+            "description": "Server error while saving."
+          }
+        },
+        "description": "",
+        "summary": "Saves new spending breakdown data.",
+        "operationId": "Api::V2::SpendingBreakdownController#update",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "a user id",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Integer"
+            }
+          },
+          {
+            "in": "path",
+            "description": "default, student or custom",
+            "name": "category",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "description": "object with array of spending breakdown data",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SB_body"
+            }
+          }
+        ]
+      }
+    },
+    "/users/{id}/spending_breakdown/{category}/{name}": {
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "Data was deleted."
+          }
+        },
+        "description": "",
+        "summary": "Deletes a single spending breakdown item.",
+        "operationId": "Api::V2::SpendingBreakdownController#destroy",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "a user id",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Integer"
+            }
+          },
+          {
+            "in": "path",
+            "description": "default, student or custom",
+            "name": "category",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "the name of the spending breakdown item",
+            "name": "name",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
     }
   },
-  "basePath":"http://trycents.com/api/v2",
-  "resourcePath":"/users",
-  "apis":[  
-    {  
-      "path":"/users/new",
-      "operations":[  
-        {  
-          "method":"GET",
-          "summary":"Redirects to a form that registers new users.",
-          "notes":"See the form at https://trycents.com/api/v2/users/new. This page will not redirect you.",
-          "type":"string",
-          "nickname":"Api::V2::UsersController#register",
-          "responseMessages":[  
-            {  
-              "code":200,
-              "message":"The form was returned."
-            }
-          ]
-        }
-      ]
-    },
-    {  
-      "path":"/users",
-      "operations":[  
-        {  
-          "method":"POST",
-          "summary":"Registers a new user.",
-          "type":"string",
-          "nickname":"Api::V2::UsersController#create",
-          "parameters":[  
-            {  
-              "name":"body",
-              "description":"object with array of career objects and optional operation",
-              "required":true,
-              "paramType":"body",
-              "type":"User_body",
-              "defaultValue":"{\n  \"first_name\": \"Jane\",\n   \"last_name\": \"Doe\",\n   \"email\": \"jane.doe@podunk.com\",\n   \"password\": \"Hard2Crack\",\n   \"password_confirmation\": \"Hard2Crack\",\n   \"email_type\": \"HTML\"\n}"
-            }
-          ],
-          "responseMessages":[  
-            {  
-              "code":200,
-              "message":"User was registered."
-            },
-            {  
-              "code":400,
-              "message":"One or more parameters were missing."
-            },
-            {  
-              "code":400,
-              "message":"The user was already registered."
-            },
-            {  
-              "code":400,
-              "message":"The user data didn't meet the requirements."
-            }
-          ]
-        }
-      ]
-    },
-    {  
-      "path":"/users/{id}",
-      "operations":[  
-        {  
-          "method":"POST",
-          "summary":"Gets profile data for a user.",
-          "type":"string",
-          "nickname":"Api::V2::UsersController#show",
-          "parameters":[  
-            {  
-              "name":"id",
-              "description":"a user id",
-              "required":true,
-              "paramType":"path",
-              "type":"integer"
-            },
-            {  
-              "name":"body",
-              "description":"object with password field",
-              "required":true,
-              "paramType":"body",
-              "type":"Password_body",
-              "defaultValue":"{\n  \"password\": \"Hard2Crack\"  \n}"
-            }
-          ],
-          "responseMessages":[  
-            {  
-              "code":200,
-              "message":"There is a user with that ID."
-            },
-            {  
-              "code":404,
-              "message":"There is no user with that ID."
-            }
-          ]
-        }
-      ]
-    },
-    {  
-      "path":"/users/validate",
-      "operations":[  
-        {  
-          "method":"POST",
-          "summary":"Validate a username and password.",
-          "type":"string",
-          "nickname":"Api::V2::UsersController#validate",
-          "parameters":[  
-            {  
-              "name":"body",
-              "description":"object with password field",
-              "required":true,
-              "paramType":"body",
-              "type":"Validate_body",
-              "defaultValue":"{\n  \"email\": \"jane.doe@podunk.com\",\n  \"password\": \"Hard2Crack\"  \n}"
-            }
-          ],
-          "responseMessages":[  
-            {  
-              "code":200,
-              "message":"Authentication successful."
-            },
-            {  
-              "code":400,
-              "message":"Password was missing."
-            },
-            {  
-              "code":400,
-              "message":"Authentication failed."
-            }
-          ]
-        }
-      ]
-    },
-    {  
-      "path":"/users/{id}/completed",
-      "operations":[  
-        {  
-          "method":"GET",
-          "summary":"Shows which sections a user has completed.",
-          "type":"string",
-          "nickname":"Api::V2::UserController#show_completed",
-          "parameters":[  
-            {  
-              "name":"id",
-              "description":"a user id",
-              "required":true,
-              "paramType":"path",
-              "type":"Integer"
-            }
-          ],
-          "responseMessages":[  
-            {  
-              "code":200,
-              "message":"User was found."
-            },
-            {  
-              "code":404,
-              "message":"No such user ID was found."
-            }
-          ]
-        }
-      ]
-    },
-    {  
-      "path":"/users/{id}/completed",
-      "operations":[  
-        {  
-          "method":"POST",
-          "summary":"Record that a user has completed a section.",
-          "type":"string",
-          "nickname":"Api::V2::UserController#create_completed",
-          "parameters":[  
-            {  
-              "name":"id",
-              "description":"a user id",
-              "required":true,
-              "paramType":"path",
-              "type":"Integer"
-            },
-            {  
-              "name":"body",
-              "description":"object with section field",
-              "required":true,
-              "paramType":"body",
-              "type":"Completed_body",
-              "defaultValue":"{\n  \"section\": \"career\"\n}"
-            }
-          ],
-          "responseMessages":[  
-            {  
-              "code":200,
-              "message":"User was found."
-            },
-            {  
-              "code":404,
-              "message":"No such user was found."
-            }
-          ]
-        }
-      ]
-    },
-    {  
-      "path":"/users/{id}/spending_breakdown",
-      "operations":[  
-        {  
-          "method":"GET",
-          "summary":"Loads all spending breakdown data for a user.",
-          "type":"string",
-          "nickname":"Api::V2::SpendingBreakdownController#show",
-          "parameters":[  
-            {  
-              "name":"id",
-              "description":"a user id",
-              "required":true,
-              "paramType":"path",
-              "type":"Integer"
-            }
-          ],
-          "responseMessages":[  
-            {  
-              "code":200,
-              "message":"User was found."
-            },
-            {  
-              "code":404,
-              "message":"No such user ID was found."
-            }
-          ]
-        }
-      ]
-    },
-    {  
-      "path":"/users/{id}/spending_breakdown/{category}",
-      "operations":[  
-        {  
-          "method":"GET",
-          "summary":"Loads spending breakdown data by category.",
-          "type":"string",
-          "nickname":"Api::V2::SpendingBreakdownController#show_category",
-          "parameters":[  
-            {  
-              "name":"id",
-              "description":"a user id",
-              "required":true,
-              "paramType":"path",
-              "type":"integer"
-            },
-            {  
-              "name":"category",
-              "description":"default, student or custom",
-              "required":true,
-              "paramType":"path",
-              "type":"string"
-            }
-          ],
-          "responseMessages":[  
-            {  
-              "code":200,
-              "message":"User was found."
-            },
-            {  
-              "code":404,
-              "message":"No such user was found."
-            }
-          ]
-        }
-      ]
-    },
-    {  
-      "path":"/users/{id}/spending_breakdown/{category}",
-      "operations":[  
-        {  
-          "method":"PUT",
-          "summary":"Updates all spending breakdown data by category.",
-          "notes":"This route will replace all data in this category with the new data from the body. Use it if you want to restore a category's data to a default.",
-          "type":"string",
-          "nickname":"Api::V2::SpendingBreakdownController#update",
-          "parameters":[  
-            {  
-              "name":"id",
-              "description":"a user id",
-              "required":true,
-              "paramType":"path",
-              "type":"Integer"
-            },
-            {  
-              "name":"category",
-              "description":"default, student or custom",
-              "required":true,
-              "paramType":"path",
-              "type":"string"
-            },
-            {  
-              "name":"body",
-              "description":"object with array of spending breakdown data",
-              "required":true,
-              "paramType":"body",
-              "type":"SB_body",
-              "defaultValue":"{\n  \"fields\": [\n    {\n      \"name\": \"Taxes\",\n      \"value\": 1113.02\n    },\n    {\n      \"name\": \"Food\",\n      \"value\": 427.51\n    },\n    {\n      \"name\": \"Housing\",\n      \"value\": 641.27\n    },\n    {\n      \"name\": \"Utilities\",\n      \"value\": 183.22\n    },\n    {\n      \"name\": \"Transportation\",\n      \"value\": 366.44\n    },\n    {\n      \"name\": \"Tuition\",\n      \"value\": 763.41\n    },\n    {\n      \"name\": \"Books\",\n      \"value\": 183.22\n    },\n    {\n      \"name\": \"Savings\",\n      \"value\": 249.29\n    },\n    {\n      \"name\": \"Misc\",\n      \"value\": 249.29\n    }\n  ]\n}"
-            }
-          ],
-          "responseMessages":[  
-            {  
-              "code":200,
-              "message":"Data was saved."
-            },
-            {  
-              "code":400,
-              "message":"The fields param was not an array or was empty."
-            },
-            {  
-              "code":400,
-              "message":"Each field object must have a name and value."
-            },
-            {  
-              "code":404,
-              "message":"No such user was found."
-            },
-            {  
-              "code":500,
-              "message":"Server error while saving."
-            }
-          ]
-        }
-      ]
-    },
-    {  
-      "path":"/users/{id}/spending_breakdown/{category}",
-      "operations":[  
-        {  
-          "method":"PATCH",
-          "summary":"Saves new spending breakdown data.",
-          "notes":"This route will insert new (name, value) pairs if the name doesn't exist or overwrite them if it does. Use it when you want to insert or update a few fields.",
-          "type":"string",
-          "nickname":"Api::V2::SpendingBreakdownController#update",
-          "parameters":[  
-            {  
-              "name":"id",
-              "description":"a user id",
-              "required":true,
-              "paramType":"path",
-              "type":"Integer"
-            },
-            {  
-              "name":"category",
-              "description":"default, student or custom",
-              "required":true,
-              "paramType":"path",
-              "type":"string"
-            },
-            {  
-              "name":"body",
-              "description":"object with array of spending breakdown data",
-              "required":true,
-              "paramType":"body",
-              "type":"SB_body",
-              "defaultValue":"{\n  \"fields\": [\n    {\n      \"name\": \"Day Care\",\n      \"value\": 1200.00\n    }\n  ]\n}"
-            }
-          ],
-          "responseMessages":[  
-            {  
-              "code":200,
-              "message":"Data was deleted."
-            },
-            {  
-              "code":400,
-              "message":"The fields param was not an array or was empty."
-            },
-            {  
-              "code":400,
-              "message":"Each field object must have a name and value."
-            },
-            {  
-              "code":404,
-              "message":"No such user was found."
-            },
-            {  
-              "code":500,
-              "message":"Server error while saving."
-            }
-          ]
-        }
-      ]
-    },
-    {  
-      "path":"/users/{id}/spending_breakdown/{category}/{name}",
-      "operations":[  
-        {  
-          "method":"DELETE",
-          "summary":"Deletes a single spending breakdown item.",
-          "type":"string",
-          "nickname":"Api::V2::SpendingBreakdownController#destroy",
-          "parameters":[  
-            {  
-              "name":"id",
-              "description":"a user id",
-              "required":true,
-              "paramType":"path",
-              "type":"Integer"
-            },
-            {  
-              "name":"category",
-              "description":"default, student or custom",
-              "required":true,
-              "paramType":"path",
-              "type":"string"
-            },
-            {  
-              "name":"name",
-              "description":"the name of the spending breakdown item",
-              "required":true,
-              "paramType":"path",
-              "type":"string"
-            }
-          ],
-          "responseMessages":[  
-            {  
-              "code":200,
-              "message":"Data was deleted."
-						}
-          ]
-        }
-      ]
-    }
+  "host": "trycents.com",
+  "basePath": "/api/v2",
+  "schemes": [
+    "http"
   ],
-  "models":{  
-    "User_body":{  
-      "id":"User_body",
-      "type":"object",
-      "properties":{  
-        "first_name":{  
-          "type":"string"
+  "definitions": {
+    "User_body": {
+      "id": "User_body",
+      "type": "object",
+      "properties": {
+        "first_name": {
+          "type": "string"
         },
-        "last_name":{  
-          "type":"string"
+        "last_name": {
+          "type": "string"
         },
-        "email":{  
-          "type":"string"
+        "email": {
+          "type": "string"
         },
-        "password":{  
-          "type":"string"
+        "password": {
+          "type": "string"
         },
-        "password_confirmation":{  
-          "type":"string"
+        "password_confirmation": {
+          "type": "string"
         },
-        "email_type":{  
-          "type":"string"
+        "email_type": {
+          "type": "string"
         }
       },
-      "required":[  
+      "required": [
         "first_name",
         "last_name",
         "email",
@@ -468,82 +287,82 @@
         "email_type"
       ]
     },
-    "Validate_body":{  
-      "required":[  
+    "Validate_body": {
+      "required": [
         "email",
         "password"
       ],
-      "id":"Validate_body",
-      "properties":{  
-        "email":{  
-          "type":"string"
+      "id": "Validate_body",
+      "properties": {
+        "email": {
+          "type": "string"
         },
-        "password":{  
-          "type":"string"
+        "password": {
+          "type": "string"
         }
       }
     },
-    "Password_body":{  
-      "required":[  
+    "Password_body": {
+      "required": [
         "password"
       ],
-      "id":"Password_body",
-      "properties":{  
-        "password":{  
-          "type":"string"
+      "id": "Password_body",
+      "properties": {
+        "password": {
+          "type": "string"
         }
       }
     },
-    "Validate_response":{  
-      "id":"Validate_response",
-      "properties":{  
-        "name":{  
-          "type":"string"
+    "Validate_response": {
+      "id": "Validate_response",
+      "properties": {
+        "name": {
+          "type": "string"
         },
-        "id":{  
-          "type":"integer"
+        "id": {
+          "type": "integer"
         }
       }
     },
-    "SB_body":{  
-      "id":"SB_body",
-      "type":"object",
-      "properties":{  
-        "fields":{  
-          "type":"array",
-          "items":{  
-            "$ref":"Field"
+    "SB_body": {
+      "id": "SB_body",
+      "type": "object",
+      "properties": {
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Field"
           }
         }
       },
-      "required":[  
+      "required": [
         "fields"
       ]
     },
-    "Field":{  
-      "required":[  
+    "Field": {
+      "required": [
         "name",
         "amount"
       ],
-      "id":"Field",
-      "properties":{  
-        "name":{  
-          "type":"string"
+      "id": "Field",
+      "properties": {
+        "name": {
+          "type": "string"
         },
-        "amount":{  
-          "type":"integer"
+        "amount": {
+          "type": "integer"
         }
       }
     },
-    "Completed_body":{  
-      "id":"Completed_body",
-      "type":"object",
-      "properties":{  
-        "section":{  
-          "type":"string"
+    "Completed_body": {
+      "id": "Completed_body",
+      "type": "object",
+      "properties": {
+        "section": {
+          "type": "string"
         }
       },
-      "required":[  
+      "required": [
         "section"
       ]
     }

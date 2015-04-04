@@ -1,196 +1,134 @@
-{  
-  "apiVersion":"v2",
-  "swaggerVersion":"1.2",
-  "info":{  
-    "version":"2.0.0",
-    "title":"Cents API",
-    "description":"The API for Cents.",
-    "contact":{  
-      "name":"Team FDE",
-      "url":"admin@trycents.com"
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v2",
+    "title": "Title was not specified"
+  },
+  "paths": {
+    "/degrees": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Records were found."
+          },
+          "400": {
+            "description": "No objects were in the degrees array."
+          },
+          "404": {
+            "description": "No data for some degrees."
+          }
+        },
+        "description": "",
+        "summary": "Returns degree information for two degrees.",
+        "operationId": "Api::V2::DegreesController#show_two",
+        "parameters": [
+          {
+            "in": "body",
+            "description": "object with array of degree objects and optional operation",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Degree_body"
+            }
+          }
+        ]
+      }
+    },
+    "/degrees/{name}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Records were found."
+          },
+          "404": {
+            "description": "Degree does not exist."
+          }
+        },
+        "description": "",
+        "summary": "Returns information on all degrees of all levels with that name.",
+        "operationId": "Api::V2::DegreesController#show",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "a degree name",
+            "name": "name",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/degrees/{level}/{name}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Records were found."
+          },
+          "404": {
+            "description": "Degree does not exist."
+          }
+        },
+        "description": "",
+        "summary": "Returns information on all degrees of all levels that start with {level} and have the name {name}.",
+        "operationId": "Api::V2::DegreesController#show_level_name",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "a degree level",
+            "name": "level",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "a degree name",
+            "name": "name",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
     }
   },
-  "basePath":"http://trycents.com/api/v2",
-  "resourcePath":"/degrees",
-  "apis":[  
-    {  
-      "path":"/degrees",
-      "operations":[  
-        {  
-          "method":"GET",
-          "summary":"Returns names of all degrees.",
-          "notes": "You can fetch a list of all degrees (name, level) simply by calling 'https://trycents.com/api/v2/degrees', since both parameters are optional.",
-          "type":"string",
-          "nickname":"Api::V2::DegreesController#index",
-          "parameters":[  
-            {  
-              "name":"only_level_names",
-              "description":"whether to show level names",
-              "required":false,
-              "type":"boolean",
-              "paramType":"query",
-              "defaultValue":false
-            },
-            {  
-              "name":"level",
-              "description":"the start of a degree level name",
-              "required":false,
-              "type":"string",
-              "paramType":"query",
-              "defaultValue":"bachelor"
-            }
-          ],
-          "responseMessages":[  
-            {  
-              "code":200,
-              "message":"Records were found."
-            },
-            {  
-              "code":404,
-              "message":"No records were found."
-            }
-          ]
-        }
-      ]
-    },
-    {  
-      "path":"/degrees/{name}",
-      "operations":[  
-        {  
-          "method":"GET",
-          "summary":"Returns information on all degrees of all levels with that name.",
-          "type":"string",
-          "nickname":"Api::V2::DegreesController#show",
-          "parameters":[  
-            {  
-              "name":"name",
-              "description":"a degree name",
-              "required":true,
-              "type":"string",
-              "paramType":"path"
-            }
-          ],
-          "responseMessages":[  
-            {  
-              "code":200,
-              "message":"Records were found."
-            },
-            {  
-              "code":404,
-              "message":"Degree does not exist."
-            }
-          ]
-        }
-      ]
-    },
-    {  
-      "path":"/degrees/{level}/{name}",
-      "operations":[  
-        {  
-          "method":"GET",
-          "summary":"Returns information on all degrees of all levels that start with {level} and have the name {name}.",
-          "type":"string",
-          "nickname":"Api::V2::DegreesController#show_level_name",
-          "parameters":[ 
-            {  
-              "name":"level",
-              "description":"a degree level",
-              "required":true,
-              "type":"string",
-              "paramType":"path"
-            }, 
-            {  
-              "name":"name",
-              "description":"a degree name",
-              "required":true,
-              "type":"string",
-              "paramType":"path"
-            }
-          ],
-          "responseMessages":[  
-            {  
-              "code":200,
-              "message":"Records were found."
-            },
-            {  
-              "code":404,
-              "message":"Degree does not exist."
-            }
-          ]
-        }
-      ]
-    },
-    {  
-      "path":"/degrees",
-      "operations":[  
-        {  
-          "method":"POST",
-          "summary":"Returns degree information for two degrees.",
-          "notes": "<p>This route is intended for internal use.</p><p>The order parameter is optional, but if you use it, you must use it for both degrees. The value of the order parameter must be either 1 or 2.</p>",
-          "type":"string",
-          "nickname":"Api::V2::DegreesController#show_two",
-          "parameters":[  
-            {  
-              "name":"body",
-              "description":"object with array of degree objects and optional operation",
-              "required":true,
-              "paramType":"body",
-              "type":"Degree_body",
-              "defaultValue":"{\n  \"operation\": \"compare\",\n  \"degrees\": [\n    {\n      \"name\": \"Petroleum Engineering\",\n      \"level\": \"Bachelor's Degree\",\n      \"order\": 2\n    }, \n    {\n      \"name\": \"Accounting\",\n      \"level\": \"Associate's Degree\",\n      \"order\": 1\n    }\n  ]\n}"
-            }
-          ],
-          "responseMessages":[  
-            {  
-              "code":200,
-              "message":"Records were found."
-            },
-            {
-            	"code":400,
-            	"message":"No objects were in the degrees array."
-            },
-            {  
-              "code":404,
-              "message":"No data for some degrees."
-            }
-          ]
-        }
-      ]
-    }
+  "host": "localhost:3000",
+  "basePath": "/api/v2",
+  "schemes": [
+    "http"
   ],
-  "models":{  
-    "Degree_body":{  
-      "id":"Degree_body",
-      "type":"object",
-      "properties":{  
-        "operation":{  
-          "type":"string"
+  "definitions": {
+    "Degree_body": {
+      "id": "Degree_body",
+      "type": "object",
+      "properties": {
+        "operation": {
+          "type": "string"
         },
-        "degrees":{  
-          "type":"array",
-          "items":{  
-            "$ref":"Degree"
+        "degrees": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Degree"
           }
         }
       },
-      "required":[  
+      "required": [
         "degrees"
       ]
     },
-    "Degree":{  
-      "required":[  
+    "Degree": {
+      "required": [
         "name",
         "level"
       ],
-      "id":"Degree",
-      "properties":{  
-        "name":{  
-          "type":"string"
+      "id": "Degree",
+      "properties": {
+        "name": {
+          "type": "string"
         },
-        "level":{  
-          "type":"string"
+        "level": {
+          "type": "string"
         },
-        "order":{  
-          "type":"integer"
+        "order": {
+          "type": "integer"
         }
       }
     }

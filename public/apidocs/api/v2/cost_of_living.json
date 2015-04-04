@@ -1,195 +1,134 @@
-{  
-  "apiVersion":"v2",
-  "swaggerVersion":"1.2",
-  "info":{  
-    "version":"2.0.0",
-    "title":"Cents API",
-    "description":"The API for Cents.",
-    "contact":{  
-      "name":"Team FDE",
-      "url":"admin@trycents.com"
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v2",
+    "title": "Title was not specified"
+  },
+  "paths": {
+    "/cost_of_living": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Records were found."
+          },
+          "400": {
+            "description": "No objects were in the locations array."
+          },
+          "404": {
+            "description": "No data on city or state for some locations."
+          }
+        },
+        "description": "",
+        "summary": "Returns cost of living information for two locations.",
+        "operationId": "Api::V2::Coli#show_two",
+        "parameters": [
+          {
+            "in": "body",
+            "description": "object with array of location objects and optional operation",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Cost_of_living_body"
+            }
+          }
+        ]
+      }
+    },
+    "/cost_of_living/{state}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Records were found."
+          },
+          "404": {
+            "description": "State does not exist."
+          }
+        },
+        "description": "",
+        "summary": "Returns information on all available locations for a state.",
+        "operationId": "Api::V2::Coli#show_state",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "a US state",
+            "name": "state",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/cost_of_living/{state}/{city}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Records were found."
+          },
+          "404": {
+            "description": "State or city does not exist."
+          }
+        },
+        "description": "",
+        "summary": "Returns cost of living information for a city.",
+        "operationId": "Api::V2::Coli#show_city",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "a US state name",
+            "name": "state",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "the name of a city in the state",
+            "name": "city",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
     }
   },
-  "basePath":"http://trycents.com/api/v2",
-  "resourcePath":"/cost_of_living",
-  "apis":[  
-    {  
-      "path":"/cost_of_living",
-      "operations":[  
-        {  
-          "method":"GET",
-          "summary":"Returns names of all locations.",
-          "notes": "You can fetch a list of all location (city, state) names simply by calling 'https://trycents.com/api/v2/cost_of_living', since both parameters are optional.",
-          "type":"string",
-          "nickname":"Api::V2::Coli#index",
-          "parameters":[  
-            {  
-              "name":"only_state_names",
-              "description":"whether to show state names",
-              "required":false,
-              "type":"boolean",
-              "paramType":"query",
-              "defaultValue":false
-            },
-            {  
-              "name":"state",
-              "description":"a US state name",
-              "required":false,
-              "type":"string",
-              "paramType":"query"
-            }
-          ],
-          "responseMessages":[  
-            {  
-              "code":200,
-              "message":"Records were found."
-            },
-            {  
-              "code":404,
-              "message":"No records were found."
-            }
-          ]
-        }
-      ]
-    },
-    {  
-      "path":"/cost_of_living/{state}",
-      "operations":[  
-        {  
-          "method":"GET",
-          "summary":"Returns information on all available locations for a state.",
-          "type":"string",
-          "nickname":"Api::V2::Coli#show_state",
-          "parameters":[  
-            {  
-              "name":"state",
-              "description":"a US state",
-              "required":true,
-              "type":"string",
-              "paramType":"path"
-            }
-          ],
-          "responseMessages":[  
-            {  
-              "code":200,
-              "message":"Records were found."
-            },
-            {  
-              "code":404,
-              "message":"State does not exist."
-            }
-          ]
-        }
-      ]
-    },
-    {  
-      "path":"/cost_of_living/{state}/{city}",
-      "operations":[  
-        {  
-          "method":"GET",
-          "summary":"Returns cost of living information for a city.",
-          "type":"string",
-          "nickname":"Api::V2::Coli#show_city",
-          "parameters":[  
-            {  
-              "name":"state",
-              "description":"a US state name",
-              "required":true,
-              "type":"string",
-              "paramType":"path"
-            },
-            {  
-              "name":"city",
-              "description":"the name of a city in the state",
-              "required":true,
-              "type":"string",
-              "paramType":"path"
-            }
-          ],
-          "responseMessages":[  
-            {  
-              "code":200,
-              "message":"Records were found."
-            },
-            {  
-              "code":404,
-              "message":"State or city does not exist."
-            }
-          ]
-        }
-      ]
-    },
-    {  
-      "path":"/cost_of_living",
-      "operations":[  
-        {  
-          "method":"POST",
-          "summary":"Returns cost of living information for two locations.",
-          "notes": "<p>This route is intended for internal use.</p><p>The order parameter is optional, but if you use it, you must use it for both cities. The value of the order parameter must be either 1 or 2.</p>",
-          "type":"string",
-          "nickname":"Api::V2::Coli#show_two",
-          "parameters":[  
-            {  
-              "name":"body",
-              "description":"object with array of location objects and optional operation",
-              "required":true,
-              "paramType":"body",
-              "type":"Cost_of_living_body",
-              "defaultValue":"{\n  \"operation\": \"compare\",\n  \"locations\": [\n    {\n      \"city\": \"San Francisco\",\n      \"state\": \"California\",\n      \"order\": 2\n    }, \n    {\n      \"city\": \"Salt Lake City\",\n      \"state\": \"Utah\",\n      \"order\": 1\n    }\n  ]\n}"
-            }
-          ],
-          "responseMessages":[  
-            {  
-              "code":200,
-              "message":"Records were found."
-            },
-            {
-            	"code":400,
-            	"message":"No objects were in the locations array."
-            },
-            {  
-              "code":404,
-              "message":"No data on city or state for some locations."
-            }
-          ]
-        }
-      ]
-    }
+  "host": "localhost:3000",
+  "basePath": "/api/v2",
+  "schemes": [
+    "http"
   ],
-  "models":{  
-    "Cost_of_living_body":{  
-      "id":"Cost_of_living_body",
-      "type":"object",
-      "properties":{  
-        "operation":{  
-          "type":"string"
+  "definitions": {
+    "Cost_of_living_body": {
+      "id": "Cost_of_living_body",
+      "type": "object",
+      "properties": {
+        "operation": {
+          "type": "string"
         },
-        "locations":{  
-          "type":"array",
-          "items":{  
-            "$ref":"Location"
+        "locations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Location"
           }
         }
       },
-      "required":[  
+      "required": [
         "locations"
       ]
     },
-    "Location":{  
-      "required":[  
+    "Location": {
+      "required": [
         "city",
         "state"
       ],
-      "id":"Location",
-      "properties":{  
-        "city":{  
-          "type":"string"
+      "id": "Location",
+      "properties": {
+        "city": {
+          "type": "string"
         },
-        "state":{  
-          "type":"string"
+        "state": {
+          "type": "string"
         },
-        "order":{  
-          "type":"integer"
+        "order": {
+          "type": "integer"
         }
       }
     }

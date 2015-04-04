@@ -1,187 +1,124 @@
-{  
-  "apiVersion":"v2",
-  "swaggerVersion":"1.2",
-  "info":{  
-    "version":"2.0.0",
-    "title":"Cents API",
-    "description":"The API for Cents.",
-    "contact":{  
-      "name":"Team FDE",
-      "url":"admin@trycents.com"
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v2",
+    "title": "Title was not specified"
+  },
+  "paths": {
+    "/schools": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Records were found."
+          },
+          "400": {
+            "description": "No schools were in the schools array."
+          },
+          "404": {
+            "description": "No data on some schools."
+          }
+        },
+        "description": "",
+        "summary": "Returns data on two schools.",
+        "operationId": "Api::V2::SchoolsController#show_two",
+        "parameters": [
+          {
+            "in": "body",
+            "description": "object with array of school objects and optional operation",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/School_body"
+            }
+          }
+        ]
+      }
+    },
+    "/schools/location/{location}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Records were found."
+          },
+          "404": {
+            "description": "Location does not exist."
+          }
+        },
+        "description": "",
+        "summary": "Returns information on all available schools for a location.",
+        "operationId": "Api::V2::SchoolsController#show_location",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "city or postal abbreviation for state in the US",
+            "name": "location",
+            "required": true,
+            "type": "string",
+            "default": "Princeton, NJ"
+          }
+        ]
+      }
+    },
+    "/schools/{name}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Records were found."
+          },
+          "404": {
+            "description": "School does not exist."
+          }
+        },
+        "description": "",
+        "summary": "Returns data for a school.",
+        "operationId": "Api::V2::SchoolsController#show_state_name",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "a school name",
+            "name": "name",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
     }
   },
-  "basePath":"http://trycents.com/api/v2",
-  "resourcePath":"/schools",
-  "apis":[  
-    {  
-      "path":"/schools",
-      "operations":[  
-        {  
-          "method":"GET",
-          "summary":"Returns names of all available schools.",
-          "notes":"You can fetch a list of all school names simply by calling 'https://trycents.com/api/v2/schools', since both parameters are optional.",
-          "type":"string",
-          "nickname":"Api::V2::SchoolsController#index",
-          "parameters":[  
-            {  
-              "name":"only_location_names",
-              "description":"whether to show location names",
-              "required":false,
-              "type":"boolean",
-              "paramType":"query",
-              "defaultValue":false
-            },
-            {  
-              "name":"location",
-              "description":"city or postal abbreviation for state in the US",
-              "required":false,
-              "type":"string",
-              "paramType":"query",
-              "defaultValue":"Salt Lake City, UT"
-            }
-          ],
-          "responseMessages":[  
-            {  
-              "code":200,
-              "message":"Records were found."
-            },
-            {  
-              "code":404,
-              "message":"No records were found."
-            }
-          ]
-        }
-      ]
-    },
-    {  
-      "path":"/schools/location/{location}",
-      "operations":[  
-        {  
-          "method":"GET",
-          "summary":"Returns information on all available schools for a location.",
-          "type":"string",
-          "nickname":"Api::V2::SchoolsController#show_location",
-          "parameters":[  
-            {  
-              "name":"location",
-              "description":"city or postal abbreviation for state in the US",
-              "required":true,
-              "type":"string",
-              "paramType":"path",
-              "defaultValue":"Princeton, NJ"
-            }
-          ],
-          "responseMessages":[  
-            {  
-              "code":200,
-              "message":"Records were found."
-            },
-            {  
-              "code":404,
-              "message":"Location does not exist."
-            }
-          ]
-        }
-      ]
-    },
-    {  
-      "path":"/schools/{name}",
-      "operations":[  
-        {  
-          "method":"GET",
-          "summary":"Returns data for a school.",
-          "type":"string",
-          "notes":"Will return data on multiple schools if they have the same name.",
-          "nickname":"Api::V2::SchoolsController#show_state_name",
-          "parameters":[  
-            {  
-              "name":"name",
-              "description":"a school name",
-              "required":true,
-              "type":"string",
-              "paramType":"path"
-            }
-          ],
-          "responseMessages":[  
-            {  
-              "code":200,
-              "message":"Records were found."
-            },
-            {  
-              "code":404,
-              "message":"School does not exist."
-            }
-          ]
-        }
-      ]
-    },
-    {  
-      "path":"/schools",
-      "operations":[  
-        {  
-          "method":"POST",
-          "summary":"Returns data on two schools.",
-          "notes":"<p>This route is intended for internal use.</p><p>The order parameter is optional, but if you use it, you must use it for both schools. The value of the order parameter must be either 1 or 2.</p>",
-          "type":"string",
-          "nickname":"Api::V2::SchoolsController#show_two",
-          "parameters":[  
-            {  
-              "name":"body",
-              "description":"object with array of school objects and optional operation",
-              "required":true,
-              "paramType":"body",
-              "type":"School_body",
-              "defaultValue":"{\n  \"operation\": \"compare\",\n  \"schools\": [\n    {\n      \"name\": \"Princeton University\",\n      \"order\": 2\n    }, \n    {\n      \"name\": \"Harvard University\",\n      \"order\": 1\n    }\n  ]\n}"
-            }
-          ],
-          "responseMessages":[  
-            {  
-              "code":200,
-              "message":"Records were found."
-            },
-            {  
-              "code":400,
-              "message":"No schools were in the schools array."
-            },
-            {  
-              "code":404,
-              "message":"No data on some schools."
-            }
-          ]
-        }
-      ]
-    }
+  "host": "trycents.com",
+  "basePath": "/api/v2",
+  "schemes": [
+    "http"
   ],
-  "models":{  
-    "School_body":{  
-      "id":"School_body",
-      "type":"object",
-      "properties":{  
-        "operation":{  
-          "type":"string"
+  "definitions": {
+    "School_body": {
+      "id": "School_body",
+      "type": "object",
+      "properties": {
+        "operation": {
+          "type": "string"
         },
-        "schools":{  
-          "type":"array",
-          "items":{  
-            "$ref":"School"
+        "schools": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/School"
           }
         }
       },
-      "required":[  
+      "required": [
         "schools"
       ]
     },
-    "School":{  
-      "required":[  
+    "School": {
+      "required": [
         "name"
       ],
-      "id":"School",
-      "properties":{  
-        "name":{  
-          "type":"string"
+      "id": "School",
+      "properties": {
+        "name": {
+          "type": "string"
         },
-        "order":{  
-          "type":"integer"
+        "order": {
+          "type": "integer"
         }
       }
     }
