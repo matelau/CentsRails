@@ -36,7 +36,9 @@
             }
           }
         ]
-      },
+      }
+    },
+    "/careers": {
       "get": {
       	"tags": [
     			"career"
@@ -82,6 +84,22 @@
       }
     },
     "/cost_of_living": {
+      "get": {
+       	"tags": [
+    			"cost of living"
+  			],
+        "responses": {
+          "200": {
+            "description": "Records were found."
+          },
+          "404": {
+            "description": "No record were found."
+          }
+        },
+        "description": "",
+        "summary": "Returns cost of living information for a city.",
+        "operationId": "Api::V2::Coli#index"
+      },
       "post": {
       	 "tags": [
     			"cost of living"
@@ -174,24 +192,6 @@
         ]
       }
     },
-    "/cost_of_living": {
-      "get": {
-       	"tags": [
-    			"cost of living"
-  			],
-        "responses": {
-          "200": {
-            "description": "Records were found."
-          },
-          "404": {
-            "description": "No record were found."
-          }
-        },
-        "description": "",
-        "summary": "Returns cost of living information for a city.",
-        "operationId": "Api::V2::Coli#index"
-      }
-    },
     "/degrees": {
       "post": {
        	"tags": [
@@ -222,6 +222,21 @@
             }
           }
         ]
+      },
+      "get": {
+       	"tags": [
+    			"degrees"
+  			],
+        "responses": {
+          "200": {
+            "description": "Records were found."
+          },
+          "404": {
+            "description": "No records were found."
+          }
+        },
+        "description": "",
+        "summary": "Returns information on all degrees of all levels with that name."     
       }
     },
     "/degrees/{name}": {
@@ -285,24 +300,6 @@
         ]
       }
     },
-    "/degrees": {
-      "get": {
-       	"tags": [
-    			"degrees"
-  			],
-        "responses": {
-          "200": {
-            "description": "Records were found."
-          },
-          "404": {
-            "description": "No records were found."
-          }
-        },
-        "description": "",
-        "summary": "Returns information on all degrees of all levels with that name.",
-        "operationId": "Api::V2::DegreesController#index"
-      }
-    },
     "/users/new": {
       "get": {
        	"tags": [
@@ -343,6 +340,40 @@
         "description": "",
         "summary": "Shows which sections a user has completed.",
         "operationId": "Api::V2::UsersController#show_completed"
+      },
+      "post": {
+       	"tags": [
+    			"users"
+  			],
+        "responses": {
+          "200": {
+            "description": "User was found."
+          },
+          "404": {
+            "description": "No such user was found."
+          }
+        },
+        "description": "",
+        "summary": "Record that a user has completed a section.",
+        "operationId": "Api::V2::UserController#create_completed",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "a user id",
+            "name": "id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "description": "object with section field",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Completed_body"
+            }
+          }
+        ]
       }
     },
     "/users/{id}/spending_breakdown/{category}": {
@@ -473,42 +504,6 @@
         ]
       }
     },
-    "/users/{id}/completed": {
-      "post": {
-       	"tags": [
-    			"users"
-  			],
-        "responses": {
-          "200": {
-            "description": "User was found."
-          },
-          "404": {
-            "description": "No such user was found."
-          }
-        },
-        "description": "",
-        "summary": "Record that a user has completed a section.",
-        "operationId": "Api::V2::UserController#create_completed",
-        "parameters": [
-          {
-            "in": "path",
-            "description": "a user id",
-            "name": "id",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "in": "body",
-            "description": "object with section field",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Completed_body"
-            }
-          }
-        ]
-      }
-    },
     "/users/{id}/spending_breakdown": {
       "get": {
        	"tags": [
@@ -583,9 +578,7 @@
             }
           }
         ]
-      }
-    },
-    "/users/{id}/spending_breakdown/{category}": {
+      },
       "put": {
        	"tags": [
     			"users"
