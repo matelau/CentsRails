@@ -40,9 +40,15 @@ class Api::V2::SchoolsController < ApplicationController
 
 	# Get school by name.
 	def show
-		school = University.where(['name LIKE ?', "#{params[:name]}%"])
-		if school.present?
-			return render json: school, status: 200
+		records = University.where(['name LIKE ?', "#{params[:name]}%"])
+		schools = Array.new
+
+		records.each do |record|
+			schools << record.attributes.except('id', 'created_at', 'updated_at')
+		end
+
+		if schools.present?
+			return render json: schools, status: 200
 		else
 			return render json: [], status: 404
 		end
@@ -50,9 +56,15 @@ class Api::V2::SchoolsController < ApplicationController
 
 	# Get school by location.
 	def show_location
-		school = University.where(['state LIKE ?', "%#{params[:location]}%"])
-		if school.present?
-			return render json: school, status: 200
+		records = University.where(['state LIKE ?', "%#{params[:location]}%"])
+		schools = Array.new
+
+		records.each do |record|
+			schools << record.attributes.except('id', 'created_at', 'updated_at')
+		end
+
+		if schools.present?
+			return render json: schools, status: 200
 		else
 			return render json: [], status: 404
 		end

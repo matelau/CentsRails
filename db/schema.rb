@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150308195717) do
+ActiveRecord::Schema.define(version: 20150404005140) do
 
   create_table "amounts", force: true do |t|
     t.integer  "user_id"
@@ -29,6 +29,10 @@ ActiveRecord::Schema.define(version: 20150308195717) do
     t.integer  "employment_change_volume"
     t.float    "employment_change_percent", limit: 24
     t.integer  "job_openings"
+    t.string   "name"
+    t.string   "salary"
+    t.float    "unemp11",                   limit: 24
+    t.float    "unemp12",                   limit: 24
   end
 
   create_table "coli_weather", id: false, force: true do |t|
@@ -92,6 +96,7 @@ ActiveRecord::Schema.define(version: 20150308195717) do
     t.float    "in_field",     limit: 24
     t.float    "recommend",    limit: 24
     t.float    "meaningful",   limit: 24
+    t.string   "level"
   end
 
   create_table "gets", force: true do |t|
@@ -165,9 +170,6 @@ ActiveRecord::Schema.define(version: 20150308195717) do
   end
 
   create_table "users", force: true do |t|
-    t.float    "debt",            limit: 24
-    t.float    "books",           limit: 24
-    t.float    "savings",         limit: 24
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"

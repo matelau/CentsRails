@@ -23,8 +23,9 @@ class Api::V2::CareersController < ApplicationController
 	# Get career by name.
 	def show
 		career = Career.where(name: params[:name])
+
 		if career.present?
-			return render json: career, status: 200
+			return render json: career[0].attributes.except('id', 'created_at', 'updated_at'), status: 200
 		else
 			return render json: [], status: 404
 		end

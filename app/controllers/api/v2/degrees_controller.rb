@@ -47,9 +47,15 @@ class Api::V2::DegreesController < ApplicationController
 
 	# Get degree by name.
 	def show
-		degree = Degree.where(name: params[:name])
-		if degree.present?
-			return render json: degree, status: 200
+		records = Degree.where(name: params[:name])
+		degrees = Array.new
+
+		records.each do |record|
+			degrees << record.attributes.except('id', 'created_at', 'updated_at')
+		end
+
+		if degrees.present?
+			return render json: degrees, status: 200
 		else
 			return render json: [], status: 404
 		end
@@ -57,9 +63,15 @@ class Api::V2::DegreesController < ApplicationController
 
 	# Get degrees by level and name.
 	def show_level_name
-		degrees = Degree.where(['level like ? and name = ?', "#{params[:level]}%", params[:name]])
+		records = Degree.where(['level like ? and name = ?', "#{params[:level]}%", params[:name]])
+		degrees = Array.new
+
+		records.each do |record|
+			degrees << record.attributes.except('id', 'created_at', 'updated_at')
+		end
+
 		if degrees.present?
-			return render json: degree, status: 200
+			return render json: degrees, status: 200
 		else
 			return render json: [], status: 404
 		end

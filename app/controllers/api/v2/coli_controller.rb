@@ -46,9 +46,15 @@ class Api::V2::ColiController < ApplicationController
 
 	# Get cost of living data by state.
 	def show_state
-		location = Coli.where(state: params[:state])
-		if location.present?
-			return render json: location, status: 200
+		records = Coli.where(state: params[:state])
+		locations = Array.new
+
+		records.each do |record|
+			locations << record.attributes.except('id', 'created_at', 'updated_at')
+		end
+
+		if locations.present?
+			return render json: locations, status: 200
 		else
 			return render json: [], status: 404
 		end
@@ -57,10 +63,11 @@ class Api::V2::ColiController < ApplicationController
 	# Get cost of living data by state and city.
 	def show_city
 		location = Coli.where(state: params[:state], city: params[:city])
+
 		if location.present?
-			return render json: location, status: 200
+			return render json: location[0].attributes.except('id', 'created_at', 'updated_at'), status: 200
 		else
-			return render json: [], status: 404
+			return render json: Hash.new, status: 404
 		end
 	end
 

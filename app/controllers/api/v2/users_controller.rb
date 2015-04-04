@@ -89,7 +89,27 @@ class Api::V2::UsersController < ApplicationController
 
 		# Try to authenticate the user and finish.
 		if user && user.authenticate(params[:password])
-			return render json: user, status: 200
+			user = user.as_json
+			
+			# Add completed section data.
+			user[:completed_sections] = Array.new
+			Completed.where(user_id: params[:id]).each do |section|
+				user[:completed_sections] << section[:section]
+			end
+
+			# Add spending breakdown data.
+			user[:spending_breakdown_data] = Array.new
+			records = Amount.find_by_sql [
+			'SELECT name, value, category
+			 FROM amounts
+			 WHERE user_id = ?',
+			 params[:id]
+			]
+			records.each do |record|
+				user[:spending_breakdown_data] << record.attributes.except('id', 'created_at', 'updated_at')
+			end
+			
+			return render json: user.except('created_at', 'updated_at', 'password_digest'), status: 200
 		else
 			result[:errors] = 'authentication failed'
 			return render json: result, status: 400
@@ -105,7 +125,7 @@ class Api::V2::UsersController < ApplicationController
 			records = Completed.where(user_id: params[:id])
 
 			records.each do |record|
-				completed_sections << record[:completed]
+				completed_sections << record[:section]
 			end
 
 			return render json: completed_sections, status: 200
