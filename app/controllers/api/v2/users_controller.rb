@@ -166,7 +166,6 @@ class Api::V2::UsersController < ApplicationController
 
 		# Try to authenticate the user and finish.
 		if user && user.authenticate(params[:password])
-			result[:name] = "#{user.first_name} #{user.last_name}"
 			result[:id] = user.id
 			return render json: result, status: 200
 		else

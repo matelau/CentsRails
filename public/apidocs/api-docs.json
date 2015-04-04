@@ -453,7 +453,7 @@
        	"tags": [
     			"users"
   			],
-        "description": "",
+        "description": "This route will return a user ID that you can use with other user routes.",
         "summary": "Registers a new user.",
         "operationId": "Api::V2::UsersController#create",
         "parameters": [
@@ -804,13 +804,16 @@
   			],
         "responses": {
           "200": {
-            "description": "Authentication successful."
+            "description": "Authentication successful.",
+            "schema": {
+            	"$ref": "#/definitions/IDReponse"
+            }
           },
           "400": {
             "description": "Authentication failed."
           }
         },
-        "description": "",
+        "description": "This route will return a user ID that you can use with other user routes.",
         "summary": "Validate a username and password.",
         "operationId": "Api::V2::UsersController#validate",
         "parameters": [
@@ -1079,6 +1082,9 @@
     },
     "IDReponse": {
     	"type": "object",
+    	"required": [
+    	  "id"
+    	],
     	"properties": {
     		"id": {
     			"type": "integer"
