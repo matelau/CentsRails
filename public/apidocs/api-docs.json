@@ -53,7 +53,7 @@
         },
         "description": "",
         "summary": "Returns names of all available careers.",
-        "operationId": "Api::V2::CareersController#show_two",
+        "operationId": "Api::V2::CareersController#show_two"
       }
     },
     "/careers/{name}": {
