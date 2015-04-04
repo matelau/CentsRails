@@ -122,6 +122,8 @@ Rails.application.routes.draw do
       # Users.
     	get 'users/new' => '/user#register'											# Go to the register form.
       post 'users' => 'users#create'													# Register a new user.
+      get 'users/:id/completed' => 'users#show_completed'
+      post 'users/:id/completed' => 'users#create_completed'
      	get 'users/:id/spending_breakdown' => 'spending_breakdown#show'
      	get 'users/:id/spending_breakdown/:category' => 'spending_breakdown#show_category'
       put 'users/:id/spending_breakdown/:category' => 'spending_breakdown#update_all'

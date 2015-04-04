@@ -143,6 +143,74 @@
       ]
     },
     {  
+      "path":"/users/{id}/completed",
+      "operations":[  
+        {  
+          "method":"GET",
+          "summary":"Shows which sections a user has completed.",
+          "type":"string",
+          "nickname":"Api::V2::UserController#show_completed",
+          "parameters":[  
+            {  
+              "name":"id",
+              "description":"a user id",
+              "required":true,
+              "paramType":"path",
+              "type":"Integer"
+            }
+          ],
+          "responseMessages":[  
+            {  
+              "code":200,
+              "message":"User was found."
+            },
+            {  
+              "code":404,
+              "message":"No such user ID was found."
+            }
+          ]
+        }
+      ]
+    },
+    {  
+      "path":"/users/{id}/completed",
+      "operations":[  
+        {  
+          "method":"POST",
+          "summary":"Record that a user has completed a section.",
+          "type":"string",
+          "nickname":"Api::V2::UserController#create_completed",
+          "parameters":[  
+            {  
+              "name":"id",
+              "description":"a user id",
+              "required":true,
+              "paramType":"path",
+              "type":"Integer"
+            },
+            {  
+              "name":"body",
+              "description":"object with section field",
+              "required":true,
+              "paramType":"body",
+              "type":"Completed_body",
+              "defaultValue":"{\n  \"section\": \"career\"\n}"
+            }
+          ],
+          "responseMessages":[  
+            {  
+              "code":200,
+              "message":"User was found."
+            },
+            {  
+              "code":404,
+              "message":"No such user was found."
+            }
+          ]
+        }
+      ]
+    },
+    {  
       "path":"/users/{id}/spending_breakdown",
       "operations":[  
         {  
@@ -465,6 +533,18 @@
           "type":"integer"
         }
       }
+    },
+    "Completed_body":{  
+      "id":"Completed_body",
+      "type":"object",
+      "properties":{  
+        "section":{  
+          "type":"string"
+        }
+      },
+      "required":[  
+        "section"
+      ]
     }
   }
 }

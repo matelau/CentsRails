@@ -96,6 +96,38 @@ class Api::V2::UsersController < ApplicationController
 		end
 	end
 
+	# Show which sections a user has completed.
+	def show_completed
+		result = Hash.new
+
+		if User.exists? params[:id]
+			completed_sections = Completed.where(user_id: params[:id])
+			return render json: completed_sections, status: 200
+		else
+			result[:errors] = 'No such user found.'
+			return render json: result, status: 404
+		end
+	end
+
+	# Record that a user has completed a section.
+	def create_completed
+		# Check that the section isn't already completed.
+		old_section = Completed.where(user_id: params[:id]).where(section: params[:section])
+		if old_section.present?
+			return render json: 'Section already completed.', status: 400
+		else
+			new_section = Completed.new
+			new_section.user_id = params[:id]
+			new_section.section = params[:section]
+
+			if new_section.save
+				return render json: 'Saved.', status: 200
+			else
+				return render json: 'Server error.', status: 500
+			end
+		end
+	end
+
 	# Validate a username and password.
 	def validate
 		result = Hash.new
