@@ -623,6 +623,38 @@
             }
           }
         ]
+      },
+      "get": {
+      	"tags": [
+      	  "users"
+      	],
+      	"responses": {
+          "200": {
+            "description": "Records were found."
+          },
+          "404": {
+            "description": "No records were found."
+          }
+        },
+        "description": "",
+        "summary": "Gets spending breakdown data by category.",
+        "operationId": "Api::V2::SpendingBreakdownController#show_category",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "a user id",
+            "name": "id",
+            "required": true,
+            "type":"integer"
+          },
+          {
+            "in": "path",
+            "description": "default, student or custom",
+            "name": "category",
+            "required": true,
+            "type": "string"
+          }
+        ]
       }
     },
     "/users/{id}/spending_breakdown/{category}/{name}": {
