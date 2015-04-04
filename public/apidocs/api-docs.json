@@ -302,7 +302,7 @@
         },
         "description": "",
         "summary": "Returns information on all degrees of all levels with that name.",
-        "operationId": "Api::V2::DegreesController#index",
+        "operationId": "Api::V2::DegreesController#index"
       }
     },
     "/users/new": {
