@@ -36,9 +36,7 @@
             }
           }
         ]
-      }
-    },
-    "/careers": {
+      },
       "get": {
       	"tags": [
     			"career"
