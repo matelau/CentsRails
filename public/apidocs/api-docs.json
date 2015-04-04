@@ -1,7 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Cents API"
+    "title": "Cents API",
+    "description": "An API to examine the impact of your financial decisions",
+    "version": 2.0
   },
   "paths": {
     "/careers": {
