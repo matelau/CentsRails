@@ -113,6 +113,7 @@ Rails.application.routes.draw do
       get 'degrees/:name' => 'degrees#show'										# Get degree by name.
       get 'degrees/:level/:name' => 'degrees#show_level_name'	# Get degree by level and name.
       post 'degrees' => 'degrees#show_two'										# Get degree data for comparison.
+      post 'degrees/:level/:name/:rating' => 'degrees#rate'
 
       # Careers.
       get 'careers' => 'careers#index'												# Get career names for autocomplete.
