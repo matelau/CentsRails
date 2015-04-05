@@ -48,7 +48,7 @@ class Api::V2::DegreesController < ApplicationController
 	# Rate a degree.
 	def rate
 		degree = Degree.where(['level like ? AND name like ?', "#{params[:level]}%", "#{params[:name]}"]).first
-		rating = RatesMajor.where(user_id: params[:id], degree_id: degree.id)
+		rating = RatesMajor.where(user_id: params[:user], degree_id: degree.id)
 
 		if rating.present?
 			rating.rating = params[:rating]
@@ -60,7 +60,7 @@ class Api::V2::DegreesController < ApplicationController
 		else
 			rating = RatesMajor.new
 			rating.rating = params[:rating]
-			rating.user_id = params[:id]
+			rating.user_id = params[:user]
 			rating.degree_id = degree.id
 			if rating.save
 				return render json: 'Rating saved.', status: 200

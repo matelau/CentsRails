@@ -316,7 +316,7 @@
             "description": "Degree does not exist."
           }
         },
-        "description": "",
+        "description": "This route is idempotent: it will add a rating if it doesn't exist, or update the rating if it does.",
         "summary": "Allows a user to rate a degree.",
         "operationId": "Api::V2::DegreesController#rate",
         "parameters": [
@@ -347,9 +347,11 @@
           {
             "in": "body",
             "description": "a user ID or email",
-            "name": "user",
+            "name": "body",
             "required": true,
-            "type": "integer"
+            "schema": {
+              "$ref": "#/definitions/DegreeRatingBody"
+            }          
           }
         ]
       }
@@ -1138,6 +1140,17 @@
     	],
     	"properties": {
     		"id": {
+    			"type": "integer"
+    		}
+    	}
+    },
+    "DegreeRatingBody": {
+    	"type": "object",
+    	"required": [
+    	  "user"
+    	],
+    	"properties": {
+    		"user": {
     			"type": "integer"
     		}
     	}
