@@ -108,7 +108,7 @@
           {
             "in": "path",
             "description": "an integer between 0 and 5 inclusive",
-            "name": "name",
+            "name": "rating",
             "required": true,
             "type": "integer"
           },
