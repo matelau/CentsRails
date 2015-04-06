@@ -84,7 +84,7 @@
     "/careers/{name}/{rating}": {
       "post": {
        	"tags": [
-    			"careers"
+    			"career"
   			],
         "responses": {
           "200": {
