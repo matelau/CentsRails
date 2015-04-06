@@ -136,6 +136,7 @@ class Api::V2::CareersController < ApplicationController
 					]
 					cents_rating = cents_rating[0][:average].to_f
 
+					result["career_#{index}"] = Hash.new
 					result["career_#{index}"]["name_#{index}"] = record[:name]
 					result["career_#{index}"]["career_salary_#{index}"] = [record[:salary], 
 						0, 0, 0, 0, 0, 0, 0, 0, 0]
