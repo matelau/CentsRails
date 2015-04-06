@@ -94,7 +94,7 @@
             "description": "Career does not exist."
           }
         },
-        "description": "",
+        "description": "This route is idempotent: it will insert a new rating if none is present, or update the current rating.",
         "summary": "Allows a user to rate a career.",
         "operationId": "Api::V2::CareersController#rate",
         "parameters": [
@@ -292,7 +292,7 @@
             "description": "No records were found."
           }
         },
-        "description": "Get a list of all available degrees at https://trycents.com/api/v2/degrees; both parameters are optional. If you don't know the exact name of the level you want (Bachelor of Arts? Bachelor's of Arts?), enter the first part of the name. The API will return a list of substring matches.",
+        "description": "Get a list of all available degrees at https://trycents.com/api/v2/degrees; both parameters are optional. If you don't know the exact name of the level you want (Bachelor's Degree? Bachelor of Arts?), enter the first part of the name. The API will return a list of substring matches.",
         "summary": "Returns a list of all available degrees.",
         "parameters": [
           {

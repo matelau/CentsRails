@@ -185,9 +185,9 @@ class Api::V2::DegreesController < ApplicationController
 					meaningful = record[:meaningful] ? record[:meaningful].to_f : nil
 					job_name = record[:job_name] ? record[:job_name] : nil
 					job_salary = record[:job_salary] ? record[:job_salary].to_f : nil
-					cents_rating = RatesSchool.find_by_sql [
+					cents_rating = RatesMajor.find_by_sql [
 						'SELECT avg(rating) AS average
-						FROM rates_majorss
+						FROM rates_majors
 						WHERE degree_id = ?',
 						record[:id]
 					]
