@@ -47,19 +47,18 @@ class Api::V2::CareersController < ApplicationController
 
 	# Get career by name.
 	def show
-		career = Career.where(name: params[:name])
+		record = Career.where(name: params[:name]).first
 
-		cents_rating = RatesCareer.find_by_sql [
-			'SELECT avg(rating) AS average
-			FROM rates_careers
-			WHERE career_id = ?',
-			career.id
-		]
-
-		if career.present?
+		if record.present?
+			cents_rating = RatesCareer.find_by_sql [
+				'SELECT avg(rating) AS average
+				FROM rates_careers
+				WHERE career_id = ?',
+				record.id
+			]
 			career = record.as_json
 			career[:average_rating] = cents_rating[0][:average].to_f
-			return render json: career[0].attributes.except('id', 'created_at', 'updated_at'), status: 200
+			return render json: career.except('id', 'created_at', 'updated_at'), status: 200
 		else
 			return render json: [], status: 404
 		end
