@@ -79,6 +79,20 @@ class Api::V2::UsersController < ApplicationController
 		end
 	end
 
+	# Record that a user made a query.
+	def create_query
+		query = Query.new
+		query.user_id = params[:id]
+		query.url = params[:url]
+
+		# Attempt to save the query and finish.
+		if query.save
+			return render json: 'Query saved.', status: 200
+		else
+			return render json: query.errors, status: 400
+		end
+	end
+
 	# Get profile data.
 	def show
 		result = Hash.new
@@ -138,6 +152,13 @@ class Api::V2::UsersController < ApplicationController
 			records.each do |record|
 				user[:school_ratings]["#{record.name}"] = record.rating
 			end
+
+			# Add past queries.
+			user[:queries] = Hash.new
+			records = Query.where(user_id: params[:id])
+			records.each do |record|
+				user[:queries] << record.url
+			end
 			
 			return render json: user.except('created_at', 'updated_at', 'password_digest'), status: 200
 		else
@@ -163,6 +184,11 @@ class Api::V2::UsersController < ApplicationController
 			result[:errors] = 'No such user found.'
 			return render json: result, status: 404
 		end
+	end
+
+	# Get queries for a user.
+	def show_query
+		return render json: Query.where(user_id: params[:id]), status: 200
 	end
 
 	# Record that a user has completed a section.

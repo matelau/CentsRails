@@ -693,6 +693,67 @@
         ]
       }
     },
+    "/users/{id}/query": {
+      "get": {
+       	"tags": [
+    			"users"
+  			],
+        "responses": {
+          "200": {
+            "description": "The user was found."
+          },
+          "404": {
+          	"description": "No such user was found."
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "description": "a user id",
+            "name": "id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "description": "",
+        "summary": "Shows a user's past queries.",
+        "operationId": "Api::V2::UsersController#show_query"
+      },
+      "post": {
+       	"tags": [
+    			"users"
+  			],
+        "responses": {
+          "200": {
+            "description": "User was found."
+          },
+          "404": {
+            "description": "No such user was found."
+          }
+        },
+        "description": "",
+        "summary": "Record that a user has made a query.",
+        "operationId": "Api::V2::UserController#create_query",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "a user id",
+            "name": "id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "description": "object with query field",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/QueryBody"
+            }
+          }
+        ]
+      }
+    },
     "/users/{id}/spending_breakdown": {
       "get": {
        	"tags": [
@@ -1215,6 +1276,17 @@
     	"properties": {
     		"user": {
     			"type": "integer"
+    		}
+    	}
+    },
+    "UserIDBody": {
+    	"type": "object",
+    	"required": [
+    	  "url"
+    	],
+    	"properties": {
+    		"url": {
+    			"type": "string"
     		}
     	}
     }
