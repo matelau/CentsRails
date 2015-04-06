@@ -158,6 +158,10 @@ class Api::V2::CareersController < ApplicationController
 
 		result["career_unemploy_3"] = [8.9, 8.1] # two values national average
 
+		if no_data_for.present?
+			result[:no_data_for] = no_data_for
+		end
+
 		return render json: result, status: 200
 	end
 end
