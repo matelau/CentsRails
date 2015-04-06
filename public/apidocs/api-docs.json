@@ -1279,7 +1279,7 @@
     		}
     	}
     },
-    "UserIDBody": {
+    "QueryBody": {
     	"type": "object",
     	"required": [
     	  "url"
