@@ -86,8 +86,8 @@ class Api::V2::UsersController < ApplicationController
 		# Search for the user.
 		user = User.find(params[:id])
 
-		# Try to authenticate the user and finish.
-		if user && user.authenticate(params[:password])
+		# Get user data.
+		if user
 			user = user.as_json
 			
 			# Add completed section data.
@@ -106,6 +106,22 @@ class Api::V2::UsersController < ApplicationController
 			]
 			records.each do |record|
 				user[:spending_breakdown_data] << record.attributes.except('id', 'created_at', 'updated_at')
+			end
+
+			# Add degree rating data.
+			user[:degree_ratings] = Hash.new
+			records = Degree.find_by_sql [
+				'SELECT d.name,
+								d.level,
+								r.rating
+				FROM degrees AS d 
+				INNER JOIN rates_majors AS r
+				ON d.id = r.degree_id
+				WHERE r.user_id = ?',
+				params[:id]
+			]
+			records.each do |record|
+				user[:degree_ratings]["#{record.name} (#{record.level})"] = record.rating
 			end
 			
 			return render json: user.except('created_at', 'updated_at', 'password_digest'), status: 200

@@ -346,7 +346,7 @@
           },
           {
             "in": "body",
-            "description": "a user ID or email",
+            "description": "a user ID",
             "name": "body",
             "required": true,
             "schema": {

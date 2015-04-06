@@ -48,24 +48,24 @@ class Api::V2::DegreesController < ApplicationController
 	# Rate a degree.
 	def rate
 		degree = Degree.where(['level like ? AND name like ?', "#{params[:level]}%", "#{params[:name]}"]).first
-		rating = RatesMajor.where(user_id: params[:user], degree_id: degree.id)
+		degree_rating = RatesMajor.where(user_id: params[:user], degree_id: degree.id).first
 
-		if rating.present?
-			rating.rating = params[:rating]
-			if rating.save
+		if degree_rating.present?
+			degree_rating.rating = params[:rating]
+			if degree_rating.save
 				return render json: 'Rating saved.', status: 200
 			else
-				return render json: rating.errors, status: 400
+				return render json: degree_rating.errors, status: 400
 			end
 		else
-			rating = RatesMajor.new
-			rating.rating = params[:rating]
-			rating.user_id = params[:user]
-			rating.degree_id = degree.id
-			if rating.save
+			degree_rating = RatesMajor.new
+			degree_rating.rating = params[:rating]
+			degree_rating.user_id = params[:user]
+			degree_rating.degree_id = degree.id
+			if degree_rating.save
 				return render json: 'Rating saved.', status: 200
 			else
-				return render json: rating.errors, status: 400
+				return render json: degree_rating.errors, status: 400
 			end
 		end
 	end
@@ -73,10 +73,12 @@ class Api::V2::DegreesController < ApplicationController
 	# Get degree by name.
 	def show
 		records = Degree.where(name: params[:name])
+		records = records.as_json
 		degrees = Array.new
 
 		records.each do |record|
-			degrees << record.attributes.except('id', 'created_at', 'updated_at')
+			record[:average_rating] = RatesMajor.average(:rating, conditions: ['degree_id ?', record[:id]])
+			degrees << record.except('id', 'created_at', 'updated_at')
 		end
 
 		if degrees.present?
@@ -89,10 +91,12 @@ class Api::V2::DegreesController < ApplicationController
 	# Get degrees by level and name.
 	def show_level_name
 		records = Degree.where(['level like ? and name = ?', "#{params[:level]}%", params[:name]])
+		records = records.as_json
 		degrees = Array.new
 
 		records.each do |record|
-			degrees << record.attributes.except('id', 'created_at', 'updated_at')
+			record[:average_rating] = RatesMajor.average(:rating, conditions: ['degree_id ?', record[:id]])
+			degrees << record.except('id', 'created_at', 'updated_at')
 		end
 
 		if degrees.present?
@@ -143,7 +147,8 @@ class Api::V2::DegreesController < ApplicationController
 		where_string = where_string[0..-5]	# Strip off the last ' OR '.
 
 		records = Degree.find_by_sql [
-			"SELECT d.name AS degree_name,
+			"SELECT d.id AS id_from_degree,
+							d.name AS degree_name,
 							d.level,
 							d.salary AS degree_salary,
 							d.recommend,
@@ -174,8 +179,7 @@ class Api::V2::DegreesController < ApplicationController
 					meaningful = record[:meaningful] ? record[:meaningful].to_f : nil
 					job_name = record[:job_name] ? record[:job_name] : nil
 					job_salary = record[:job_salary] ? record[:job_salary].to_f : nil
-					# Cents rating goes here
-					cents_rating = 0
+					cents_rating = RatesMajor.average(:rating, conditions: ['degree_id ?', record[:id_from_degree]]).to_f
 
 					result["name_#{index}"] = "#{record[:degree_name]} (#{record[:level]})"
 					result["degree_#{index}"] = [salary, recommended, meaningful, cents_rating]
