@@ -9,7 +9,7 @@
     "/careers": {
       "post": {
       	"tags": [
-    			"career"
+    			"careers"
   			],
         "responses": {
           "200": {
@@ -39,7 +39,7 @@
       },
       "get": {
       	"tags": [
-    			"career"
+    			"careers"
   			],
         "responses": {
           "200": {
@@ -57,7 +57,7 @@
     "/careers/{name}": {
       "get": {
       	"tags": [
-    			"career"
+    			"careers"
   			],
         "responses": {
           "200": {
@@ -84,7 +84,7 @@
     "/careers/{name}/{rating}": {
       "post": {
        	"tags": [
-    			"career"
+    			"careers"
   			],
         "responses": {
           "200": {
