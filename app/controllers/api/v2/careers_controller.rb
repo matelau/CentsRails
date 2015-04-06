@@ -115,6 +115,8 @@ class Api::V2::CareersController < ApplicationController
 				*where_params
 			]
 
+		no_data_for = Array.new
+
 		# Iterate over each career, keeping track of the career's index.
 		# (The index is needed because that's how the view tracks careers.)
 		index = 1
