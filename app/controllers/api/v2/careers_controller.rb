@@ -136,12 +136,13 @@ class Api::V2::CareersController < ApplicationController
 					]
 					cents_rating = cents_rating[0][:average].to_f
 
-					result["career_salary_#{index}"] = [record[:salary], 
+					result["career_#{index}"]["name_#{index}"] = record[:name]
+					result["career_#{index}"]["career_salary_#{index}"] = [record[:salary], 
 						0, 0, 0, 0, 0, 0, 0, 0, 0]
-					result["career_satisfaction_#{index}"] = 0.0
-					result["career_demand_#{index}"] = [0, 0, 0] # three values
-					result["career_unemploy_#{index}"] = [record[:unemp11], record[:unemp12]]
-					result["career_rating_#{index}"] = cents_rating
+					result["career_#{index}"]["career_satisfaction_#{index}"] = 0.0
+					result["career_#{index}"]["career_demand_#{index}"] = [0, 0, 0] # three values
+					result["career_#{index}"]["career_unemploy_#{index}"] = [record[:unemp11], record[:unemp12]]
+					result["career_#{index}"]["career_rating_#{index}"] = cents_rating
 					break
 				end
 			end
