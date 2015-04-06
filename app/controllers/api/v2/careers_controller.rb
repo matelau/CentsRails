@@ -20,11 +20,45 @@ class Api::V2::CareersController < ApplicationController
 		return render json: result, status: 200
 	end
 
+	# Rate a school.
+	def rate
+		career = Career.where(['name like ?', "#{params[:name]}%"]).first
+		career_rating = RatesCareer.where(user_id: params[:user], career_id: career.id).first
+
+		if career_rating.present?
+			career_rating.rating = params[:rating]
+			if career_rating.save
+				return render json: 'Rating saved.', status: 200
+			else
+				return render json: career_rating.errors, status: 400
+			end
+		else
+			career_rating = RatesCareer.new
+			career_rating.rating = params[:rating]
+			career_rating.user_id = params[:user]
+			career_rating.career_id = career.id
+			if career_rating.save
+				return render json: 'Rating saved.', status: 200
+			else
+				return render json: career_rating.errors, status: 400
+			end
+		end
+	end
+
 	# Get career by name.
 	def show
 		career = Career.where(name: params[:name])
 
+		cents_rating = RatesCareer.find_by_sql [
+			'SELECT avg(rating) AS average
+			FROM rates_careers
+			WHERE career_id = ?',
+			career.id
+		]
+
 		if career.present?
+			career = record.as_json
+			career[:average_rating] = cents_rating[0][:average].to_f
 			return render json: career[0].attributes.except('id', 'created_at', 'updated_at'), status: 200
 		else
 			return render json: [], status: 404
@@ -93,11 +127,20 @@ class Api::V2::CareersController < ApplicationController
 				if record[:name] == career[:name]
 					match = true
 
+					cents_rating = RatesCareer.find_by_sql [
+						'SELECT avg(rating) AS average
+						FROM rates_careers
+						WHERE career_id = ?',
+						record[:id]
+					]
+					cents_rating = cents_rating[0][:average].to_f
+
 					result["career_salary_#{index}"] = [record[:salary], 
 						0, 0, 0, 0, 0, 0, 0, 0, 0]
 					result["career_satisfaction_#{index}"] = 0.0
 					result["career_demand_#{index}"] = [0, 0, 0] # three values
 					result["career_unemploy_#{index}"] = [record[:unemp11], record[:unemp12]]
+					result["career_rating_#{index}"] = cents_rating
 					break
 				end
 			end

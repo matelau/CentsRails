@@ -81,6 +81,42 @@
         ]
       }
     },
+    "/careers/{name}/{rating}": {
+      "post": {
+       	"tags": [
+    			"careers"
+  			],
+        "responses": {
+          "200": {
+            "description": "Rating was saved."
+          },
+          "404": {
+            "description": "Career does not exist."
+          }
+        },
+        "description": "",
+        "summary": "Allows a user to rate a career.",
+        "operationId": "Api::V2::CareersController#rate",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "a career name",
+            "name": "name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "description": "a user ID",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserIDBody"
+            }
+          }
+        ]
+      }
+    },
     "/cost_of_living": {
       "get": {
        	"tags": [

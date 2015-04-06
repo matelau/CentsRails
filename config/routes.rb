@@ -120,6 +120,7 @@ Rails.application.routes.draw do
       get 'careers' => 'careers#index'												# Get career names for autocomplete.
       get 'careers/:name' => 'careers#show'										# Get career by name.
       post 'careers' => 'careers#show_two'										# Get career data for comparison.
+      post 'careers/:name/:rating' => 'careers#rate'
 
       # Users.
     	get 'users/new' => '/user#register'											# Go to the register form.
