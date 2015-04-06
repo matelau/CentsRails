@@ -134,8 +134,8 @@ Rails.application.routes.draw do
       delete 'users/:id/spending_breakdown/:category/:name' => 'spending_breakdown#destroy'
       post 'users/validate' => 'users#validate'								# Validate a username and password.
       post 'users/:id' => 'users#show'												# Get user profile data.
-      post 'users/:id/query'
-      get 'users/:id/query'
+      post 'users/:id/query' => 'users#create_query'
+      get 'users/:id/query' => 'users#show_query'
     end
   end
 end
