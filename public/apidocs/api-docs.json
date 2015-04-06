@@ -138,7 +138,7 @@
           }
         },
         "description": "Get a list of all available locations at https://trycents.com/api/v2/cost_of_living; both parameters are optional.",
-        "summary": "Returns cost of living information for a city.",
+        "summary": "Returns names of locations that have cost of living data.",
         "operationId": "Api::V2::Coli#index",
         "parameters": [
           {
@@ -439,7 +439,7 @@
             "description": "No records were found."
          	}
         },
-        "description": "Get a list of all available schools at https://trycents.com/api/v2/schools; both parameters are optional. If you don't know the exact name of the school you want (Harvard? Harvard University?), enter part of the name. The API will return a list of substring matches.",
+        "description": "Get a list of all available schools at https://trycents.com/api/v2/schools; both parameters are optional. If you don't know the exact name of the school you want ("Harvard?" "Harvard University?"), enter part of the name. The API will return a list of substring matches.",
         "summary": "Returns a list of all available schools.",
         "parameters": [
           {
@@ -631,7 +631,7 @@
         "parameters": [
           {
             "in": "path",
-            "description": "a user id",
+            "description": "a user ID",
             "name": "id",
             "required": true,
             "type": "integer"
@@ -655,7 +655,7 @@
         "parameters": [
           {
             "in": "path",
-            "description": "a user id",
+            "description": "a user ID",
             "name": "id",
             "required": true,
             "type": "integer"
@@ -683,7 +683,7 @@
         "parameters": [
           {
             "in": "path",
-            "description": "a user id",
+            "description": "a user ID",
             "name": "id",
             "required": true,
             "type": "integer"
@@ -716,7 +716,7 @@
         "parameters": [
           {
             "in": "path",
-            "description": "a user id",
+            "description": "a user ID",
             "name": "id",
             "required": true,
             "type": "integer"
@@ -744,7 +744,7 @@
         "parameters": [
           {
             "in": "path",
-            "description": "a user id",
+            "description": "a user ID",
             "name": "id",
             "required": true,
             "type": "integer"
@@ -780,7 +780,7 @@
         "parameters": [
           {
             "in": "path",
-            "description": "a user id",
+            "description": "a user ID",
             "name": "id",
             "required": true,
             "type":"integer"
@@ -807,13 +807,13 @@
             "description": "Server error while saving."
           }
         },
-        "description": "",
+        "description": "Use this route to save a few individual spending breakdown items.",
         "summary": "Saves new spending breakdown data.",
         "operationId": "Api::V2::SpendingBreakdownController#update",
         "parameters": [
           {
             "in": "path",
-            "description": "a user id",
+            "description": "a user ID",
             "name": "id",
             "required": true,
             "type":"integer"
@@ -857,13 +857,13 @@
             "description": "Server error while saving."
           }
         },
-        "description": "",
+        "description": "Use this route to replace all spending breakdown data for a category with whatever you send. This route could be used to reset to a default.",
         "summary": "Updates all spending breakdown data by category.",
         "operationId": "Api::V2::SpendingBreakdownController#update_all",
         "parameters": [
           {
             "in": "path",
-            "description": "a user id",
+            "description": "a user ID",
             "name": "id",
             "required": true,
             "type":"integer"
@@ -907,7 +907,7 @@
         "parameters": [
           {
             "in": "path",
-            "description": "a user id",
+            "description": "a user ID",
             "name": "id",
             "required": true,
             "type":"integer"
@@ -941,7 +941,7 @@
         "parameters": [
           {
             "in": "path",
-            "description": "a user id",
+            "description": "a user ID",
             "name": "id",
             "required": true,
             "type":"integer"
