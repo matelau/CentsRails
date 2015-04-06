@@ -154,7 +154,7 @@ class Api::V2::UsersController < ApplicationController
 			end
 
 			# Add past queries.
-			user[:queries] = Hash.new
+			user[:queries] = Array.new
 			records = Query.where(user_id: params[:id])
 			records.each do |record|
 				user[:queries] << record.url
