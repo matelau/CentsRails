@@ -38,13 +38,46 @@ class Api::V2::SchoolsController < ApplicationController
 		return render json: result, status: 200
 	end
 
+	# Rate a school.
+	def rate
+		school = University.where(['name like ?', "#{params[:name]}%"]).first
+		school_rating = RatesSchool.where(user_id: params[:user], university_id: school.id).first
+
+		if school_rating.present?
+			school_rating.rating = params[:rating]
+			if school_rating.save
+				return render json: 'Rating saved.', status: 200
+			else
+				return render json: school_rating.errors, status: 400
+			end
+		else
+			school_rating = RatesSchool.new
+			school_rating.rating = params[:rating]
+			school_rating.user_id = params[:user]
+			school_rating.university_id = school.id
+			if school_rating.save
+				return render json: 'Rating saved.', status: 200
+			else
+				return render json: school_rating.errors, status: 400
+			end
+		end
+	end
+
 	# Get school by name.
 	def show
 		records = University.where(['name LIKE ?', "#{params[:name]}%"])
 		schools = Array.new
 
 		records.each do |record|
-			schools << record.attributes.except('id', 'created_at', 'updated_at')
+			cents_rating = RatesSchool.find_by_sql [
+				'SELECT avg(rating) AS average
+				FROM rates_schools
+				WHERE university_id = ?',
+				record.id
+			]
+			record = record.as_json
+			record[:average_rating] = cents_rating[0][:average].to_f
+			schools << record.except('id', 'created_at', 'updated_at')
 		end
 
 		if schools.present?
@@ -60,7 +93,15 @@ class Api::V2::SchoolsController < ApplicationController
 		schools = Array.new
 
 		records.each do |record|
-			schools << record.attributes.except('id', 'created_at', 'updated_at')
+			cents_rating = RatesSchool.find_by_sql [
+				'SELECT avg(rating) AS average
+				FROM rates_schools
+				WHERE university_id = ?',
+				record.id
+			]
+			record = record.as_json
+			record[:average_rating] = cents_rating[0][:average].to_f
+			schools << record.except('id', 'created_at', 'updated_at')
 		end
 
 		if schools.present?
@@ -109,7 +150,8 @@ class Api::V2::SchoolsController < ApplicationController
 		where_string = where_string[0..-5]	# Strip off the last ' OR '.
 
 		# Query the database.
-		records = University.select(:name,
+		records = University.select(:id,
+								:name,
 								:state,
 								:tuition_resident,
 								:tuition_nonresident,
@@ -144,10 +186,17 @@ class Api::V2::SchoolsController < ApplicationController
 					size = size ? size.to_f : nil
 					rank = record[:rank]
 					rank = rank ? rank.to_f : nil
+					cents_rating = RatesSchool.find_by_sql [
+						'SELECT avg(rating) AS average
+						FROM rates_schools
+						WHERE university_id = ?',
+						record[:id]
+					]
+					cents_rating = cents_rating[0][:average].to_f
 					
 					# Put the stats in result.
 					result["school_#{index}"] = [tuition_resident, tuition_nonresident, 
-						grad_rate, size, rank, 0]
+						grad_rate, size, rank, cents_rating]
 					result["school_#{index}_image"] = record[:image]
 					break
 				end

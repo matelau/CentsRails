@@ -107,6 +107,7 @@ Rails.application.routes.draw do
       get 'schools/:name' => 'schools#show'										# Get school by name.
       get 'schools/location/:location' => 'schools#show_location'	# Get schools by location.
       post 'schools' => 'schools#show_two'										# Get school data for comparison.
+      post 'schools/:name/:rating' => 'schools#rate'
 
       # Degrees.
       get 'degrees' => 'degrees#index'												# Get degree names for autocomplete.

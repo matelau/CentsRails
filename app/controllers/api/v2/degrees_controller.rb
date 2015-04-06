@@ -47,7 +47,7 @@ class Api::V2::DegreesController < ApplicationController
 
 	# Rate a degree.
 	def rate
-		degree = Degree.where(['level like ? AND name like ?', "#{params[:level]}%", "#{params[:name]}"]).first
+		degree = Degree.where(['level like ? AND name = ?', "#{params[:level]}%", "#{params[:name]}"]).first
 		degree_rating = RatesMajor.where(user_id: params[:user], degree_id: degree.id).first
 
 		if degree_rating.present?
@@ -91,12 +91,18 @@ class Api::V2::DegreesController < ApplicationController
 	# Get degrees by level and name.
 	def show_level_name
 		records = Degree.where(['level like ? and name = ?', "#{params[:level]}%", params[:name]])
-		records = records.as_json
 		degrees = Array.new
 
 		records.each do |record|
-			record[:average_rating] = RatesMajor.average(:rating, conditions: ['degree_id ?', record[:id]])
-			degrees << record.except('id', 'created_at', 'updated_at')
+			cents_rating = RatesMajor.find_by_sql [
+				'SELECT avg(rating) AS average
+				FROM rates_majors
+				WHERE degree_id = ?',
+				record.id
+			]
+			record = record.as_json
+			record[:average_rating] = cents_rating[0][:average].to_f
+			degrees << record.except('created_at', 'updated_at')
 		end
 
 		if degrees.present?
@@ -179,7 +185,13 @@ class Api::V2::DegreesController < ApplicationController
 					meaningful = record[:meaningful] ? record[:meaningful].to_f : nil
 					job_name = record[:job_name] ? record[:job_name] : nil
 					job_salary = record[:job_salary] ? record[:job_salary].to_f : nil
-					cents_rating = RatesMajor.average(:rating, conditions: ['degree_id ?', record[:id_from_degree]]).to_f
+					cents_rating = RatesSchool.find_by_sql [
+						'SELECT avg(rating) AS average
+						FROM rates_majorss
+						WHERE degree_id = ?',
+						record[:id]
+					]
+					cents_rating = cents_rating[0][:average].to_f
 
 					result["name_#{index}"] = "#{record[:degree_name]} (#{record[:level]})"
 					result["degree_#{index}"] = [salary, recommended, meaningful, cents_rating]

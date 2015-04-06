@@ -123,6 +123,21 @@ class Api::V2::UsersController < ApplicationController
 			records.each do |record|
 				user[:degree_ratings]["#{record.name} (#{record.level})"] = record.rating
 			end
+
+			# Add school rating data.
+			user[:school_ratings] = Hash.new
+			records = University.find_by_sql [
+				'SELECT s.name,
+								r.rating
+				FROM universities AS s 
+				INNER JOIN rates_schools AS r
+				ON s.id = r.university_id
+				WHERE r.user_id = ?',
+				params[:id]
+			]
+			records.each do |record|
+				user[:school_ratings]["#{record.name}"] = record.rating
+			end
 			
 			return render json: user.except('created_at', 'updated_at', 'password_digest'), status: 200
 		else

@@ -350,7 +350,7 @@
             "name": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/DegreeRatingBody"
+              "$ref": "#/definitions/UserIDBody"
             }          
           }
         ]
@@ -501,6 +501,42 @@
         ]
       }
     },
+    "/schools/{name}/{rating}": {
+      "post": {
+       	"tags": [
+    			"schools"
+  			],
+        "responses": {
+          "200": {
+            "description": "Records were found."
+          },
+          "404": {
+            "description": "School does not exist."
+          }
+        },
+        "description": "",
+        "summary": "Allows a user to rate a school.",
+        "operationId": "Api::V2::SchoolsController#rate",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "a school name",
+            "name": "name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "description": "a user ID",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserIDBody"
+            }
+          }
+        ]
+      }
+    },
     "/users": {
       "post": {
        	"tags": [
@@ -556,15 +592,6 @@
             "name": "id",
             "required": true,
             "type": "integer"
-          },
-          {
-            "in": "body",
-            "description": "object with password field",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Password_body"
-            }
           }
         ]
       }
@@ -1144,7 +1171,7 @@
     		}
     	}
     },
-    "DegreeRatingBody": {
+    "UserIDBody": {
     	"type": "object",
     	"required": [
     	  "user"
