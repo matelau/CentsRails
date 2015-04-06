@@ -106,6 +106,13 @@
             "type": "string"
           },
           {
+            "in": "path",
+            "description": "an integer between 0 and 5 inclusive",
+            "name": "name",
+            "required": true,
+            "type": "integer"
+          },
+          {
             "in": "body",
             "description": "a user ID",
             "name": "body",
