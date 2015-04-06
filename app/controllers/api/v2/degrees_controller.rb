@@ -73,12 +73,18 @@ class Api::V2::DegreesController < ApplicationController
 	# Get degree by name.
 	def show
 		records = Degree.where(name: params[:name])
-		records = records.as_json
 		degrees = Array.new
 
 		records.each do |record|
-			record[:average_rating] = RatesMajor.average(:rating, conditions: ['degree_id ?', record[:id]])
-			degrees << record.except('id', 'created_at', 'updated_at')
+			cents_rating = RatesMajor.find_by_sql [
+				'SELECT avg(rating) AS average
+				FROM rates_majors
+				WHERE degree_id = ?',
+				record.id
+			]
+			record = record.as_json
+			record[:average_rating] = cents_rating[0][:average].to_f
+			degrees << record.except('created_at', 'updated_at')
 		end
 
 		if degrees.present?

@@ -19,7 +19,7 @@
             "description": "No careers were in the careers array."
           },
           "404": {
-            "description": "No data on some schools."
+            "description": "No data on some careers."
           }
         },
         "description": "This route is intended for internal use. The order parameter is optional, but if you use it, you must use it in exactly two career objects. Its value is either 1 or 2.",
@@ -326,7 +326,7 @@
           }
         },
         "description": "",
-        "summary": "Returns information on all degrees of all levels that start with {level} and have the name {name}.",
+        "summary": "Returns information on all degrees that start with {level} and have the name {name}.",
         "operationId": "Api::V2::DegreesController#show_level_name",
         "parameters": [
           {
