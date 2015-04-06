@@ -139,7 +139,7 @@ class Api::V2::UsersController < ApplicationController
 			end
 
 			# Add school rating data.
-			user[:school_ratings] = Hash.new
+			user[:school_ratings] = Array.new
 			records = University.find_by_sql [
 				'SELECT s.name,
 								r.rating
