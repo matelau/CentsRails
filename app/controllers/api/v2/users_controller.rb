@@ -188,7 +188,13 @@ class Api::V2::UsersController < ApplicationController
 
 	# Get queries for a user.
 	def show_query
-		return render json: Query.where(user_id: params[:id]), status: 200
+		records = Query.where(user_id: params[:id])
+		queries = Array.new
+
+		records.each do |record|
+			queries << record.url
+		end
+		return render json: queries, status: 200
 	end
 
 	# Record that a user has completed a section.
