@@ -257,16 +257,14 @@ class Api::V2::UsersController < ApplicationController
 
 		if user.present?
 			params[:fields].each do |field|
-				user.write_attribute("#{field[:name]}", field[:value])
+				if user.update("#{field[:name]}" => field[:value])
+					return render json: 'Changes saved.', status: 200
+				else
+					return render json: user.errors, status: 500
+				end
 			end
 		else
 			return render json: 'User not found.', status: 404
-		end
-
-		if user.save
-			return render json: 'User saved.', status: 200
-		else
-			return render json: user.errors, status: 500
 		end
 	end
 

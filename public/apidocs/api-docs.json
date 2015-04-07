@@ -661,6 +661,43 @@
             "name":"id",
             "required":true,
             "type":"integer"
+          },
+          {  
+            "in":"body",
+            "description":"object with array of field objects",
+            "name":"body",
+            "required":true,
+            "schema":{  
+              "$ref":"#/definitions/Fields"
+            }
+          }
+        ]
+      },
+      "patch":{  
+        "tags":[  
+          "users"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Changes saved."
+          },
+          "404":{  
+            "description":"There is no user with that ID."
+          },
+          "500":{  
+            "description":"Error while saving."
+          }
+        },
+        "description":"Update any of a user's fields by passing in a list of objects with names a values. Although the value type is listed here as string, the value type must match the field type.",
+        "summary":"Updates a user's fields.",
+        "operationId":"Api::V2::UsersController#update",
+        "parameters":[  
+          {  
+            "in":"path",
+            "description":"a user ID",
+            "name":"id",
+            "required":true,
+            "type":"integer"
           }
         ]
       }
@@ -1331,6 +1368,34 @@
       ],
       "properties":{  
         "url":{  
+          "type":"string"
+        }
+      }
+    }
+  },
+  "Fields":{  
+    "type":"object",
+      "properties":{ 
+        "fields":{  
+          "type":"array",
+          "items":{  
+            "$ref":"#/definitions/Field"
+          }
+        }
+      },
+      "required":[  
+        "fields"
+      ]
+    },
+    "Field":{  
+      "required":[  
+        "name", "value"
+      ],
+      "properties":{  
+        "name":{  
+          "type":"string"
+        },
+        "value":{  
           "type":"string"
         }
       }
