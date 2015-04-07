@@ -188,7 +188,7 @@ class Api::V2::UsersController < ApplicationController
 
 	# Get queries for a user.
 	def show_query
-		records = Query.where(user_id: params[:id])
+		records = Query.where(user_id: params[:id]).order(created_at: :desc)
 		queries = Array.new
 
 		records.each do |record|
