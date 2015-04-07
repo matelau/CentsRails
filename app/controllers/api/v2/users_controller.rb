@@ -1,6 +1,6 @@
 class Api::V2::UsersController < ApplicationController
 
-	@query_count = 20
+	QUERY_COUNT = 20
 
 	# Register a new user.
 	def create
@@ -205,7 +205,16 @@ class Api::V2::UsersController < ApplicationController
 
 	# Get queries for a user.
 	def show_query
-		records = Query.where(user_id: params[:id]).order(created_at: :desc).limit(@query_count)
+		#records = Query.where(user_id: params[:id]).order(created_at: :asc).limit(@query_count)
+		records = Query.find_by_sql [
+			'SELECT url
+			FROM queries
+			WHERE user_id = ?
+			ORDER BY created_at DESC
+			LIMIT ?',
+			params[:id],
+			QUERY_COUNT
+		]
 		queries = Array.new
 
 		records.each do |record|
