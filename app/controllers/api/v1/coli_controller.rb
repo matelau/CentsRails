@@ -165,7 +165,11 @@ private
 	def extract_coli_data(location, i, record, result)
 		# Store each locations's data in result.
 		# Name each location.
-		result["location_#{i}"] = "#{location[:city]}, #{location[:state]}"
+		if location[:city].present?
+			result["location_#{i}"] = "#{location[:city]}, #{location[:state]}"
+		else
+			result["location_#{i}"] = "#{location[:state]}"
+		end
 
 		##### ---------------- COST OF LIVING ---------------- #####
 		coli_stats = Array.new	# For formatting the eventual JSON object.
@@ -200,6 +204,31 @@ private
 			labor_stats << stat
 		end
 
+
+		# Add max and min. The compact method removes nils.
+		labor_stats << labor_stats.compact.min
+		labor_stats << labor_stats.compact.max
+
+		result["labor_#{i}"] = labor_stats
+
+		
+		##### -------------------- TAXES --------------------- #####
+		tax_stats = Array.new	# For formatting the eventual JSON object.			
+
+		fields = [:sales_tax, :income_tax_min, :income_tax_max, :property_tax]
+
+		# Collect the value of each non-nil field in tax_stats.
+		fields.each do |field|
+			stat = record[field]
+			stat = stat ? stat.to_f : nil
+			tax_stats << stat
+		end
+
+		# Add max and min.
+		tax_stats << tax_stats.compact.min
+		tax_stats << tax_stats.compact.max
+
+		result["taxes_#{i}"] = tax_stats
 
 		# Add max and min. The compact method removes nils.
 		labor_stats << labor_stats.compact.min

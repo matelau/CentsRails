@@ -14,9 +14,17 @@
 	<form>
 	
 	<input class="main-search" type="text" id="search">
-	<button class="circle-arrow" type="submit" onclick="api_request(document.getElementById('search').value); return false;"><img src="assets/circle arrow.png" height="25" width="25"></button>
+	<button class="circle-arrow" type="submit" onclick="api_request(document.getElementById('search').value); return false;">
+		<svg height="25" width="25">
+			<g>
+				<circle class="fill_circle" cx="12.100644" cy="12.04889" id="circle11" style="clip-rule:evenodd;fill:#884412;fill-opacity:1;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision" r="11.786511"/>
+				<polygon class="fill_arrow" points="156,103 33,103 33,115 156,115 121,150 129,158 176,111 178,109 176,106 129,59 121,68 " id="polygon13" style="fill:#ffffff" transform="matrix(0.11119351,0,0,0.11119351,0.31413248,0.26237772)"/>
+			</g>
+
+		</svg>
+	</button>
 	<br>
-	<p class="help-text">NEW HERE? CHECK OUT OUR <a href="/wizard/start">WIZARD</a> OR SOME <a href="/info/examples">EXAMPLES</a>.</p>
+	<p class="help-text">NEW HERE? CHECK OUT OUR <a class="help-nav" href="/wizard/start">WIZARD</a> OR SOME <a class="help-nav" href="/info/examples">EXAMPLES</a>.</p>
 	</form>
 </div>
 
@@ -24,7 +32,7 @@
   <img id="loading-image" style="display: block; margin: 0 auto;" src="../assets/circle load.gif" alt="Loading..." />
 </div>
 
-<footer>SUGGESTIONS? <a href="https://docs.google.com/forms/d/1wrSEhVhGICnqK1hg4kQ6YHSHAn8-zkcJkosS_zIfmXk/viewform">LET US KNOW</a>!</footer>
+<footer>SUGGESTIONS? <a class="help-nav" href="https://docs.google.com/forms/d/1wrSEhVhGICnqK1hg4kQ6YHSHAn8-zkcJkosS_zIfmXk/viewform">LET US KNOW</a>!</footer>
 
 
 <script language="javascript" type="text/javascript">
@@ -32,4 +40,21 @@
     $('#loading').attr("hidden", "true");
     $('#search-bar').removeAttr("hidden");
   });
+    if (localStorage.getItem("colors"))
+    {
+        var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+        $('.main-search').css({"border-color":c["p_hex"]});
+        $('.help-nav').css({"color":c["p_hex"]});
+        $('.fill_circle').css({"fill": c["p_hex"]});
+    }
+</script>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-61563557-1', 'auto');
+    ga('send', 'pageview');
+
 </script>

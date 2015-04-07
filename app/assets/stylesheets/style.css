@@ -89,3 +89,6 @@
 .ac-container input:checked ~ article.ac-large{
 	height: 170px;
 }
+.ac-container input:checked ~ article.ac-colors{
+	height: 400px;
+}

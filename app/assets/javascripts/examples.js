@@ -1,4 +1,4 @@
-var prefill = {'city':['City 1', 'City 2 (Optional)'], 'major':['Major 1', 'Major 2 (Optional'], 
+var prefill = {'city':['City 1', 'City 2 (Optional)'], 'major':['Major 1', 'Major 2 (Optional)'], 
 				'school':['College 1', 'College 2 (Optional)'], 'spending':['Annual Income ($)'],
 				'career':['Career 1', 'Career 2 (Optional)'], 'suggest':['What else would you like to search for?']};
 
@@ -11,39 +11,99 @@ $(document).ready(function() {
 
 	//wait to change bg color until image has loaded
 	//first get color from local storage
-	var bg_color = "#884412";
-	$('<img/>').attr('src', '/assets/examples/city.png').load(function() {
-		$('#city_container').css({"background-color":bg_color});
-	});
-	$('<img/>').attr('src', '/assets/examples/career.png').load(function() {
-		$('#career_container').css({"background-color":bg_color});
-	});
-	$('<img/>').attr('src', '/assets/examples/school.png').load(function() {
-		$('#school_container').css({"background-color":bg_color});
-	});
-	$('<img/>').attr('src', '/assets/examples/major.png').load(function() {
-		$('#major_container').css({"background-color":bg_color});
-	});
-	$('<img/>').attr('src', '/assets/examples/spending.png').load(function() {
-		$('#spending_container').css({"background-color":bg_color});
-	});
-	$('<img/>').attr('src', '/assets/examples/suggest.png').load(function() {
-		$('#suggest_container').css({"background-color":bg_color});
+	var bg_color;
+    if (localStorage.getItem("colors"))
+    {
+        console.log("here");
+        var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+        bg_color = c["p_hex"];
+    }
+    else
+    	bg_color = "#884412";
+    $('<img/>').attr('src', '/assets/examples/career_blur.jpeg').load(function() {
+    	$('<img/>').attr('src', '/assets/examples/career.png').load(function(){
+    	$('#career_container').css({"background-color":bg_color});
+    	});
 	});
 
+	$('<img/>').attr('src', '/assets/examples/city_blur.jpeg').load(function() {
+    	$('<img/>').attr('src', '/assets/examples/city.png').load(function(){
+    	$('#city_container').css({"background-color":bg_color});
+    	});
+	});
 
-	var blur_1 = new Image(540, 300);
-	blur_1.src = "/assets/examples/city_blur.jpeg";
-	var blur_2 = new Image(540, 300);
-	blur_2.src = "/assets/examples/career_blur.jpeg";
-	var blur_3 = new Image(540, 300);
-	blur_3.src = "/assets/examples/school_blur.jpeg";
-	var blur_4 = new Image(540, 300);
-	blur_4.src = "/assets/examples/major_blur.jpeg";
-	var blur_5 = new Image(540, 300);
-	blur_5.src = "/assets/examples/spending_blur.jpeg";
-	var blur_6 = new Image(540, 300);
-	blur_6.src = "/assets/examples/suggest_blur.jpeg";
+	$('<img/>').attr('src', '/assets/examples/major_blur.jpeg').load(function() {
+    	$('<img/>').attr('src', '/assets/examples/major.png').load(function(){
+    	$('#major_container').css({"background-color":bg_color});
+    	});
+	});
+
+	$('<img/>').attr('src', '/assets/examples/spending_blur.jpeg').load(function() {
+    	$('<img/>').attr('src', '/assets/examples/spending.png').load(function(){
+    	$('#spending_container').css({"background-color":bg_color});
+    	});
+	});
+
+	$('<img/>').attr('src', '/assets/examples/school_blur.jpeg').load(function() {
+    	$('<img/>').attr('src', '/assets/examples/school.png').load(function(){
+    	$('#school_container').css({"background-color":bg_color});
+    	});
+	});
+
+	$('<img/>').attr('src', '/assets/examples/suggest_blur.jpeg').load(function() {
+    	$('<img/>').attr('src', '/assets/examples/suggest.png').load(function(){
+    	$('#suggest_container').css({"background-color":bg_color});
+    	});
+	});
+	// $('<img/>').attr('src', '/assets/examples/career.png').load(function() {
+	// 	$('<img/>').attr('src', '/assets/examples/career_blur.jpeg').load();
+ //    	$('#career_container').css({"background-color":bg_color});
+	// });
+	// $('<img/>').attr('src', '/assets/examples/school.png').load(function() {
+	// 	$('<img/>').attr('src', '/assets/examples/school_blur.jpeg').load();
+ //    	$('#school_container').css({"background-color":bg_color});
+	// });
+	// $('<img/>').attr('src', '/assets/examples/major.png').load(function() {
+	// 	$('<img/>').attr('src', '/assets/examples/major_blur.jpeg').load();
+ //    	$('#major_container').css({"background-color":bg_color});
+	// });
+	// $('<img/>').attr('src', '/assets/examples/spending.png').load(function() {
+	// 	$('<img/>').attr('src', '/assets/examples/spending_blur.jpeg').load();
+ //    	$('#spending_container').css({"background-color":bg_color});
+	// });
+	// $('<img/>').attr('src', '/assets/examples/suggest.png').load(function() {
+	// 	$('<img/>').attr('src', '/assets/examples/suggest_blur.jpeg').load();
+ //    	$('#suggest_container').css({"background-color":bg_color});
+	// });
+		// $('<img/>').attr('src', '/assets/examples/career.png').load(function() {
+		// 	$('#career_container').css({"background-color":bg_color});
+		// });
+		// $('<img/>').attr('src', '/assets/examples/school.png').load(function() {
+		// 	$('#school_container').css({"background-color":bg_color});
+		// });
+		// $('<img/>').attr('src', '/assets/examples/major.png').load(function() {
+		// 	$('#major_container').css({"background-color":bg_color});
+		// });
+		// $('<img/>').attr('src', '/assets/examples/spending.png').load(function() {
+		// 	$('#spending_container').css({"background-color":bg_color});
+		// });
+		// $('<img/>').attr('src', '/assets/examples/suggest.png').load(function() {
+		// 	$('#suggest_container').css({"background-color":bg_color});
+		// });
+
+
+	// var blur_1 = new Image(540, 300);
+	// blur_1.src = "/assets/examples/city_blur.jpeg";
+	// var blur_2 = new Image(540, 300);
+	// blur_2.src = "/assets/examples/career_blur.jpeg";
+	// var blur_3 = new Image(540, 300);
+	// blur_3.src = "/assets/examples/school_blur.jpeg";
+	// var blur_4 = new Image(540, 300);
+	// blur_4.src = "/assets/examples/major_blur.jpeg";
+	// var blur_5 = new Image(540, 300);
+	// blur_5.src = "/assets/examples/spending_blur.jpeg";
+	// var blur_6 = new Image(540, 300);
+	// blur_6.src = "/assets/examples/suggest_blur.jpeg";
 
 	//put in placeholders
 	for (category in prefill)

@@ -23,9 +23,30 @@
 	<ul class="viz_objects">
 		<li><canvas class="process_viz" id="main_viz" width="655" height="375"></canvas></li>
 		<li><ul style="list-style-type: none">
-			<li><a class="btn btn-default">SUMMARY</a></li>
+			<li><a id="summary_tab" class="btn btn-default">SUMMARY</a></li>
 		</ul></li>
 	</ul>
+	<br>
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-61563557-1', 'auto');
+      ga('send', 'pageview');
+
+  </script>
+	<script>
+    if (localStorage.getItem("colors"))
+    {
+        var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+        $('.error_msg').css({"color":c["p_hex"]});
+        $('.search_1').css({"border-color":c["p_hex"]});
+        $('.search_2').css({"border-color":c["s_hex"]});
+        $('.btn-default').css({"color":c["p_hex"]});
+    }
+	</script>
 	<!-- 
 	<br>s
 	<form>

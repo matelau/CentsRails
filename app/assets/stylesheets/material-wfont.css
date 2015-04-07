@@ -69,6 +69,8 @@ canvas {
   margin-right: auto;
 }
 .viz_objects {
+  float: left;
+  margin-top: 20px;
   display: -webkit-flex;
   display: flex;
   list-style-type: none;
@@ -292,6 +294,7 @@ canvas {
     float: left;
 }
 
+
 #stylized label.error {
     float: right;
     font-size: 12px;
@@ -319,6 +322,15 @@ canvas {
     border-radius: 10px;
     width: 200px;
     margin: 2px 0 10px 10px;
+}
+#stylized input[type="radio"], input[type="checkbox"] {
+  width: 25px !important;
+}
+.email_label {
+  width: 35px !important;
+}
+.label_terms {
+  width: 220px !important;
 }
 .examples-img-left{
   float : left; 
@@ -468,10 +480,16 @@ canvas {
   border: 0;
   outline: 0;
   background: transparent;
-  border-bottom: 2px solid #884412;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
   text-align: right;
 }
-
+.btn-color_select {
+  color: black !important;
+}
+.btn-color_not_select {
+  color: darkgray !important;
+}
 .tax_spend {
   width: 85px;
   height: 20px;
@@ -480,7 +498,8 @@ canvas {
   border: 0;
   outline: 0;
   background: transparent;
-  border-bottom: 2px solid #884412;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
   text-align: right;
 }
 
