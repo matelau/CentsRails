@@ -251,6 +251,25 @@ class Api::V2::UsersController < ApplicationController
 		end
 	end
 
+	# Update some of a user's fields.
+	def update
+		user = User.find(params[:id])
+
+		if user.present?
+			params[:fields].each do |field|
+				user.write_attribute("#{field[:name]}", field[:value])
+			end
+		else
+			return render json: 'User not found.', status: 404
+		end
+
+		if user.save
+			return render json: 'User saved.', status: 200
+		else
+			return render json: user.errors, status: 500
+		end
+	end
+
 	# Validate a username and password.
 	def validate
 		result = Hash.new
