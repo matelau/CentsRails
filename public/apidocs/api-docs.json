@@ -1371,10 +1371,9 @@
           "type":"string"
         }
       }
-    }
-  },
-  "Fields":{  
-    "type":"object",
+    },
+  	"Fields":{  
+    	"type":"object",
       "properties":{ 
         "fields":{  
           "type":"array",
