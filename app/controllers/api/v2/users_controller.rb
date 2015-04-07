@@ -172,7 +172,16 @@ class Api::V2::UsersController < ApplicationController
 
 			# Add past queries.
 			user[:queries] = Array.new
-			records = Query.where(user_id: params[:id])
+			records = Query.find_by_sql [
+				'SELECT url
+				FROM queries
+				WHERE user_id = ?
+				ORDER BY created_at DESC
+				LIMIT ?',
+				params[:id],
+				QUERY_COUNT
+			]
+			
 			records.each do |record|
 				user[:queries] << record.url
 			end
