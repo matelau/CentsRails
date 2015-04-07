@@ -127,6 +127,8 @@ Rails.application.routes.draw do
       post 'users' => 'users#create'													# Register a new user.
       get 'users/:id/completed' => 'users#show_completed'
       post 'users/:id/completed' => 'users#create_completed'
+      get 'user/:id/prefers_autocomplete' => 'users#show_autocomplete'
+      patch 'users/:id' => 'users#update'
      	get 'users/:id/spending_breakdown' => 'spending_breakdown#show'
      	get 'users/:id/spending_breakdown/:category' => 'spending_breakdown#show_category'
       put 'users/:id/spending_breakdown/:category' => 'spending_breakdown#update_all'

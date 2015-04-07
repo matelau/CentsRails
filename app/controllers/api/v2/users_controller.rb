@@ -125,7 +125,7 @@ class Api::V2::UsersController < ApplicationController
 			end
 
 			# Add career rating data.
-			user[:career_ratings] = Hash.new
+			user[:career_ratings] = Array.new
 			records = Career.find_by_sql [
 				'SELECT d.name,
 								r.rating
@@ -136,11 +136,11 @@ class Api::V2::UsersController < ApplicationController
 				params[:id]
 			]
 			records.each do |record|
-				user[:career_ratings]["#{record.name}"] = record.rating
+				user[:career_ratings] << record.attributes.except('id', 'created_at', 'updated_at')
 			end
 
 			# Add degree rating data.
-			user[:degree_ratings] = Hash.new
+			user[:degree_ratings] = Array.new
 			records = Degree.find_by_sql [
 				'SELECT d.name,
 								d.level,
@@ -152,11 +152,11 @@ class Api::V2::UsersController < ApplicationController
 				params[:id]
 			]
 			records.each do |record|
-				user[:degree_ratings]["#{record.name} (#{record.level})"] = record.rating
+				user[:degree_ratings] << record.attributes.except('id', 'created_at', 'updated_at')
 			end
 
 			# Add school rating data.
-			user[:school_ratings] = Hash.new
+			user[:school_ratings] = Array.new
 			records = University.find_by_sql [
 				'SELECT s.name,
 								r.rating
@@ -167,7 +167,7 @@ class Api::V2::UsersController < ApplicationController
 				params[:id]
 			]
 			records.each do |record|
-				user[:school_ratings]["#{record.name}"] = record.rating
+				user[:school_ratings] << record.attributes.except('id', 'created_at', 'updated_at')
 			end
 
 			# Add past queries.
@@ -181,7 +181,7 @@ class Api::V2::UsersController < ApplicationController
 				params[:id],
 				QUERY_COUNT
 			]
-			
+
 			records.each do |record|
 				user[:queries] << record.url
 			end
