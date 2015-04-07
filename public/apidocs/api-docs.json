@@ -112,7 +112,10 @@
             "description":"an integer between 0 and 5 inclusive",
             "name":"rating",
             "required":true,
-            "type":"integer"
+            "type":"integer",
+            "enum":[
+              "0", "1", "2", "3", "4", "5"
+            ]
           },
           {  
             "in":"body",
@@ -580,6 +583,16 @@
             "name":"name",
             "required":true,
             "type":"string"
+          },
+          {  
+            "in":"path",
+            "description":"an integer between 0 and 5 inclusive",
+            "name":"rating",
+            "required":true,
+            "type":"integer",
+            "enum":[
+              "0", "1", "2", "3", "4", "5"
+            ]
           },
           {  
             "in":"body",
