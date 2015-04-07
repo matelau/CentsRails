@@ -120,7 +120,6 @@ def query(query):
 	with open("../data/queries.txt", "a") as logfile:
 		logfile.write(query + "\n")
 
-	object = []
 	ops = []
 	locations = []
 	schools = []
