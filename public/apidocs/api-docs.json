@@ -7,6 +7,24 @@
   },
   "paths": {
     "/careers": {
+      "get": {
+      	"tags": [
+    			"careers"
+  			],
+        "responses": {
+          "200": {
+            "description": "Records were found."
+          },
+          "404": {
+            "description": "No records were found."
+          }
+        },
+        "description": "",
+        "summary": "Returns names of all available careers.",
+        "operationId": "Api::V2::CareersController#show_two"
+      }
+    },
+    "/careers/compare": {
       "post": {
       	"tags": [
     			"careers"
@@ -36,22 +54,6 @@
             }
           }
         ]
-      },
-      "get": {
-      	"tags": [
-    			"careers"
-  			],
-        "responses": {
-          "200": {
-            "description": "Records were found."
-          },
-          "404": {
-            "description": "No records were found."
-          }
-        },
-        "description": "",
-        "summary": "Returns names of all available careers.",
-        "operationId": "Api::V2::CareersController#show_two"
       }
     },
     "/careers/{name}": {
@@ -82,7 +84,7 @@
       }
     },
     "/careers/{name}/{rating}": {
-      "post": {
+      "put": {
        	"tags": [
     			"careers"
   			],
@@ -94,7 +96,7 @@
             "description": "Career does not exist."
           }
         },
-        "description": "This route is idempotent: it will insert a new rating if none is present, or update the current rating.",
+        "description": "This will insert a new rating if none is present, or update the current rating if there is one.",
         "summary": "Allows a user to rate a career.",
         "operationId": "Api::V2::CareersController#rate",
         "parameters": [
@@ -156,7 +158,9 @@
             "type": "string"
           }
         ]
-      },
+      }
+    },
+    "/cost_of_living/compare": {
       "post": {
       	 "tags": [
     			"cost of living"
@@ -250,36 +254,6 @@
       }
     },
     "/degrees": {
-      "post": {
-       	"tags": [
-    			"degrees"
-  			],
-        "responses": {
-          "200": {
-            "description": "Records were found."
-          },
-          "400": {
-            "description": "No objects were in the degrees array."
-          },
-          "404": {
-            "description": "No data for some degrees."
-          }
-        },
-        "description": "This route is intended for internal use. The order parameter is optional, but if you use it, you must use it in exactly two degree objects. Its value is either 1 or 2.",
-        "summary": "Returns degree information for two degrees.",
-        "operationId": "Api::V2::DegreesController#show_two",
-        "parameters": [
-          {
-            "in": "body",
-            "description": "object with array of degree objects and optional operation",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Degree_body"
-            }
-          }
-        ]
-      },
       "get": {
        	"tags": [
     			"degrees"
@@ -312,6 +286,37 @@
         ]   
       }
     },
+    "/degrees/compare": {
+      "post": {
+       	"tags": [
+    			"degrees"
+  			],
+        "responses": {
+          "200": {
+            "description": "Records were found."
+          },
+          "400": {
+            "description": "No objects were in the degrees array."
+          },
+          "404": {
+            "description": "No data for some degrees."
+          }
+        },
+        "description": "This route is intended for internal use. The order parameter is optional, but if you use it, you must use it in exactly two degree objects. Its value is either 1 or 2.",
+        "summary": "Returns degree information for two degrees.",
+        "operationId": "Api::V2::DegreesController#show_two",
+        "parameters": [
+          {
+            "in": "body",
+            "description": "object with array of degree objects and optional operation",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Degree_body"
+            }
+          }
+        ]
+      },
     "/degrees/{level}/{name}": {
       "get": {
        	"tags": [
@@ -347,7 +352,7 @@
       }
     },
     "/degrees/{level}/{name}/{rating}": {
-      "post": {
+      "put": {
        	"tags": [
     			"degrees"
   			],
@@ -359,7 +364,7 @@
             "description": "Degree does not exist."
           }
         },
-        "description": "This route is idempotent: it will add a rating if it doesn't exist, or update the rating if it does.",
+        "description": "This route will add a rating if it doesn't exist, or update the rating if it does.",
         "summary": "Allows a user to rate a degree.",
         "operationId": "Api::V2::DegreesController#rate",
         "parameters": [
@@ -457,7 +462,9 @@
             "type": "string"
           }
         ]   
-    	},
+    	}
+   },
+   "/schools/compare": {
       "post": {
        	"tags": [
     			"schools"
@@ -545,7 +552,7 @@
       }
     },
     "/schools/{name}/{rating}": {
-      "post": {
+      "put": {
        	"tags": [
     			"schools"
   			],
@@ -557,7 +564,7 @@
             "description": "School does not exist."
           }
         },
-        "description": "",
+        "description": "This route will add a new rating if none exists, or update the current rating if it does.",
         "summary": "Allows a user to rate a school.",
         "operationId": "Api::V2::SchoolsController#rate",
         "parameters": [
@@ -613,7 +620,7 @@
       }
     },
     "/users/{id}": {
-      "post": {
+      "get": {
        	"tags": [
     			"users"
   			],

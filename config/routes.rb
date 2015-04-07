@@ -100,27 +100,27 @@ Rails.application.routes.draw do
     	get 'cost_of_living' => 'coli#index'										# Get coli names for autocomplete.
     	get 'cost_of_living/:state' => 'coli#show_state'				# Get cost of living data by state.
     	get 'cost_of_living/:state/:city' => 'coli#show_city'		# Get cost of living data by state and city.
-    	post 'cost_of_living' => 'coli#show_two'								# Get cost of living data for comparison.
+    	post 'cost_of_living/compare' => 'coli#show_two'				# Get cost of living data for comparison.
 
       # Schools.
       get 'schools' => 'schools#index'												# Get school names for autocomplete.
       get 'schools/:name' => 'schools#show'										# Get school by name.
       get 'schools/location/:location' => 'schools#show_location'	# Get schools by location.
-      post 'schools' => 'schools#show_two'										# Get school data for comparison.
-      post 'schools/:name/:rating' => 'schools#rate'
+      post 'schools/compare' => 'schools#show_two'						# Get school data for comparison.
+      put 'schools/:name/:rating' => 'schools#rate'
 
       # Degrees.
       get 'degrees' => 'degrees#index'												# Get degree names for autocomplete.
       get 'degrees/:name' => 'degrees#show'										# Get degree by name.
       get 'degrees/:level/:name' => 'degrees#show_level_name'	# Get degree by level and name.
-      post 'degrees' => 'degrees#show_two'										# Get degree data for comparison.
-      post 'degrees/:level/:name/:rating' => 'degrees#rate'
+      post 'degrees/compare' => 'degrees#show_two'						# Get degree data for comparison.
+      put 'degrees/:level/:name/:rating' => 'degrees#rate'
 
       # Careers.
       get 'careers' => 'careers#index'												# Get career names for autocomplete.
       get 'careers/:name' => 'careers#show'										# Get career by name.
-      post 'careers' => 'careers#show_two'										# Get career data for comparison.
-      post 'careers/:name/:rating' => 'careers#rate'
+      post 'careers/compare' => 'careers#show_two'						# Get career data for comparison.
+      put 'careers/:name/:rating' => 'careers#rate'
 
       # Users.
     	get 'users/new' => '/user#register'											# Go to the register form.
