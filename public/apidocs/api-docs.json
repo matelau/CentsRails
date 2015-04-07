@@ -661,15 +661,6 @@
             "name":"id",
             "required":true,
             "type":"integer"
-          },
-          {  
-            "in":"body",
-            "description":"object with array of field objects",
-            "name":"body",
-            "required":true,
-            "schema":{  
-              "$ref":"#/definitions/Fields"
-            }
           }
         ]
       },
@@ -698,6 +689,15 @@
             "name":"id",
             "required":true,
             "type":"integer"
+          },
+          {  
+            "in":"body",
+            "description":"object with array of field objects",
+            "name":"body",
+            "required":true,
+            "schema":{  
+              "$ref":"#/definitions/Fields"
+            }
           }
         ]
       }
