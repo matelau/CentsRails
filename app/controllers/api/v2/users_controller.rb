@@ -1,5 +1,7 @@
 class Api::V2::UsersController < ApplicationController
 
+	@query_count = 20
+
 	# Register a new user.
 	def create
   	result = Hash.new
@@ -122,6 +124,21 @@ class Api::V2::UsersController < ApplicationController
 				user[:spending_breakdown_data] << record.attributes.except('id', 'created_at', 'updated_at')
 			end
 
+			# Add career rating data.
+			user[:career_ratings] = Hash.new
+			records = Career.find_by_sql [
+				'SELECT d.name,
+								r.rating
+				FROM careers AS d 
+				INNER JOIN rates_careers AS r
+				ON d.id = r.career_id
+				WHERE r.user_id = ?',
+				params[:id]
+			]
+			records.each do |record|
+				user[:career_ratings]["#{record.name}"] = record.rating
+			end
+
 			# Add degree rating data.
 			user[:degree_ratings] = Hash.new
 			records = Degree.find_by_sql [
@@ -188,7 +205,7 @@ class Api::V2::UsersController < ApplicationController
 
 	# Get queries for a user.
 	def show_query
-		records = Query.where(user_id: params[:id]).order(created_at: :desc)
+		records = Query.where(user_id: params[:id]).order(created_at: :desc).limit(@query_count)
 		queries = Array.new
 
 		records.each do |record|
