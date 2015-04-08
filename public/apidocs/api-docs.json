@@ -824,6 +824,33 @@
         ]
       }
     },
+    "/users/{id}/ratings":{  
+      "get":{  
+        "tags":[  
+          "users"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"The user was found."
+          },
+          "404":{  
+            "description":"No such user was found."
+          }
+        },
+        "parameters":[  
+          {  
+            "in":"path",
+            "description":"a user ID",
+            "name":"id",
+            "required":true,
+            "type":"integer"
+          }
+        ],
+        "description":"",
+        "summary":"Shows all items a user has rated.",
+        "operationId":"Api::V2::UsersController#show_ratings"
+      }
+    },
     "/users/{id}/spending_breakdown":{  
       "get":{  
         "tags":[  

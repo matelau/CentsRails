@@ -105,87 +105,6 @@ class Api::V2::UsersController < ApplicationController
 		# Get user data.
 		if user
 			user = user.as_json
-			
-			# Add completed section data.
-			user[:completed_sections] = Array.new
-			Completed.where(user_id: params[:id]).each do |section|
-				user[:completed_sections] << section[:section]
-			end
-
-			# Add spending breakdown data.
-			user[:spending_breakdown_data] = Array.new
-			records = Amount.find_by_sql [
-			'SELECT name, value, category
-			 FROM amounts
-			 WHERE user_id = ?',
-			 params[:id]
-			]
-			records.each do |record|
-				user[:spending_breakdown_data] << record.attributes.except('id', 'created_at', 'updated_at')
-			end
-
-			# Add career rating data.
-			user[:career_ratings] = Array.new
-			records = Career.find_by_sql [
-				'SELECT d.name,
-								r.rating
-				FROM careers AS d 
-				INNER JOIN rates_careers AS r
-				ON d.id = r.career_id
-				WHERE r.user_id = ?',
-				params[:id]
-			]
-			records.each do |record|
-				user[:career_ratings] << record.attributes.except('id', 'created_at', 'updated_at')
-			end
-
-			# Add degree rating data.
-			user[:degree_ratings] = Array.new
-			records = Degree.find_by_sql [
-				'SELECT d.name,
-								d.level,
-								r.rating
-				FROM degrees AS d 
-				INNER JOIN rates_majors AS r
-				ON d.id = r.degree_id
-				WHERE r.user_id = ?',
-				params[:id]
-			]
-			records.each do |record|
-				user[:degree_ratings] << record.attributes.except('id', 'created_at', 'updated_at')
-			end
-
-			# Add school rating data.
-			user[:school_ratings] = Array.new
-			records = University.find_by_sql [
-				'SELECT s.name,
-								r.rating
-				FROM universities AS s 
-				INNER JOIN rates_schools AS r
-				ON s.id = r.university_id
-				WHERE r.user_id = ?',
-				params[:id]
-			]
-			records.each do |record|
-				user[:school_ratings] << record.attributes.except('id', 'created_at', 'updated_at')
-			end
-
-			# Add past queries.
-			user[:queries] = Array.new
-			records = Query.find_by_sql [
-				'SELECT url
-				FROM queries
-				WHERE user_id = ?
-				ORDER BY created_at DESC
-				LIMIT ?',
-				params[:id],
-				QUERY_COUNT
-			]
-
-			records.each do |record|
-				user[:queries] << record.url
-			end
-			
 			return render json: user.except('created_at', 'updated_at', 'password_digest'), status: 200
 		else
 			result[:errors] = 'authentication failed'
@@ -230,6 +149,69 @@ class Api::V2::UsersController < ApplicationController
 			queries << record.url
 		end
 		return render json: queries, status: 200
+	end
+
+	# Get all the user's ratings.
+	def show_ratings
+		result = Hash.new
+
+		# Search for the user.
+		user = User.find(params[:id])
+
+		# Get user data.
+		if user
+			user = user.as_json
+
+			# Add career rating data.
+			result[:career_ratings] = Array.new
+			records = Career.find_by_sql [
+				'SELECT d.name,
+								r.rating
+				FROM careers AS d 
+				INNER JOIN rates_careers AS r
+				ON d.id = r.career_id
+				WHERE r.user_id = ?',
+				params[:id]
+			]
+			records.each do |record|
+				result[:career_ratings] << record.attributes.except('id', 'created_at', 'updated_at')
+			end
+
+			# Add degree rating data.
+			result[:degree_ratings] = Array.new
+			records = Degree.find_by_sql [
+				'SELECT d.name,
+								d.level,
+								r.rating
+				FROM degrees AS d 
+				INNER JOIN rates_majors AS r
+				ON d.id = r.degree_id
+				WHERE r.user_id = ?',
+				params[:id]
+			]
+			records.each do |record|
+				result[:degree_ratings] << record.attributes.except('id', 'created_at', 'updated_at')
+			end
+
+			# Add school rating data.
+			result[:school_ratings] = Array.new
+			records = University.find_by_sql [
+				'SELECT s.name,
+								r.rating
+				FROM universities AS s 
+				INNER JOIN rates_schools AS r
+				ON s.id = r.university_id
+				WHERE r.user_id = ?',
+				params[:id]
+			]
+			records.each do |record|
+				result[:school_ratings] << record.attributes.except('id', 'created_at', 'updated_at')
+			end
+
+			return render json: result, status: 200
+		else
+			return render json: 'No user found with that ID.', status: 404
+		end
 	end
 
 	# Record that a user has completed a section.
