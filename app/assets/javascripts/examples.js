@@ -3,7 +3,7 @@ var prefill = {'city':['City 1', 'City 2 (Optional)'], 'major':['Major 1', 'Majo
 				'career':['Career 1', 'Career 2 (Optional)'], 'suggest':['What else would you like to search for?']};
 
 //get all data for the auto completes
-var auto_cities, auto_majors, auto_schools, stillover;
+var auto_cities, auto_majors, auto_schools, auto_careers, stillover;
 
 stillover = true;
 
@@ -23,7 +23,6 @@ $(document).ready(function() {
 	var bg_color;
     if (localStorage.getItem("colors"))
     {
-        console.log("here");
         var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
         bg_color = c["p_hex"];
     }
@@ -125,7 +124,31 @@ $(document).ready(function() {
 		}
 	}
 
-
+	// $.post("/api/v1/record_names", {operation: 'get', tables: ['careers']}, function(response) { 
+	// 	auto_careers = response;
+	// 	$( "#search_1_career" ).autocomplete({
+	//   		source: function(req, responseFn) {
+	// 	  			var re = $.ui.autocomplete.escapeRegex(req.term);
+	// 	  			var pattern1 = new RegExp("^"+re, "i");
+	// 	  			var a = $.grep(auto_careers, function(item, index){return pattern1.test(item);});
+	// 	  			var b = $.grep(auto_careers, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
+	// 	  			responseFn(a.concat(b));
+	// 	  	},
+	//   		autoFocus: true,
+	//   		delay: 0
+	// 	});
+	// 	$( "#search_2_career" ).autocomplete({
+	//   		source: function(req, responseFn) {
+	// 	  			var re = $.ui.autocomplete.escapeRegex(req.term);
+	// 	  			var pattern1 = new RegExp("^"+re, "i");
+	// 	  			var a = $.grep(auto_careers, function(item, index){return pattern1.test(item);});
+	// 	  			var b = $.grep(auto_careers, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
+	// 	  			responseFn(a.concat(b));
+	// 	  	},
+	//   		autoFocus: true,
+	//   		delay: 0
+	// 	});
+	// });
 
 	$.post("/api/v1/record_names", {operation: 'get', tables: ['colis']}, function(response) { 
 		auto_cities = response;
@@ -249,6 +272,19 @@ function build_school_auto() {
   		delay: 200
 	});
 };
+
+// function build_career_auto() {
+// 	$( "#search_1_career" ).autocomplete({
+//   		source: career_auto,
+//   		autoFocus: true,
+//   		delay: 200
+// 	});
+// 	$( "#search_2_career" ).autocomplete({
+//   		source: career_auto,
+//   		autoFocus: true,
+//   		delay: 200
+// 	});
+// };
 
 function leftDiv() {
 	stillover = false;
