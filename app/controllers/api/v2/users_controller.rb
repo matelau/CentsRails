@@ -1,5 +1,7 @@
 class Api::V2::UsersController < ApplicationController
 
+	QUERY_COUNT = 20
+
 	# Register a new user.
 	def create
   	result = Hash.new
@@ -72,7 +74,6 @@ class Api::V2::UsersController < ApplicationController
 		# Attempt to save the user and finish.
 		if user.save
 			session[:user_id] = user.id
-			result[:name] = "#{params[:first_name]} #{params[:last_name]}"
 			result[:id] = user.id
 			return render json: result, status: 200
 		else
@@ -80,15 +81,172 @@ class Api::V2::UsersController < ApplicationController
 		end
 	end
 
-	# Confirm that a user exists.
-	def show
-		# Search for the user.
-		user = User.find_by_email(params[:email])
+	# Record that a user made a query.
+	def create_query
+		query = Query.new
+		query.user_id = params[:id]
+		query.url = params[:url]
 
-		if user
-			return render json: 'User found', status: 200
+		# Attempt to save the query and finish.
+		if query.save
+			return render json: 'Query saved.', status: 200
 		else
-			return render json: 'No such user found', status: 404
+			return render json: query.errors, status: 400
+		end
+	end
+
+	# Get profile data.
+	def show
+		result = Hash.new
+
+		# Search for the user.
+		user = User.find(params[:id])
+
+		# Get user data.
+		if user
+			user = user.as_json
+			return render json: user.except('created_at', 'updated_at', 'password_digest'), status: 200
+		else
+			result[:errors] = 'authentication failed'
+			return render json: result, status: 400
+		end
+	end
+
+	# Show which sections a user has completed.
+	def show_completed
+		result = Hash.new
+
+		if User.exists? params[:id]
+			completed_sections = Array.new
+			records = Completed.where(user_id: params[:id])
+
+			records.each do |record|
+				completed_sections << record[:section]
+			end
+
+			return render json: completed_sections, status: 200
+		else
+			result[:errors] = 'No such user found.'
+			return render json: result, status: 404
+		end
+	end
+
+	# Get queries for a user.
+	def show_query
+		#records = Query.where(user_id: params[:id]).order(created_at: :asc).limit(@query_count)
+		records = Query.find_by_sql [
+			'SELECT url
+			FROM queries
+			WHERE user_id = ?
+			ORDER BY created_at DESC
+			LIMIT ?',
+			params[:id],
+			QUERY_COUNT
+		]
+		queries = Array.new
+
+		records.each do |record|
+			queries << record.url
+		end
+		return render json: queries, status: 200
+	end
+
+	# Get all the user's ratings.
+	def show_ratings
+		result = Hash.new
+
+		# Search for the user.
+		user = User.find(params[:id])
+
+		# Get user data.
+		if user
+			user = user.as_json
+
+			# Add career rating data.
+			result[:career_ratings] = Array.new
+			records = Career.find_by_sql [
+				'SELECT d.name,
+								r.rating
+				FROM careers AS d 
+				INNER JOIN rates_careers AS r
+				ON d.id = r.career_id
+				WHERE r.user_id = ?',
+				params[:id]
+			]
+			records.each do |record|
+				result[:career_ratings] << record.attributes.except('id', 'created_at', 'updated_at')
+			end
+
+			# Add degree rating data.
+			result[:degree_ratings] = Array.new
+			records = Degree.find_by_sql [
+				'SELECT d.name,
+								d.level,
+								r.rating
+				FROM degrees AS d 
+				INNER JOIN rates_majors AS r
+				ON d.id = r.degree_id
+				WHERE r.user_id = ?',
+				params[:id]
+			]
+			records.each do |record|
+				result[:degree_ratings] << record.attributes.except('id', 'created_at', 'updated_at')
+			end
+
+			# Add school rating data.
+			result[:school_ratings] = Array.new
+			records = University.find_by_sql [
+				'SELECT s.name,
+								r.rating
+				FROM universities AS s 
+				INNER JOIN rates_schools AS r
+				ON s.id = r.university_id
+				WHERE r.user_id = ?',
+				params[:id]
+			]
+			records.each do |record|
+				result[:school_ratings] << record.attributes.except('id', 'created_at', 'updated_at')
+			end
+
+			return render json: result, status: 200
+		else
+			return render json: 'No user found with that ID.', status: 404
+		end
+	end
+
+	# Record that a user has completed a section.
+	def create_completed
+		# Check that the section isn't already completed.
+		old_section = Completed.where(user_id: params[:id]).where(section: params[:section])
+		if old_section.present?
+			return render json: 'Section already completed.', status: 400
+		else
+			new_section = Completed.new
+			new_section.user_id = params[:id]
+			new_section.section = params[:section]
+
+			if new_section.save
+				return render json: 'Saved.', status: 200
+			else
+				return render json: 'Server error.', status: 500
+			end
+		end
+	end
+
+	# Update some of a user's fields.
+	def update
+		user = User.find(params[:id])
+
+		if user.present?
+			params[:fields].each do |field|
+				if user.update("#{field[:name]}" => field[:value])
+					return render json: 'Changes saved.', status: 200
+				else
+					return render json: user.errors, status: 500
+				end
+			end
+		else
+			return render json: 'User not found.', status: 404
 		end
 	end
 
@@ -105,7 +263,6 @@ class Api::V2::UsersController < ApplicationController
 
 		# Try to authenticate the user and finish.
 		if user && user.authenticate(params[:password])
-			result[:name] = "#{params[:first_name]} #{params[:last_name]}"
 			result[:id] = user.id
 			return render json: result, status: 200
 		else

@@ -1,24 +1,21 @@
 class Api::V2::ColiController < ApplicationController
-	
-	# Get coli record names for autocomplete.
 	def index
 		result = Array.new
 
-		if params[:where] and not params[:select]
-			records = Coli.select('DISTINCT city').where(['state = ? and city IS NOT NULL', params[:where]])
+		if params[:state] and not (params[:only_state_names] == 'true')
+			records = Coli.select('DISTINCT city').where(['state = ? and city IS NOT NULL', params[:state]])
 
-			# Format the location name as a single string.
 			records.each do |record|
 				result << record[:city]
 			end
 
-		elsif params[:select] and not params[:where]
+		elsif params[:only_state_names] == 'true' and not params[:state]
 			records = Coli.select('DISTINCT state')
 			records.each do |record|
 				result << record[:state]
 			end
 
-		elsif (not params[:select]) and (not params[:where])
+		elsif (not (params[:only_state_names] == 'true')) and (not params[:state])
 			records = Coli.select('DISTINCT city, state')
 			
 			# Format the location name as a single string.
@@ -31,7 +28,7 @@ class Api::V2::ColiController < ApplicationController
 			end
 
 		else
-			records = Coli.select('DISTINCT state').where(state: params[:where])
+			records = Coli.select('DISTINCT state').where(state: params[:state])
 			records.each do |record|
 				result << record[:state]
 			end
@@ -45,13 +42,19 @@ class Api::V2::ColiController < ApplicationController
 		# Return the record names as a JSON object.
 		result.sort!
 		return render json: result, status: 200
-	end
+  end
 
 	# Get cost of living data by state.
 	def show_state
-		location = Coli.where(state: params[:state])
-		if location.present?
-			return render json: location, status: 200
+		records = Coli.where(state: params[:state])
+		locations = Array.new
+
+		records.each do |record|
+			locations << record.attributes.except('id', 'created_at', 'updated_at')
+		end
+
+		if locations.present?
+			return render json: locations, status: 200
 		else
 			return render json: [], status: 404
 		end
@@ -60,10 +63,11 @@ class Api::V2::ColiController < ApplicationController
 	# Get cost of living data by state and city.
 	def show_city
 		location = Coli.where(state: params[:state], city: params[:city])
+
 		if location.present?
-			return render json: location, status: 200
+			return render json: location[0].attributes.except('id', 'created_at', 'updated_at'), status: 200
 		else
-			return render json: [], status: 404
+			return render json: Hash.new, status: 404
 		end
 	end
 
@@ -186,8 +190,10 @@ class Api::V2::ColiController < ApplicationController
 
 			# Add the weather data for this location.
 			weather_data = extract_weather_data(location, records, result)
-			result["location_#{index}"]["weather_#{index}"] = weather_data[:weather_high_stats]
-			result["location_#{index}"]["weatherlow_#{index}"] = weather_data[:weather_low_stats]
+			if result["location_#{index}"]
+				result["location_#{index}"]["weather_#{index}"] = weather_data[:weather_high_stats]
+				result["location_#{index}"]["weatherlow_#{index}"] = weather_data[:weather_low_stats]
+			end
 
 			# Keep track of which states we substituted state data for.
 			if state_match
