@@ -124,31 +124,31 @@ $(document).ready(function() {
 		}
 	}
 
-	// $.post("/api/v1/record_names", {operation: 'get', tables: ['careers']}, function(response) { 
-	// 	auto_careers = response;
-	// 	$( "#search_1_career" ).autocomplete({
-	//   		source: function(req, responseFn) {
-	// 	  			var re = $.ui.autocomplete.escapeRegex(req.term);
-	// 	  			var pattern1 = new RegExp("^"+re, "i");
-	// 	  			var a = $.grep(auto_careers, function(item, index){return pattern1.test(item);});
-	// 	  			var b = $.grep(auto_careers, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
-	// 	  			responseFn(a.concat(b));
-	// 	  	},
-	//   		autoFocus: true,
-	//   		delay: 0
-	// 	});
-	// 	$( "#search_2_career" ).autocomplete({
-	//   		source: function(req, responseFn) {
-	// 	  			var re = $.ui.autocomplete.escapeRegex(req.term);
-	// 	  			var pattern1 = new RegExp("^"+re, "i");
-	// 	  			var a = $.grep(auto_careers, function(item, index){return pattern1.test(item);});
-	// 	  			var b = $.grep(auto_careers, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
-	// 	  			responseFn(a.concat(b));
-	// 	  	},
-	//   		autoFocus: true,
-	//   		delay: 0
-	// 	});
-	// });
+	$.get("/api/v2/careers", function(response) { 
+		auto_careers = response;
+		$( "#search_1_career" ).autocomplete({
+	  		source: function(req, responseFn) {
+		  			var re = $.ui.autocomplete.escapeRegex(req.term);
+		  			var pattern1 = new RegExp("^"+re, "i");
+		  			var a = $.grep(auto_careers, function(item, index){return pattern1.test(item);});
+		  			var b = $.grep(auto_careers, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
+		  			responseFn(a.concat(b));
+		  	},
+	  		autoFocus: true,
+	  		delay: 0
+		});
+		$( "#search_2_career" ).autocomplete({
+	  		source: function(req, responseFn) {
+		  			var re = $.ui.autocomplete.escapeRegex(req.term);
+		  			var pattern1 = new RegExp("^"+re, "i");
+		  			var a = $.grep(auto_careers, function(item, index){return pattern1.test(item);});
+		  			var b = $.grep(auto_careers, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
+		  			responseFn(a.concat(b));
+		  	},
+	  		autoFocus: true,
+	  		delay: 0
+		});
+	});
 
 	$.post("/api/v1/record_names", {operation: 'get', tables: ['colis']}, function(response) { 
 		auto_cities = response;
@@ -273,18 +273,18 @@ function build_school_auto() {
 	});
 };
 
-// function build_career_auto() {
-// 	$( "#search_1_career" ).autocomplete({
-//   		source: career_auto,
-//   		autoFocus: true,
-//   		delay: 200
-// 	});
-// 	$( "#search_2_career" ).autocomplete({
-//   		source: career_auto,
-//   		autoFocus: true,
-//   		delay: 200
-// 	});
-// };
+function build_career_auto() {
+	$( "#search_1_career" ).autocomplete({
+  		source: career_auto,
+  		autoFocus: true,
+  		delay: 200
+	});
+	$( "#search_2_career" ).autocomplete({
+  		source: career_auto,
+  		autoFocus: true,
+  		delay: 200
+	});
+};
 
 function leftDiv() {
 	stillover = false;
@@ -320,11 +320,6 @@ function spendingRedirect() {
 
 function dataRequest(type)
 {
-	if (dataRequest == "career")
-	{
-		window.alert("Career data coming soon!");
-		return;
-	}
 	field1 = document.getElementById("search_1_" + type).value;
 	if (type == "city" && auto_cities.indexOf(field1) < 0)
 		field1 = "";
