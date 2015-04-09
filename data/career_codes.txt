@@ -1,0 +1,678 @@
+﻿Office Manager;43-1000
+Bookkeeper;43-3031
+Full Charge Bookkeeper;43-3031
+Administrative Assistant;43-6000
+Accounts Payable Clerk;43-4141
+Executive Assistant;43-6011
+Accounting Assistant;43-3031
+Retail Store Manager;41-1011
+Office Administrator;43-0000
+Executive Administrative Assistant;43-6011
+Customer Service Representative (CSR);43-4051
+General Manager, Hotel;11-9081
+General Manager, Restaurant;11-9051
+Restaurant Manager;11-9051
+Production Supervisor, Manufacturing;51-1000
+Registered Nurse (RN);29-1141
+Registered Nurse (RN), Operating Room;29-1141
+Registered Nurse (RN) Supervisor;29-1141
+Registered Nurse (RN), Emergency Room;29-1141
+Staff Nurse;29-1141
+Registered Nurse (RN), Utilization Management (UM);29-1141
+Paralegal;23-2011
+Legal Assistant;23-2011
+Legal Secretary;43-6012
+Paralegal / Legal Assistant;23-2011
+Nurse Case Manager;29-1141
+Director, Nursing;11-9161
+Hospice Registered Nurse (RN);29-1141
+MDS Coordinator;29-1141
+Long Term Care Nursing Director;11-9161
+Assistant Director of Nursing (ADON);11-9161
+Network Administrator;15-1142
+Physical Therapist Assistant;31-2021
+Systems Administrator;15-1142
+Certified Occupational Therapy Assistant (COTA);31-2011
+Mechanical Designer;17-3013
+Accountant;13-2011
+Staff Accountant;13-2011
+Financial Controller;13-2061
+Accounting Manager;11-3031
+Accounts Payable Manager;11-3031
+Accounting Clerk;43-3000
+Human Resources (HR) Manager;11-3121
+Operations Manager;11-1021
+Executive Assistant to CEO;43-6011
+Property Manager;11-9141
+Account Manager;11-2022
+Production Manager, Manufacturing;11-3051
+Computer Aided Design (CAD) Drafter;17-3019
+Senior Computer Aided Design (CAD) Designer;17-3019
+Design Engineer;17-3000
+Computer Aided Design (CAD) Designer;17-3000
+Architectural Drafter;17-3011
+Senior Mechanical Designer;17-3013
+Information Technology (IT) Manager;11-3021
+Information Technology Specialist;15-1152
+Information Technology (IT) Director;11-3021
+Network Engineer;17-2199
+Support Technician, Information Technology (IT);15-1152
+Systems Engineer, IT;17-2199
+Systems Engineer (Computer Networking / IT);17-2199
+Desktop Support Technician;15-1151
+Software Developer;15-1130
+Software Engineer;15-1130
+Web Developer;15-1134
+Police Officer;33-3050
+Service Manager Automotive;49-3023
+Substance Abuse Counselor;21-1011
+Security Supervisor;33-9032
+Executive Chef;35-1011
+Sous Chef;35-1011
+Head Chef;35-1011
+Food Service Director;11-9051
+Food Service Manager;11-9051
+Chef de Cuisine;35-1011
+Dental Hygienist;29-2021
+Registered Dental Hygienist (RDH);29-2021
+Engineering Technician;17-3020
+Electronics Technician;17-3023
+Field Service Engineer;17-3029
+Senior Engineering Technician;17-3020
+Facility Manager;11-9141
+Electrical Engineer;17-2071
+Environmental Health & Safety (EHS) Specialist;19-2041
+Registered Health Information Technician (RHIT);29-2071
+Health Information Management (HIM) Manager;11-9111
+Medical Coder;29-2071
+Health Information Management (HIM) Supervisor;11-9111
+Health Information Management (HIM) Director;11-9111
+Medical Office Manager;11-9111
+Hospital Coder;29-2071
+Information Technology (IT) Support Specialist;15-1150
+Senior Systems Administrator;15-1140
+Medical Assistant;31-9092
+Certified Medical Assistant (CMA);31-9092
+Medical Assistant (Certified);31-9092
+Medical Office Assistant;31-9092
+Clinical Nurse Manager;11-9161
+Occupational Therapist Assistant;31-2011
+Occupational Therapy Assistant (OTA);31-2011
+Senior Paralegal;23-2011
+Litigation Paralegal;23-2011
+Corporate Paralegal;23-2011
+Licensed Physical Therapist Assistant (LPTA);31-2021
+Physical Therapy Assistant;31-2021
+Rehabilitation Director;21-1015
+Radiologic Technologist;29-2034
+Radiology Manager;11-9111
+Radiology Technologist;29-2034
+Radiology Technician;29-2034
+Radiology Supervisor;11-9111
+Radiology Director;11-9111
+Respiratory Therapist;29-1126
+Respiratory Therapy Manager;11-9111
+Registered Respiratory Therapist (RRT);29-1126
+Respiratory Services Manager;11-9111
+Training Manager;11-3131
+Human Resources (HR) Generalist;13-1070
+Administrative / Office Manager;43-1000
+General / Operations Manager;11-1021
+Inside Sales Representative;41-3099
+Human Resources (HR) Director;11-3121
+Retail General Manager (GM);41-1011
+Graphic Designer;27-1024
+Senior Graphic Designer;27-1024
+Art Director;27-1011
+Web Designer;15-1134
+Production Manager, Print;51-1000
+Recruiting Administrator;43-0000
+Contract Administrator;43-0000
+Accounting Supervisor;11-3031
+Customer Service Manager;11-9199
+Surgical Technologist;29-2055
+Accounts Receivable Specialist;13-2000
+Quality Manager;11-9199
+Sr. Network Engineer;17-2199
+Sr. Software Engineer / Developer / Programmer;15-1130
+Human Resources (HR) Coordinator;11-3121
+Construction Superintendent;11-9021
+Registered Psychiatric Nurse (RPN);29-2061
+Senior Accountant;13-2011
+Assistant Controller;13-2061
+Nursing Manager;11-9161
+Clinical Supervisor;11-9161
+Clinical Documentation Specialist;29-2071
+Resident Care Director;11-9161
+Automotive Technician;49-3023
+Shop Foreman;49-1011
+Parts Specialist;41-2022
+Parts Counterman;41-2022
+Automobile Service Advisor;49-3023
+Diesel Shop Foreman / Mechanic;49-3031
+Marketing Director;11-2021
+Marketing Manager;11-2021
+Senior Buyer;13-1020
+Production Supervisor;51-1000
+Director of Operations;11-1021
+Executive Director;11-1000
+Drafter Design;17-3010
+Building Information Modeling (BIM) Coordinator;17-3011
+Computer Aided Design (CAD) Manager;11-9199
+Senior Software Engineer;15-1130
+Support Analyst, Information Technology (IT);15-1121
+Network Technician;17-3029
+Senior Information Technology (IT) Manager;11-3021
+Sharepoint Administrator;15-1142
+Information Technology (IT) Architect;15-1143
+Security Manager;33-9032
+Security Director;33-9032
+Correctional Officer;33-3010
+Police Lieutenant;33-1012
+Chef Manager;35-1011
+Corporate Chef;35-1011
+Executive Sous Chef;35-2019
+Kitchen Manager;35-2019
+Child Care Center Director;39-9011
+Director, Preschool;11-9031
+Daycare Director;39-9011
+Education Paraprofessional;11-9039
+Education Administrator, Preschool or Child Care Center Program;11-9031
+Child Care Provider;39-9011
+Toddler Teacher;11-9031
+Branch Manager, Wholesale Distributor;11-2022
+Graphic Artist;27-1024
+Graphic Design Specialist;27-1024
+Graphic Design Manager;27-1024
+Marketing Communications Specialist;11-2000
+Production Artist;27-1024
+Health Information Manager;11-9111
+Coding Manager;15-1130
+Medical Records Supervisor;29-2071
+Certified Medical Coding Supervisor;29-2071
+Help Desk Engineer;43-4081
+Help Desk Team Leader;43-4081
+Receptionist;43-4171
+Practice Manager;11-3011
+Clinic Office Manager;19-3031
+Medical Assistant Instructor;31-9092
+Clinical Analyst;29-2010
+Nursing Home Administrator;31-1000
+Nursing Home Nursing Manager;31-1000
+Assisted Living Administrator;31-1000
+Intellectual Property (IP) Paralegal;23-2011
+Legal Administrative Assistant;23-0000
+Parts Manager;41-2020
+Social Worker;21-1000
+Training Coordinator;11-3131
+Assistant Property Manager;11-9141
+Certified Public Accountant (CPA);13-2011
+Chief Financial Officer (CFO);11-1011
+Corporate Controller;11-0000
+Financial Analyst;13-2050
+Design Architect;17-0000
+Project Architect;11-9041
+Intern Architect;11-9041
+Project Manager, Architecture;11-9041
+Architectural Designer;17-0000
+Senior Project Architect;11-9041
+Architect (but not Landscape or Naval);17-1010
+Marketing Coordinator;11-2021
+Account Executive;13-2011
+Assistant Media Planner;13-1121
+Senior Account Executive;13-2011
+Creative Director;27-1000
+Sr. Art Director;27-1000
+Graphic Artist / Designer;27-1024
+Program Coordinator, Non-Profit Organization;25-9031
+Architectural Job Captain;11-9041
+Research Scientist;15-1111
+Clinical Research Coordinator;15-1111
+Chemist;19-2031
+Senior Research Associate;15-1111
+Physician Assistant (PA);29-1071
+Senior Clinical Research Associate (CRA);15-1111
+Research Technician;15-1111
+Regional Sales Manager;41-1000
+Analytical Chemist;19-2030
+Quality Control (QC) Chemist;19-2030
+Quality Assurance Manager;11-9199
+Sr. Chemist;19-2031
+Project Manager, Information Technology (IT);11-3021
+Programmer Analyst;15-1131
+Fraud Investigator;33-3021
+Police Sergeant;33-3051
+Business Analyst (Unspecified Type);13-1111
+Data Analyst;13-1111
+Research Analyst;15-2031
+Senior Financial Analyst;13-2051
+Management Consultant;11-9199
+Elementary School Teacher;25-2020
+High School Teacher;25-2030
+Special Education Teacher, Preschool, Kindergarten, or Elementary School;25-2000
+Kindergarten Teacher (but not Special Education);25-2012
+Technical Writer;27-3042
+Editor;27-3041
+Copywriter;43-9081
+Film / Video Editor;27-4032
+Post Production Manager, Television, Video, or Motion Picture;51-0000
+Video Producer;27-2010
+Videographer;27-2010
+Finance Manager;11-3031
+Senior Business Analyst;13-1111
+President;11-1000
+Geographic Information Systems (GIS) Analyst;19-3092
+Geographic Information Systems (GIS) Specialist;19-3092
+Geographic Information Systems (GIS) Manager;19-3092
+Geographic Information Systems (GIS) Technician;19-3092
+Junior Graphic Designer;27-1024
+Sr. Human Resources (HR) Manager;43-4161
+Human Resources (HR) Specialist;43-4161
+Regional Human Resources (HR) Manager;11-3121
+Interior Designer;27-1025
+Senior Interior Designer;27-1025
+Assistant Interior Designer;27-1025
+Project Manager, Interior Design;27-1025
+Design Director, Interior Design;27-1025
+Showroom Manager;11-9199
+Assistant Project Manager, Construction;11-9021
+Project Manager, Marketing;11-2021
+Sales Director;11-2022
+Intelligence Analyst;13-1161
+Program Manager, Non-Profit Organization;11-9199
+Program Assistant (Unspecified Type);43-6011
+Reporter;27-3020
+Journalist;27-3020
+Communications Manager;11-3121
+Director of Communications;11-3121
+Communications Specialist;25-1120
+Outside Sales Representative;41-3000
+Business Analyst, IT;15-1122
+Solutions Architect;15-1140
+Database Administrator (DBA);15-1141
+Marketing Assistant;11-2000
+Digital Marketing Manager;11-2021
+Marketing Specialist;11-2020
+Actuary;15-2011
+Worship Pastor;21-2011
+Government Affairs Director;43-4061
+Case Manager;43-4061
+Public Relations Coordinator;11-2031
+Public Relations (PR) Specialist;11-2031
+Student Services Coordinator;11-9033
+Business Development Manager;11-9199
+Vice President (VP), Sales & Marketing;11-1011
+Program Project Manager;11-9199
+Recruiter;13-1141
+.NET Software Developer / Programmer;15-1130
+Information Technology (IT) Consultant;11-3021
+Credit Analyst;13-2041
+Human Resources (HR) Representative;13-1070
+Senior Human Resources (HR) Generalist;11-3121
+Logistics Coordinator;13-1081
+Systems Analyst;15-1121
+Business Systems Analyst;15-2031
+Director of Sales and Marketing;11-2021
+Mechanical Engineer;17-2141
+Project Engineer;17-2000
+Civil Engineer;17-2051
+Process Engineer;17-2000
+Chemical Engineer;17-2041
+Senior Process Engineer;17-2000
+Project Manager, Engineering;17-2000
+Chemical Process Engineer;17-2041
+Environmental Engineer;17-2081
+Structural Engineer;17-2199
+Project Manager, Construction;11-9021
+Senior Civil Engineer;17-2051
+Civil Engineer in Training;17-2051
+Principal Software Engineer;15-1130
+Software Architect;15-1133
+Lead Software Engineer;15-1130
+Senior Java Developer;15-1130
+Senior Technical Consultant;29-2090
+Software Development Manager;15-1130
+Senior Electrical Engineer;17-2071
+Controls Engineer;17-2071
+Industrial Engineer;17-2112
+Manufacturing Engineer;17-2199
+Quality Assurance (QA) Engineer;17-2199
+Senior Mechanical Engineer;17-2141
+Mechanical Design Engineer;17-2141
+Senior Web Designer;15-1130
+User Experience Designer;15-1130
+Junior Interior Designer;27-1025
+Landscape Architect;17-1012
+Landscape Designer;27-1029
+Sr. Landscape Architect;17-1012
+Aerospace Engineer;17-2011
+Senior Systems Engineer;17-2199
+Senior Project Manager, Construction;11-9021
+Research Associate (Unspecified Type);25-1191
+Associate Research Scientist;25-1191
+Biochemist;19-1021
+Laboratory Manager;11-9111
+Environmental Scientist;19-2040
+Biologist;19-1023
+Biomedical Engineer;17-2031
+Quality Engineer, Medical Devices;17-2199
+Research Engineer;17-2199
+Product Development Engineer;17-2199
+Research Chemist;19-2031
+Medical Technologist;29-2011
+Laboratory Supervisor, Medical / Clinical;11-9111
+Clinical Laboratory Scientist;29-2011
+Blood Bank Supervisor;11-9111
+Senior Medical Technologist;29-2011
+Medical / Clinical Laboratory Technologist;29-2011
+Embedded Software Engineer;15-1130
+Software Engineer / Developer / Programmer;15-1130
+Software Development Engineer (SDE);15-1130
+Chief Technology Officer (CTO);11-1011
+Construction Project Manager;11-9021
+Construction Estimator;13-1051
+Construction Manager;11-9021
+Probation Officer;21-1092
+Dental Hygiene Instructor;29-2021
+Registered Dietitian;29-1031
+Dietitian;29-1031
+Clinical Dietitian;29-1031
+Renal Dietitian;29-1031
+Clinical Nutrition Manager;29-1031
+Certified Diabetes Educator (CDE);21-1091
+Director Food and Nutrition Services;35-1000
+Test Engineer;17-2199
+Electrical Design Engineer;17-2071
+Middle School Teacher;25-2020
+Preschool Teacher, (but not Special Education);25-2010
+Chief Engineer;11-1011
+Vice President (VP), Operations;11-1021
+Environmental Health & Safety (EHS) Manager;11-9199
+Environmental Project Manager;11-9199
+Environmental Consultant;19-2041
+Environmental Manager;11-9199
+Project Manager, Environmental;11-9199
+Fitness Manager;11-9199
+Wellness Director;29-1000
+Personal Trainer;39-9031
+Club General Manager;11-1021
+Wellness/Fitness Center Program Director;11-1021
+Health Fitness Specialist;39-9031
+General Manager, Fitness Club;11-1021
+Assistant Buyer;13-1020
+Buyer;13-1020
+Retail Sales Manager;41-1011
+Product Development Coordinator;27-1021
+Retail Store Assistant Manager;41-1011
+Geologist;19-2040
+Staff Geologist;19-2040
+Project Geologist;19-2040
+Sr. Geologist;19-2040
+Creative Services Manager;11-9199
+Healthcare Manager;11-9111
+Healthcare Administrator;11-9111
+Medical Practice Manager;11-9111
+Health Care Administrator;11-9111
+Medical Records Administrator;11-9111
+Registered Health Information Administrator (RHIA);11-9111
+Assistant General Manager, Hotel;11-9081
+Guest Services Manager;11-9081
+Catering Manager;11-9051
+Catering Sales Manager;11-9051
+Human Resources (HR) Assistant;13-1070
+Human Resources (HR) Administrator;11-3121
+Manufacturing Engineering Manager;11-9199
+Maintenance Supervisor;37-1000
+Assistant Editor;27-3040
+Sr. Editor;27-3040
+Web Producer;27-2010
+Vice President (VP), Sales;11-2022
+Product Engineer;17-2199
+Laboratory Director;11-1021
+Hospital Laboratory Director;11-1021
+Senior Regulatory Affairs Specialist;13-2000
+Microbiologist;19-1022
+Performance Improvement Coordinator;13-1151
+Safety Manager;11-9111
+Safety Director;11-9111
+Safety Coordinator;11-9111
+Environmental Health & Safety (EHS) Coordinator;11-9111
+Health and Safety Manager;11-9111
+Licensed Registered Occupational Therapist;29-1122
+Registered Occupational Therapist;29-1122
+School-Based Occupational Therapist;29-1122
+Occupational Therapist (OT);29-1122
+Certified Hand Therapist;29-1122
+Licensed Occupational Therapist;29-1122
+Pediatric Occupational Therapist;29-1122
+Pharmacist;29-1051
+Pharmacy Manager;11-9111
+Staff Pharmacist;29-1051
+Pharmacy Director;11-9111
+Clinical Pharmacist;29-1051
+Pharmacist in Charge;29-1051
+Hospital Pharmacy Director;11-9111
+Physical Therapist (PT);29-1123
+Staff Physical Therapist;29-1123
+Licensed Physical Therapist (LPT);29-1123
+Lead Physical Therapist (PT);29-1123
+Physical Therapist Director;11-9111
+Senior Physical Therapist;29-1123
+Physicist;19-2012
+Account Coordinator;13-2011
+Assistant Account Executive;13-2011
+Account Executive, Public Relations (PR);27-3031
+Activity Director;13-1121
+Social Work Supervisor;11-9151
+Social Worker (BSW);21-1020
+Social Services Director;11-9151
+Licensed Social Worker;21-1020
+Case Manager, Social Services;21-1020
+Medical Social Worker;21-1022
+Senior Cost Accountant;13-2011
+Senior Tax Analyst;13-2082
+Assistant Research Scientist;15-1111
+Channel Sales Manager;11-2020
+Vice President (VP), Marketing;11-2021
+Lead Applications Developer;15-1132
+Senior .NET Developer / Programmer;15-1132
+Senior Application Developer;15-1132
+Detective;33-3021
+FBI Agent;33-3021
+State Trooper;33-3050
+Chief Operating Officer (COO);11-1011
+Junior Financial Analyst;13-2051
+Physical Design Engineer;27-1020
+Financial Advisor Assistant;13-2052
+Valuation Manager;11-9199
+Equity Analyst;13-1141
+Analyst, Corporate Development;13-1111
+Director of Human Resources (HR);11-3121
+Associate Account Manager;13-2011
+Facility Engineer;17-2000
+Development Engineer, Manufacturing;17-2000
+Senior Project Engineer;17-2000
+Medical Nursing Manager;11-9111
+Home Healthcare Director;11-9111
+Facility Administrator, Health Care;11-9111
+Clinical Specialist, Medical Devices;29-2010
+Hospice Administrator;11-9111
+Vice President (VP), Government Affairs;11-1000
+Licensed Addiction Counselor (LAC);21-1023
+Licensed Practical Nurse (LPN);29-2061
+Medical Billing Manager;11-9111
+Certified Nurse Assistant (CNA);31-9092
+Certified Professional Coder (CPC);29-2071
+Certified Medical Billing/Coding Specialist;29-2071
+Medical Biller;29-2071
+Medical Records Coder;29-2071
+Charge Nurse (LPN);29-2061
+Licensed Practical or Licensed Vocational Nurse;29-2061
+Veterinarian;29-1131
+Optometrist;29-1041
+Dentist;29-1023
+Family Physician / Doctor;29-1060
+Physician / Doctor, Internal Medicine;29-1069
+Pharmacy Clinical Coordinator;29-1051
+Pediatric Physical Therapist;29-1065
+Associate Veterinarian;29-1131
+Assistant Professor, Postsecondary / Higher Education;19-0000
+Associate Professor, Postsecondary / Higher Education;19-0000
+Professor, Postsecondary / Higher Education;19-0000
+Postdoctoral Research Associate;19-0000
+Psychologist;19-3030
+Clinical Psychologist;19-3030
+Research Scientist, Biotechnology;17-2031
+Principal Scientist;19-0000
+Senior Research Scientist, Biotechnology;17-2031
+Chemical Engineer, Research & Development (R&D);17-2041
+Senior Research Scientist (Unspecified Type);19-0000
+Data Scientist, IT;15-1111
+Senior Data Scientist, IT;15-1111
+Computer Scientist;15-1111
+Senior Computer Scientist;15-1111
+Senior Principal Engineer;17-0000
+Principal Mechanical Engineer;17-2141
+Chief Executive Officer (CEO), Non-Profit Organization;11-1000
+President and CEO;11-1000
+Chief Executive Officer (CEO);11-1000
+Business Development Director;11-2000
+Supply Chain Manager;11-3061
+Warehouse Manager;11-3061
+Construction Superintendent, Commercial;11-9021
+Attorney / Lawyer;23-1000
+Associate Attorney;23-1000
+General Counsel;23-1000
+Corporate Counsel;23-1000
+Associate General Counsel;23-1000
+Assistant General Counsel;23-1000
+Litigation Attorney;23-1000
+Legal Counsel;23-1000
+Senior Counsel;23-1000
+Prosecutor;23-1000
+Senior Auditor;13-2011
+Architectural Intern;17-1000
+Special Education Teacher, Secondary School;25-2000
+Communications Director;27-3099
+Licensed Professional Counselor;21-1010
+Mental Health Therapist;21-1014
+School Counselor;21-1012
+Mental Health Counselor;21-1014
+Career Counselor;21-1012
+Licensed Mental Health Counselor;21-1014
+Psychotherapist;29-1129
+Mental Health Clinician;21-1014
+Economist;19-3011
+Senior Data Analyst;43-9020
+Instructional Designer;25-9031
+English Language / Literature Teacher, Postsecondary;25-1123
+Teacher College/University (Unknown Type);25-1000
+Proposal Manager;11-1021
+Copy Editor;27-3041
+Sr. Human Resources (HR) Business Partner;11-3121
+Human Resources (HR) Business Partner;11-3121
+Program Officer, Foundation;11-9039
+Marriage / Family Therapist;21-1013
+Behavior Analyst;21-1011
+Product Marketing Manager;11-2021
+Senior Marketing Manager;11-2021
+Product Marketing Director;11-2021
+Finance Director;11-3031
+Vice President (VP), Finance;11-3031
+Portfolio Manager;11-3031
+Practice Administrator;11-0000
+Chief Nursing Officer (CNO);11-9111
+Consultant, Human Resources (HR);11-3121
+Program Manager, IT;11-3021
+Strategic Sourcing Manager;11-0000
+Senior Project Manager, IT;11-3021
+Business Analysis Manager, IT;11-3021
+Brand Manager;11-2021
+Chief Marketing Officer (CMO);11-2021
+Senior Product Manager;11-0000
+Marketing Analyst;13-1161
+Project Manager, Operations;11-3000
+Project Manager, (Unspecified Type / General);11-0000
+Sr. Project Manager, Operations;11-3000
+Education Program Director;11-9030
+Athletic Director;27-2020
+Special Education Teacher, Middle School;25-2053
+Intervention Specialist;25-2000
+Director of Special Education;11-9032
+Senior Project Manager, Engineering;11-9041
+Senior Structural Engineer;17-2051
+Radio Frequency (RF) Engineer;17-2071
+Mechanical Engineering Manager;11-9041
+Hospital Administrator;11-9111
+Librarian;25-4021
+Library Director;11-9039
+Reference Librarian;25-4021
+Head Librarian;25-4021
+School Library Media Specialist;25-4031
+Librarian, Special Library;25-4021
+Assistant Librarian;25-4021
+Senior Mechanical Design Engineer;17-2141
+Physical Therapy Director;11-9111
+Program Analyst;13-1111
+Policy Analyst;13-2000
+City Manager;11-9199
+Epidemiologist;19-1041
+Health Educator;21-1091
+Family Nurse Practitioner (NP);29-1171
+Auditor;13-2011
+Stress Engineer;17-2051
+Clinical Engineer, Medical Devices;17-2031
+Regulatory Affairs Specialist;13-2000
+Process Development Engineer;17-2110
+Process Engineering Manager;11-9041
+Water Resources Engineer;17-2199
+Design Verification Engineer;17-2199
+Sales Engineer;41-9031
+Economic Analyst;19-3011
+Hardware Engineer;17-2061
+Program Manager, Engineering;11-9041
+Environmental Specialist;19-2041
+Ecologist;19-2041
+Senior Environmental Consultant;19-2041
+Investment Analyst;13-2051
+Petroleum Geologist;19-2042
+Hydrogeologist;19-2042
+Vice President (VP), Human Resources (HR);11-3121
+Senior Industrial Engineer;17-2110
+Data Architect;11-9199
+Mathematician;15-2021
+Biostatistician;15-2041
+Pediatrics Advanced Registered Nurse Practitioner (ARNP);29-1171
+Orthopedic Physician Assistant (PA);29-1171
+Senior Test Engineer;17-2199
+Behavior Specialist;21-1011
+Statistician;15-2041
+Statistical Analyst;15-2041
+SAS Programmer;15-2041
+Senior Statistician;15-2041
+Advanced Registered Nurse Practitioner (ARNP);29-1171
+Nurse Practitioner (NP);29-1171
+Hospitalist Advanced Registered Nurse Practitioner (ARNP);29-1171
+Advanced Practice Registered Nurse (APRN);29-1141
+Hospitalist Nurse Practitioner (NP);29-1171
+Internal Medicine Advanced Registered Nurse Practitioner (ARNP);29-1171
+Licensed Clinical Social Worker (LCSW);21-1020
+Clinical Social Worker;21-1022
+School Social Worker;21-1021
+Social Worker (MSW);21-1020
+Pediatrician, General;29-1065
+Medical Director, Medicine;11-9111
+Psychiatrist;29-1066
+General Surgeon;29-1067
+Physician / Doctor, Emergency Room (ER);29-1069
+Anesthesiologist;29-1061
+Sales Associate;41-3000
+Nanny;39-9011
+Superintendent of Public Works;11-9199
+Maintenance Manager;11-9199
+HVAC Technician;49-9021
+Maintenance Technician;49-9071
+Heating, Air Conditioning, or Refrigeration Mechanic / Installer;49-9021
+Field Service Technician;29-9000
+HVAC Controls Technician;49-9021
+Maintenance Mechanic;49-9071
