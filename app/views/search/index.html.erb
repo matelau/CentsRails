@@ -1,15 +1,12 @@
 
 
-</script>
-<!-- Search Field -->
-
 <div class="search-bar" id="search-bar">
 
 	
-	<p class="quote">ASK US ABOUT CITIES</p>
-	<p class="quote">ASK US ABOUT UNIVERSITIES</p>
+	<p style="text-align:center">WHAT WOULD YOU LIKE TO COMPARE?</p>
+	<!-- <p class="quote">ASK US ABOUT UNIVERSITIES</p>
 	<p class="quote">ASK US ABOUT MAJORS</p>
-	<p class="quote">ASK US ABOUT SPENDING</p>
+	<p class="quote">ASK US ABOUT SPENDING</p> -->
  
 	<form>
 	
@@ -26,9 +23,31 @@
 	<br>
 	<p class="help-text">NEW HERE? CHECK OUT OUR <a class="help-nav" href="/wizard/start">WIZARD</a> OR SOME <a class="help-nav" href="/info/examples">EXAMPLES</a>.</p>
 	</form>
+
+
+
+<link rel="stylesheet" href="/assets/ideal-image-slider.css">
+
+
+
+	<div id="examples_slider" onmouseover="stopSlider()" onmouseleave="startSlider()" style="width:400px; margin-left:auto; margin-right:auto; margin-top:30px;">
+        <img src="/assets/slider images/career.png" id="career" alt="">
+        <img src="/assets/slider images/city.png" id="city" src="" alt="">
+        <img src="/assets/slider images/major.png"  id="major" src="" alt="">
+        <img src="/assets/slider images/spend.png" id="spend" src="" alt="">
+        <img src="/assets/slider images/school.png" id="school" src="" alt="">  
+    </div>
+
+<script src="/assets/ideal-image-slider.js"></script>
+<script src="/assets/iis-captions.js"></script>
+<script src="/assets/index.js"></script>
+
+
 </div>
 
-<div id="loading" hidden="hidden">
+
+
+<div id="loading" hidden="hidden" style="padding-top:100px">
   <img id="loading-image" style="display: block; margin: 0 auto;" src="../assets/circle load.gif" alt="Loading..." />
 </div>
 
@@ -46,6 +65,11 @@
         $('.main-search').css({"border-color":c["p_hex"]});
         $('.help-nav').css({"color":c["p_hex"]});
         $('.fill_circle').css({"fill": c["p_hex"]});
+        //$('#examples_slider').css({"background-color": c["p_hex"]});
+    }
+    else
+    {
+    	//$('#examples_slider').css({"background-color": "#884412"});
     }
 </script>
 <script>

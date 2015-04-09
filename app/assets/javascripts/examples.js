@@ -7,6 +7,15 @@ var auto_cities, auto_majors, auto_schools, stillover;
 
 stillover = true;
 
+function showSearch(type) {
+	if (!stillover)
+	{
+		$("#" + type + "_container").css("background-image", "url(/assets/examples/"+ type +"_blur.jpeg)");
+		$("#" + type + "_form").removeAttr("hidden");
+		$("#" + type + "_clear").css("visibility", "visible");
+	}
+};
+
 $(document).ready(function() {
 
 	//wait to change bg color until image has loaded
@@ -239,16 +248,6 @@ function build_school_auto() {
   		autoFocus: true,
   		delay: 200
 	});
-};
-
-
-function showSearch(type) {
-	if (!stillover)
-	{
-		$("#" + type + "_container").css("background-image", "url(/assets/examples/"+ type +"_blur.jpeg)");
-		$("#" + type + "_form").removeAttr("hidden");
-		$("#" + type + "_clear").css("visibility", "visible");
-	}
 };
 
 function leftDiv() {

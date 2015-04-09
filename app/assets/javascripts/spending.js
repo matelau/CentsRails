@@ -59,13 +59,12 @@ function sketchProc(processing) {
 			spending_income = 45000;
 		else
 			spending_income = localStorage.getItem("income") * 1.00;
-		//console.log(spending_income);
 
 		calculateTaxes();
 		rebuildPercentages();
 
 		buildCategories();
-		document.getElementById("income_value").value = (spending_income).toFixed(2);
+		document.getElementById("income_value").value = (spending_income).toFixed(0);
 	};
 
 
@@ -132,7 +131,7 @@ function sketchProc(processing) {
 			processing.text("BUDGET", 420, 230);
 			processing.fill(0,200,0);
 			processing.textFont(font, 36);
-			processing.text("$" + String((spending_income*(100-spending_sum)/1200).toFixed(2)), 415, 208);
+			processing.text("$" + String((spending_income*(100-spending_sum)/1200).toFixed(0)), 415, 208);
 		}
 		//spending more than making
 		else if (spending_sum.toFixed(2) > 100)
@@ -143,7 +142,7 @@ function sketchProc(processing) {
 			processing.text("BUDGET", 420, 230);
 			processing.fill(200,0,0);
 			processing.textFont(font, 36);
-			processing.text("$" + String((spending_income*(spending_sum-100)/1200).toFixed(2)), 415, 208);
+			processing.text("$" + String((spending_income*(spending_sum-100)/1200).toFixed(0)), 415, 208);
 
 		}
 		else
@@ -187,9 +186,9 @@ function buildCategories() {
 		$(add).appendTo("#category_list");
 		//add the appropriate values into the text fields
 		if (spending_sum <= 0)
-			document.getElementById(key + "_field").value = (0).toFixed(2);
+			document.getElementById(key + "_field").value = (0).toFixed(0);
 		else
-			document.getElementById(key + "_field").value = ((spending_categories[spending_selected][key]/100)*(spending_income/12)).toFixed(2);
+			document.getElementById(key + "_field").value = ((spending_categories[spending_selected][key]/100)*(spending_income/12)).toFixed(0);
 	}
 	if (localStorage.getItem("colors"))
 	{
@@ -249,7 +248,7 @@ function updateIncome() {
 	//populate the fields with the rebuilt values
 	for (key in spending_categories[spending_selected])
 	{
-		document.getElementById(key + "_field").value = ((spending_categories[spending_selected][key]/100)*(temp_income/12)).toFixed(2);
+		document.getElementById(key + "_field").value = ((spending_categories[spending_selected][key]/100)*(temp_income/12)).toFixed(0);
 	}
 };
 

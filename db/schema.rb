@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150308195717) do
+ActiveRecord::Schema.define(version: 20150409195329) do
+
 
   create_table "amounts", force: true do |t|
     t.integer  "user_id"
@@ -29,6 +30,25 @@ ActiveRecord::Schema.define(version: 20150308195717) do
     t.integer  "employment_change_volume"
     t.float    "employment_change_percent", limit: 24
     t.integer  "job_openings"
+    t.string   "name"
+    t.string   "salary"
+    t.float    "unemp11",                   limit: 24
+    t.float    "unemp12",                   limit: 24
+<<<<<<< HEAD
+=======
+    t.string   "career_code"
+    t.float    "sal2003",                   limit: 24
+    t.float    "sal2004",                   limit: 24
+    t.float    "sal2005",                   limit: 24
+    t.float    "sal2006",                   limit: 24
+    t.float    "sal2007",                   limit: 24
+    t.float    "sal2008",                   limit: 24
+    t.float    "sal2009",                   limit: 24
+    t.float    "sal2010",                   limit: 24
+    t.float    "sal2011",                   limit: 24
+    t.float    "sal2012",                   limit: 24
+    t.float    "sal2013",                   limit: 24
+>>>>>>> scraper/career
   end
 
   create_table "coli_weather", id: false, force: true do |t|
@@ -92,6 +112,7 @@ ActiveRecord::Schema.define(version: 20150308195717) do
     t.float    "in_field",     limit: 24
     t.float    "recommend",    limit: 24
     t.float    "meaningful",   limit: 24
+    t.string   "level"
   end
 
   create_table "gets", force: true do |t|
@@ -105,6 +126,46 @@ ActiveRecord::Schema.define(version: 20150308195717) do
   add_index "gets", ["career_id"], name: "index_gets_on_career_id", using: :btree
   add_index "gets", ["degree_id"], name: "index_gets_on_degree_id", using: :btree
 
+  create_table "oauth_access_grants", force: true do |t|
+    t.integer  "resource_owner_id", null: false
+    t.integer  "application_id",    null: false
+    t.string   "token",             null: false
+    t.integer  "expires_in",        null: false
+    t.text     "redirect_uri",      null: false
+    t.datetime "created_at",        null: false
+    t.datetime "revoked_at"
+    t.string   "scopes"
+  end
+
+  add_index "oauth_access_grants", ["token"], name: "index_oauth_access_grants_on_token", unique: true, using: :btree
+
+  create_table "oauth_access_tokens", force: true do |t|
+    t.integer  "resource_owner_id"
+    t.integer  "application_id"
+    t.string   "token",             null: false
+    t.string   "refresh_token"
+    t.integer  "expires_in"
+    t.datetime "revoked_at"
+    t.datetime "created_at",        null: false
+    t.string   "scopes"
+  end
+
+  add_index "oauth_access_tokens", ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true, using: :btree
+  add_index "oauth_access_tokens", ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id", using: :btree
+  add_index "oauth_access_tokens", ["token"], name: "index_oauth_access_tokens_on_token", unique: true, using: :btree
+
+  create_table "oauth_applications", force: true do |t|
+    t.string   "name",                      null: false
+    t.string   "uid",                       null: false
+    t.string   "secret",                    null: false
+    t.text     "redirect_uri",              null: false
+    t.string   "scopes",       default: "", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
+
   create_table "offers", force: true do |t|
     t.integer  "university_id"
     t.integer  "degree_id"
@@ -115,6 +176,14 @@ ActiveRecord::Schema.define(version: 20150308195717) do
   create_table "queries", force: true do |t|
     t.integer  "user_id"
     t.string   "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "rates_careers", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "career_id"
+    t.integer  "rating"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -165,9 +234,6 @@ ActiveRecord::Schema.define(version: 20150308195717) do
   end
 
   create_table "users", force: true do |t|
-    t.float    "debt",            limit: 24
-    t.float    "books",           limit: 24
-    t.float    "savings",         limit: 24
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -175,6 +241,9 @@ ActiveRecord::Schema.define(version: 20150308195717) do
     t.string   "last_name"
     t.string   "password_digest"
     t.string   "email_type"
+    t.string   "primary_color"
+    t.string   "secondary_color"
+    t.boolean  "prefers_autocomplete"
   end
 
   create_table "weather_records", force: true do |t|

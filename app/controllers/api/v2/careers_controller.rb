@@ -20,11 +20,45 @@ class Api::V2::CareersController < ApplicationController
 		return render json: result, status: 200
 	end
 
+	# Rate a school.
+	def rate
+		career = Career.where(['name like ?', "#{params[:name]}%"]).first
+		career_rating = RatesCareer.where(user_id: params[:user], career_id: career.id).first
+
+		if career_rating.present?
+			career_rating.rating = params[:rating]
+			if career_rating.save
+				return render json: 'Rating saved.', status: 200
+			else
+				return render json: career_rating.errors, status: 400
+			end
+		else
+			career_rating = RatesCareer.new
+			career_rating.rating = params[:rating]
+			career_rating.user_id = params[:user]
+			career_rating.career_id = career.id
+			if career_rating.save
+				return render json: 'Rating saved.', status: 200
+			else
+				return render json: career_rating.errors, status: 400
+			end
+		end
+	end
+
 	# Get career by name.
 	def show
-		career = Career.where(career: params[:career])
-		if career.present?
-			return render json: career, status: 200
+		record = Career.where(name: params[:name]).first
+
+		if record.present?
+			cents_rating = RatesCareer.find_by_sql [
+				'SELECT avg(rating) AS average
+				FROM rates_careers
+				WHERE career_id = ?',
+				record.id
+			]
+			career = record.as_json
+			career[:average_rating] = cents_rating[0][:average].to_f
+			return render json: career.except('id', 'created_at', 'updated_at'), status: 200
 		else
 			return render json: [], status: 404
 		end
@@ -43,17 +77,19 @@ class Api::V2::CareersController < ApplicationController
 		if params[:careers][0][:order] and params[:careers][1][:order]
 			params[:careers].each do |career|
 				if career[:order] == 1
-					careers << career[:name]
+					careers << career
 				end
 			end
 			params[:careers].each do |career|
 				if career[:order] == 2
-					careers << career[:name]
+					careers << career
 				end
 			end
 		else
-			careers << params[:careers][0][:name]
-			careers << params[:careers][1][:name]
+			careers << params[:careers][0]
+			if params[:careers][1]
+				careers << params[:careers][1]
+			end
 		end
 
 		# Create a string of the form 'name = n1 OR name = n2 ...' and a list of 
@@ -68,10 +104,17 @@ class Api::V2::CareersController < ApplicationController
 		where_string = where_string[0..-5]	# Strip off the last ' OR '.
 
 		# Query the database.
-		records = Career.select(:name, :salary).where([where_string, *where_params])
+		records = Career.find_by_sql [
+							"SELECT name,
+											salary,
+											unemp11,
+											unemp12
+				FROM careers
+				WHERE #{where_string};",
+				*where_params
+			]
 
-		#@averages = Career.find_by_sql "SELECT AVG(unemp_rate) AS avg_unemp_rate, 
-		#										FROM colis"
+		no_data_for = Array.new
 
 		# Iterate over each career, keeping track of the career's index.
 		# (The index is needed because that's how the view tracks careers.)
@@ -85,17 +128,25 @@ class Api::V2::CareersController < ApplicationController
 				if record[:name] == career[:name]
 					match = true
 
-					result["career_salary_#{index}"] = [career[:salary], 0, 0, 0] # year 1, year 2, year 3, year 4
-					result["career_satisfaction_#{index}"] = 0.0
-					result["career_demand_#{index}"] = [0, 0, 0] # three values
+					cents_rating = RatesCareer.find_by_sql [
+						'SELECT avg(rating) AS average
+						FROM rates_careers
+						WHERE career_id = ?',
+						record[:id]
+					]
+					cents_rating = cents_rating[0][:average].to_f
+
+					result["career_#{index}"] = Hash.new
+					result["career_#{index}"]["name_#{index}"] = record[:name]
+					result["career_#{index}"]["career_salary_#{index}"] = [record[:salary], 
+						0, 0, 0, 0, 0, 0, 0, 0, 0]
+					result["career_#{index}"]["career_satisfaction_#{index}"] = 0.0
+					result["career_#{index}"]["career_demand_#{index}"] = [0, 0, 0] # three values
+					result["career_#{index}"]["career_unemploy_#{index}"] = [record[:unemp11], record[:unemp12]]
+					result["career_#{index}"]["career_rating_#{index}"] = cents_rating
 					break
 				end
 			end
-
-			#mystery
-			result["career_unemploy_1"] = [0, 0] # two values
-			result["career_unemploy_2"] = [0, 0] # two values
-			result["career_unemploy_3"] = [0, 0] # two values national average
 
 			# Keep track of which careers had neither exact nor state data.
 			if not match
@@ -105,5 +156,13 @@ class Api::V2::CareersController < ApplicationController
 			# Increment for next object.
 			index += 1
 		end
+
+		result["career_unemploy_3"] = [8.9, 8.1] # two values national average
+
+		if no_data_for.present?
+			result[:no_data_for] = no_data_for
+		end
+
+		return render json: result, status: 200
 	end
 end
