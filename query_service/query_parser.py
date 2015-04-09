@@ -152,8 +152,12 @@ def query(query):
 		mname = m.split("(")[0].strip()
 		mlev = m.split("(")[1].replace(")","").strip()
 		if " " + mname.lower() + " " in query:
-			majors.append({"name":mname,"level":mlev})
-			maj_names.append(m)
+			if mlev.split(" ")[0] not in query:
+				majors.append({"name":mname,"level":"Bachelors Degree"})
+				maj_names.append(mname + "(Bachelors Degree)")
+			else
+				majors.append({"name":mname,"level":mlev})
+				maj_names.append(m)
 	for c in cities:
 		temp = " " + c.replace(",", "").lower() + " "
 		if(temp in query):
