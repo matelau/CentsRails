@@ -153,8 +153,9 @@ def query(query):
 		mlev = m.split("(")[1].replace(")","").strip()
 		if " " + mname.lower() + " " in query:
 			if mlev.split(" ")[0] not in query:
-				majors.append({"name":mname,"level":"Bachelors Degree"})
-				maj_names.append(mname + "(Bachelors Degree)")
+				if {"name":mname,"level":"Bachelors Degree"} not in majors:
+					majors.append({"name":mname,"level":"Bachelors Degree"})
+					maj_names.append(mname + "(Bachelors Degree)")
 			else:
 				majors.append({"name":mname,"level":mlev})
 				maj_names.append(m)
@@ -254,8 +255,6 @@ def query(query):
 		resp = json.dumps(package)
 		return resp
 	elif len(majors) >= 1:
-		majors = set(majors)
-		maj_names = set(maj_names)
 		package = {
 			"operation":command,
 			"query":query,
