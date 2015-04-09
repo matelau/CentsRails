@@ -207,6 +207,15 @@ function major_api_request(query) {
 		  	 		$("#search_1_button").removeAttr("disabled");
 	  			}
 	  			nochanges = true;
+	  			if (data["jobs_1"].length == 0 && data["jobs_2"].length == 0)
+				{
+					//no top jobs for either major, disable that tab
+					$("#job_tab").hide();
+				}
+				else
+				{
+					$("#job_tab").show();
+				}
       		}
       	}
     }
@@ -255,6 +264,11 @@ function sketchProc(processing) {
 
 			data["major_1_name"] = "Computer Science";
 			data["major_2_name"] = "Music";
+		}
+		if (data["jobs_1"].length == 0 && data["jobs_2"].length == 0)
+		{
+			//no top jobs for either major, disable that tab
+			$("#job_tab").hide();
 		}
 		
 		document.getElementById("search_1_name").value = data["major_1_name"];
@@ -455,24 +469,9 @@ function sketchProc(processing) {
 			}
 			else
 			{
-				//write no job 2 data for ...
+				//write no job 3 data for ...
 				processing.text("NO TOP JOB #3 DATA.", 275, 145+move_down);
 			}
-			
-			//processing.text((data["jobs_1"][2]).toUpperCase(), 275, 103+move_down);
-			//processing.text((data["jobs_1"][4]).toUpperCase(), 275, 145+move_down);
-			//processing.fill(main);
-			//var bar1 = (data["jobs_1"][1]-min)/(max-min);
-			//var bar2 = (data["jobs_1"][3]-min)/(max-min);
-			//var bar3 = (data["jobs_1"][5]-min)/(max-min);
-			//processing.rect(bar_left, 50+move_down, bar_width*bar1, 20);
-			//processing.rect(bar_left, 88+move_down, bar_width*bar2, 20);
-			//processing.rect(bar_left, 130+move_down, bar_width*bar3, 20);
-			//processing.fill(0);
-			//processing.textAlign(processing.LEFT);
-			//processing.text("$" + (data["jobs_1"][1]/1000).toFixed(0) + "K", bar_left+bar_width*bar1+15, 65+move_down);
-			//processing.text("$" + (data["jobs_1"][3]/1000).toFixed(0) + "K", bar_left+bar_width*bar2+15, 103+move_down);
-			//processing.text("$" + (data["jobs_1"][5]/1000).toFixed(0) + "K", bar_left+bar_width*bar3+15, 145+move_down);
 
 		}
 		processing.stroke(0);
