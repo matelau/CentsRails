@@ -407,21 +407,72 @@ function sketchProc(processing) {
 			processing.textAlign(processing.RIGHT);
 			processing.noStroke();
 			processing.fill(0);
-			processing.text((data["jobs_1"][0]).toUpperCase(), 275, 65+move_down);
-			processing.text((data["jobs_1"][2]).toUpperCase(), 275, 103+move_down);
-			processing.text((data["jobs_1"][4]).toUpperCase(), 275, 145+move_down);
-			processing.fill(main);
-			var bar1 = (data["jobs_1"][1]-min)/(max-min);
-			var bar2 = (data["jobs_1"][3]-min)/(max-min);
-			var bar3 = (data["jobs_1"][5]-min)/(max-min);
-			processing.rect(bar_left, 50+move_down, bar_width*bar1, 20);
-			processing.rect(bar_left, 88+move_down, bar_width*bar2, 20);
-			processing.rect(bar_left, 130+move_down, bar_width*bar3, 20);
+			if (data["jobs_1"][0])
+			{
+				processing.text((data["jobs_1"][0]).toUpperCase(), 275, 65+move_down);
+				processing.fill(main);
+				var bar1 = (data["jobs_1"][1]-min)/(max-min);
+				processing.rect(bar_left, 50+move_down, bar_width*bar1, 20);
+				processing.fill(0);
+				processing.textAlign(processing.LEFT);
+				processing.text("$" + (data["jobs_1"][1]/1000).toFixed(0) + "K", bar_left+bar_width*bar1+15, 65+move_down);
+			}
+			else
+			{
+				//write no job 1 data for ...
+				processing.text("NO TOP JOB #1 DATA.", 275, 65+move_down);
+			}
+			processing.textAlign(processing.RIGHT);
+			processing.noStroke();
 			processing.fill(0);
-			processing.textAlign(processing.LEFT);
-			processing.text("$" + (data["jobs_1"][1]/1000).toFixed(0) + "K", bar_left+bar_width*bar1+15, 65+move_down);
-			processing.text("$" + (data["jobs_1"][3]/1000).toFixed(0) + "K", bar_left+bar_width*bar2+15, 103+move_down);
-			processing.text("$" + (data["jobs_1"][5]/1000).toFixed(0) + "K", bar_left+bar_width*bar3+15, 145+move_down);
+			if (data["jobs_1"][2])
+			{
+				processing.text((data["jobs_1"][2]).toUpperCase(), 275, 103+move_down);
+				processing.fill(main);
+				var bar1 = (data["jobs_1"][3]-min)/(max-min);
+				processing.rect(bar_left, 88+move_down, bar_width*bar1, 20);
+				processing.fill(0);
+				processing.textAlign(processing.LEFT);
+				processing.text("$" + (data["jobs_1"][3]/1000).toFixed(0) + "K", bar_left+bar_width*bar1+15, 103+move_down);
+			}
+			else
+			{
+				//write no job 2 data for ...
+				processing.text("NO TOP JOB #2 DATA.", 275, 103+move_down);
+			}
+			processing.textAlign(processing.RIGHT);
+			processing.noStroke();
+			processing.fill(0);
+			if (data["jobs_1"][4])
+			{
+				processing.text((data["jobs_1"][4]).toUpperCase(), 275, 145+move_down);
+				processing.fill(main);
+				var bar1 = (data["jobs_1"][5]-min)/(max-min);
+				processing.rect(bar_left, 130+move_down, bar_width*bar1, 20);
+				processing.fill(0);
+				processing.textAlign(processing.LEFT);
+				processing.text("$" + (data["jobs_1"][5]/1000).toFixed(0) + "K", bar_left+bar_width*bar1+15, 145+move_down);
+			}
+			else
+			{
+				//write no job 2 data for ...
+				processing.text("NO TOP JOB #3 DATA.", 275, 145+move_down);
+			}
+			
+			//processing.text((data["jobs_1"][2]).toUpperCase(), 275, 103+move_down);
+			//processing.text((data["jobs_1"][4]).toUpperCase(), 275, 145+move_down);
+			//processing.fill(main);
+			//var bar1 = (data["jobs_1"][1]-min)/(max-min);
+			//var bar2 = (data["jobs_1"][3]-min)/(max-min);
+			//var bar3 = (data["jobs_1"][5]-min)/(max-min);
+			//processing.rect(bar_left, 50+move_down, bar_width*bar1, 20);
+			//processing.rect(bar_left, 88+move_down, bar_width*bar2, 20);
+			//processing.rect(bar_left, 130+move_down, bar_width*bar3, 20);
+			//processing.fill(0);
+			//processing.textAlign(processing.LEFT);
+			//processing.text("$" + (data["jobs_1"][1]/1000).toFixed(0) + "K", bar_left+bar_width*bar1+15, 65+move_down);
+			//processing.text("$" + (data["jobs_1"][3]/1000).toFixed(0) + "K", bar_left+bar_width*bar2+15, 103+move_down);
+			//processing.text("$" + (data["jobs_1"][5]/1000).toFixed(0) + "K", bar_left+bar_width*bar3+15, 145+move_down);
 
 		}
 		processing.stroke(0);
@@ -432,21 +483,75 @@ function sketchProc(processing) {
 			processing.textAlign(processing.RIGHT);
 			processing.noStroke();
 			processing.fill(0);
-			processing.text((data["jobs_2"][0]).toUpperCase(), 275, 225+move_down);
-			processing.text((data["jobs_2"][2]).toUpperCase(), 275, 263+move_down);
-			processing.text((data["jobs_2"][4]).toUpperCase(), 275, 305+move_down);
-			processing.fill(gray);
-			var bar1 = (data["jobs_2"][1]-min)/(max-min);
-			var bar2 = (data["jobs_2"][3]-min)/(max-min);
-			var bar3 = (data["jobs_2"][5]-min)/(max-min);
-			processing.rect(bar_left, 210+move_down, bar_width*bar1, 20);
-			processing.rect(bar_left, 248+move_down, bar_width*bar2, 20);
-			processing.rect(bar_left, 290+move_down, bar_width*bar3, 20);
+			if (data["jobs_2"][0])
+			{
+				processing.text((data["jobs_2"][0]).toUpperCase(), 275, 225+move_down);
+				processing.fill(gray);
+				var bar1 = (data["jobs_2"][1]-min)/(max-min);
+				processing.rect(bar_left, 210+move_down, bar_width*bar1, 20);
+				processing.fill(0);
+				processing.textAlign(processing.LEFT);
+				processing.text("$" + (data["jobs_2"][1]/1000).toFixed(0) + "K", bar_left+bar_width*bar1+15, 225+move_down);
+			}
+			else
+			{
+				//write no job 1 data for ...
+				processing.text("NO TOP JOB #1 DATA.", 275, 225+move_down);
+			}
+			processing.textAlign(processing.RIGHT);
+			processing.noStroke();
 			processing.fill(0);
-			processing.textAlign(processing.LEFT);
-			processing.text("$" + (data["jobs_2"][1]/1000).toFixed(0) + "K", bar_left+bar_width*bar1+15, 225+move_down);
-			processing.text("$" + (data["jobs_2"][3]/1000).toFixed(0) + "K", bar_left+bar_width*bar2+15, 263+move_down);
-			processing.text("$" + (data["jobs_2"][5]/1000).toFixed(0) + "K", bar_left+bar_width*bar3+15, 305+move_down);
+			if (data["jobs_2"][2])
+			{
+				processing.text((data["jobs_2"][2]).toUpperCase(), 275, 263+move_down);
+				processing.fill(gray);
+				var bar1 = (data["jobs_2"][3]-min)/(max-min);
+				processing.rect(bar_left, 248+move_down, bar_width*bar1, 20);
+				processing.fill(0);
+				processing.textAlign(processing.LEFT);
+				processing.text("$" + (data["jobs_2"][3]/1000).toFixed(0) + "K", bar_left+bar_width*bar1+15, 263+move_down);
+			}
+			else
+			{
+				//write no job 2 data for ...
+				processing.text("NO TOP JOB #2 DATA.", 275, 263+move_down);
+			}
+			processing.textAlign(processing.RIGHT);
+			processing.noStroke();
+			processing.fill(0);
+			if (data["jobs_2"][4])
+			{
+				processing.text((data["jobs_2"][4]).toUpperCase(), 275, 305+move_down);
+				processing.fill(gray);
+				var bar1 = (data["jobs_2"][5]-min)/(max-min);
+				processing.rect(bar_left, 290+move_down, bar_width*bar1, 20);
+				processing.fill(0);
+				processing.textAlign(processing.LEFT);
+				processing.text("$" + (data["jobs_2"][5]/1000).toFixed(0) + "K", bar_left+bar_width*bar1+15, 305+move_down);
+			}
+			else
+			{
+				//write no job 2 data for ...
+				processing.text("NO TOP JOB #3 DATA.", 275, 305+move_down);
+			}
+			// processing.textAlign(processing.RIGHT);
+			// processing.noStroke();
+			// processing.fill(0);
+			// processing.text((data["jobs_2"][0]).toUpperCase(), 275, 225+move_down);
+			// //processing.text((data["jobs_2"][2]).toUpperCase(), 275, 263+move_down);
+			// //processing.text((data["jobs_2"][4]).toUpperCase(), 275, 305+move_down);
+			// processing.fill(gray);
+			// var bar1 = (data["jobs_2"][1]-min)/(max-min);
+			// //var bar2 = (data["jobs_2"][3]-min)/(max-min);
+			// //var bar3 = (data["jobs_2"][5]-min)/(max-min);
+			// processing.rect(bar_left, 210+move_down, bar_width*bar1, 20);
+			// //processing.rect(bar_left, 248+move_down, bar_width*bar2, 20);
+			// //processing.rect(bar_left, 290+move_down, bar_width*bar3, 20);
+			// processing.fill(0);
+			// processing.textAlign(processing.LEFT);
+			// processing.text("$" + (data["jobs_2"][1]/1000).toFixed(0) + "K", bar_left+bar_width*bar1+15, 225+move_down);
+			//processing.text("$" + (data["jobs_2"][3]/1000).toFixed(0) + "K", bar_left+bar_width*bar2+15, 263+move_down);
+			//processing.text("$" + (data["jobs_2"][5]/1000).toFixed(0) + "K", bar_left+bar_width*bar3+15, 305+move_down);
 
 		}
 		//processing.rect(bar_left, 50, bar_width*0.75, 20);
@@ -456,22 +561,22 @@ function sketchProc(processing) {
 };
 
 function update_tab(name) {
-	// if (name != active_tab)
-	// {
-	// 	processingInstance.noLoop();
-	// 	$("#main_viz").fadeTo(500, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(700, 1);});
-	// 	active_tab = name;
-	// 	if(data["location_1"])
-	// 	{
-	// 		hide_1 = false;
-	// 		document.getElementById("search_1_button").value = "HIDE";
-	// 	}
-	// 	if(data["location_2"])
-	// 	{
-	// 		hide_2 = false;
-	// 		document.getElementById("search_2_button").value = "HIDE";
-	// 	}
-	// }
+	if (name != active_tab)
+	{
+		processingInstance.noLoop();
+		$("#main_viz").fadeTo(500, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(700, 1);});
+		active_tab = name;
+		if(data["major_1"])
+		{
+			hide_1 = false;
+			document.getElementById("search_1_button").value = "HIDE";
+		}
+		if(data["major_2"])
+		{
+			hide_2 = false;
+			document.getElementById("search_2_button").value = "HIDE";
+		}
+	}
 };
 
 function hide_toggle(num) {
