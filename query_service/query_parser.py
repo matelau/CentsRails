@@ -155,7 +155,7 @@ def query(query):
 			if mlev.split(" ")[0] not in query:
 				majors.append({"name":mname,"level":"Bachelors Degree"})
 				maj_names.append(mname + "(Bachelors Degree)")
-			else
+			else:
 				majors.append({"name":mname,"level":mlev})
 				maj_names.append(m)
 	for c in cities:
