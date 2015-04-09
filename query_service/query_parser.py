@@ -254,6 +254,8 @@ def query(query):
 		resp = json.dumps(package)
 		return resp
 	elif len(majors) >= 1:
+		majors = set(majors)
+		maj_names = set(maj_names)
 		package = {
 			"operation":command,
 			"query":query,
