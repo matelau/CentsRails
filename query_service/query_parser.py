@@ -97,22 +97,22 @@ cresp = cs.send(cprep)
 
 cities = json.loads(cresp.text)
 
-cpac = {
-	"operation":"get",
-	"tables":[
-		"careers"
-	]
-}
+# cpac = {
+# 	"operation":"get",
+# 	"tables":[
+# 		"careers"
+# 	]
+# }
 
-cpayload = json.dumps(cpac)
-murl = "https://trycents.com/api/v1/record_names/"
-r = requests.Request("POST",murl,headers={'Content-Type':'application/json','Accept':'application/json'},data=cpayload)
-cprep = r.prepare()
-cs = requests.Session()
-cs.verify = False
-cresp = cs.send(cprep)
+# cpayload = json.dumps(cpac)
+# murl = "https://trycents.com/api/v1/record_names/"
+# r = requests.Request("POST",murl,headers={'Content-Type':'application/json','Accept':'application/json'},data=cpayload)
+# cprep = r.prepare()
+# cs = requests.Session()
+# cs.verify = False
+# cresp = cs.send(cprep)
 
-careers = json.loads(cresp.text)
+# careers = json.loads(cresp.text)
 
 # for c in cities:
 # 	cabbr = ""
