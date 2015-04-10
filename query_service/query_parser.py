@@ -48,7 +48,7 @@ state = {}
 commands = {"compare":"compare","vs.":"compare","vs":"compare","get":"get","find":"get","difference between":"compare"}
 common_abbrs = {"sf":"san francisco, california","nyc":"new york, new york","slc":"salt lake city, utah","la":"los angeles, california","ft.":"fort","ft":"fort","mt.":"mount","mt":"mount"}
 supers = {"best":"","worst":"","cheapest":"","expensive":"","priciest":""}
-levels = ["Associate","Bachelor","Master","Doctorate"]
+levels = ["associate","bachelor","master","doctorate"]
 datasets = {"schools":"school","universities":"university","cities":"city","majors":"degree","degrees":"degrees"}
 
 states = open("states.csv", "rU")
@@ -96,6 +96,23 @@ cs.verify = False
 cresp = cs.send(cprep)
 
 cities = json.loads(cresp.text)
+
+cpac = {
+	"operation":"get",
+	"tables":[
+		"careers"
+	]
+}
+
+cpayload = json.dumps(cpac)
+murl = "https://trycents.com/api/v1/record_names/"
+r = requests.Request("POST",murl,headers={'Content-Type':'application/json','Accept':'application/json'},data=cpayload)
+cprep = r.prepare()
+cs = requests.Session()
+cs.verify = False
+cresp = cs.send(cprep)
+
+careers = json.loads(cresp.text)
 
 # for c in cities:
 # 	cabbr = ""
@@ -149,20 +166,22 @@ def query(query):
 	for abbr, c in common_abbrs.iteritems():
 		if re.search(r"\b" + abbr + r"\b", query):
 			query = re.sub(r"\b" + abbr + r"\b", c, query)
-	nolev = set()
+	lmatch = []
+	for l in levels:
+		if l in query:
+			lmatch.append(l)
 	for m in majs:
 		mname = m.split("(")[0].strip()
 		mlev = m.split("(")[1].replace(")","").strip()
+		stay = True
+		for l in lmatch:
+			if l in mlev.lower():
+				stay = False
+		if stay:
+			continue
 		if " " + mname.lower() + " " in query:
-			if mlev in query:
-				nolev.append(mname)
-			else:
-				majors.append({"name":mname,"level":mlev})
-				maj_names.append(m)
-	if len(nolev) > 0:
-		for mn in nolev:
-			majors.append({"name":mn,"level":"Bachelors Degree"})
-			maj_names.append(mn + " (Bachelors Degree)")
+			majors.append({"name":mname,"level":mlev})
+			maj_names.append(m)
 	for c in cities:
 		temp = " " + c.replace(",", "").lower() + " "
 		if(temp in query):
