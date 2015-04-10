@@ -48,6 +48,7 @@ state = {}
 commands = {"compare":"compare","vs.":"compare","vs":"compare","get":"get","find":"get","difference between":"compare"}
 common_abbrs = {"sf":"san francisco, california","nyc":"new york, new york","slc":"salt lake city, utah","la":"los angeles, california","ft.":"fort","ft":"fort","mt.":"mount","mt":"mount"}
 supers = {"best":"","worst":"","cheapest":"","expensive":"","priciest":""}
+levels = ["Associate","Bachelor","Master","Doctorate"]
 datasets = {"schools":"school","universities":"university","cities":"city","majors":"degree","degrees":"degrees"}
 
 states = open("states.csv", "rU")
@@ -149,17 +150,21 @@ def query(query):
 	for abbr, c in common_abbrs.iteritems():
 		if re.search(r"\b" + abbr + r"\b", query):
 			query = re.sub(r"\b" + abbr + r"\b", c, query)
+	nolev = set()
 	for m in majs:
 		mname = m.split("(")[0].strip()
 		mlev = m.split("(")[1].replace(")","").strip()
 		if " " + mname.lower() + " " in query:
-			if mlev.split(" ")[0] not in query:
-				print 'here'
-				majors.append({"name":mname,"level":"Bachelors Degree"})
-				maj_names.append(mname + " (Bachelors Degree)")
+			for l in levels:
+				if l not in query:
+					nolev.append(mname)
 			else:
 				majors.append({"name":mname,"level":mlev})
 				maj_names.append(m)
+	if len(nolev) > 0:
+		for mn in nolev:
+			majors.append({"name":mn,"level":"Bachelors Degree"})
+			maj_names.append(mn + " (Bachelors Degree)")
 	for c in cities:
 		temp = " " + c.replace(",", "").lower() + " "
 		if(temp in query):
