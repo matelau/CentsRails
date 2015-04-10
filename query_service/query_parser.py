@@ -152,6 +152,7 @@ def query(query):
 		mname = m.split("(")[0].strip()
 		mlev = m.split("(")[1].replace(")","").strip()
 		if " " + mname.lower() + " " in query:
+			print mlev.split(" ")[0]
 			if mlev.split(" ")[0] not in query:
 				if {"name":mname,"level":"Bachelors Degree"} not in majors:
 					majors.append({"name":mname,"level":"Bachelors Degree"})
