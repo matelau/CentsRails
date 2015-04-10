@@ -131,7 +131,6 @@ def query(query):
 	package = {}
 	sent_query = query
 	query = query.lower()
-	print majs
 	
 	#query = str(query).translate(string.maketrans("",""), string.punctuation)
 	if(query[len(query)-1:] == "." or query[len(query)-1:] == "?" or query[len(query)-1:] == "!" or query[len(query)-1:] == ";"):
@@ -155,9 +154,8 @@ def query(query):
 		mname = m.split("(")[0].strip()
 		mlev = m.split("(")[1].replace(")","").strip()
 		if " " + mname.lower() + " " in query:
-			for l in levels:
-				if l not in query:
-					nolev.append(mname)
+			if mlev in query:
+				nolev.append(mname)
 			else:
 				majors.append({"name":mname,"level":mlev})
 				maj_names.append(m)
