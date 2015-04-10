@@ -174,11 +174,12 @@ def query(query):
 		mname = m.split("(")[0].strip()
 		mlev = m.split("(")[1].replace(")","").strip()
 		stay = True
-		for l in lmatch:
-			if l in mlev.lower():
-				stay = False
-		if stay:
-			continue
+		if len(lmatch) > 0:
+			for l in lmatch:
+				if l in mlev.lower():
+					stay = False
+			if stay:
+				continue
 		if " " + mname.lower() + " " in query:
 			majors.append({"name":mname,"level":mlev})
 			maj_names.append(m)
