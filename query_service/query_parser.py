@@ -130,6 +130,7 @@ def query(query):
 	package = {}
 	sent_query = query
 	query = query.lower()
+	print majs
 	
 	#query = str(query).translate(string.maketrans("",""), string.punctuation)
 	if(query[len(query)-1:] == "." or query[len(query)-1:] == "?" or query[len(query)-1:] == "!" or query[len(query)-1:] == ";"):
@@ -152,7 +153,6 @@ def query(query):
 		mname = m.split("(")[0].strip()
 		mlev = m.split("(")[1].replace(")","").strip()
 		if " " + mname.lower() + " " in query:
-			print mlev.split(" ")[0]
 			if mlev.split(" ")[0] not in query:
 				if {"name":mname,"level":"Bachelors Degree"} not in majors:
 					majors.append({"name":mname,"level":"Bachelors Degree"})
