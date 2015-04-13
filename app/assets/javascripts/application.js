@@ -122,20 +122,24 @@ function api_request(query) {
 			  			});
 			    	}
 			    	else {
+			    		var obj = []
+			    		Object.keys(data["objects"]).forEach(function(key) {
+			    			obs.push(key);
+			    		});
 			    		o1 = data["objects"][obs[0].toString()];
 	  					if(obs.length == 2){
 	  						o2 = data["objects"][obs[1]];
 	  					}
 
 			    		Object.keys(o1).forEach(function(key) {
-			    			var nKey = key.slice(0, - 1) + "1"
+			    			var nKey = key.slice(0, - 1) + "1";
 			    			data[nKey] = o1[key];
 						});
 
 						data["name_1"] = o1["name"];
 			    		if(o2 != null){
 							Object.keys(o2).forEach(function(key) {
-								var nKey = key.slice(0, - 1) + "2"
+								var nKey = key.slice(0, - 1) + "2";
 				    			data[nKey] = o2[key];
 							});
 							data["name_2"] = o2["name"];
