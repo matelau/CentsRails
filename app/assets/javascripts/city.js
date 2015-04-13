@@ -280,20 +280,20 @@ function sketchProc(processing) {
   					if(locs.length == 2){
   						l2 = data["locations"][locs[1]];
   					}
+
+  					delete data["locations"];
+
+		    		Object.keys(l1).forEach(function(key) {
+		    			data[key] = l1[key];
+					});
+		    		if(l2 != null){
+						Object.keys(l2).forEach(function(key) {
+			    			data[key] = l2[key];
+						});
+					}
   					$('#disModal').hide();
   				}
   			});
-
-    		delete data["locations"];
-
-    		Object.keys(l1).forEach(function(key) {
-    			data[key] = l1[key];
-			});
-    		if(l2 != null){
-				Object.keys(l2).forEach(function(key) {
-	    			data[key] = l2[key];
-				});
-			}
     	}
 
   		//console.log(data["location_1"]);
