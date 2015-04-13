@@ -424,7 +424,7 @@ function sketchProc(processing) {
 		processing.text("AVERAGE COST OF LIVING", 235+title_offset, 55);
 		processing.text("AVERAGE INCOME", 235+title_offset, 135);
 		processing.text("INCOME TAX RANGE", 235+title_offset, 215);
-		processing.text("AVERAGE TEMPERATURES", 235+title_offset, 295);
+		processing.text("TEMPERATURE RANGES", 235+title_offset, 295);
 		processing.stroke(225);
 		processing.strokeWeight(1);
 		processing.line(65+title_offset, 93, 235+title_offset, 93);
