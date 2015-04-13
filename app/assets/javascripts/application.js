@@ -95,7 +95,7 @@ function api_request(query) {
 			  					alert("Please click one or two only.");
 			  				}
 			  				else{
-			  					o1 = data["locations"][obs[0].toString()];
+			  					o1 = data["objects"][obs[0].toString()];
 			  					if(obs.length == 2){
 			  						o2 = data["objects"][obs[1]];
 			  					}
