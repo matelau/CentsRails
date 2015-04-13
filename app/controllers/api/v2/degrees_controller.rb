@@ -153,28 +153,26 @@ class Api::V2::DegreesController < ApplicationController
 		where_string = ""
 		where_params = Array.new
 		degrees.each do |degree|
-			where_string += 'd.name = ? OR '
+			where_string += 'name = ? OR '
 			where_params << degree[:name].strip
 		end
 		where_string = where_string[0..-5]	# Strip off the last ' OR '.
 
 		records = Degree.find_by_sql [
-			"SELECT d.id AS id_from_degree,
-							d.name AS degree_name,
-							d.level,
-							d.salary AS degree_salary,
-							d.recommend,
-							d.meaningful,
-							j.name AS job_name,
-							j.salary AS job_salary
-			FROM degrees AS d
-			LEFT OUTER JOIN top_jobs AS j
-			ON d.id = j.degree_id
+			"SELECT id AS id_from_degree,
+							name AS degree_name,
+							level,
+							salary AS degree_salary,
+							recommend,
+							meaningful
+			FROM degrees
 			WHERE #{where_string}",
 			*where_params
 		]
 
 		no_data_for = Array.new
+
+		deg = {}
 
 		# Iterate over each degree, keeping track of the degree's index.
 		# (The index is needed because that's how the view tracks degrees.)
@@ -189,20 +187,31 @@ class Api::V2::DegreesController < ApplicationController
 					salary = record[:degree_salary] ? record[:degree_salary].to_f : nil
 					recommended = record[:recommend] ? record[:recommend].to_f : nil
 					meaningful = record[:meaningful] ? record[:meaningful].to_f : nil
-					job_name = record[:job_name] ? record[:job_name] : nil
-					job_salary = record[:job_salary] ? record[:job_salary].to_f : nil
+
+					top_jobs = TopJob.find_by_sql [
+						"SELECT name, salary
+						FROM top_jobs
+						WHERE degree_id = ?
+						ORDER BY salary DESC
+						LIMIT 3",
+						record[:id_from_degree]
+					]
 					cents_rating = RatesMajor.find_by_sql [
 						'SELECT avg(rating) AS average
 						FROM rates_majors
 						WHERE degree_id = ?',
-						record[:id]
+						record[:id_from_degree]
 					]
 					cents_rating = cents_rating[0][:average].to_f
 
-					result["name_#{index}"] = "#{record[:degree_name]} (#{record[:level]})"
-					result["degree_#{index}"] = [salary, recommended, meaningful, cents_rating]
-					result["jobs_#{index}"] = Array.new
-					result["jobs_#{index}"].concat [job_name, job_salary]
+					deg["element_#{index}"] = Hash.new
+					deg["element_#{index}"]["name_#{index}"] = "#{record[:degree_name]} (#{record[:level]})"
+					deg["element_#{index}"]["degree_#{index}"] = [salary, recommended, meaningful, cents_rating]
+					deg["element_#{index}"]["jobs_#{index}"] = Array.new
+
+					top_jobs.each do |job|
+						deg["element_#{index}"]["jobs_#{index}"].concat [job[:name], job[:salary]]
+					end
 					break
 				end
 			end
@@ -214,6 +223,12 @@ class Api::V2::DegreesController < ApplicationController
 
 			# Increment for next object.
 			index += 1
+		end
+
+		result["elements"] = []
+
+		deg.each do |k, v|
+		  result["elements"] << v
 		end
 
 		# If there is no data for a degree, send an error message.

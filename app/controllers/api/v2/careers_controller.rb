@@ -105,6 +105,8 @@ class Api::V2::CareersController < ApplicationController
 				"SELECT * FROM careers WHERE #{where_string};", *where_params
 		]
 
+		car = {}
+
 		no_data_for = Array.new
 
 		# Iterate over each career, keeping track of the career's index.
@@ -126,18 +128,18 @@ class Api::V2::CareersController < ApplicationController
 					]
 					cents_rating = cents_rating[0][:average].to_f
 
-					result["career_#{index}"] = Hash.new
-					result["career_#{index}"]["name_#{index}"] = record[:name]
-					result["career_#{index}"]["career_salary_#{index}"] = [record[:sal2003], 
+					car["career_#{index}"] = Hash.new
+					car["career_#{index}"]["name_#{index}"] = record[:name]
+					car["career_#{index}"]["career_salary_#{index}"] = [record[:sal2003], 
 						record[:sal2004], record[:sal2005], record[:sal2006], record[:sal2007],
 						record[:sal2008], record[:sal2009], record[:sal2010], record[:sal2011], 
 						record[:sal2012], record[:sal2013]]
-					result["career_#{index}"]["career_demand_#{index}"] = [record[:job_openings], 
+					car["career_#{index}"]["career_demand_#{index}"] = [record[:job_openings], 
 							record[:employment_growth_percent], 
 							record[:employment_change_volume]
 					]
-					result["career_#{index}"]["career_unemploy_#{index}"] = [record[:unemp11], record[:unemp12]]
-					result["career_#{index}"]["career_rating_#{index}"] = cents_rating
+					car["career_#{index}"]["career_unemploy_#{index}"] = [record[:unemp11], record[:unemp12]]
+					car["career_#{index}"]["career_rating_#{index}"] = cents_rating
 					break
 				end
 			end
@@ -155,6 +157,12 @@ class Api::V2::CareersController < ApplicationController
 			result["operation"] = "get"
 		else
 			result["operation"] = "compare"
+		end
+
+		result["elements"] = []
+
+		car.each do |k, v|
+		  result["elements"] << v
 		end
 
 		result["career_unemploy_3"] = [8.9, 8.1] # two values national average
