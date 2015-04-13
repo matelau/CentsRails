@@ -266,8 +266,10 @@ function sketchProc(processing) {
   			$('#disModal').show();
 
   			$('#sub').click(function(event){
-  				console.log($('#location'));
-  				if($('#location').length == 0 || $('#location').length > 2){
+  				var locs = $('input:checkbox:checked.location').map(function () {
+				  return this.name;
+				}).get();
+  				if(locs.length == 0 || locs.length > 2){
   					alert("Please click one or two only.");
   				}
   			});
