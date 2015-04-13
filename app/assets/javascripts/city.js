@@ -298,86 +298,131 @@ function sketchProc(processing) {
 						data["location_2"] = l2["name"];
 					}
   					$('#disModal').hide();
+  					uWait = true;
   				}
   			});
     	}
 
   		//console.log(data["location_1"]);
   		//localStorage.removeItem("data_store");
+  		if(uWait) {
+	  		if (!data || (!data["location_1"] && !data["location_2"]))
+	  		{
+	  			data = new Array();
 
-  		if ((!data || (!data["location_1"] && !data["location_2"])) && uWait)
-  		{
-  			data = new Array();
+	  			data["weather_1"] =    [38.0, 44.0, 53.0, 61.0, 71.0, 82.0, 90.0, 89.0, 78.0, 65.0, 50.0, 40.0, 38.0, 90.0];
+				data["weatherlow_1"] = [26.0, 31.0, 38.0, 43.0, 52.0, 61.0, 69.0, 67.0, 58.0, 46.0, 36.0, 27.0, 26.0, 69.0];
+				data["weather_2"]    = [67.0, 71.0, 77.0, 85.0, 95.0, 104.0, 106.0, 104.0, 100.0, 89.0, 76.0, 66.0, 66.0, 106.0];
+				data["weatherlow_2"] = [46.0, 49.0, 53.0, 60.0, 69.0, 78.0, 83.0, 83.0, 77.0, 65.0, 53.0, 45.0, 45.0, 83.0];
 
-  			data["weather_1"] =    [38.0, 44.0, 53.0, 61.0, 71.0, 82.0, 90.0, 89.0, 78.0, 65.0, 50.0, 40.0, 38.0, 90.0];
-			data["weatherlow_1"] = [26.0, 31.0, 38.0, 43.0, 52.0, 61.0, 69.0, 67.0, 58.0, 46.0, 36.0, 27.0, 26.0, 69.0];
-			data["weather_2"]    = [67.0, 71.0, 77.0, 85.0, 95.0, 104.0, 106.0, 104.0, 100.0, 89.0, 76.0, 66.0, 66.0, 106.0];
-			data["weatherlow_2"] = [46.0, 49.0, 53.0, 60.0, 69.0, 78.0, 83.0, 83.0, 77.0, 65.0, 53.0, 45.0, 45.0, 83.0];
+				data["location_1"] = "Salt Lake City, Utah";
+				data["location_2"] = "Phoenix, Arizona";
 
-			data["location_1"] = "Salt Lake City, Utah";
-			data["location_2"] = "Phoenix, Arizona";
+				data["cli_1"] = [102, 94, 95, 95, 119, 105, 92, 92, 119];
+				data["cli_2"] = [96, 92, 100, 106, 97, 101, 99, 92, 106];
 
-			data["cli_1"] = [102, 94, 95, 95, 119, 105, 92, 92, 119];
-			data["cli_2"] = [96, 92, 100, 106, 97, 101, 99, 92, 106];
+				data["labor_1"] = [3.4, 48000, 4.4];
+				data["labor_2"] = [6.4, 51000, 3.3];
+				data["labor_3"] = [5.8, 44800, 4.6];
 
-			data["labor_1"] = [3.4, 48000, 4.4];
-			data["labor_2"] = [6.4, 51000, 3.3];
-			data["labor_3"] = [5.8, 44800, 4.6];
+				//sales, income min, income max, property
+				data["taxes_1"] = [6.85, 5.0, 5.0, 1407];
+				data["taxes_2"] = [8.3, 2.59, 4.54, 1427];
+				data["taxes_3"] = [8.25, 3.5, 7.8, 2065];
+	  		}
+	  		//console.log(data["location_2"]);
+	  		if (!data["location_2"])
+	  		{
+	  			hide_2 = true;
+	  			document.getElementById("search_2_button").value = "SHOW";
+	  			$("#search_2_button").attr("disabled", "true");
+	  		}
+	  		else
+	  		{
+	  			document.getElementById("search_2_name").value = data["location_2"];
+	  		}
 
-			//sales, income min, income max, property
-			data["taxes_1"] = [6.85, 5.0, 5.0, 1407];
-			data["taxes_2"] = [8.3, 2.59, 4.54, 1427];
-			data["taxes_3"] = [8.25, 3.5, 7.8, 2065];
-  		}
-  		//console.log(data["location_2"]);
-  		if (!data["location_2"])
-  		{
-  			hide_2 = true;
-  			document.getElementById("search_2_button").value = "SHOW";
-  			$("#search_2_button").attr("disabled", "true");
-  		}
-  		else
-  		{
-  			document.getElementById("search_2_name").value = data["location_2"];
-  		}
-
-		document.getElementById("search_1_name").value = data["location_1"];
-		old1 = document.getElementById("search_1_name").value;
-		old2 = document.getElementById("search_2_name").value;
-		nochanges = true;
+			document.getElementById("search_1_name").value = data["location_1"];
+			old1 = document.getElementById("search_1_name").value;
+			old2 = document.getElementById("search_2_name").value;
+			nochanges = true;
+		}
 	};
 
+	if(uWait) {
+		processing.draw = function() {
+			processing.background(255);
 
-	processing.draw = function() {
-		processing.background(255);
+			if (active_tab == 1)
+				city_summary();
+			else if (active_tab == 2)
+				cost_of_living();
+			else if (active_tab == 3)
+				labor_stats();
+			else if (active_tab == 4)
+				taxes();
+			else
+				weather();
 
-		if (active_tab == 1)
-			city_summary();
-		else if (active_tab == 2)
-			cost_of_living();
-		else if (active_tab == 3)
-			labor_stats();
-		else if (active_tab == 4)
-			taxes();
-		else
-			weather();
-
-		//show cli mouse over details
-		if (active_tab == 2)
-		{
-			var category = ["Overall, costs in", "Goods in", "Groceries in", "Health care costs in", "Housing costs in", "Transportation costs in", "Utilities in"];
-			for (var i=0; i<7; i++)
+			//show cli mouse over details
+			if (active_tab == 2)
 			{
-				//aligned horizontally
-				if (processing.mouseX < horz_locs[i] && processing.mouseX >= (horz_locs[i] - 16) && !hide_1)
+				var category = ["Overall, costs in", "Goods in", "Groceries in", "Health care costs in", "Housing costs in", "Transportation costs in", "Utilities in"];
+				for (var i=0; i<7; i++)
 				{
-						//location 1, postive change
-						var data1 = data["cli_1"][i];
-						if (processing.mouseY < (axis_location-10) && processing.mouseY > above_1[i])
+					//aligned horizontally
+					if (processing.mouseX < horz_locs[i] && processing.mouseX >= (horz_locs[i] - 16) && !hide_1)
+					{
+							//location 1, postive change
+							var data1 = data["cli_1"][i];
+							if (processing.mouseY < (axis_location-10) && processing.mouseY > above_1[i])
+							{
+								processing.fill(255);
+								processing.stroke(0);
+								var length = processing.max(data["location_1"].length, category[i]);
+								var height;
+								if (processing.mouseY < 60)
+									height = 62;
+								else
+									height = processing.mouseY;
+								processing.rect(processing.mouseX-(120+length)/2, height-60, length+120, 52);
+								processing.fill(0);
+								processing.textAlign(processing.CENTER);
+								processing.text(category[i], processing.mouseX, height-48);
+								processing.text(data["location_1"], processing.mouseX, height-36);
+								processing.text("are " + String(data1 - 100) + "% above the", processing.mouseX, height-24);
+								processing.text("national average.", processing.mouseX, height-12);
+
+							}
+							if (processing.mouseY > (axis_location+10) && processing.mouseY < below_1[i])
+							{
+								processing.fill(255);
+								processing.stroke(0);
+								var length = processing.max(data["location_1"].length, category[i]);
+								var height;
+								if (processing.mouseY > 595)
+									height = 593;
+								else
+									height = processing.mouseY;
+								processing.rect(processing.mouseX-(120+length)/2, height-60, length+120, 52);
+								processing.fill(0);
+								processing.textAlign(processing.CENTER);
+								processing.text(category[i], processing.mouseX, height-48);
+								processing.text(data["location_1"], processing.mouseX, height-36);
+								processing.text("are " + String(100 - data1) + "% below the", processing.mouseX, height-24);
+								processing.text("national average.", processing.mouseX, height-12);
+
+							}
+							
+					}
+					if (processing.mouseX >= horz_locs[i] && processing.mouseX < (horz_locs[i] + 16) && !hide_2)
+					{
+						var data2 = data["cli_2"][i];
+						if (processing.mouseY < (axis_location-10) && processing.mouseY > above_2[i])
 						{
 							processing.fill(255);
 							processing.stroke(0);
-							var length = processing.max(data["location_1"].length, category[i]);
+							var length = processing.max(data["location_2"].length, category[i]);
 							var height;
 							if (processing.mouseY < 60)
 								height = 62;
@@ -387,16 +432,16 @@ function sketchProc(processing) {
 							processing.fill(0);
 							processing.textAlign(processing.CENTER);
 							processing.text(category[i], processing.mouseX, height-48);
-							processing.text(data["location_1"], processing.mouseX, height-36);
-							processing.text("are " + String(data1 - 100) + "% above the", processing.mouseX, height-24);
+							processing.text(data["location_2"], processing.mouseX, height-36);
+							processing.text("are " + String(data2 - 100) + "% above the", processing.mouseX, height-24);
 							processing.text("national average.", processing.mouseX, height-12);
 
 						}
-						if (processing.mouseY > (axis_location+10) && processing.mouseY < below_1[i])
+						if (processing.mouseY > (axis_location+10) && processing.mouseY < below_2[i])
 						{
 							processing.fill(255);
 							processing.stroke(0);
-							var length = processing.max(data["location_1"].length, category[i]);
+							var length = processing.max(data["location_2"].length, category[i]);
 							var height;
 							if (processing.mouseY > 595)
 								height = 593;
@@ -406,58 +451,16 @@ function sketchProc(processing) {
 							processing.fill(0);
 							processing.textAlign(processing.CENTER);
 							processing.text(category[i], processing.mouseX, height-48);
-							processing.text(data["location_1"], processing.mouseX, height-36);
-							processing.text("are " + String(100 - data1) + "% below the", processing.mouseX, height-24);
+							processing.text(data["location_2"], processing.mouseX, height-36);
+							processing.text("are " + String(100 - data2) + "% below the", processing.mouseX, height-24);
 							processing.text("national average.", processing.mouseX, height-12);
 
 						}
-						
-				}
-				if (processing.mouseX >= horz_locs[i] && processing.mouseX < (horz_locs[i] + 16) && !hide_2)
-				{
-					var data2 = data["cli_2"][i];
-					if (processing.mouseY < (axis_location-10) && processing.mouseY > above_2[i])
-					{
-						processing.fill(255);
-						processing.stroke(0);
-						var length = processing.max(data["location_2"].length, category[i]);
-						var height;
-						if (processing.mouseY < 60)
-							height = 62;
-						else
-							height = processing.mouseY;
-						processing.rect(processing.mouseX-(120+length)/2, height-60, length+120, 52);
-						processing.fill(0);
-						processing.textAlign(processing.CENTER);
-						processing.text(category[i], processing.mouseX, height-48);
-						processing.text(data["location_2"], processing.mouseX, height-36);
-						processing.text("are " + String(data2 - 100) + "% above the", processing.mouseX, height-24);
-						processing.text("national average.", processing.mouseX, height-12);
-
-					}
-					if (processing.mouseY > (axis_location+10) && processing.mouseY < below_2[i])
-					{
-						processing.fill(255);
-						processing.stroke(0);
-						var length = processing.max(data["location_2"].length, category[i]);
-						var height;
-						if (processing.mouseY > 595)
-							height = 593;
-						else
-							height = processing.mouseY;
-						processing.rect(processing.mouseX-(120+length)/2, height-60, length+120, 52);
-						processing.fill(0);
-						processing.textAlign(processing.CENTER);
-						processing.text(category[i], processing.mouseX, height-48);
-						processing.text(data["location_2"], processing.mouseX, height-36);
-						processing.text("are " + String(100 - data2) + "% below the", processing.mouseX, height-24);
-						processing.text("national average.", processing.mouseX, height-12);
-
 					}
 				}
 			}
-		}
-	};
+		};
+	}
 
 	function city_summary() {
 		//draw categories and separations
