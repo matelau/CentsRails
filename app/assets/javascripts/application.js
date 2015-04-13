@@ -55,6 +55,7 @@ function getPartial(query_type){
 };
 
 function api_request(query) {
+	query = query.replace('/', '');
 	var temp = query.replace(/\s+/g, '');
 	if (temp == "")
 		return;
