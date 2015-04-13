@@ -63,16 +63,8 @@ for line in open("universities.csv"):
 for line in csv.reader(states):
 	state[line[0].lower()] = line[1].lower()
 
-mpac = {
-	"operation":"get",
-	"tables":[
-		"majors"
-	]
-}
-
-mpayload = json.dumps(mpac)
-murl = "https://trycents.com/api/v1/record_names/"
-r = requests.Request("POST",murl,headers={'Content-Type':'application/json','Accept':'application/json'},data=mpayload)
+murl = "https://trycents.com/api/v2/majors/"
+r = requests.Request("POST",murl,headers={'Accept':'application/json'})
 mprep = r.prepare()
 ms = requests.Session()
 ms.verify = False
@@ -80,15 +72,22 @@ mresp = ms.send(mprep)
 
 majs = json.loads(mresp.text)
 
-murl = "https://trycents.com/api/v2/cost_of_living"
-r = requests.Request("POST",murl,headers={'Accept':'application/json'})
+cpac = {
+	"operation":"get",
+	"tables":[
+		"cost of living"
+	]
+}
+
+cpayload = json.dumps(cpac)
+murl = "https://trycents.com/api/v1/record_names/"
+r = requests.Request("POST",murl,headers={'Content-Type':'application/json','Accept':'application/json'},data=cpayload)
 cprep = r.prepare()
 cs = requests.Session()
 cs.verify = False
 cresp = cs.send(cprep)
 
 cities = json.loads(cresp.text)
-
 
 murl = "https://trycents.com/api/v2/careers"
 r = requests.Request("POST",murl,headers={'Accept':'application/json'})
