@@ -345,6 +345,8 @@ def query(query):
 		}
 		for c in careers:
 			package["careers"].append({"name": c})
+
+		print package
 		#url = "https://%s/api/v1/schools/" % (ip)
 		url = "https://trycents.com/api/v2/careers/compare"
 		payload = json.dumps(package)
