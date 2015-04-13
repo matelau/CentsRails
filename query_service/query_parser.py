@@ -64,7 +64,7 @@ for line in csv.reader(states):
 	state[line[0].lower()] = line[1].lower()
 
 murl = "https://trycents.com/api/v2/degrees"
-r = requests.Request("POST",murl,headers={'Accept':'application/json'})
+r = requests.Request("GET",murl,headers={'Accept':'application/json'})
 mprep = r.prepare()
 ms = requests.Session()
 ms.verify = False
@@ -90,7 +90,7 @@ cresp = cs.send(cprep)
 cities = json.loads(cresp.text)
 
 murl = "https://trycents.com/api/v2/careers"
-r = requests.Request("POST",murl,headers={'Accept':'application/json'})
+r = requests.Request("GET",murl,headers={'Accept':'application/json'})
 cprep = r.prepare()
 cs = requests.Session()
 cs.verify = False
