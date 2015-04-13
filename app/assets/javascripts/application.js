@@ -105,12 +105,12 @@ function api_request(query) {
 					    		Object.keys(o1).forEach(function(key) {
 					    			data[key] = o1[key];
 								});
-								data["name_1"] = l1["name"];
+								data["name_1"] = o1["name"];
 					    		if(l2 != null){
 									Object.keys(o2).forEach(function(key) {
 						    			data[key] = o2[key];
 									});
-									data["name_2"] = l2["name"];
+									data["name_2"] = o2["name"];
 								}
 			  					$('#disModal').hide();
 			  				}
