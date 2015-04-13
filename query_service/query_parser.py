@@ -269,7 +269,7 @@ def query(query):
 			"degrees":[]
 		}
 		for m in majors:
-			package["majors"].append(m)
+			package["degrees"].append(m)
 		#url = "https://%s/api/v1/schools/" % (ip)
 		url = "https://trycents.com/api/v2/degrees/compare"
 		payload = json.dumps(package)
