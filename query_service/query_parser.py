@@ -72,8 +72,6 @@ mresp = ms.send(mprep)
 
 majs = json.loads(mresp.text)
 
-print majs
-
 cpac = {
 	"operation":"get",
 	"tables":[
@@ -159,6 +157,7 @@ def query(query):
 	for m in majs:
 		mname = m.split("(")[0].strip()
 		mlev = m.split("(")[1].replace(")","").strip()
+		print mname
 		stay = True
 		if len(lmatch) > 0:
 			for l in lmatch:
