@@ -157,7 +157,6 @@ def query(query):
 	for m in majs:
 		mname = m.split("(")[0].strip()
 		mlev = m.split("(")[1].replace(")","").strip()
-		print mname
 		stay = True
 		if len(lmatch) > 0:
 			for l in lmatch:
@@ -168,6 +167,7 @@ def query(query):
 		if " " + mname.lower() + " " in query:
 			majors.append({"name":mname,"level":mlev})
 			maj_names.append(m)
+	print majors
 	for c in cities:
 		temp = " " + c.replace(",", "").lower() + " "
 		if(temp in query):
