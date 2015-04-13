@@ -266,11 +266,11 @@ function sketchProc(processing) {
     		delete data["locations"];
 
     		Object.keys(l1).forEach(function(key) {
-    			data.key = l1.key;
+    			data[key] = l1[key];
 			});
 
 			Object.keys(l2).forEach(function(key) {
-    			data.key = l2.key;
+    			data[key] = l2[key];
 			});
     	}
 
