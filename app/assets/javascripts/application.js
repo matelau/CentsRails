@@ -95,9 +95,9 @@ function api_request(query) {
 			  					alert("Please click one or two only.");
 			  				}
 			  				else{
-			  					o1 = data["elements"][int(obs[0])];
+			  					o1 = data["elements"][obs[0]];
 			  					if(obs.length == 2){
-			  						o2 = data["elements"][int(obs[1])];
+			  						o2 = data["elements"][obs[1]];
 			  					}
 
 			  					delete data["elements"];
