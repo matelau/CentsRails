@@ -265,6 +265,12 @@ function sketchProc(processing) {
 
   			$('#disModal').show();
 
+  			$('#submit').click(function(event){
+  				if($('#location').length == 0 or $('#location').length > 2){
+  					alert("Please click one or two only.")
+  				}
+  			});
+
   			var l1 = data["locations"]["location_1"];
     		var l2 = data["locations"]["location_2"];
 
