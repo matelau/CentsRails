@@ -221,7 +221,7 @@ def query(query):
 	if command == "" and len(majors) > 1:
 		command = "compare"
 
-	if len(schools) == 0 and len(locations) == 0 and len(majors) == 0:
+	if len(schools) == 0 and len(locations) == 0 and len(majors) == 0 and len(careers) == 0:
 		package = {
 			"operation":"undefined",
 			"query":sent_query
