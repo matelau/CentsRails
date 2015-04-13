@@ -260,7 +260,7 @@ function sketchProc(processing) {
   		if(Object.keys(data["locations"]).length > 2) {
 
   			Object.keys(data["locations"]).forEach(function(key) {
-  				$('#disSelections > tbody:last').append("<tr><td><input type='checkbox' name='"+key+"' id='location'/></td><td>"+data['locations'][key]['name']+"</td></tr>");
+  				$('#disSelections > tbody:last').append("<tr><td><input type='checkbox' name='"+key+"' class='location'/></td><td>"+data['locations'][key]['name']+"</td></tr>");
   			});
 
   			$('#disModal').show();
