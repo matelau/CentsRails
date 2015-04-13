@@ -76,15 +76,15 @@ function api_request(query) {
 				else {
     				localStorage.removeItem("data_store");
 
+    				var o1 = null;
+			  		var o2 = null;
+
     				if(Object.keys(data["objects"]).length > 2) {
 			  			Object.keys(data["objects"]).forEach(function(key) {
 			  				$('#disSelections > tbody:last').append("<tr><td><input type='checkbox' name='"+key+"' class='obj'/></td><td>"+data['objects'][key]['name']+"</td></tr>");
 			  			});
 
 			  			$('#disModal').show();
-
-			  			var o1 = null;
-			  			var o2 = null;
 
 			  			$('#sub').click(function(event){
 			  				var obs = $('input:checkbox:checked.obj').map(function () {
@@ -122,6 +122,24 @@ function api_request(query) {
 			  			});
 			    	}
 			    	else {
+			    		o1 = data["objects"][obs[0].toString()];
+	  					if(obs.length == 2){
+	  						o2 = data["objects"][obs[1]];
+	  					}
+
+			    		Object.keys(o1).forEach(function(key) {
+			    			var nKey = key.slice(0, - 1) + "1"
+			    			data[nKey] = o1[key];
+						});
+
+						data["name_1"] = o1["name"];
+			    		if(o2 != null){
+							Object.keys(o2).forEach(function(key) {
+								var nKey = key.slice(0, - 1) + "2"
+				    			data[nKey] = o2[key];
+							});
+							data["name_2"] = o2["name"];
+						}
 			    		localStorage.setItem("data_store", JSON.stringify(data));
 						localStorage.setItem("query_type", data["query_type"]);
 						window.location = "/search/results/";
