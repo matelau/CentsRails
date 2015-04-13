@@ -257,12 +257,12 @@ function sketchProc(processing) {
 
   		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));
 
+  		console.log(data)
+
   		if(Object.keys(data["locations"]).length > 2) {
   			data.add(data["locations"]["location_1"]);
     		data.add(data["locations"]["location_2"]);
     	}
-
-    	console.log(data["locations"]["location_2"])
 
   		//console.log(data["location_1"]);
   		//localStorage.removeItem("data_store");
