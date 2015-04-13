@@ -103,12 +103,14 @@ function api_request(query) {
 			  					delete data["objects"];
 
 					    		Object.keys(o1).forEach(function(key) {
-					    			data[key] = o1[key];
+					    			var nKey = key.slice(0, - 1) + "1"
+					    			data[nKey] = o1[key];
 								});
 								data["name_1"] = o1["name"];
 					    		if(o2 != null){
 									Object.keys(o2).forEach(function(key) {
-						    			data[key] = o2[key];
+										var nKey = key.slice(0, - 1) + "2"
+						    			data[nKey] = o2[key];
 									});
 									data["name_2"] = o2["name"];
 								}
