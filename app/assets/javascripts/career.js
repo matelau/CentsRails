@@ -1,47 +1,220 @@
-var data, hide_1, hide_2, main, gray, font, active_tab;
+
+$(document).ready(function() {
+	$.get("/api/v2/careers", function(response) { 
+		auto_careers = response;
+		$( "#search_1_name" ).autocomplete({
+	  		source: function(req, responseFn) {
+	  			var re = $.ui.autocomplete.escapeRegex(req.term);
+	  			var pattern1 = new RegExp("^"+re, "i");
+	  			var a = $.grep(auto_careers, function(item, index){return pattern1.test(item);});
+	  			var b = $.grep(auto_careers, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
+	  			responseFn(a.concat(b));
+	  		},
+	  		response: function(e, u) {
+	  			//if match list isnt empty, save the first match
+	  			if (u.content.length != 0)
+	  				auto_1 = u.content[0].value;
+	  			else
+	  				auto_1 = "";
+	  		},
+	  		close: function(e, u) {
+	  			//when leaving, replace with first match
+	  			temp1 = document.getElementById("search_1_name").value;
+	  			if (temp1 == "")
+	  				auto_1 = "";
+	  			else if (auto_careers.indexOf(temp1) < 0 && auto_1)
+					document.getElementById("search_1_name").value = auto_1;
+				else if (auto_1)
+					auto_1 = temp1;
+	  		},
+	  		delay: 0
+		});
+		$( "#search_2_name" ).autocomplete({
+	  		source: function(req, responseFn) {
+	  			var re = $.ui.autocomplete.escapeRegex(req.term);
+	  			var pattern1 = new RegExp("^"+re, "i");
+	  			var a = $.grep(auto_careers, function(item, index){return pattern1.test(item);});
+	  			var b = $.grep(auto_careers, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
+	  			responseFn(a.concat(b));
+	  		},
+	  		response: function(e, u) {
+	  			if (u.content.length != 0)
+	  				auto_2 = u.content[0].value;
+	  			else
+	  				auto_2 = "";
+	  		},
+	  		close: function(e, u) {
+	  			//when leaving, replace with first match
+	  			temp2 = document.getElementById("search_2_name").value;
+	  			if (temp2 == "")
+	  				auto_2 = "";
+	  			else if (auto_careers.indexOf(temp2) < 0 && auto_2)
+					document.getElementById("search_2_name").value = auto_2;
+				else if (auto_2)
+					auto_2 = temp2;
+	  		},
+	  		delay: 0
+		});
+	});	
+});
+
+var data, hide_1, hide_2, main, gray, font, active_tab, auto_1, auto_2, sent1, sent2, nochanges, old1, old2, canvas, processingInstance;
+
+canvas = document.getElementById("main_viz");
+if (canvas != null)
+	processingInstance = new Processing(canvas, sketchProc);
+
+sent1 = true;
+sent2 = true;
 
 var sketch = new Processing.Sketch();
 
+function changeMade() {
+	if (old1 != document.getElementById("search_1_name").value)
+	{
+		old1 = document.getElementById("search_1_name").value;
+		nochanges = false;
+	}
+	if (old2 != document.getElementById("search_2_name").value)
+	{
+		old2 = document.getElementById("search_2_name").value;
+		nochanges = false;
+	}
+};
+
 function career_api_request(query) {
-	window.alert("Career data coming soon!");
-	// field1 = document.getElementById("search_1_name").value;
-	// field2 = document.getElementById("search_2_name").value;
-	// url = "";
+	if (nochanges)
+		return;
 
-	// type = "career"
+	var field1, field2;
+	field1 = "";
+	field2 = "";
 
-	// if(field1 == "" && field2 == ""){
-	// 	return;
-	// }
-	// else if(field2 == ""){
-	// 	url = "https://trycents.com:6001/data/type="+type+"&option="+field1;
-	// }
-	// else if(field1 == ""){
-	// 	url = "https://trycents.com:6001/data/type="+type+"&option="+field2;
-	// }
-	// else{
-	// 	url = "https://trycents.com:6001/data/type="+type+"&option="+field1+"&option="+field2;
-	// }
+	$("#error_1").empty();
+	$('#search_1_name').autocomplete('close');
+	//check to see if any of the fields are empty
+	if (document.getElementById("search_1_name").value != "")
+	{
+		if (auto_1 == "")
+			$("#error_1").append("Invalid career.");
+		if (auto_1 != "" && auto_1)
+			field1 = auto_1;		
+		else if (auto_1 == undefined)
+		{
+			if (auto_careers.indexOf(document.getElementById("search_1_name").value) < 0)
+				$("#error_1").append("Invalid career.");
+			else
+				field1 = document.getElementById("search_1_name").value;	
+		}	
+	}
+	$("#error_2").empty();
+	$('#search_2_name').autocomplete('close');
+	if (document.getElementById("search_2_name").value != "")
+	{
+		if (auto_2 == "")
+			$("#error_2").append("Invalid career.");
+		if (auto_2 != "" && auto_2)
+			field2 = auto_2;		
+		else if (auto_2 == undefined)
+		{
+			if (auto_careers.indexOf(document.getElementById("search_2_name").value) < 0)
+				$("#error_2").append("Invalid career.");
+			else
+				field2 = document.getElementById("search_2_name").value;	
+		}	
+	}
 
-	// var data = new Object();
-	// var xmlHttp = null;
+	url = "https://trycents.com:6001/data";
+	type = "career"
+	body = ""
 
- //    xmlHttp = new XMLHttpRequest();
- //    xmlHttp.open( "GET", url, true );
+	if((field1 == "" && field2 == "")){
+		sent1 = false;
+		sent2 = false;
+		return;
+	}
+	else if(field2 == ""){
+		body = JSON.stringify({type:type,option:[field1]});
+		sent2 = false;
+		sent1 = true;
+		processingInstance.noLoop();
+		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
+	}
+	else if(field1 == ""){
+		body = JSON.stringify({type:type,option:[field2]});
+		sent1 = false;
+		sent2 = true;
+		processingInstance.noLoop();
+		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
+	}
+	else{
+		body = JSON.stringify({type:type,option:[field1,field2]});
+		sent1 = true;
+		sent2 = true;
+		processingInstance.noLoop();
+		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
+	}
 
- //    xmlHttp.onreadystatechange = function() {
- //    	if (xmlHttp.readyState === 4) { 
- //      		if (xmlHttp.status === 200) {
- //      			data = jQuery.parseJSON(xmlHttp.responseText);
- //      			//make api request here with type included
-	// 			localStorage.setItem("query_type", type);
-	// 			localStorage.setItem("data_store",JSON.stringify(data));
+	var xmlHttp = null;
 
-	// 			location.reload();
- //      		}
- //      	}
- //    }
- //    xmlHttp.send( null );
+    xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "POST", url, true );
+    xmlHttp.onreadystatechange = function() {
+    	if (xmlHttp.readyState === 4) { 
+      		if (xmlHttp.status === 200) {
+      			data = jQuery.parseJSON(xmlHttp.responseText);
+      			//make api request here with type included
+				localStorage.setItem("query_type", type);
+				localStorage.setItem("data_store",JSON.stringify(data));
+
+				auto_1 = undefined;
+				auto_2 = undefined;
+
+	  			if (sent1 && sent2)
+	  			{
+	  				hide_1 = false; 
+	  				hide_2 = false;
+		  	 		document.getElementById("search_1_button").value = "HIDE";
+		  	 		$("#search_1_button").removeAttr("disabled");
+		  	 		document.getElementById("search_2_button").value = "HIDE";
+		  	 		$("#search_2_button").removeAttr("disabled");
+	  			}
+	  			else if (!sent1 && sent2)
+	  			{
+	  				hide_1 = true;
+	  				document.getElementById("search_1_button").value = "SHOW";
+		  	 		$("#search_1_button").attr("disabled", "true");
+		  	 		hide_2 = false;
+		  	 		document.getElementById("search_2_button").value = "HIDE";
+		  	 		$("#search_2_button").removeAttr("disabled");
+		  	 		//need to flip data to _2 arrays
+					data["career_salary_2"] = $.extend(true, [], data["career_salary_1"]);
+					data["career_salary_1"] = null;
+					data["career_satisfaction_2"] = $.extend(true, [], data["career_satisfaction_1"]);
+					data["career_satisfaction_1"] = null;
+					data["career_demand_2"] = $.extend(true, [], data["career_demand_1"]);
+					data["career_demand_1"] = null;
+					data["career_unemploy_2"] = $.extend(true, [], data["career_unemploy_1"]);
+					data["career_unemploy_1"] = null;
+	
+					data["career_2_name"] = data["career_1_name"];
+					data["career_1_name"] = null;
+
+	  			}
+	  			else if (sent1 && !sent2)
+	  			{
+	  				hide_2 = true;
+	  				document.getElementById("search_2_button").value = "SHOW";
+		  	 		$("#search_2_button").attr("disabled", "true");
+		  	 		hide_1 = false;
+		  	 		document.getElementById("search_1_button").value = "HIDE";
+		  	 		$("#search_1_button").removeAttr("disabled");
+	  			}
+	  			nochanges = true;
+      		}
+      	}
+    }
+    xmlHttp.send(body);
 };
 
 function sketchProc(processing) {
@@ -60,9 +233,13 @@ function sketchProc(processing) {
 			gray = processing.color(138, 136, 137);
 		}
 
+		data = new Array();
 
-		document.getElementById("search_1_name").value = "software engineer";
-		document.getElementById("search_2_name").value = "music teacher";
+		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));
+
+
+		//document.getElementById("search_1_name").value = "software engineer";
+		//document.getElementById("search_2_name").value = "music teacher";
 
 		processing.size(655,375);
 		//always set the initial tab to the first one
@@ -73,20 +250,42 @@ function sketchProc(processing) {
 		font = processing.loadFont("Roboto");
 		processing.textFont(font, 12);
 
-		data = new Array();
-		//career salary data, 1997-2013, min, max
-		data["career_salary_1"] = [52000, 53500, 53000, 54500, 54500, 55500, 59000, 72000, 73500, 77000, 79000, 81000, 82000, 85000, 86000, 86500, 88000, 52000, 88000];
-		data["career_salary_2"] = [27000, 28000, 29000, 29250, 29500, 30000, 29500, 27750, 25500, 26000, 26250, 26500, 26500, 26500, 25750, 28000, 27250, 25500, 30000];
-		//career satisfaction
-		data["career_satisfaction_1"] = 4.8;
-		data["career_satisfaction_2"] = 2.9;
-		//demand
-		data["career_demand_1"] = [353200, 22.4, 252700];
-		data["career_demand_2"] = [35500, 16.0, 18300];
-		//unemployment
-		data["career_unemploy_1"] = [3.8, 3.2];
-		data["career_unemploy_2"] = [8.1, 8.5];
-		data["career_unemploy_3"] = [6.0, 6.8];
+		if (!data || (!data["career_salary_1"] && !data["career_salary_2"]))
+  		{
+			data = new Array();
+			//career salary data, 1997-2013, min, max
+			data["career_salary_1"] = [52000, 53500, 53000, 54500, 54500, 55500, 59000, 72000, 73500, 77000, 79000, 81000, 82000, 85000, 86000, 86500, 88000, 52000, 88000];
+			data["career_salary_2"] = [27000, 28000, 29000, 29250, 29500, 30000, 29500, 27750, 25500, 26000, 26250, 26500, 26500, 26500, 25750, 28000, 27250, 25500, 30000];
+			//career satisfaction
+			data["career_satisfaction_1"] = 4.8;
+			data["career_satisfaction_2"] = 2.9;
+			//demand
+			data["career_demand_1"] = [353200, 22.4, 252700];
+			data["career_demand_2"] = [35500, 16.0, 18300];
+			//unemployment
+			data["career_unemploy_1"] = [3.8, 3.2];
+			data["career_unemploy_2"] = [8.1, 8.5];
+			data["career_unemploy_3"] = [6.0, 6.8];
+
+			data["career_1_name"] = "Software Engineer";
+			data["career_2_name"] = "Music Teacher";
+		}
+
+		document.getElementById("search_1_name").value = data["career_1_name"];
+
+		if (!data["career_salary_2"])
+  		{
+  			hide_2 = true;
+  			document.getElementById("search_2_button").value = "SHOW";
+  			$("#search_2_button").attr("disabled", "true");
+  		}
+  		else
+  		{
+  			document.getElementById("search_2_name").value = data["career_2_name"];
+  		}
+  		old1 = document.getElementById("search_1_name").value;
+		old2 = document.getElementById("search_2_name").value;
+		nochanges = true;
 
 	};
 

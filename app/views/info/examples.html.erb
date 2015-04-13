@@ -113,7 +113,7 @@
 
 	<div class="examples-img-left" id="career_container" onmouseover="showSearch('career');" onmouseleave="resort('career'); leftDiv();" style="background-image: url(/assets/examples/career.png);">
 		<btn class='btn btn-default' id="career_clear" onclick="clearFields('career');" style='float: right; visibility: hidden'>X</btn>
-		<form onsubmit="window.alert('Career data coming soon.'); return false;">
+		<form onsubmit="dataRequest('career'); return false;">
 			<ul class='examples_search' id="career_form" hidden>
 				<li><input class='search_1_examples' id='search_1_career' type='text'></li>
 				<li><p class='versus'>VS.</p></li>

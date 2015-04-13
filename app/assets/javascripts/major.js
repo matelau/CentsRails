@@ -254,7 +254,6 @@ function sketchProc(processing) {
 
   		if (!data || (!data["degree_1"] && !data["degree_2"]))
   		{
-  			console.log("in here");
   			data = new Array();
 			//salary, major recommendation, major satisfaction, cents major rating
 			data["degree_1"] = [95000, 89, 77, 4.8];
