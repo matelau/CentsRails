@@ -182,7 +182,6 @@ def query(query):
 	for c in cars:
 		if(c.lower() in query):
 			careers.append(c)
-	print careers
 	#tokens = nltk.word_tokenize(query)
 	for s in commands:
 		if s in query:
@@ -354,6 +353,8 @@ def query(query):
 		s = requests.Session()
 		s.verify = False
 		resp = s.send(prep)
+
+		print resp
 		if(resp.status_code == 400):
 			package = {
 				"operation":"undefined",
