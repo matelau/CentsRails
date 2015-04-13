@@ -257,7 +257,9 @@ function sketchProc(processing) {
 
   		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));
 
-  		data["location_1"] = data["name_1"];
+  		if(data["name_1"]){
+  			data["location_1"] = data["name_1"];
+  		}
 
   		if(data["name_2"]){
   			data["location_2"] = data["name_2"]
