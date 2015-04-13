@@ -20,7 +20,7 @@ class Api::V2::CareersController < ApplicationController
 		return render json: result, status: 200
 	end
 
-	# Rate a school.
+	# Rate a career.
 	def rate
 		career = Career.where(['name like ?', "#{params[:name]}%"]).first
 		career_rating = RatesCareer.where(user_id: params[:user], career_id: career.id).first
@@ -74,7 +74,7 @@ class Api::V2::CareersController < ApplicationController
 
 		# Order the careers.
 		careers = Array.new
-		if params[:careers][0][:order] and params[:careers][1][:order]
+		if params[:careers][0][:order].present? and params[:careers][1][:order].present?
 			params[:careers].each do |career|
 				if career[:order] == 1
 					careers << career
@@ -86,10 +86,7 @@ class Api::V2::CareersController < ApplicationController
 				end
 			end
 		else
-			careers << params[:careers][0]
-			if params[:careers][1]
-				careers << params[:careers][1]
-			end
+			careers = params[:careers]
 		end
 
 		# Create a string of the form 'name = n1 OR name = n2 ...' and a list of 
@@ -105,7 +102,7 @@ class Api::V2::CareersController < ApplicationController
 
 		# Query the database.
 		records = Career.find_by_sql [
-				"SELECT * FROM careers WHERE #{where_string};", where_params
+				"SELECT * FROM careers WHERE #{where_string};", *where_params
 		]
 
 		no_data_for = Array.new
@@ -114,7 +111,6 @@ class Api::V2::CareersController < ApplicationController
 		# (The index is needed because that's how the view tracks careers.)
 		index = 1
 		careers.each do |career|
-			result["jobs_#{index}"] = Array.new
 			match = false
 
 			# Search through the retrieved records for a match.
@@ -136,8 +132,7 @@ class Api::V2::CareersController < ApplicationController
 						record[:sal2004], record[:sal2005], record[:sal2006], record[:sal2007],
 						record[:sal2008], record[:sal2009], record[:sal2010], record[:sal2011], 
 						record[:sal2012], record[:sal2013]]
-					result["career_#{index}"]["career_satisfaction_#{index}"] = 0.0
-					result["career_#{index}"]["career_demand_#{index}"] = [0, 
+					result["career_#{index}"]["career_demand_#{index}"] = [record[:job_openings], 
 							record[:employment_growth_percent], 
 							record[:employment_change_volume]
 					]
