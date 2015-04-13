@@ -75,6 +75,8 @@ function api_request(query) {
 				}
 				else {
     				localStorage.removeItem("data_store");
+    				res = JSON.stringify(data);
+    				Console.log(res.length())
 					localStorage.setItem("data_store", JSON.stringify(data));
 					localStorage.setItem("query_type", data["query_type"]);
 					window.location = "/search/results/";
