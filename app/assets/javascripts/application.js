@@ -79,9 +79,9 @@ function api_request(query) {
     				var o1 = null;
 			  		var o2 = null;
 
-    				if(data["objects"].length > 2) {
-			  			data["objects"].forEach(function(key,value) {
-			  				$('#disSelections > tbody:last').append("<tr><td><input type='checkbox' name='"+key+"' class='obj'/></td><td>"+value['name']+"</td></tr>");
+    				if(data["elements"].length > 2) {
+    					for(var i = 0, i < data["elements"].length, i++) {
+			  				$('#disSelections > tbody:last').append("<tr><td><input type='checkbox' name='"+i+"' class='obj'/></td><td>"+data['elements'][i]['name']+"</td></tr>");
 			  			});
 
 			  			$('#disModal').show();
@@ -95,12 +95,12 @@ function api_request(query) {
 			  					alert("Please click one or two only.");
 			  				}
 			  				else{
-			  					o1 = data["objects"][obs[0].toString()];
+			  					o1 = data["elements"][int(obs[0])];
 			  					if(obs.length == 2){
-			  						o2 = data["objects"][obs[1]];
+			  						o2 = data["elements"][int(obs[1])];
 			  					}
 
-			  					delete data["objects"];
+			  					delete data["elements"];
 
 					    		Object.keys(o1).forEach(function(key) {
 					    			var nKey = key.slice(0, - 1) + "1"
@@ -123,13 +123,9 @@ function api_request(query) {
 			  			});
 			    	}
 			    	else {
-			    		var obs = [];
-			    		Object.keys(data["objects"]).forEach(function(key) {
-			    			obs.push(key);
-			    		});
-			    		o1 = data["objects"][obs[0].toString()];
-	  					if(obs.length == 2){
-	  						o2 = data["objects"][obs[1]];
+			    		o1 = data["elements"][0];
+	  					if(data["elements"].length == 2){
+	  						o2 = data["elements"][1];
 	  					}
 
 			    		Object.keys(o1).forEach(function(key) {
