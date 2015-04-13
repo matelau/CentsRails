@@ -80,16 +80,8 @@ mresp = ms.send(mprep)
 
 majs = json.loads(mresp.text)
 
-cpac = {
-	"operation":"get",
-	"tables":[
-		"cost of living"
-	]
-}
-
-cpayload = json.dumps(cpac)
-murl = "https://trycents.com/api/v1/record_names/"
-r = requests.Request("POST",murl,headers={'Content-Type':'application/json','Accept':'application/json'},data=cpayload)
+murl = "https://trycents.com/api/v2/cost_of_living"
+r = requests.Request("POST",murl,headers={'Accept':'application/json'})
 cprep = r.prepare()
 cs = requests.Session()
 cs.verify = False
@@ -97,22 +89,15 @@ cresp = cs.send(cprep)
 
 cities = json.loads(cresp.text)
 
-# cpac = {
-# 	"operation":"get",
-# 	"tables":[
-# 		"careers"
-# 	]
-# }
 
-# cpayload = json.dumps(cpac)
-# murl = "https://trycents.com/api/v1/record_names/"
-# r = requests.Request("POST",murl,headers={'Content-Type':'application/json','Accept':'application/json'},data=cpayload)
-# cprep = r.prepare()
-# cs = requests.Session()
-# cs.verify = False
-# cresp = cs.send(cprep)
+murl = "https://trycents.com/api/v2/careers"
+r = requests.Request("POST",murl,headers={'Accept':'application/json'})
+cprep = r.prepare()
+cs = requests.Session()
+cs.verify = False
+cresp = cs.send(cprep)
 
-# careers = json.loads(cresp.text)
+careers = json.loads(cresp.text)
 
 # for c in cities:
 # 	cabbr = ""
@@ -250,7 +235,7 @@ def query(query):
 		for s in schools:
 			package["schools"].append({"name":s})
 		#url = "https://%s/api/v1/schools/" % (ip)
-		url = "https://trycents.com/api/v1/schools/"
+		url = "https://trycents.com/api/v2/schools/compare"
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
 		prep = r.prepare()
@@ -287,7 +272,7 @@ def query(query):
 		for m in majors:
 			package["majors"].append(m)
 		#url = "https://%s/api/v1/schools/" % (ip)
-		url = "https://trycents.com/api/v1/majors/"
+		url = "https://trycents.com/api/v2/degrees/compare"
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
 		prep = r.prepare()
@@ -324,7 +309,7 @@ def query(query):
 		for l in locations:
 			package["locations"].append({"city":l[:l.index(",")],"state":l[l.index(", ")+2:]})
 		#url = "https://%s/api/v1/coli/" % (ip)
-		url = "https://trycents.com/api/v1/coli"
+		url = "https://trycents.com/api/v2/cost_of_living/compare"
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
 		prep = r.prepare()
@@ -460,7 +445,7 @@ def data():
 		for o in query['option']:
 			package["careers"].append(o)
 
-		url = "https://trycents.com/api/v1/careers/"
+		url = "https://trycents.com/api/v2/careers/compare"
 
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
