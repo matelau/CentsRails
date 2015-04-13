@@ -96,7 +96,7 @@ cs = requests.Session()
 cs.verify = False
 cresp = cs.send(cprep)
 
-careers = json.loads(cresp.text)
+cars = json.loads(cresp.text)
 
 # for c in cities:
 # 	cabbr = ""
@@ -179,7 +179,7 @@ def query(query):
 		if cname in query:
 			if c not in locations:
 				locations.append(c)
-	for c in careers:
+	for c in cars:
 		if(c.lower() in query):
 			careers.append(c)
 	print careers
