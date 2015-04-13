@@ -257,9 +257,14 @@ function sketchProc(processing) {
 
   		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));
 
-  		console.log(data)
-
   		if(Object.keys(data["locations"]).length > 2) {
+
+  			Object.keys(data["locations"]).forEach(function(key) {
+  				$('#disSelections > tbody:last').append("<tr><td><input type='checkbox' name='"+key+"' id='location'/></td><td>"+data['locations'][key]['name']+"</td></tr>");
+  			});
+
+  			$('#disModal').modal('toggle');
+
   			var l1 = data["locations"]["location_1"];
     		var l2 = data["locations"]["location_2"];
 

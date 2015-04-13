@@ -170,9 +170,9 @@ class Api::V2::ColiController < ApplicationController
 					match = true
 					loc["location_#{index}"] = extract_coli_data(location, index, record)
 					if location[:city].present?
-						loc["location_#{index}"]["location_#{index}"] = "#{location[:city]}, #{location[:state]}"
+						loc["location_#{index}"][:name] = "#{location[:city]}, #{location[:state]}"
 					else
-						loc["location_#{index}"]["location_#{index}"] = "#{location[:state]}"
+						loc["location_#{index}"][:name] = "#{location[:state]}"
 					end
 					break
 				end
@@ -185,7 +185,7 @@ class Api::V2::ColiController < ApplicationController
 						 record[:state] == location[:state] then
 						state_match = true
 						loc["location_#{index}"] = extract_coli_data(location, index, record)
-						loc["location_#{index}"]["location_#{index}"] = location[:state]
+						loc["location_#{index}"][:name] = location[:state]
 						break
 					end
 				end
