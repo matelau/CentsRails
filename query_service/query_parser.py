@@ -182,6 +182,7 @@ def query(query):
 	for c in careers:
 		if(c.lower() in query):
 			careers.append(c)
+	print careers
 	#tokens = nltk.word_tokenize(query)
 	for s in commands:
 		if s in query:
