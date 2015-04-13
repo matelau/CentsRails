@@ -82,7 +82,7 @@ function api_request(query) {
     				if(data["elements"].length > 2) {
     					for(var i = 0; i < data["elements"].length; i++) {
 			  				$('#disSelections > tbody:last').append("<tr><td><input type='checkbox' name='"+i+"' class='obj'/></td><td>"+data['elements'][i]['name']+"</td></tr>");
-			  			});
+			  			}
 
 			  			$('#disModal').show();
 
