@@ -122,7 +122,7 @@ function api_request(query) {
 			  			});
 			    	}
 			    	else {
-			    		var obj = []
+			    		var obs = [];
 			    		Object.keys(data["objects"]).forEach(function(key) {
 			    			obs.push(key);
 			    		});
