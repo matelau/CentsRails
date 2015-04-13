@@ -106,7 +106,7 @@ function api_request(query) {
 					    			data[key] = o1[key];
 								});
 								data["name_1"] = o1["name"];
-					    		if(l2 != null){
+					    		if(o2 != null){
 									Object.keys(o2).forEach(function(key) {
 						    			data[key] = o2[key];
 									});
