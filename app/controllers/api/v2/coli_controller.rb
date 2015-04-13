@@ -214,7 +214,7 @@ class Api::V2::ColiController < ApplicationController
 		result["objects"] = []
 
 		loc.each do |k,v|
-			result["objects"] << {k,v}
+			result["objects"] << {k => v}
 		end
 
 		labor_avg = Array.new
