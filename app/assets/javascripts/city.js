@@ -296,6 +296,9 @@ function sketchProc(processing) {
 						});
 						data["location_2"] = l2["name"];
 					}
+					else {
+						delete data["location_2"];
+					}
   					$('#disModal').hide();
   					uWait = true;
   				}
@@ -306,7 +309,7 @@ function sketchProc(processing) {
   		//localStorage.removeItem("data_store");
   		if (!data || (!data["location_1"] && !data["location_2"]))
   		{
-  			data = new Array();
+  			//data = new Array();
 
   			data["weather_1"] =    [38.0, 44.0, 53.0, 61.0, 71.0, 82.0, 90.0, 89.0, 78.0, 65.0, 50.0, 40.0, 38.0, 90.0];
 			data["weatherlow_1"] = [26.0, 31.0, 38.0, 43.0, 52.0, 61.0, 69.0, 67.0, 58.0, 46.0, 36.0, 27.0, 26.0, 69.0];
