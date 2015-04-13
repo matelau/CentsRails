@@ -265,6 +265,9 @@ function sketchProc(processing) {
 
   			$('#disModal').show();
 
+  			var l1 = null;
+  			var l2 = null;
+
   			$('#sub').click(function(event){
   				var locs = $('input:checkbox:checked.location').map(function () {
 				  return this.name;
@@ -272,20 +275,25 @@ function sketchProc(processing) {
   				if(locs.length == 0 || locs.length > 2){
   					alert("Please click one or two only.");
   				}
+  				else{
+  					l1 = data["locations"][locs[0]];
+  					if(locs.length == 2){
+  						l2 = data["locations"][locs[1]];
+  					}
+  					$('#disModal').hide();
+  				}
   			});
-
-  			var l1 = data["locations"]["location_1"];
-    		var l2 = data["locations"]["location_2"];
 
     		delete data["locations"];
 
     		Object.keys(l1).forEach(function(key) {
     			data[key] = l1[key];
 			});
-
-			Object.keys(l2).forEach(function(key) {
-    			data[key] = l2[key];
-			});
+    		if(l2 != null){
+				Object.keys(l2).forEach(function(key) {
+	    			data[key] = l2[key];
+				});
+			}
     	}
 
   		//console.log(data["location_1"]);
