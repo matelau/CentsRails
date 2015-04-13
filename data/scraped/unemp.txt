@@ -1,0 +1,504 @@
+job name;industry;unemp 2011;unemp 2012
+Accountants and auditors;Business and financial operations occupations;4.2;4.2
+Actors;Arts, design, entertainment, sports, and media occupations;35.2;28.5
+Actuaries;Computer and mathematical occupations;N/A;N/A
+Administrative services managers;Management occupations;7.9;5.3
+Advertising and promotions managers;Management occupations;7.1;3.2
+Aerospace engineers;Architecture and engineering occupations;1.9;3.7
+Agents and business managers of artists, performers, and athletes;Business and financial operations occupations;6.3;11.8
+Agricultural and food science technicians;Life, physical, and social science occupations;7.6;3.7
+Agricultural and food scientists;Life, physical, and social science occupations;7.5;3.7
+Agricultural engineers;Architecture and engineering occupations;N/A;N/A
+Announcers;Arts, design, entertainment, sports, and media occupations;12.4;4.6
+Appraisers and assessors of real estate;Business and financial operations occupations;6.9;1
+Architects, except naval;Architecture and engineering occupations;7.3;6
+Archivists, curators, and museum technicians;Education, training, and library occupations;4.4;1.8
+Artists and related workers;Arts, design, entertainment, sports, and media occupations;7;6.4
+Astronomers and physicists;Life, physical, and social science occupations;3.5;0.3
+Athletes, coaches, umpires, and related workers;Arts, design, entertainment, sports, and media occupations;9;8.8
+Atmospheric and space scientists;Life, physical, and social science occupations;4.6;0
+Audiologists;Healthcare practitioner and technical occupations;N/A;0.8
+Biological scientists;Life, physical, and social science occupations;2.9;3
+Biological technicians;Life, physical, and social science occupations;2.8;6.3
+Biomedical engineers;Architecture and engineering occupations;4.2;0.4
+Broadcast and sound engineering technicians and radio operators;Arts, design, entertainment, sports, and media occupations;5.8;7.6
+Budget analysts;Business and financial operations occupations;0.3;7.7
+Chemical engineers;Architecture and engineering occupations;3.6;2.7
+Chemical technicians;Life, physical, and social science occupations;5.1;1.5
+Chemists and materials scientists;Life, physical, and social science occupations;6.1;5.5
+Chief executives;Management occupations;2.8;2.1
+Chiropractors;Healthcare practitioner and technical occupations;2.4;1.9
+Civil engineers;Architecture and engineering occupations;4.8;3.4
+Claims adjusters, appraisers, examiners, and investigators;Business and financial operations occupations;6.9;2.3
+Clergy;Community and social services occupations;1.2;1.2
+Clinical laboratory technologists and technicians;Healthcare practitioner and technical occupations;4.3;2.1
+Compliance officers, except agriculture, construction, health and safety, and transportation;Business and financial operations occupations;2.3;2.6
+Computer and information systems managers;Management occupations;2.9;3.2
+Computer hardware engineers;Architecture and engineering occupations;2.3;1.9
+Computer programmers;Computer and mathematical occupations;3.7;4.5
+Computer scientists and systems analysts;Computer and mathematical occupations;;3.6
+Computer support specialists;Computer and mathematical occupations;7.3;6.6
+Conservation scientists and foresters;Life, physical, and social science occupations;4;2.1
+Construction managers;Management occupations;7;4.7
+Cost estimators;Business and financial operations occupations;5.8;6.8
+Counselors;Community and social services occupations;4.8;7.1
+Credit analysts;Business and financial operations occupations;9.8;3.1
+Dancers and choreographers;Arts, design, entertainment, sports, and media occupations;10.3;10
+Database administrators;Computer and mathematical occupations;1.3;3.6
+Dental hygienists;Healthcare practitioner and technical occupations;2.8;2.8
+Dentists;Healthcare practitioner and technical occupations;0.7;1.5
+Designers;Arts, design, entertainment, sports, and media occupations;7.1;5.5
+Diagnostic related technologists and technicians;Healthcare practitioner and technical occupations;4.4;4.1
+Dietitians and nutritionists;Healthcare practitioner and technical occupations;4.4;2.8
+Directors, religious activities and education;Community and social services occupations;3.4;0.3
+Drafters;Architecture and engineering occupations;8.9;9.3
+Economists;Life, physical, and social science occupations;9.5;11.3
+Editors;Arts, design, entertainment, sports, and media occupations;3.8;4.4
+Education administrators;Management occupations;2.5;3.1
+Electrical and electronics engineers;Architecture and engineering occupations;3.4;3.4
+Elementary and middle school teachers;Education, training, and library occupations;4;4.5
+Emergency medical technicians and paramedics;Healthcare practitioner and technical occupations;3.1;5.5
+Engineering technicians, except drafters;Architecture and engineering occupations;8.5;4.7
+Engineers, all other;Architecture and engineering occupations;2.9;3.4
+Entertainers and performers, sports and related workers, all other;Arts, design, entertainment, sports, and media occupations;8.2;3.3
+Environmental engineers;Architecture and engineering occupations;4.1;2.7
+Environmental scientists and geoscientists;Life, physical, and social science occupations;1.2;2.6
+Farm, ranch, and other agricultural managers;Management occupations;2;2.1
+Farmers and ranchers;Management occupations;2;2.1
+Financial analysts;Business and financial operations occupations;5.7;2.3
+Financial examiners;Business and financial operations occupations;9.9;2
+Financial managers;Management occupations;3.7;3
+Financial specialists, all other;Business and financial operations occupations;6.8;5.5
+Food service managers;Management occupations;6.1;5.8
+Funeral directors;Management occupations;N/A;7
+Gaming managers;Management occupations;12.3;3.8
+General and operations managers;Management occupations;5.7;4.1
+Geological and petroleum technicians;Life, physical, and social science occupations;2.2;4.7
+Health diagnosing and treating practitioner support technicians;Healthcare practitioner and technical occupations;N/A;3.4
+Health diagnosing and treating practitioners, all other;Healthcare practitioner and technical occupations;N/A;3.4
+Human resources managers;Management occupations;3.3;3.1
+Human resources, training, and labor relations specialists;Business and financial operations occupations;6.1;5.3
+Industrial engineers, including health and safety;Architecture and engineering occupations;5.5;2.7
+Industrial production managers;Management occupations;5.5;4.9
+Insurance underwriters;Business and financial operations occupations;2.4;1.7
+Judges, magistrates, and other judicial workers;Legal occupations;2;0.4
+Lawyers;Legal occupations;2.1;1.4
+Legislators;Management occupations;0.5;7.4
+Librarians;Education, training, and library occupations;2.3;4.7
+Library technicians;Education, training, and library occupations;;2
+Licensed practical and licensed vocational nurses;Healthcare practitioner and technical occupations;4.8;6.7
+Loan counselors and officers;Business and financial operations occupations;8.4;7.4
+Lodging managers;Management occupations;5.5;7.1
+Logisticians;Business and financial operations occupations;7.9;5.8
+Management analysts;Business and financial operations occupations;5.3;4.1
+Managers, all other;Management occupations;3.9;3.5
+Marine engineers and naval architects;Architecture and engineering occupations;3.1;8.2
+Marketing and sales managers;Management occupations;6.1;5.2
+Materials engineers;Architecture and engineering occupations;11.1;4.4
+Mathematicians;Computer and mathematical occupations;25.4;N/A
+Mechanical engineers;Architecture and engineering occupations;2.4;3.1
+Media and communication equipment workers, all other;Arts, design, entertainment, sports, and media occupations;2.7;43.5
+Medical and health services managers;Management occupations;3;2.9
+Medical records and health information technicians;Healthcare practitioner and technical occupations;5.7;7.2
+Medical scientists;Life, physical, and social science occupations;3.4;2.2
+Meeting and convention planners;Business and financial operations occupations;7.8;5.6
+Mining and geological engineers, including mining safety engineers;Architecture and engineering occupations;2.4;18.5
+Miscellaneous community and social service specialists;Community and social services occupations;13.9;10.2
+Miscellaneous health technologists and technicians;Healthcare practitioner and technical occupations;2.8;4.2
+Miscellaneous legal support workers;Legal occupations;5.9;5.2
+Miscellaneous mathematical science occupations;Computer and mathematical occupations;5.1;1.3
+Miscellaneous media and communication workers;Arts, design, entertainment, sports, and media occupations;7.1;8.3
+Miscellaneous social scientists and related workers;Life, physical, and social science occupations;4.1;6.1
+Musicians, singers, and related workers;Arts, design, entertainment, sports, and media occupations;8.7;8
+Natural sciences managers;Management occupations;5.2;2.1
+Network and computer systems administrators;Computer and mathematical occupations;3.9;4.1
+Network systems and data communications analysts;Computer and mathematical occupations;3.9;4.1
+News analysts, reporters and correspondents;Arts, design, entertainment, sports, and media occupations;4.9;6.6
+Nuclear engineers;Architecture and engineering occupations;0.4;1.7
+Nuclear technicians;Life, physical, and social science occupations;N/A;N/A
+Occupational therapists;Healthcare practitioner and technical occupations;0.4;2.3
+Operations research analysts;Computer and mathematical occupations;6.5;1.3
+Opticians, dispensing;Healthcare practitioner and technical occupations;5.6;5.2
+Optometrists;Healthcare practitioner and technical occupations;N/A;N/A
+Other business operations specialists;Business and financial operations occupations;7.1;5.4
+Other education, training, and library workers;Education, training, and library occupations;5.2;2.5
+Other healthcare practitioners and technical occupations;Healthcare practitioner and technical occupations;4.2;2.9
+Other life, physical, and social science technicians;Life, physical, and social science occupations;4.9;5.5
+Other teachers and instructors;Education, training, and library occupations;7.3;6.5
+Paralegals and legal assistants;Legal occupations;6.7;5.1
+Personal financial advisors;Business and financial operations occupations;2.4;2
+Petroleum engineers;Architecture and engineering occupations;0.1;0.6
+Pharmacists;Healthcare practitioner and technical occupations;3.1;3.2
+Photographers;Arts, design, entertainment, sports, and media occupations;9;11.6
+Physical scientists, all other;Life, physical, and social science occupations;4;3.1
+Physical therapists;Healthcare practitioner and technical occupations;1.8;2
+Physician assistants;Healthcare practitioner and technical occupations;4;1.2
+Physicians and surgeons;Healthcare practitioner and technical occupations;0.6;0.8
+Podiatrists;Healthcare practitioner and technical occupations;N/A;N/A
+Postmasters and mail superintendents;Management occupations;6.6;1.9
+Postsecondary teachers;Education, training, and library occupations;3.6;3.6
+Preschool and kindergarten teachers;Education, training, and library occupations;5.5;5.9
+Producers and directors;Arts, design, entertainment, sports, and media occupations;4.6;10.5
+Property, real estate, and community association managers;Management occupations;6.3;4.2
+Psychologists;Life, physical, and social science occupations;1.4;5.2
+Public relations managers;Management occupations;8;3.7
+Public relations specialists;Arts, design, entertainment, sports, and media occupations;2.7;4.5
+Purchasing agents and buyers, farm products;Business and financial operations occupations;11.8;7.5
+Purchasing agents, except wholesale, retail, and farm products;Business and financial operations occupations;3.6;4.3
+Purchasing managers;Management occupations;5.4;3.3
+Radiation therapists;Healthcare practitioner and technical occupations;0.2;13.9
+Recreational therapists;Healthcare practitioner and technical occupations;0.2;N/A
+Registered nurses;Healthcare practitioner and technical occupations;2;2.6
+Religious workers, all other;Community and social services occupations;4.7;6.1
+Respiratory therapists;Healthcare practitioner and technical occupations;2.9;3.6
+Secondary school teachers;Education, training, and library occupations;3;3
+Social and community service managers;Management occupations;4.5;5
+Social workers;Community and social services occupations;6.1;3.9
+Sociologists;Life, physical, and social science occupations;N/A;1.4
+Special education teachers;Education, training, and library occupations;3.6;3.3
+Speech-language pathologists;Healthcare practitioner and technical occupations;1.7;1.8
+Statisticians;Computer and mathematical occupations;1.6;N/A
+Surveying and mapping technicians;Architecture and engineering occupations;14.1;8.9
+Surveyors, cartographers, and photogrammetrists;Architecture and engineering occupations;5;4.1
+Tax examiners, collectors, and revenue agents;Business and financial operations occupations;7.1;1
+Tax preparers;Business and financial operations occupations;15.9;17.6
+Teacher assistants;Education, training, and library occupations;6.7;7.9
+Technical writers;Arts, design, entertainment, sports, and media occupations;8.6;8.7
+Television, video, and motion picture camera operators and editors;Arts, design, entertainment, sports, and media occupations;12.7;9.4
+Therapists, all other;Healthcare practitioner and technical occupations;1.7;4.3
+Transportation, storage, and distribution managers;Management occupations;6.5;4
+Urban and regional planners;Life, physical, and social science occupations;2.6;4.3
+Veterinarians;Healthcare practitioner and technical occupations;0.6;1.2
+Wholesale and retail buyers, except farm products;Business and financial operations occupations;3.7;5
+Writers and authors;Arts, design, entertainment, sports, and media occupations;6.2;6
+Advertising sales agents;Sales and related occupations;6.8;4.7
+Agricultural inspectors;Farming, fishing, and forestry occupations;9.5;11.8
+Air traffic controllers and airfield operations specialists;Transportation and material moving occupations;2;1.9
+Aircraft mechanics and service technicians;Installation, maintenance, and repair occupations;3.5;2.6
+Aircraft pilots and flight engineers;Transportation and material moving occupations;2.9;3.3
+Aircraft structure, surfaces, rigging, and systems assemblers;Production occupations;4.1;7.9
+Ambulance drivers and attendants, except emergency medical technicians;Transportation and material moving occupations;11.7;26
+Animal breeders;Farming, fishing, and forestry occupations;0.6;1
+Animal control workers;Protective service occupations;25;4.1
+Animal trainers;Personal care and service occupations;0.8;2.8
+Automotive body and related repairers;Installation, maintenance, and repair occupations;10.8;8.2
+Automotive glass installers and repairers;Installation, maintenance, and repair occupations;9.1;4.7
+Automotive service technicians and mechanics;Installation, maintenance, and repair occupations;8.3;7.9
+Avionics technicians;Installation, maintenance, and repair occupations;5;1.7
+Baggage porters, bellhops, and concierges;Personal care and service occupations;4.8;3.7
+Bailiffs, correctional officers, and jailers;Protective service occupations;3.3;3.6
+Bakers;Production occupations;4.6;11.3
+Barbers;Personal care and service occupations;9;5.5
+Bartenders;Food preparation and serving related occupations;10.2;7.2
+Bill and account collectors;Office and administrative support occupations;12.9;9.9
+Billing and posting clerks and machine operators;Office and administrative support occupations;7;4.2
+Boilermakers;Construction and extraction occupations;31.7;20.4
+Bookkeeping, accounting, and auditing clerks;Office and administrative support occupations;6.4;6.4
+Brickmasons, blockmasons, and stonemasons;Construction and extraction occupations;26.1;18.8
+Bridge and lock tenders;Transportation and material moving occupations;8.9;N/A
+Brokerage clerks;Office and administrative support occupations;5.8;N/A
+Bus and truck mechanics and diesel engine specialists;Installation, maintenance, and repair occupations;5.2;3.6
+Bus drivers;Transportation and material moving occupations;6.4;8.2
+Butchers and other meat, poultry, and fish processing workers;Production occupations;7.7;8.8
+Cabinetmakers and bench carpenters;Production occupations;11.2;13.8
+Cargo and freight agents;Office and administrative support occupations;10;4.3
+Carpenters;Construction and extraction occupations;16;15.2
+Carpet, floor, and tile installers and finishers;Construction and extraction occupations;16.3;14.1
+Cashiers;Sales and related occupations;13.9;12.8
+Cement masons, concrete finishers, and terrazzo workers;Construction and extraction occupations;19.4;19.4
+Chefs and head cooks;Food preparation and serving related occupations;7.6;6.3
+Chemical processing machine setters, operators, and tenders;Production occupations;8.3;3.8
+Child care workers;Personal care and service occupations;10.4;9.4
+Cleaners of vehicles and equipment;Transportation and material moving occupations;17;16.2
+Cleaning, washing, and metal pickling equipment operators and tenders;Production occupations;N/A;10.3
+Coin, vending, and amusement machine servicers and repairers;Installation, maintenance, and repair occupations;1.6;8.1
+Combined food preparation and serving workers, including fast food;Food preparation and serving related occupations;14.8;11.3
+Commercial divers;Installation, maintenance, and repair occupations;N/A;31.7
+Communications equipment operators, all other;Office and administrative support occupations;2;24.8
+Computer and mathematical occupations;Management, business, and financial operations;4.1;3.6
+Computer control programmers and operators;Production occupations;10.3;6.1
+Computer operators;Office and administrative support occupations;8.6;10.1
+Computer, automated teller, and office machine repairers;Installation, maintenance, and repair occupations;8;7
+Construction and building inspectors;Construction and extraction occupations;8.9;6.7
+Construction laborers;Construction and extraction occupations;21.2;19.9
+Control and valve installers and repairers;Installation, maintenance, and repair occupations;N/A;2.7
+Conveyor operators and tenders;Transportation and material moving occupations;11.1;33.6
+Cooks;Food preparation and serving related occupations;13.8;10.7
+Cooling and freezing equipment operators and tenders;Production occupations;26.7;12
+Correspondence clerks;Office and administrative support occupations;4.9;3.6
+Counter and rental clerks;Sales and related occupations;8;7.3
+Counter attendants, cafeteria, food concession, and coffee shop;Food preparation and serving related occupations;13.2;16.2
+Couriers and messengers;Office and administrative support occupations;10.3;6.8
+Court, municipal, and license clerks;Office and administrative support occupations;2.7;1.5
+Crane and tower operators;Transportation and material moving occupations;10.9;6.8
+Credit authorizers, checkers, and clerks;Office and administrative support occupations;6.6;6
+Crossing guards;Protective service occupations;17.6;20.6
+Crushing, grinding, polishing, mixing, and blending workers;Production occupations;8.5;7
+Customer service representatives;Office and administrative support occupations;9;9.1
+Cutting workers;Production occupations;11.9;11
+Cutting, punching, and press machine setters, operators, and tenders, metal and plastic;Production occupations;11;7.6
+Data entry keyers;Office and administrative support occupations;13.8;10.9
+Dental assistants;Healthcare support occupations;4.4;4.1
+Derrick, rotary drill, and service unit operators, oil, gas, and mining;Construction and extraction occupations;2.7;6.9
+Desktop publishers;Office and administrative support occupations;N/A;20.9
+Detectives and criminal investigators;Protective service occupations;1;2.2
+Dining room and cafeteria attendants and bartender helpers;Food preparation and serving related occupations;11.2;10.8
+Dishwashers;Food preparation and serving related occupations;16.1;17.7
+Dispatchers;Office and administrative support occupations;5.8;4.2
+Door-to-door sales workers, news and street vendors, and related workers;Sales and related occupations;10.5;10.5
+Dredge, excavating, and loading machine operators;Transportation and material moving occupations;9.1;6.8
+Drilling and boring machine tool setters, operators, and tenders, metal and plastic;Production occupations;8.9;25.8
+Driver/sales workers and truck drivers;Transportation and material moving occupations;9.2;7.1
+Drywall installers, ceiling tile installers, and tapers;Construction and extraction occupations;23;18
+Earth drillers, except oil and gas;Construction and extraction occupations;9.4;0.9
+Education, training, and library occupations;Management, business, and financial operations;4.5;4.8
+Electric motor, power tool, and related repairers;Installation, maintenance, and repair occupations;11.3;9
+Electrical and electronics installers and repairers, transportation equipment;Installation, maintenance, and repair occupations;19.3;N/A
+Electrical and electronics repairers, industrial and utility;Installation, maintenance, and repair occupations;11.8;7.6
+Electrical power-line installers and repairers;Installation, maintenance, and repair occupations;5.9;4.4
+Electrical, electronics, and electromechanical assemblers;Production occupations;19.5;13.3
+Electricians;Construction and extraction occupations;12.1;11.2
+Electronic equipment installers and repairers, motor vehicles;Installation, maintenance, and repair occupations;5.7;4.3
+Electronic home entertainment equipment installers and repairers;Installation, maintenance, and repair occupations;13.3;12.1
+Elevator installers and repairers;Construction and extraction occupations;7.4;5
+Eligibility interviewers, government programs;Office and administrative support occupations;9.5;2.9
+Engine and other machine assemblers;Production occupations;8.1;2.8
+Etchers and engravers;Production occupations;9.3;3.5
+Explosives workers, ordnance handling experts, and blasters;Construction and extraction occupations;4.9;6.5
+Extruding and drawing machine setters, operators, and tenders, metal and plastic;Production occupations;2.1;16.9
+Extruding and forming machine setters, operators, and tenders, synthetic and glass fibers;Production occupations;N/A;N/A
+Extruding, forming, pressing, and compacting machine setters, operators, and tenders;Production occupations;13.6;2.6
+Fabric and apparel patternmakers;Production occupations;N/A;5.1
+Fence erectors;Construction and extraction occupations;18.7;23.4
+File clerks;Office and administrative support occupations;9.7;8.5
+Fire fighters;Protective service occupations;1.4;2.5
+Fire inspectors;Protective service occupations;7.4;3.6
+First-line supervisors/managers of construction trades and extraction workers;Construction and extraction occupations;9.7;7
+First-line supervisors/managers of correctional officers;Protective service occupations;3.5;0.6
+First-line supervisors/managers of farming, fishing, and forestry workers;Farming, fishing, and forestry occupations;3.9;3.9
+First-line supervisors/managers of fire fighting and prevention workers;Protective service occupations;N/A;0.4
+First-line supervisors/managers of food preparation and serving workers;Food preparation and serving related occupations;6.1;7.1
+First-line supervisors/managers of gaming workers;Personal care and service occupations;6.3;5
+First-line supervisors/managers of housekeeping and janitorial workers;Building and grounds cleaning and maintenance occupations;5.4;5.6
+First-line supervisors/managers of landscaping, lawn service, and groundskeeping workers;Building and grounds cleaning and maintenance occupations;5.3;3.8
+First-line supervisors/managers of mechanics, installers, and repairers;Installation, maintenance, and repair occupations;4.2;1.9
+First-line supervisors/managers of non-retail sales workers;Sales and related occupations;4.2;3.3
+First-line supervisors/managers of office and administrative support workers;Office and administrative support occupations;5.4;4.6
+First-line supervisors/managers of personal service workers;Personal care and service occupations;2.4;2.1
+First-line supervisors/managers of police and detectives;Protective service occupations;1.8;1.2
+First-line supervisors/managers of production and operating workers;Production occupations;7.1;5.4
+First-line supervisors/managers of retail sales workers;Sales and related occupations;5.4;4
+Fish and game wardens;Protective service occupations;N/A;N/A
+Fishers and related fishing workers;Farming, fishing, and forestry occupations;18.6;8.5
+Food and tobacco roasting, baking, and drying machine operators and tenders;Production occupations;2.7;4.1
+Food batchmakers;Production occupations;7;10.7
+Food cooking machine operators and tenders;Production occupations;10.8;7.7
+Food preparation and serving related workers, all other;Food preparation and serving related occupations;11.7;11.5
+Food preparation workers;Food preparation and serving related occupations;14.2;10.8
+Food servers, nonrestaurant;Food preparation and serving related occupations;7.9;8.5
+Forest and conservation workers;Farming, fishing, and forestry occupations;13.5;38.4
+Forging machine setters, operators, and tenders, metal and plastic;Production occupations;27.1;N/A
+Furnace, kiln, oven, drier, and kettle operators and tenders;Production occupations;4.4;7.2
+Furniture finishers;Production occupations;0.9;27.7
+Gaming cage workers;Office and administrative support occupations;21.7;24.7
+Gaming services workers;Personal care and service occupations;6.3;7.2
+Glaziers;Construction and extraction occupations;12.7;9
+Graders and sorters, agricultural products;Farming, fishing, and forestry occupations;22;14.5
+Grinding, lapping, polishing, and buffing machine tool setters, operators, and tenders, metal and plastic;Production occupations;11.2;10.5
+Grounds maintenance workers;Building and grounds cleaning and maintenance occupations;16.1;14.3
+Hairdressers, hairstylists, and cosmetologists;Personal care and service occupations;5.6;4.1
+Hazardous materials removal workers;Construction and extraction occupations;16.2;12.3
+Healthcare practitioner and technical occupations;Management, business, and financial operations;2.7;3
+Heat treating equipment setters, operators, and tenders, metal and plastic;Production occupations;4.9;N/A
+Heating, air conditioning, and refrigeration mechanics and installers;Installation, maintenance, and repair occupations;10.4;6.6
+Heavy vehicle and mobile equipment service technicians and mechanics;Installation, maintenance, and repair occupations;8.8;5
+Helpers, construction trades;Construction and extraction occupations;27.8;15.5
+Helpers--extraction workers;Construction and extraction occupations;11;7.4
+Helpers--installation, maintenance, and repair workers;Installation, maintenance, and repair occupations;25.7;12.1
+Helpers--production workers;Production occupations;13.2;6.7
+Highway maintenance workers;Construction and extraction occupations;8.1;6
+Hoist and winch operators;Transportation and material moving occupations;2.8;10.5
+Home appliance repairers;Installation, maintenance, and repair occupations;5.7;3.7
+Hosts and hostesses, restaurant, lounge, and coffee shop;Food preparation and serving related occupations;8.9;10.9
+Hotel, motel, and resort desk clerks;Office and administrative support occupations;7.7;11.2
+Human resources assistants, except payroll and timekeeping;Office and administrative support occupations;4.9;5.9
+Hunters and trappers;Farming, fishing, and forestry occupations;N/A;8.4
+Industrial and refractory machinery mechanics;Installation, maintenance, and repair occupations;8.3;4.3
+Industrial truck and tractor operators;Transportation and material moving occupations;13.2;11.4
+Information and record clerks, all other;Office and administrative support occupations;4.3;8.9
+Inspectors, testers, sorters, samplers, and weighers;Production occupations;11.6;8.2
+Insulation workers;Construction and extraction occupations;17.2;16.6
+Insurance claims and policy processing clerks;Office and administrative support occupations;7.1;7.6
+Insurance sales agents;Sales and related occupations;5.5;4.5
+Interviewers, except eligibility and loan;Office and administrative support occupations;27.3;17.3
+Janitors and building cleaners;Building and grounds cleaning and maintenance occupations;10.9;10.1
+Jewelers and precious stone and metal workers;Production occupations;8.3;6.3
+Laborers and freight, stock, and material movers, hand;Transportation and material moving occupations;15.3;14.8
+Lathe and turning machine tool setters, operators, and tenders, metal and plastic;Production occupations;15.6;17
+Laundry and dry-cleaning workers;Production occupations;8.7;11.6
+Lay-out workers, metal and plastic;Production occupations;0.5;3
+Legal occupations;Management, business, and financial operations;3.7;2.7
+Library assistants, clerical;Office and administrative support occupations;5.7;7.7
+Life, physical, and social science occupations;Management, business, and financial operations;3.8;4
+Lifeguards and other protective service workers;Protective service occupations;10.3;11.1
+Loan interviewers and clerks;Office and administrative support occupations;10.3;7.7
+Locksmiths and safe repairers;Installation, maintenance, and repair occupations;3;4.9
+Locomotive engineers and operators;Transportation and material moving occupations;0.5;1.2
+Logging workers;Farming, fishing, and forestry occupations;15.8;16.1
+Machine feeders and offbearers;Transportation and material moving occupations;13;14.3
+Machinists;Production occupations;7.2;5.9
+Maids and housekeeping cleaners;Building and grounds cleaning and maintenance occupations;11.4;11.9
+Mail clerks and mail machine operators, except postal service;Office and administrative support occupations;12.2;16.9
+Maintenance and repair workers, general;Installation, maintenance, and repair occupations;7.2;5.1
+Maintenance workers, machinery;Installation, maintenance, and repair occupations;3.4;8.7
+Manufactured building and mobile home installers;Installation, maintenance, and repair occupations;24.2;35.5
+Massage therapists;Healthcare support occupations;6.1;3.7
+Material moving workers, all other;Transportation and material moving occupations;16.6;12.2
+Medical assistants and other healthcare support occupations;Healthcare support occupations;6.9;6.7
+Medical, dental, and ophthalmic laboratory technicians;Production occupations;5.6;5.9
+Metal furnace and kiln operators and tenders;Production occupations;13.5;3.3
+Metalworkers and plastic workers, all other;Production occupations;10.7;10.5
+Meter readers, utilities;Office and administrative support occupations;4.1;1.2
+Milling and planing machine setters, operators, and tenders, metal and plastic;Production occupations;N/A;14.2
+Millwrights;Installation, maintenance, and repair occupations;11.1;6.9
+Mine shuttle car operators;Transportation and material moving occupations;N/A;10.1
+Mining machine operators;Construction and extraction occupations;10.4;9.3
+Miscellaneous agricultural workers;Farming, fishing, and forestry occupations;15.3;14.9
+Miscellaneous assemblers and fabricators;Production occupations;17.5;12.4
+Miscellaneous construction and related workers;Construction and extraction occupations;14.8;18.6
+Miscellaneous entertainment attendants and related workers;Personal care and service occupations;13.5;13.7
+Miscellaneous personal appearance workers;Personal care and service occupations;5.8;3.9
+Miscellaneous plant and system operators;Production occupations;7.5;2.7
+Miscellaneous vehicle and mobile equipment mechanics, installers, and repairers;Installation, maintenance, and repair occupations;10.1;3.8
+Model makers and patternmakers, metal and plastic;Production occupations;7;1.7
+Model makers and patternmakers, wood;Production occupations;N/A;N/A
+Models, demonstrators, and product promoters;Sales and related occupations;14.6;18.6
+Molders and molding machine setters, operators, and tenders, metal and plastic;Production occupations;14.7;10.4
+Molders, shapers, and casters, except metal and plastic;Production occupations;13.3;7.6
+Motion picture projectionists;Personal care and service occupations;0.3;22.6
+Motor vehicle operators, all other;Transportation and material moving occupations;11.4;11.5
+Multiple machine tool setters, operators, and tenders, metal and plastic;Production occupations;N/A;N/A
+New accounts clerks;Office and administrative support occupations;5.8;5.8
+Nonfarm animal caretakers;Personal care and service occupations;10.2;8
+Nursing, psychiatric, and home health aides;Healthcare support occupations;9.1;8.6
+Occupational therapist assistants and aides;Healthcare support occupations;N/A;1.6
+Office and administrative support workers, all other;Office and administrative support occupations;5.7;4.4
+Office clerks, general;Office and administrative support occupations;10;9.8
+Office machine operators, except computer;Office and administrative support occupations;19.5;6.5
+Operating engineers and other construction equipment operators;Construction and extraction occupations;15.2;13.3
+Order clerks;Office and administrative support occupations;10.5;9.2
+Other extraction workers;Construction and extraction occupations;12;12.7
+Other installation, maintenance, and repair workers;Installation, maintenance, and repair occupations;9.9;10.9
+Other transportation workers;Transportation and material moving occupations;5;7.8
+Packaging and filling machine operators and tenders;Production occupations;15.9;14.5
+Packers and packagers, hand;Transportation and material moving occupations;18.6;19.2
+Painters, construction and maintenance;Construction and extraction occupations;16.9;14.6
+Painting workers;Production occupations;12.2;11.3
+Paper goods machine setters, operators, and tenders;Production occupations;6.5;12.1
+Paperhangers;Construction and extraction occupations;N/A;4.9
+Parking enforcement workers;Protective service occupations;14.4;6
+Parking lot attendants;Transportation and material moving occupations;11.9;10.9
+Parts salespersons;Sales and related occupations;4.1;7.5
+Paving, surfacing, and tamping equipment operators;Construction and extraction occupations;21.6;20.4
+Payroll and timekeeping clerks;Office and administrative support occupations;10.3;7.4
+Personal and home care aides;Personal care and service occupations;10.4;10
+Personal care and service workers, all other;Personal care and service occupations;11.7;11.3
+Pest control workers;Building and grounds cleaning and maintenance occupations;5.1;5.2
+Photographic process workers and processing machine operators;Production occupations;6.3;8.3
+Physical therapist assistants and aides;Healthcare support occupations;3.4;3.4
+Pile-driver operators;Construction and extraction occupations;N/A;N/A
+Pipelayers, plumbers, pipefitters, and steamfitters;Construction and extraction occupations;15;10.2
+Plasterers and stucco masons;Construction and extraction occupations;26.8;30.5
+Plating and coating machine setters, operators, and tenders, metal and plastic;Production occupations;7.1;5.9
+Police and sheriffâ€™s patrol officers;Protective service occupations;2;1.2
+Postal service clerks;Office and administrative support occupations;2;2.4
+Postal service mail carriers;Office and administrative support occupations;1.6;2.1
+Postal service mail sorters, processors, and processing machine operators;Office and administrative support occupations;10.7;4.5
+Power plant operators, distributors, and dispatchers;Production occupations;3;2.8
+Precision instrument and equipment repairers;Installation, maintenance, and repair occupations;4.8;9.8
+Prepress technicians and workers;Production occupations;3.2;8.7
+Pressers, textile, garment, and related materials;Production occupations;18.8;8.8
+Printing machine operators;Production occupations;12.8;9.4
+Private detectives and investigators;Protective service occupations;5.2;5.5
+Procurement clerks;Office and administrative support occupations;0.4;7.4
+Production workers, all other;Production occupations;12.8;10.5
+Production, planning, and expediting clerks;Office and administrative support occupations;7.1;5.2
+Proofreaders and copy markers;Office and administrative support occupations;14.9;9.4
+Pumping station operators;Transportation and material moving occupations;1.1;3.5
+Radio and telecommunications equipment installers and repairers;Installation, maintenance, and repair occupations;4.9;4
+Railroad brake, signal, and switch operators;Transportation and material moving occupations;N/A;N/A
+Railroad conductors and yardmasters;Transportation and material moving occupations;4.8;2.3
+Rail-track laying and maintenance equipment operators;Construction and extraction occupations;12.6;6
+Real estate brokers and sales agents;Sales and related occupations;5.2;4.9
+Receptionists and information clerks;Office and administrative support occupations;9.2;8.7
+Recreation and fitness workers;Personal care and service occupations;6.3;7.4
+Refuse and recyclable material collectors;Transportation and material moving occupations;18.3;9.4
+Reinforcing iron and rebar workers;Construction and extraction occupations;27.1;27
+Reservation and transportation ticket agents and travel clerks;Office and administrative support occupations;8.1;5.4
+Residential advisors;Personal care and service occupations;8.6;3.4
+Retail salespersons;Sales and related occupations;10.5;9.5
+Riggers;Installation, maintenance, and repair occupations;1.7;21.6
+Rolling machine setters, operators, and tenders, metal and plastic;Production occupations;10.4;19.5
+Roof bolters, mining;Construction and extraction occupations;6.9;36.6
+Roofers;Construction and extraction occupations;22;17.6
+Roustabouts, oil and gas;Construction and extraction occupations;6.6;2.4
+Sailors and marine oilers;Transportation and material moving occupations;14.1;13.8
+Sales and related workers, all other;Sales and related occupations;7.9;6.2
+Sales engineers;Sales and related occupations;3.1;1.4
+Sales representatives, services, all other;Sales and related occupations;8.3;9.5
+Sales representatives, wholesale and manufacturing;Sales and related occupations;4.6;4.9
+Sawing machine setters, operators, and tenders, wood;Production occupations;9.4;4.1
+Secretaries and administrative assistants;Office and administrative support occupations;6.4;6.2
+Securities, commodities, and financial services sales agents;Sales and related occupations;9.5;5.3
+Security and fire alarm systems installers;Installation, maintenance, and repair occupations;5.3;12.8
+Security guards and gaming surveillance officers;Protective service occupations;11.2;11.6
+Semiconductor processors;Production occupations;12.6;3.5
+Septic tank servicers and sewer pipe cleaners;Construction and extraction occupations;0.3;0.9
+Sewing machine operators;Production occupations;10.6;8.7
+Sheet metal workers;Construction and extraction occupations;17.3;10.8
+Ship and boat captains and operators;Transportation and material moving occupations;12.4;3
+Ship engineers;Transportation and material moving occupations;15.9;16.8
+Shipping, receiving, and traffic clerks;Office and administrative support occupations;12.1;10.4
+Shoe and leather workers and repairers;Production occupations;2.8;8.7
+Shoe machine operators and tenders;Production occupations;7.7;11
+Signal and track switch repairers;Installation, maintenance, and repair occupations;N/A;N/A
+Small engine mechanics;Installation, maintenance, and repair occupations;9.7;5
+Stationary engineers and boiler operators;Production occupations;5.4;3.8
+Statistical assistants;Office and administrative support occupations;2.8;3.1
+Stock clerks and order fillers;Office and administrative support occupations;13.9;11.7
+Structural iron and steel workers;Construction and extraction occupations;25.3;21.9
+Structural metal fabricators and fitters;Production occupations;14.3;15.3
+Subway, streetcar, and other rail transportation workers;Transportation and material moving occupations;10.3;2
+Supervisors, protective service workers, all other;Protective service occupations;3.3;5.4
+Supervisors, transportation and material moving workers;Transportation and material moving occupations;4.7;4.4
+Switchboard operators, including answering service;Office and administrative support occupations;4.1;10.7
+Tailors, dressmakers, and sewers;Production occupations;7.8;8.1
+Tank car, truck, and ship loaders;Transportation and material moving occupations;19.2;3.1
+Taxi drivers and chauffeurs;Transportation and material moving occupations;8.8;7.1
+Telecommunications line installers and repairers;Installation, maintenance, and repair occupations;6.7;8.2
+Telemarketers;Sales and related occupations;31.4;23.1
+Telephone operators;Office and administrative support occupations;15.2;10.8
+Tellers;Office and administrative support occupations;5.8;4.8
+Textile bleaching and dyeing machine operators and tenders;Production occupations;49.6;10.7
+Textile cutting machine setters, operators, and tenders;Production occupations;11.3;3.8
+Textile knitting and weaving machine setters, operators, and tenders;Production occupations;7;10.5
+Textile winding, twisting, and drawing out machine setters, operators, and tenders;Production occupations;16.4;13.3
+Textile, apparel, and furnishings workers, all other;Production occupations;5.6;11
+Tire builders;Production occupations;5.8;3.4
+Tool and die makers;Production occupations;5.1;8.5
+Tool grinders, filers, and sharpeners;Production occupations;16.5;7.6
+Tour and travel guides;Personal care and service occupations;17.9;9.8
+Transit and railroad police;Protective service occupations;N/A;N/A
+Transportation attendants;Personal care and service occupations;6.5;12.6
+Transportation inspectors;Transportation and material moving occupations;9.8;7.6
+Travel agents;Sales and related occupations;7.9;8.4
+Upholsterers;Production occupations;8.5;5.2
+Ushers, lobby attendants, and ticket takers;Personal care and service occupations;13.5;13.3
+Waiters and waitresses;Food preparation and serving related occupations;10.7;10.1
+Water and liquid waste treatment plant and system operators;Production occupations;3.1;1.4
+Weighers, measurers, checkers, and samplers, recordkeeping;Office and administrative support occupations;6.5;9.6
+Welding, soldering, and brazing workers;Production occupations;13.3;11
+Woodworkers, all other;Production occupations;17;11.2
+Woodworking machine setters, operators, and tenders, except sawing;Production occupations;25.9;2.9
+Word processors and typists;Office and administrative support occupations;6.3;7.7
+Software developers, applications and systems software;Computer and mathematical occupations;4;2.8

@@ -105,14 +105,8 @@ class Api::V2::CareersController < ApplicationController
 
 		# Query the database.
 		records = Career.find_by_sql [
-							"SELECT name,
-											salary,
-											unemp11,
-											unemp12
-				FROM careers
-				WHERE #{where_string};",
-				*where_params
-			]
+				"SELECT * FROM careers WHERE #{where_string};", where_params
+		]
 
 		no_data_for = Array.new
 
@@ -138,10 +132,15 @@ class Api::V2::CareersController < ApplicationController
 
 					result["career_#{index}"] = Hash.new
 					result["career_#{index}"]["name_#{index}"] = record[:name]
-					result["career_#{index}"]["career_salary_#{index}"] = [record[:salary], 
-						0, 0, 0, 0, 0, 0, 0, 0, 0]
+					result["career_#{index}"]["career_salary_#{index}"] = [record[:sal2003], 
+						record[:sal2004], record[:sal2005], record[:sal2006], record[:sal2007],
+						record[:sal2008], record[:sal2009], record[:sal2010], record[:sal2011], 
+						record[:sal2012], record[:sal2013]]
 					result["career_#{index}"]["career_satisfaction_#{index}"] = 0.0
-					result["career_#{index}"]["career_demand_#{index}"] = [0, 0, 0] # three values
+					result["career_#{index}"]["career_demand_#{index}"] = [0, 
+							record[:employment_growth_percent], 
+							record[:employment_change_volume]
+					]
 					result["career_#{index}"]["career_unemploy_#{index}"] = [record[:unemp11], record[:unemp12]]
 					result["career_#{index}"]["career_rating_#{index}"] = cents_rating
 					break
