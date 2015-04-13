@@ -156,6 +156,14 @@ class Api::V2::CareersController < ApplicationController
 			index += 1
 		end
 
+		if index == 1:
+			result["operation"] = "get"
+		elsif index > 2
+			result["operation"] = "compare"
+		else
+			result["operation"] = "undefined"
+		end
+
 		result["career_unemploy_3"] = [8.9, 8.1] # two values national average
 
 		if no_data_for.present?
