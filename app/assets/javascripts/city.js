@@ -262,6 +262,8 @@ function sketchProc(processing) {
     		data.add(data["locations"]["location_2"]);
     	}
 
+    	console.log(data)
+
   		//console.log(data["location_1"]);
   		//localStorage.removeItem("data_store");
 
