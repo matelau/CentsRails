@@ -272,6 +272,7 @@ function sketchProc(processing) {
   				var locs = $('input:checkbox:checked.location').map(function () {
 				  return this.name;
 				}).get();
+				console.log(locs);
   				if(locs.length == 0 || locs.length > 2){
   					alert("Please click one or two only.");
   				}
