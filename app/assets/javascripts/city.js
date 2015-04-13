@@ -263,7 +263,7 @@ function sketchProc(processing) {
   			var l1 = data["locations"]["location_1"];
     		var l2 = data["locations"]["location_2"];
 
-    		data.removeAttr("locations");
+    		delete data["locations"];
 
     		Object.keys(l1).forEach(function(key) {
     			data.key = l1.key;
