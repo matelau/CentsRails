@@ -55,6 +55,9 @@ function getPartial(query_type){
 };
 
 function api_request(query) {
+	var temp = query.replace(/\s+/g, '');
+	if (temp == "")
+		return;
 	var data =  new Object();
 
 	var url = "https://trycents.com:6001/query/" + query;
