@@ -72,6 +72,8 @@ mresp = ms.send(mprep)
 
 majs = json.loads(mresp.text)
 
+print majs
+
 cpac = {
 	"operation":"get",
 	"tables":[
