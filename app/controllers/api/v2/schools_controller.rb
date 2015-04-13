@@ -162,6 +162,8 @@ class Api::V2::SchoolsController < ApplicationController
 						.where([where_string, *where_params])
 						.order('universities.id ASC')
 
+		sch = {}
+
 		no_data_for = Array.new
 
 		# Iterate over each location, keeping track of the location's index.
@@ -195,11 +197,11 @@ class Api::V2::SchoolsController < ApplicationController
 					cents_rating = cents_rating[0][:average].to_f
 					
 					# Put the stats in result.
-					result["school_#{index}"] = Hash.new
-					result["school_#{index}"]["name_#{index}"] = record[:name]
-					result["school_#{index}"]["school_#{index}"] = [tuition_resident, tuition_nonresident, 
+					sch["school_#{index}"] = Hash.new
+					sch["school_#{index}"]["name_#{index}"] = record[:name]
+					sch["school_#{index}"]["school_#{index}"] = [tuition_resident, tuition_nonresident, 
 						grad_rate, size, rank, cents_rating]
-					result["school_#{index}"]["school_#{index}_image"] = record[:image]
+					sch["school_#{index}"]["school_#{index}_image"] = record[:image]
 					break
 				end
 			end
@@ -211,6 +213,12 @@ class Api::V2::SchoolsController < ApplicationController
 
 			# Increment for next object.
 			index += 1
+		end
+
+		result["elements"] = []
+
+		sch.each do |k, v|
+		  result["elements"] << v
 		end
 
 		# If there is no data for a school, send an error message.
