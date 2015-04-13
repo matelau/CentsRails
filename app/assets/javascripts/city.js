@@ -223,6 +223,8 @@ function city_api_request(query) {
 };
 
 function sketchProc(processing) {
+
+	uWait = true;
 	
 	processing.setup = function() {
 
@@ -258,7 +260,7 @@ function sketchProc(processing) {
   		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));
 
   		if(Object.keys(data["locations"]).length > 2) {
-
+  			uWait = false;
   			Object.keys(data["locations"]).forEach(function(key) {
   				$('#disSelections > tbody:last').append("<tr><td><input type='checkbox' name='"+key+"' class='location'/></td><td>"+data['locations'][key]['name']+"</td></tr>");
   			});
@@ -288,10 +290,12 @@ function sketchProc(processing) {
 		    		Object.keys(l1).forEach(function(key) {
 		    			data[key] = l1[key];
 					});
+					data["location_1"] = l1["name"];
 		    		if(l2 != null){
 						Object.keys(l2).forEach(function(key) {
 			    			data[key] = l2[key];
 						});
+						data["location_2"] = l2["name"];
 					}
   					$('#disModal').hide();
   				}
@@ -301,9 +305,9 @@ function sketchProc(processing) {
   		//console.log(data["location_1"]);
   		//localStorage.removeItem("data_store");
 
-  		if (!data || (!data["location_1"] && !data["location_2"]))
+  		if ((!data || (!data["location_1"] && !data["location_2"])) && uWait)
   		{
-  			//data = new Array();
+  			data = new Array();
 
   			data["weather_1"] =    [38.0, 44.0, 53.0, 61.0, 71.0, 82.0, 90.0, 89.0, 78.0, 65.0, 50.0, 40.0, 38.0, 90.0];
 			data["weatherlow_1"] = [26.0, 31.0, 38.0, 43.0, 52.0, 61.0, 69.0, 67.0, 58.0, 46.0, 36.0, 27.0, 26.0, 69.0];
