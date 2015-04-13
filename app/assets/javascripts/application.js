@@ -115,10 +115,11 @@ function api_request(query) {
 									data["name_2"] = o2["name"];
 								}
 			  					$('#disModal').hide();
+
+			  					localStorage.setItem("data_store", JSON.stringify(data));
+								localStorage.setItem("query_type", data["query_type"]);
+								window.location = "/search/results/";
 			  				}
-			  				localStorage.setItem("data_store", JSON.stringify(data));
-							localStorage.setItem("query_type", data["query_type"]);
-							window.location = "/search/results/";
 			  			});
 			    	}
 			    	else {
