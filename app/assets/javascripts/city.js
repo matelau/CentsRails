@@ -260,8 +260,8 @@ function sketchProc(processing) {
   		console.log(data)
 
   		if(Object.keys(data["locations"]).length > 2) {
-  			data.add(data["locations"]["location_1"]);
-    		data.add(data["locations"]["location_2"]);
+  			data.push(data["locations"]["location_1"]);
+    		data.push(data["locations"]["location_2"]);
     	}
 
   		//console.log(data["location_1"]);
