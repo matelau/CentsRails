@@ -41,7 +41,8 @@ class Api::V2::ColiController < ApplicationController
 
 		# Return the record names as a JSON object.
 		result.sort!
-		return render json: result, status: 200
+
+		return render json: {locations: result}, status: 200
   end
 
 	# Get cost of living data by state.
