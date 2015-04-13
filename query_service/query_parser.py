@@ -179,6 +179,9 @@ def query(query):
 		if cname in query:
 			if c not in locations:
 				locations.append(c)
+	for c in careers:
+		if(c.lower() in query):
+			careers.append(c)
 	#tokens = nltk.word_tokenize(query)
 	for s in commands:
 		if s in query:
@@ -332,6 +335,43 @@ def query(query):
 			return resp
 		package["query"] = sent_query
 		package["query_type"] = "city"
+		resp = json.dumps(package)
+		return resp
+	elif len(careers) >= 1:
+		package = {
+			"operation":command,
+			"query":query,
+			"careers":[]
+		}
+		for c in careers:
+			package["careers"].append({"name": c})
+		#url = "https://%s/api/v1/schools/" % (ip)
+		url = "https://trycents.com/api/v2/careers/compare"
+		payload = json.dumps(package)
+		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
+		prep = r.prepare()
+		s = requests.Session()
+		s.verify = False
+		resp = s.send(prep)
+		if(resp.status_code == 400):
+			package = {
+				"operation":"undefined",
+				"query":sent_query
+			}
+			resp = json.dumps(package)
+			return resp
+		package = json.loads(resp.text)
+		if(package["operation"] == "undefined"):
+			package = {
+				"operation":"undefined",
+				"query":sent_query
+			}
+			resp = json.dumps(package)
+			return resp
+		for i in range(0, len(careers)):
+			package["career_"+`i+1`+"_name"] = careers[i]
+		package["query"] = sent_query
+		package["query_type"] = "career"
 		resp = json.dumps(package)
 		return resp
 

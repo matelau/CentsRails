@@ -223,8 +223,6 @@ function city_api_request(query) {
 };
 
 function sketchProc(processing) {
-
-	uWait = true;
 	
 	processing.setup = function() {
 
@@ -259,51 +257,12 @@ function sketchProc(processing) {
 
   		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));
 
-  		if(Object.keys(data["locations"]).length > 2) {
-  			uWait = false;
-  			Object.keys(data["locations"]).forEach(function(key) {
-  				$('#disSelections > tbody:last').append("<tr><td><input type='checkbox' name='"+key+"' class='location'/></td><td>"+data['locations'][key]['name']+"</td></tr>");
-  			});
+  		data["location_1"] = data["name_1"];
 
-  			$('#disModal').show();
+  		if(data["name_2"]){
+  			data["location_2"] = data["name_2"]
+  		}
 
-  			var l1 = null;
-  			var l2 = null;
-
-  			$('#sub').click(function(event){
-  				var locs = $('input:checkbox:checked.location').map(function () {
-				  return this.name;
-				}).get();
-
-  				if(locs.length == 0 || locs.length > 2){
-  					alert("Please click one or two only.");
-  				}
-  				else{
-  					l1 = data["locations"][locs[0].toString()];
-  					if(locs.length == 2){
-  						l2 = data["locations"][locs[1]];
-  					}
-
-  					delete data["locations"];
-
-		    		Object.keys(l1).forEach(function(key) {
-		    			data[key] = l1[key];
-					});
-					data["location_1"] = l1["name"];
-		    		if(l2 != null){
-						Object.keys(l2).forEach(function(key) {
-			    			data[key] = l2[key];
-						});
-						data["location_2"] = l2["name"];
-					}
-					else {
-						delete data["location_2"];
-					}
-  					$('#disModal').hide();
-  					uWait = true;
-  				}
-  			});
-    	}
 
   		//console.log(data["location_1"]);
   		//localStorage.removeItem("data_store");

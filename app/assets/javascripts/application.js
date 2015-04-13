@@ -75,9 +75,55 @@ function api_request(query) {
 				}
 				else {
     				localStorage.removeItem("data_store");
-					localStorage.setItem("data_store", JSON.stringify(data));
-					localStorage.setItem("query_type", data["query_type"]);
-					window.location = "/search/results/";
+
+    				if(Object.keys(data["objects"]).length > 2) {
+			  			Object.keys(data["objects"]).forEach(function(key) {
+			  				$('#disSelections > tbody:last').append("<tr><td><input type='checkbox' name='"+key+"' class='obj'/></td><td>"+data['objects'][key]['name']+"</td></tr>");
+			  			});
+
+			  			$('#disModal').show();
+
+			  			var o1 = null;
+			  			var o2 = null;
+
+			  			$('#sub').click(function(event){
+			  				var obs = $('input:checkbox:checked.obj').map(function () {
+							  return this.name;
+							}).get();
+
+			  				if(obs.length == 0 || obs.length > 2){
+			  					alert("Please click one or two only.");
+			  				}
+			  				else{
+			  					o1 = data["locations"][obs[0].toString()];
+			  					if(obs.length == 2){
+			  						o2 = data["objects"][obs[1]];
+			  					}
+
+			  					delete data["objects"];
+
+					    		Object.keys(o1).forEach(function(key) {
+					    			data[key] = o1[key];
+								});
+								data["name_1"] = l1["name"];
+					    		if(l2 != null){
+									Object.keys(o2).forEach(function(key) {
+						    			data[key] = o2[key];
+									});
+									data["name_2"] = l2["name"];
+								}
+			  					$('#disModal').hide();
+			  				}
+			  				localStorage.setItem("data_store", JSON.stringify(data));
+							localStorage.setItem("query_type", data["query_type"]);
+							window.location = "/search/results/";
+			  			});
+			    	}
+			    	else {
+			    		localStorage.setItem("data_store", JSON.stringify(data));
+						localStorage.setItem("query_type", data["query_type"]);
+						window.location = "/search/results/";
+			    	}
 				}
       		}
   		}
