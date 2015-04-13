@@ -260,8 +260,18 @@ function sketchProc(processing) {
   		console.log(data)
 
   		if(Object.keys(data["locations"]).length > 2) {
-  			data.push(data["locations"]["location_1"]);
-    		data.push(data["locations"]["location_2"]);
+  			var l1 = data["locations"]["location_1"];
+    		var l2 = data["locations"]["location_2"];
+
+    		data.removeAttr("locations");
+
+    		Object.keys(l1).forEach(function(key) {
+    			data.key = l1.key;
+			});
+
+			Object.keys(l2).forEach(function(key) {
+    			data.key = l2.key;
+			});
     	}
 
   		//console.log(data["location_1"]);
