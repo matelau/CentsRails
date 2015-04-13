@@ -211,7 +211,9 @@ class Api::V2::ColiController < ApplicationController
 			index += 1
 		end
 
-		result["objects"] = [loc]
+		loc.each do |k,v|
+			result["objects"] << {k,v}
+		end
 
 		labor_avg = Array.new
 		labor_avg << @averages[0][:avg_unemp_rate].to_f
