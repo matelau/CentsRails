@@ -167,7 +167,6 @@ def query(query):
 		if " " + mname.lower() + " " in query:
 			majors.append({"name":mname,"level":mlev})
 			maj_names.append(m)
-	print majors
 	for c in cities:
 		temp = " " + c.replace(",", "").lower() + " "
 		if(temp in query):
@@ -267,7 +266,7 @@ def query(query):
 		package = {
 			"operation":command,
 			"query":query,
-			"majors":[]
+			"degrees":[]
 		}
 		for m in majors:
 			package["majors"].append(m)
