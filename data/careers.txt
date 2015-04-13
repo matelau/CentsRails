@@ -1,0 +1,651 @@
+﻿Office Manager;3.9;3.5
+Bookkeeper;6.4;6.4
+Full Charge Bookkeeper;6.4;6.4
+Administrative Assistant;6.4;6.2
+Accounts Payable Clerk;7;4.2
+Executive Assistant;6.4;6.2
+Accounting Assistant;6.4;6.4
+Retail Store Manager;3.9;3.5
+Office Administrator;5.7;4.4
+Executive Administrative Assistant;6.4;6.2
+Customer Service Representative (CSR);9;9.1
+General Manager, Hotel;5.7;4.1
+General Manager, Restaurant;5.7;4.1
+Restaurant Manager;5.7;4.1
+Production Supervisor, Manufacturing;7.1;5.4
+Registered Nurse (RN);2;2.6
+Registered Nurse (RN), Operating Room;2;2.6
+Registered Nurse (RN) Supervisor;2;2.6
+Registered Nurse (RN), Emergency Room;2;2.6
+Staff Nurse;2;2.6
+Registered Nurse (RN), Utilization Management (UM);2;2.6
+Paralegal;6.7;5.1
+Legal Assistant;6.7;5.1
+Legal Secretary;6.7;5.1
+Paralegal / Legal Assistant;6.7;5.1
+Nurse Case Manager;4.8;6.7
+Director, Nursing;3;2.9
+Hospice Registered Nurse (RN);2;2.6
+MDS Coordinator;2;2.6
+Long Term Care Nursing Director;3;2.9
+Assistant Director of Nursing (ADON);3;2.9
+Network Administrator;3.9;4.1
+Physical Therapist Assistant;3.4;3.4
+Systems Administrator;3.9;4.1
+Certified Occupational Therapy Assistant (COTA);1.6;1.6
+Mechanical Designer;7.1;5.5
+Accountant;4.2;4.2
+Staff Accountant;4.2;4.2
+Financial Controller;3.9;3.5
+Accounting Manager;7.1;5.4
+Accounts Payable Manager;7.1;5.4
+Accounting Clerk;6.4;6.4
+Human Resources (HR) Manager;3.3;3.1
+Operations Manager;5.7;4.1
+Executive Assistant to CEO;6.4;6.2
+Property Manager;6.3;4.2
+Account Manager;5.8;5.8
+Production Manager, Manufacturing;5.5;4.9
+Computer Aided Design (CAD) Drafter;8.9;9.3
+Senior Computer Aided Design (CAD) Designer;8.9;9.3
+Design Engineer;7.1;5.5
+Computer Aided Design (CAD) Designer;8.9;9.3
+Architectural Drafter;8.9;9.3
+Senior Mechanical Designer;7.1;5.5
+Information Technology (IT) Manager;2.9;3.2
+Information Technology Specialist;7.3;6.6
+Information Technology (IT) Director;2.9;3.2
+Network Engineer;2.3;1.9
+Support Technician, Information Technology (IT);7.3;6.6
+Systems Engineer, IT;2.3;1.9
+Systems Engineer (Computer Networking / IT);2.3;1.9
+Desktop Support Technician;7.3;6.6
+Software Developer;4;2.8
+Software Engineer;4;2.8
+Web Developer;4;2.8
+Police Officer;2;1.2
+Service Manager Automotive;8.3;7.9
+Substance Abuse Counselor;4.8;7.1
+Security Supervisor;3.9;3.5
+Executive Chef;7.6;6.3
+Sous Chef;7.6;6.3
+Head Chef;7.6;6.3
+Food Service Director;6.1;5.8
+Food Service Manager;6.1;5.8
+Chef de Cuisine;7.6;6.3
+Dental Hygienist;2.8;2.8
+Registered Dental Hygienist (RDH);2.8;2.8
+Engineering Technician;8.5;4.7
+Electronics Technician;13.3;12.1
+Field Service Engineer;2.9;3.4
+Senior Engineering Technician;8.5;4.7
+Facility Manager;6.3;4.2
+Electrical Engineer;3.4;3.4
+Environmental Health & Safety (EHS) Specialist;2.3;2.6
+Registered Health Information Technician (RHIT);5.7;7.2
+Health Information Management (HIM) Manager;3;2.9
+Medical Coder;5.7;7.2
+Health Information Management (HIM) Supervisor;3;2.9
+Health Information Management (HIM) Director;3;2.9
+Medical Office Manager;3;2.9
+Hospital Coder;5.7;7.2
+Information Technology (IT) Support Specialist;7.3;6.6
+Senior Systems Administrator;3.9;4.1
+Medical Assistant;6.9;6.7
+Certified Medical Assistant (CMA);6.9;6.7
+Medical Assistant (Certified);6.9;6.7
+Medical Office Assistant;6.9;6.7
+Clinical Nurse Manager;3;2.9
+Occupational Therapist Assistant;1.6;1.6
+Occupational Therapy Assistant (OTA);1.6;1.6
+Senior Paralegal;6.7;5.1
+Litigation Paralegal;6.7;5.1
+Corporate Paralegal;6.7;5.1
+Licensed Physical Therapist Assistant (LPTA);3.4;3.4
+Physical Therapy Assistant;3.4;3.4
+Rehabilitation Director;3;2.9
+Radiologic Technologist;0.2;13.9
+Radiology Manager;3;2.9
+Radiology Technologist;0.2;13.9
+Radiology Technician;0.2;13.9
+Radiology Supervisor;3;2.9
+Radiology Director;3;2.9
+Respiratory Therapist;2.9;3.6
+Respiratory Therapy Manager;2.9;3.6
+Registered Respiratory Therapist (RRT);2.9;3.6
+Respiratory Services Manager;2.9;3.6
+Training Manager;6.1;5.3
+Human Resources (HR) Generalist;6.1;5.3
+Administrative / Office Manager;3.9;3.5
+General / Operations Manager;5.7;4.1
+Inside Sales Representative;8.3;9.5
+Human Resources (HR) Director;3.3;3.1
+Retail General Manager (GM);5.4;4
+Graphic Designer;7.1;5.5
+Senior Graphic Designer;7.1;5.5
+Art Director;7.1;5.5
+Web Designer;7.1;5.5
+Production Manager, Print;5.5;4.9
+Recruiting Administrator;3.9;3.5
+Contract Administrator;3.9;3.5
+Accounting Supervisor;4.2;4.2
+Customer Service Manager;3.9;3.5
+Surgical Technologist;6.9;6.7
+Accounts Receivable Specialist;6.8;5.5
+Quality Manager;3.9;3.5
+Sr. Network Engineer;2.3;1.9
+Sr. Software Engineer / Developer / Programmer;4;2.8
+Human Resources (HR) Coordinator;3.9;3.5
+Construction Superintendent;9.7;7
+Registered Psychiatric Nurse (RPN);2;2.6
+Senior Accountant;4.2;4.2
+Assistant Controller;3.9;3.5
+Nursing Manager;3.9;3.5
+Clinical Supervisor;3.9;3.5
+Clinical Documentation Specialist;4.3;2.1
+Resident Care Director;3.9;3.5
+Automotive Technician;8.3;7.9
+Shop Foreman;8.3;7.9
+Parts Specialist;8.3;7.9
+Parts Counterman;8.3;7.9
+Automobile Service Advisor;8.3;7.9
+Diesel Shop Foreman / Mechanic;8.3;7.9
+Marketing Director;6.1;5.2
+Marketing Manager;6.1;5.2
+Senior Buyer;3.6;4.3
+Production Supervisor;5.5;4.9
+Director of Operations;5.7;4.1
+Executive Director;2.8;2.1
+Drafter Design;8.9;9.3
+Building Information Modeling (BIM) Coordinator;8.9;9.3
+Computer Aided Design (CAD) Manager;8.9;9.3
+Senior Software Engineer;4;2.8
+Support Analyst, Information Technology (IT);7.3;6.6
+Network Technician;3.9;4.1
+Senior Information Technology (IT) Manager;3.9;3.5
+Sharepoint Administrator;3.9;4.1
+Information Technology (IT) Architect;2.3;1.9
+Security Manager;3.9;3.5
+Security Director;3.9;3.5
+Correctional Officer;3.3;3.6
+Police Lieutenant;1.8;1.2
+Chef Manager;7.6;6.3
+Corporate Chef;7.6;6.3
+Executive Sous Chef;7.6;6.3
+Kitchen Manager;7.6;6.3
+Child Care Center Director;10.4;9.4
+Director, Preschool;5.5;5.9
+Daycare Director;10.4;9.4
+Education Paraprofessional;10.4;9.4
+Education Administrator, Preschool or Child Care Center Program;10.4;9.4
+Child Care Provider;10.4;9.4
+Toddler Teacher;10.4;9.4
+Branch Manager, Wholesale Distributor;4.6;4.9
+Graphic Artist;5.8;7.6
+Graphic Design Specialist;5.8;7.6
+Graphic Design Manager;5.8;7.6
+Marketing Communications Specialist;6.1;5.2
+Production Artist;7.0;6.4
+Health Information Manager;0.7;1.5
+Coding Manager;4.0;2.8
+Medical Records Supervisor;5.7;7.2
+Certified Medical Coding Supervisor;4.0;2.8
+Help Desk Engineer;13.2;6.7
+Help Desk Team Leader;13.2;6.7
+Receptionist;9.2;8.7
+Practice Manager;4.8;6.7
+Clinic Office Manager;4.8;6.7
+Medical Assistant Instructor;6.9;6.7
+Clinical Analyst;4.3;2.1
+Nursing Home Administrator;9.1;8.6
+Nursing Home Nursing Manager;9.1;8.6
+Assisted Living Administrator;9.1;8.6
+Intellectual Property (IP) Paralegal;6.7;5.1
+Legal Administrative Assistant;6.7;5.1
+Parts Manager;4.1;7.5
+Social Worker;6.1;3.9
+Training Coordinator;6.1;5.3
+Assistant Property Manager;6.3;4.2
+Certified Public Accountant (CPA);4.2;4.2
+Chief Financial Officer (CFO);2.8;2.1
+Corporate Controller;3.9;3.5
+Financial Analyst;5.7;2.3
+Design Architect;7.3;6.0
+Project Architect;7.3;6.0
+Intern Architect;7.3;6.0
+Project Manager, Architecture;7.3;6.0
+Architectural Designer;7.3;6.0
+Senior Project Architect;7.3;6.0
+Architect (but not Landscape or Naval);7.3;6.0
+Marketing Coordinator;6.1;5.2
+Account Executive;4.2;4.2
+Assistant Media Planner;7.1;5.5
+Senior Account Executive;4.2;4.2
+Creative Director;7.1;5.5
+Sr. Art Director;3.8;4.4
+Graphic Artist / Designer;5.8;7.6
+Program Coordinator, Non-Profit Organization;3.9;3.5
+Architectural Job Captain;7.3;6.0
+Research Scientist;6.5;1.3
+Clinical Research Coordinator;6.5;1.3
+Chemist;6.1;5.5
+Senior Research Associate;6.5;1.3
+Physician Assistant (PA);4.0;1.2
+Senior Clinical Research Associate (CRA);6.5;1.3
+Research Technician;6.5;1.3
+Regional Sales Manager;6.1;5.2
+Analytical Chemist;6.1;5.5
+Quality Control (QC) Chemist;6.1;5.5
+Quality Assurance Manager;3.9;3.5
+Sr. Chemist;6.1;5.5
+Project Manager, Information Technology (IT);2.9;3.2
+Programmer Analyst;2.9;3.2
+Fraud Investigator;1.8;1.2
+Police Sergeant;1.8;1.2
+Business Analyst (Unspecified Type);5.7;2.3
+Data Analyst;3.9;4.1
+Research Analyst;3.9;4.1
+Senior Financial Analyst;5.7;2.3
+Management Consultant;4.1;3.6
+Elementary School Teacher;4.0;4.5
+High School Teacher;3.0;3.0
+Special Education Teacher, Preschool, Kindergarten, or Elementary School;3.6;3.3
+Kindergarten Teacher (but not Special Education);5.5;5.9
+Technical Writer;8.6;8.7
+Editor;3.8;4.4
+Copywriter;8.6;8.7
+Film / Video Editor;12.7;9.4
+Post Production Manager, Television, Video, or Motion Picture;12.7;9.4
+Video Producer;4.6;10.5
+Videographer;12.7;9.4
+Finance Manager;3.7;3.0
+Senior Business Analyst;5.3;4.1
+President;3.9;3.5
+Geographic Information Systems (GIS) Analyst;2.4;18.5
+Geographic Information Systems (GIS) Specialist;2.4;18.5
+Geographic Information Systems (GIS) Manager;2.4;18.5
+Geographic Information Systems (GIS) Technician;2.4;18.5
+Junior Graphic Designer;5.8;7.6
+Sr. Human Resources (HR) Manager;3.3;3.1
+Human Resources (HR) Specialist;6.1;5.3
+Regional Human Resources (HR) Manager;3.3;3.1
+Interior Designer;7.1;5.5
+Senior Interior Designer;7.1;5.5
+Assistant Interior Designer;7.1;5.5
+Project Manager, Interior Design;7.1;5.5
+Design Director, Interior Design;7.1;5.5
+Showroom Manager;3.9;3.5
+Assistant Project Manager, Construction;9.7;7.0
+Project Manager, Marketing;6.1;5.2
+Sales Director;5.4;4.0
+Intelligence Analyst;3.6;3.6
+Program Manager, Non-Profit Organization;3.9;3.5
+Program Assistant (Unspecified Type);3.9;3.5
+Reporter;4.9;6.6
+Journalist;4.9;6.6
+Communications Manager;2.0;24.8
+Director of Communications;2.0;24.8
+Communications Specialist;2.0;24.8
+Outside Sales Representative;4.2;3.3
+Business Analyst, IT;5.3;4.1
+Solutions Architect;2.4;3.1
+Database Administrator (DBA);1.3;3.6
+Marketing Assistant;6.1;5.2
+Digital Marketing Manager;6.1;5.2
+Marketing Specialist;6.1;5.2
+Actuary;3.7;4.5
+Worship Pastor;4.7;6.1
+Government Affairs Director;9.5;2.9
+Case Manager;3.9;3.5
+Public Relations Coordinator;2.7;4.5
+Public Relations (PR) Specialist;2.7;4.5
+Student Services Coordinator;3.9;3.5
+Business Development Manager;3.9;3.5
+Vice President (VP), Sales & Marketing;6.1;5.2
+Program Project Manager;6.1;5.2
+Recruiter;4.9;5.9;.NET Software Developer / Programmer;3.7;4.5
+Information Technology (IT) Consultant;2.9;3.2
+Credit Analyst;9.8;3.1
+Human Resources (HR) Representative;6.1;5.3
+Senior Human Resources (HR) Generalist;3.3;3.1
+Logistics Coordinator;7.9;5.8
+Systems Analyst;3.9;4.1
+Business Systems Analyst;6.5;1.3
+Director of Sales and Marketing;6.1;5.2
+Mechanical Engineer;2.4;3.1
+Project Engineer;4.5;5.0
+Civil Engineer;4.8;3.4
+Process Engineer;2.3;1.9
+Chemical Engineer;3.6;2.7
+Senior Process Engineer;2.3;1.9
+Project Manager, Engineering;2.3;1.9
+Chemical Process Engineer;3.6;2.7
+Environmental Engineer;4.8;3.4
+Structural Engineer;4.8;3.4
+Project Manager, Construction;4.8;3.4
+Senior Civil Engineer;4.8;3.4
+Civil Engineer in Training;4.8;3.4
+Principal Software Engineer;4.0;2.8
+Software Architect;4.0;2.8
+Lead Software Engineer;4.0;2.8
+Senior Java Developer;4.0;2.8
+Senior Technical Consultant;3.4;3.4
+Software Development Manager;4.0;2.8
+Senior Electrical Engineer;3.4;3.4
+Controls Engineer;3.4;3.4
+Industrial Engineer;5.5;2.7
+Manufacturing Engineer;11.1;4.4
+Quality Assurance (QA) Engineer;4.0;2.8
+Senior Mechanical Engineer;2.4;3.1
+Mechanical Design Engineer;2.4;3.1
+Senior Web Designer;4.0;2.8
+User Experience Designer;4.0;2.8
+Junior Interior Designer;7.1;5.5
+Landscape Architect;5.3;3.8
+Landscape Designer;5.3;3.8
+Sr. Landscape Architect;5.3;3.8
+Aerospace Engineer;1.9;3.7
+Senior Systems Engineer;3.6;3.6
+Senior Project Manager, Construction;7.0;4.7
+Research Associate (Unspecified Type);6.5;1.3
+Associate Research Scientist;6.5;1.3
+Biochemist;6.1;5.5
+Laboratory Manager;3.9;3.5
+Environmental Scientist;1.2;2.6
+Biologist;2.9;3.0
+Biomedical Engineer;4.2;0.4
+Quality Engineer, Medical Devices;11.6;8.2
+Research Engineer;6.5;1.3
+Product Development Engineer;2.9;3.4
+Research Chemist;6.1;5.5
+Medical Technologist;2.8;4.2
+Laboratory Supervisor, Medical / Clinical;3.0;2.9
+Clinical Laboratory Scientist;4.3;2.1
+Blood Bank Supervisor;3.0;2.9
+Senior Medical Technologist;4.3;2.1
+Medical / Clinical Laboratory Technologist;4.3;2.1
+Embedded Software Engineer;4.0;2.8
+Software Engineer / Developer / Programmer;4.0;2.8
+Software Development Engineer (SDE);4.0;2.8
+Chief Technology Officer (CTO);2.8;2.1
+Construction Project Manager;7.0;4.7
+Construction Estimator;5.8;6.8
+Construction Manager;7.0;4.7
+Probation Officer;3.3;3.6
+Dental Hygiene Instructor;2.8;2.8
+Registered Dietitian;4.4;2.8
+Dietitian;4.4;2.8
+Clinical Dietitian;4.4;2.8
+Renal Dietitian;4.4;2.8
+Clinical Nutrition Manager;4.4;2.8
+Certified Diabetes Educator (CDE);5.2;2.5
+Director Food and Nutrition Services;4.4;2.8
+Test Engineer;11.6;8.2
+Electrical Design Engineer;3.4;3.4
+Middle School Teacher;4.0;4.5
+Preschool Teacher, (but not Special Education);5.5;5.9
+Chief Engineer;2.9;3.4
+Vice President (VP), Operations;5.7;4.1
+Environmental Health & Safety (EHS) Manager;5.7;4.1
+Environmental Project Manager;5.7;4.1
+Environmental Consultant;1.2;2.6
+Environmental Manager;5.7;4.1
+Project Manager, Environmental;5.7;4.1
+Fitness Manager;5.7;4.1
+Wellness Director;6.9;6.7
+Personal Trainer;6.3;7.4
+Club General Manager;5.7;4.1
+Wellness/Fitness Center Program Director;5.7;4.1
+Health Fitness Specialist;6.3;7.4
+General Manager, Fitness Club;5.7;4.1
+Assistant Buyer;3.6;4.3
+Buyer;3.6;4.3
+Retail Sales Manager;6.1;5.2
+Product Development Coordinator;7.1;5.5
+Retail Store Assistant Manager;5.4;4.0
+Geologist;2.2;4.7
+Staff Geologist;2.2;4.7
+Project Geologist;2.2;4.7
+Sr. Geologist;2.2;4.7
+Creative Services Manager;5.7;4.1
+Healthcare Manager;3.0;2.9
+Healthcare Administrator;3.0;2.9
+Medical Practice Manager;3.0;2.9
+Health Care Administrator;3.0;2.9
+Medical Records Administrator;3.0;2.9
+Registered Health Information Administrator (RHIA);3.0;2.9
+Assistant General Manager, Hotel;5.7;4.1
+Guest Services Manager;5.7;4.1
+Catering Manager;6.1;5.8
+Catering Sales Manager;6.1;5.8
+Human Resources (HR) Assistant;4.9;5.9
+Human Resources (HR) Administrator;3.3;3.1
+Manufacturing Engineering Manager;3.9;3.5
+Maintenance Supervisor;5.4;5.6
+Assistant Editor;3.8;4.4
+Sr. Editor;3.8;4.4
+Web Producer;4.0;2.8
+Vice President (VP), Sales;6.1;5.2
+Product Engineer;2.9;3.4
+Laboratory Director;5.6;5.9
+Hospital Laboratory Director;5.6;5.9
+Senior Regulatory Affairs Specialist;2.3;2.6
+Microbiologist;2.9;3.0
+Performance Improvement Coordinator;11.6;8.2
+Safety Manager;2.3;2.6
+Safety Director;2.3;2.6
+Safety Coordinator;2.3;2.6
+Environmental Health & Safety (EHS) Coordinator;2.3;2.6
+Health and Safety Manager;2.3;2.6
+Licensed Registered Occupational Therapist;0.4;2.3
+Registered Occupational Therapist;0.4;2.3
+School-Based Occupational Therapist;0.4;2.3
+Occupational Therapist (OT);0.4;2.3
+Certified Hand Therapist;0.4;2.3
+Licensed Occupational Therapist;0.4;2.3
+Pediatric Occupational Therapist;0.4;2.3
+Pharmacist;3.1;3.2
+Pharmacy Manager;2.7;3.0
+Staff Pharmacist;3.1;3.2
+Pharmacy Director;3.1;3.2
+Clinical Pharmacist;3.1;3.2
+Pharmacist in Charge;3.1;3.2
+Hospital Pharmacy Director;3.1;3.2
+Physical Therapist (PT);3.4;3.4
+Staff Physical Therapist;3.4;3.4
+Licensed Physical Therapist (LPT);3.4;3.4
+Lead Physical Therapist (PT);2.4;2.1
+Physical Therapist Director;2.7;3.0
+Senior Physical Therapist;3.4;3.4
+Physicist;3.5;0.3
+Account Coordinator;6.4;6.4
+Assistant Account Executive;12.9;9.9
+Account Executive, Public Relations (PR);2.7;4.5
+Activity Director;3.4;0.3
+Social Work Supervisor;2.4;2.1
+Social Worker (BSW);6.1;3.9
+Social Services Director;2.4;2.1
+Licensed Social Worker;6.1;3.9
+Case Manager, Social Services;6.1;3.9
+Medical Social Worker;6.1;3.9
+Senior Cost Accountant;5.8;6.8
+Senior Tax Analyst;7.1;1.0
+Assistant Research Scientist;6.5;1.3
+Channel Sales Manager;6.8;4.7
+Vice President (VP), Marketing;6.1;5.2
+Lead Applications Developer;4.0;2.8
+Senior .NET Developer / Programmer;4.0;2.8
+Senior Application Developer;4.0;2.8
+Detective;1.0;2.2
+FBI Agent;1.0;2.2
+State Trooper;2.0;1.2
+Chief Operating Officer (COO);2.8;2.1
+Junior Financial Analyst;5.7;2.3
+Physical Design Engineer;2.9;3.4
+Financial Advisor Assistant;5.7;2.3
+Valuation Manager;5.4;3.3
+Equity Analyst;5.7;2.3
+Analyst, Corporate Development;0.3;7.7
+Director of Human Resources (HR);3.3;3.1
+Associate Account Manager;6.1;5.2
+Facility Engineer;5.4;3.8
+Development Engineer, Manufacturing;2.9;3.4
+Senior Project Engineer;2.9;3.4
+Medical Nursing Manager;3.0;2.9
+Home Healthcare Director;3.0;2.9
+Facility Administrator, Health Care;3.0;2.9
+Clinical Specialist, Medical Devices;4.3;2.1
+Hospice Administrator;3.0;2.9
+Vice President (VP), Government Affairs;9.5;2.9
+Licensed Addiction Counselor (LAC);4.8;7.1
+Licensed Practical Nurse (LPN);4.8;6.7
+Medical Billing Manager;3.0;2.9
+Certified Nurse Assistant (CNA);9.1;8.6
+Certified Professional Coder (CPC);5.7;7.2
+Certified Medical Billing/Coding Specialist;5.7;7.2
+Medical Biller;5.7;7.2
+Medical Records Coder;5.7;7.2
+Charge Nurse (LPN);4.8;6.7
+Licensed Practical or Licensed Vocational Nurse;4.8;6.7
+Veterinarian;0.6;1.2
+Dentist;0.7;1.5
+Family Physician / Doctor;0.6;0.8
+Physician / Doctor, Internal Medicine;0.6;0.8
+Pharmacy Clinical Coordinator;3.1;3.2
+Pediatric Physical Therapist;1.8;2
+Associate Veterinarian;0.6;1.2
+Assistant Professor, Postsecondary / Higher Education;3.6;3.6
+Associate Professor, Postsecondary / Higher Education;3.6;3.6
+Professor, Postsecondary / Higher Education;3.6;3.6
+Psychologist;1.4;5.2
+Clinical Psychologist;1.4;5.2
+Senior Research Scientist, Biotechnology;2.9;3
+Chemical Engineer, Research & Development (R&D);3.6;2.7
+Computer Scientist;3.6;3.6
+Senior Computer Scientist;3.6;3.6
+Senior Principal Engineer;2.9;3.4
+Principal Mechanical Engineer;2.4;3.1
+President and CEO;2.8;2.1
+Chief Executive Officer (CEO);2.8;2.1
+Business Development Director;7.1;5.4
+Construction Superintendent, Commercial;9.7;7
+Attorney / Lawyer;2.1;1.4
+Associate Attorney;2.1;1.4
+General Counsel;2.1;1.4
+Corporate Counsel;2.1;1.4
+Associate General Counsel;2.1;1.4
+Assistant General Counsel;2.1;1.4
+Litigation Attorney;2.1;1.4
+Legal Counsel;2.1;1.4
+Senior Counsel;2.1;1.4
+Prosecutor;2.1;1.4
+Senior Auditor;4.2;4.2
+Special Education Teacher, Secondary School;3.6;3.3
+Communications Director;8;3.7
+Licensed Professional Counselor;4.8;7.1
+Mental Health Therapist;1.7;4.3
+Career Counselor;0.4;2.3
+Psychotherapist;9.1;8.6
+Economist;9.5;11.3
+Instructional Designer;7.3;6.5
+English Language / Literature Teacher, Postsecondary;3.6;3.6
+Teacher College/University (Unknown Type);3.6;3.6
+Copy Editor;14.9;9.4
+Sr. Human Resources (HR) Business Partner;6.1;5.3
+Human Resources (HR) Business Partner;6.1;5.3
+Marriage / Family Therapist;1.7;4.3
+Product Marketing Manager;6.1;5.2
+Senior Marketing Manager;6.1;5.2
+Product Marketing Director;6.1;5.2
+Finance Director;3.7;3
+Vice President (VP), Finance;3.7;3
+Portfolio Manager;5.7;2.3
+Practice Administrator;6.8;5.5
+Consultant, Human Resources (HR);6.1;5.3
+Program Manager, IT;2.9;3.2
+Strategic Sourcing Manager;5.4;3.3
+Senior Project Manager, IT;2.9;3.2
+Business Analysis Manager, IT;2.9;3.2
+Brand Manager;6.1;5.2
+Chief Marketing Officer (CMO);6.1;5.2
+Senior Product Manager;6.1;5.2
+Marketing Analyst;6.1;5.2
+Project Manager, Operations;7;4.7
+Project Manager, (Unspecified Type / General);7;4.7
+Sr. Project Manager, Operations;7;4.7
+Education Program Director;2.5;3.1
+Athletic Director;2.5;3.1
+Special Education Teacher, Middle School;3.6;3.3
+Intervention Specialist;3.6;3.4
+Director of Special Education;3.6;3.3
+Senior Project Manager, Engineering;3.9;3.5
+Senior Structural Engineer;4.8;3.4
+Radio Frequency (RF) Engineer;5.8;7.6
+Mechanical Engineering Manager;3.9;3.5
+Hospital Administrator;3;2.9
+Librarian;4.5;4.8
+Library Director;4.5;4.8
+Reference Librarian;4.5;4.8
+Head Librarian;4.5;4.8
+School Library Media Specialist;5.2;2.5
+Librarian, Special Library;4.5;4.8
+Assistant Librarian;4.5;4.8
+Senior Mechanical Design Engineer;8.9;9.3
+Physical Therapy Director;3.8;4
+City Manager;3.9;3.5
+Health Educator;13.9;10.2
+Family Nurse Practitioner (NP);4.2;2.9
+Auditor;4.2;4.2
+Stress Engineer;4.8;3.4
+Clinical Engineer, Medical Devices;4.2;0.4
+Process Development Engineer;4.8;3.4
+Process Engineering Manager;4.8;3.4
+Design Verification Engineer;4.8;3.4
+Sales Engineer;3.1;1.4
+Economic Analyst;9.5;11.3
+Hardware Engineer;2.3;1.9
+Program Manager, Engineering;3.9;3.5
+Environmental Specialist;1.2;2.6
+Ecologist;1.2;2.6
+Senior Environmental Consultant;1.2;2.6
+Investment Analyst;5.7;2.3
+Petroleum Geologist;1.2;2.6
+Hydrogeologist;1.2;2.6
+Vice President (VP), Human Resources (HR);3.3;3.1
+Senior Industrial Engineer;4.8;3.4
+Data Architect;5.7;4.1
+Mathematician;25.4;N/A
+Biostatistician;1.6;N/A
+Pediatrics Advanced Registered Nurse Practitioner (ARNP);4.2;2.9
+Orthopedic Physician Assistant (PA);5.6;5.9
+Senior Test Engineer;11.6;8.2
+Behavior Specialist;4.8;7.1
+Statistician;1.6;N/A
+Statistical Analyst;1.6;N/A
+SAS Programmer;5.3;4.1
+Senior Statistician;1.6;N/A
+Advanced Registered Nurse Practitioner (ARNP);4.2;2.9
+Nurse Practitioner (NP);4.2;2.9
+Hospitalist Advanced Registered Nurse Practitioner (ARNP);4.2;2.9
+Advanced Practice Registered Nurse (APRN);4.2;2.9
+Hospitalist Nurse Practitioner (NP);4.2;2.9
+Internal Medicine Advanced Registered Nurse Practitioner (ARNP);4.2;2.9
+Licensed Clinical Social Worker (LCSW);6.1;3.9
+Clinical Social Worker;6.1;3.9
+School Social Worker;6.1;3.9
+Social Worker (MSW);6.1;3.9
+Pediatrician, General;0.6;0.8
+Medical Director, Medicine;3;2.9
+Psychiatrist;0.6;0.8
+General Surgeon;0.6;0.8
+Physician / Doctor, Emergency Room (ER);0.6;0.8
+Anesthesiologist;0.6;0.8
+Sales Associate;10.5;9.5
+Nanny;10.4;9.4
+Superintendent of Public Works;3.9;3.5
+Maintenance Manager;3.9;3.5
+HVAC Technician;10.4;6.6
+Maintenance Technician;7.2;5.1
+Heating, Air Conditioning, or Refrigeration Mechanic / Installer;10.4;6.6
+HVAC Controls Technician;10.4;6.6
+Maintenance Mechanic;7.2;5.1
