@@ -211,6 +211,8 @@ class Api::V2::ColiController < ApplicationController
 			index += 1
 		end
 
+		result["objects"] = []
+
 		loc.each do |k,v|
 			result["objects"] << {k,v}
 		end
