@@ -63,7 +63,7 @@ for line in open("universities.csv"):
 for line in csv.reader(states):
 	state[line[0].lower()] = line[1].lower()
 
-murl = "https://trycents.com/api/v2/degrees/"
+murl = "https://trycents.com/api/v2/degrees"
 r = requests.Request("POST",murl,headers={'Accept':'application/json'})
 mprep = r.prepare()
 ms = requests.Session()
