@@ -277,6 +277,7 @@ function sketchProc(processing) {
   					alert("Please click one or two only.");
   				}
   				else{
+  					console.log(data);
   					l1 = data["locations"][locs[0].toString()];
   					if(locs.length == 2){
   						l2 = data["locations"][locs[1]];
