@@ -111,7 +111,6 @@ class Api::V2::CareersController < ApplicationController
 		# (The index is needed because that's how the view tracks careers.)
 		index = 1
 		careers.each do |career|
-			result["jobs_#{index}"] = Array.new
 			match = false
 
 			# Search through the retrieved records for a match.
