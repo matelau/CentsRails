@@ -42,7 +42,7 @@ class Api::V2::ColiController < ApplicationController
 		# Return the record names as a JSON object.
 		result.sort!
 
-		return render json: {locations: result}, status: 200
+		return render json: result, status: 200
   end
 
 	# Get cost of living data by state.
@@ -208,6 +208,8 @@ class Api::V2::ColiController < ApplicationController
 			# Increment for next object.
 			index += 1
 		end
+
+		result["locations"] = result
 
 		labor_avg = Array.new
 		labor_avg << @averages[0][:avg_unemp_rate].to_f
