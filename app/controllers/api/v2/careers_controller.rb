@@ -156,7 +156,7 @@ class Api::V2::CareersController < ApplicationController
 			index += 1
 		end
 
-		if index == 1
+		if index == 2
 			result["operation"] = "get"
 		else
 			result["operation"] = "compare"
