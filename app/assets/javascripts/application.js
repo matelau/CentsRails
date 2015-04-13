@@ -79,9 +79,9 @@ function api_request(query) {
     				var o1 = null;
 			  		var o2 = null;
 
-    				if(Object.keys(data["objects"]).length > 2) {
-			  			Object.keys(data["objects"]).forEach(function(key) {
-			  				$('#disSelections > tbody:last').append("<tr><td><input type='checkbox' name='"+key+"' class='obj'/></td><td>"+data['objects'][key]['name']+"</td></tr>");
+    				if(data["objects"].length > 2) {
+			  			data["objects"].forEach(function(key,value) {
+			  				$('#disSelections > tbody:last').append("<tr><td><input type='checkbox' name='"+key+"' class='obj'/></td><td>"+value['name']+"</td></tr>");
 			  			});
 
 			  			$('#disModal').show();
