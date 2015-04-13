@@ -346,7 +346,6 @@ def query(query):
 		for c in careers:
 			package["careers"].append({"name": c})
 
-		print package
 		#url = "https://%s/api/v1/schools/" % (ip)
 		url = "https://trycents.com/api/v2/careers/compare"
 		payload = json.dumps(package)
@@ -356,7 +355,6 @@ def query(query):
 		s.verify = False
 		resp = s.send(prep)
 
-		print resp
 		if(resp.status_code == 400):
 			package = {
 				"operation":"undefined",
