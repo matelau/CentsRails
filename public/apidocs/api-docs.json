@@ -712,6 +712,9 @@
           "200":{  
             "description":"Changes saved."
           },
+          "400":{
+          	"description": "User doesn't have one or more of the fields."
+          },
           "401":{  
             "description":"Invalid API key."
           },
