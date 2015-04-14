@@ -172,8 +172,6 @@ class Api::V2::DegreesController < ApplicationController
 
 		no_data_for = Array.new
 
-		deg = {}
-
 		# Iterate over each degree, keeping track of the degree's index.
 		# (The index is needed because that's how the view tracks degrees.)
 		index = 1
@@ -204,13 +202,12 @@ class Api::V2::DegreesController < ApplicationController
 					]
 					cents_rating = cents_rating[0][:average].to_f
 
-					deg["element_#{index}"] = Hash.new
-					deg["element_#{index}"]["name_#{index}"] = "#{record[:degree_name]} (#{record[:level]})"
-					deg["element_#{index}"]["degree_#{index}"] = [salary, recommended, meaningful, cents_rating]
-					deg["element_#{index}"]["jobs_#{index}"] = Array.new
+					result["name_#{index}"] = "#{record[:degree_name]} (#{record[:level]})"
+					result["degree_#{index}"] = [salary, recommended, meaningful, cents_rating]
+					result["jobs_#{index}"] = Array.new
 
 					top_jobs.each do |job|
-						deg["element_#{index}"]["jobs_#{index}"].concat [job[:name], job[:salary]]
+						result["jobs_#{index}"].concat [job[:name], job[:salary]]
 					end
 					break
 				end
@@ -223,12 +220,6 @@ class Api::V2::DegreesController < ApplicationController
 
 			# Increment for next object.
 			index += 1
-		end
-
-		result["elements"] = []
-
-		deg.each do |k, v|
-		  result["elements"] << v
 		end
 
 		# If there is no data for a degree, send an error message.
