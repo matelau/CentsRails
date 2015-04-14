@@ -92,6 +92,9 @@
           "200":{  
             "description":"Rating was saved."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"Career does not exist."
           }
@@ -371,6 +374,9 @@
           "200":{  
             "description":"Rating was added."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"Degree does not exist."
           }
@@ -583,6 +589,9 @@
           "200":{  
             "description":"Records were found."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"School does not exist."
           }
@@ -668,6 +677,9 @@
           "200":{  
             "description":"There is a user with that ID."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"There is no user with that ID."
           }
@@ -699,6 +711,9 @@
         "responses":{  
           "200":{  
             "description":"Changes saved."
+          },
+          "401":{  
+            "description":"Invalid API key."
           },
           "404":{  
             "description":"There is no user with that ID."
@@ -746,6 +761,9 @@
           "200":{  
             "description":"The user was found."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"No such user was found."
           }
@@ -777,6 +795,9 @@
         "responses":{  
           "200":{  
             "description":"User was found."
+          },
+          "401":{  
+            "description":"Invalid API key."
           },
           "404":{  
             "description":"No such user was found."
@@ -821,6 +842,9 @@
           "200":{  
             "description":"The user was found."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"No such user was found."
           }
@@ -852,6 +876,9 @@
         "responses":{  
           "200":{  
             "description":"User was found."
+          },
+          "401":{  
+            "description":"Invalid API key."
           },
           "404":{  
             "description":"No such user was found."
@@ -896,6 +923,9 @@
           "200":{  
             "description":"The user was found."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"No such user was found."
           }
@@ -929,6 +959,9 @@
         "responses":{  
           "200":{  
             "description":"User was found."
+          },
+          "401":{  
+            "description":"Invalid API key."
           },
           "404":{  
             "description":"No such user ID was found."
@@ -966,6 +999,9 @@
           },
           "400":{  
             "description":"Each field object must have a name and value."
+          },
+          "401":{  
+            "description":"Invalid API key."
           },
           "404":{  
             "description":"No such user was found."
@@ -1026,6 +1062,9 @@
           "400":{  
             "description":"Each field object must have a name and value."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"No such user was found."
           },
@@ -1082,6 +1121,9 @@
           "200":{  
             "description":"Records were found."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"No records were found."
           }
@@ -1127,6 +1169,9 @@
         "responses":{  
           "200":{  
             "description":"Data was deleted."
+          },
+          "401":{  
+            "description":"Invalid API key."
           }
         },
         "description":"",
