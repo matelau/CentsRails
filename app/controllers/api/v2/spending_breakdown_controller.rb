@@ -2,6 +2,10 @@ class Api::V2::SpendingBreakdownController < ApplicationController
 
 	# Load all spending breakdown data.
 	def show
+		unless api_key_is_valid?
+			return render json: 'Invalid API key.', status: 401
+		end
+
 		result = Array.new
 
 		unless User.exists? params[:id]
@@ -26,6 +30,10 @@ class Api::V2::SpendingBreakdownController < ApplicationController
 
 	# Load spending breakdown data by category.
 	def show_category
+		unless api_key_is_valid?
+			return render json: 'Invalid API key.', status: 401
+		end
+
 		result = Array.new
 
 		unless User.exists? params[:id]
@@ -51,6 +59,10 @@ class Api::V2::SpendingBreakdownController < ApplicationController
 
 	# Save new spending breakdown data.
 	def update
+		unless api_key_is_valid?
+			return render json: 'Invalid API key.', status: 401
+		end
+
 		result = Hash.new
 		error_list = []
 
@@ -103,6 +115,10 @@ class Api::V2::SpendingBreakdownController < ApplicationController
 
 	# Save new spending breakdown data.
 	def update_all
+		unless api_key_is_valid?
+			return render json: 'Invalid API key.', status: 401
+		end
+
 		result = Hash.new
 		error_list = []
 
@@ -162,6 +178,10 @@ class Api::V2::SpendingBreakdownController < ApplicationController
 
   # Remove a single item of spending breakdown data.
 	def destroy
+		unless api_key_is_valid?
+			return render json: 'Invalid API key.', status: 401
+		end
+
 		Amount.where(
 			user_id: params[:id], 
 			category: params[:category], 

@@ -47,6 +47,10 @@ class Api::V2::DegreesController < ApplicationController
 
 	# Rate a degree.
 	def rate
+		unless api_key_is_valid?
+			return render json: 'Invalid API key.', status: 401
+		end
+
 		degree = Degree.where(['level like ? AND name = ?', "#{params[:level]}%", "#{params[:name]}"]).first
 		degree_rating = RatesMajor.where(user_id: params[:user], degree_id: degree.id).first
 

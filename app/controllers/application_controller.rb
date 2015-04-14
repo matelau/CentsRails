@@ -19,5 +19,10 @@ class ApplicationController < ActionController::Base
 	def authorize
 		redirect_to '/login' unless current_user
 	end
+
+	def api_key_is_valid?
+		user_key = ApiKey.find_by_key(params[:api_key])
+		user_key.present?
+	end
   
 end

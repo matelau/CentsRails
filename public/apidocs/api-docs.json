@@ -99,7 +99,14 @@
         "description":"This will insert a new rating if none is present, or update the current rating if there is one.",
         "summary":"Allows a user to rate a career.",
         "operationId":"Api::V2::CareersController#rate",
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
           {  
             "in":"path",
             "description":"a career name",
@@ -371,7 +378,14 @@
         "description":"This route will add a rating if it doesn't exist, or update the rating if it does.",
         "summary":"Allows a user to rate a degree.",
         "operationId":"Api::V2::DegreesController#rate",
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
           {  
             "in":"path",
             "description":"bachelor, masters, etc.",
@@ -578,6 +592,13 @@
         "operationId":"Api::V2::SchoolsController#rate",
         "parameters":[  
           {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          }, 
+          {  
             "in":"path",
             "description":"a school name",
             "name":"name",
@@ -654,7 +675,14 @@
         "description":"",
         "summary":"Gets profile data for a user.",
         "operationId":"Api::V2::UsersController#show",
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },  
           {  
             "in":"path",
             "description":"a user ID",
@@ -682,7 +710,14 @@
         "description":"Update any of a user's fields by passing in a list of objects with names a values. Although the value type is listed here as string, the value type must match the field type.",
         "summary":"Updates a user's fields.",
         "operationId":"Api::V2::UsersController#update",
-        "parameters":[  
+        "parameters":[ 
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },  
           {  
             "in":"path",
             "description":"a user ID",
@@ -717,6 +752,13 @@
         },
         "parameters":[  
           {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          }, 
+          {  
             "in":"path",
             "description":"a user ID",
             "name":"id",
@@ -743,7 +785,14 @@
         "description":"",
         "summary":"Record that a user has completed a section.",
         "operationId":"Api::V2::UserController#create_completed",
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
           {  
             "in":"path",
             "description":"a user ID",
@@ -776,7 +825,14 @@
             "description":"No such user was found."
           }
         },
-        "parameters":[  
+        "parameters":[ 
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },  
           {  
             "in":"path",
             "description":"a user ID",
@@ -804,7 +860,14 @@
         "description":"",
         "summary":"Record that a user has made a query.",
         "operationId":"Api::V2::UserController#create_query",
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
           {  
             "in":"path",
             "description":"a user ID",
@@ -837,7 +900,14 @@
             "description":"No such user was found."
           }
         },
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
           {  
             "in":"path",
             "description":"a user ID",
@@ -867,7 +937,14 @@
         "description":"",
         "summary":"Loads all spending breakdown data for a user.",
         "operationId":"Api::V2::SpendingBreakdownController#show",
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
           {  
             "in":"path",
             "description":"a user ID",
@@ -900,7 +977,14 @@
         "description":"Use this route to save a few individual spending breakdown items.",
         "summary":"Saves new spending breakdown data.",
         "operationId":"Api::V2::SpendingBreakdownController#update",
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
           {  
             "in":"path",
             "description":"a user ID",
@@ -952,7 +1036,14 @@
         "description":"Use this route to replace all spending breakdown data for a category with whatever you send. This route could be used to reset to a default.",
         "summary":"Updates all spending breakdown data by category.",
         "operationId":"Api::V2::SpendingBreakdownController#update_all",
-        "parameters":[  
+        "parameters":[ 
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },  
           {  
             "in":"path",
             "description":"a user ID",
@@ -1000,6 +1091,13 @@
         "operationId":"Api::V2::SpendingBreakdownController#show_category",
         "parameters":[  
           {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          }, 
+          {  
             "in":"path",
             "description":"a user ID",
             "name":"id",
@@ -1034,7 +1132,14 @@
         "description":"",
         "summary":"Deletes a single spending breakdown item.",
         "operationId":"Api::V2::SpendingBreakdownController#destroy",
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
           {  
             "in":"path",
             "description":"a user ID",
