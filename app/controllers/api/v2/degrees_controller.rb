@@ -145,7 +145,14 @@ class Api::V2::DegreesController < ApplicationController
 
 	# Get degree data for two degrees.
 	def show_two
+		if params[:operation].present?
+			operation = params[:operation]
+		else
+			operation = "undefined"
+		end
 
+		degrees = params[:degrees]
+		internal_show_two(degrees, operation)
 	end
 
 private

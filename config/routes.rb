@@ -127,6 +127,9 @@ Rails.application.routes.draw do
 
       # Careers.
       get 'careers' => 'careers#index'												# Get career names for autocomplete.
+      get 'careers/best' => 'schools#show_best'
+      get 'careers/worst' => 'schools#show_worst'
+      get 'careers/random' => 'schools#show_random'
       get 'careers/:name' => 'careers#show'										# Get career by name.
       post 'careers/compare' => 'careers#show_two'						# Get career data for comparison.
       put 'careers/:name/:rating' => 'careers#rate'
