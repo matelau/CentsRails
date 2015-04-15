@@ -122,6 +122,12 @@ class Api::V2::SchoolsController < ApplicationController
 		internal_show_two(schools, "get")
 	end
 
+	def show_random
+		school = University.order("RAND()").first
+		schools = [{name: school[:name]}]
+		internal_show_two(schools, "get")
+	end
+
 	# Get school by location.
 	def show_location
 		records = University.where(['state LIKE ?', "%#{params[:location]}%"])
