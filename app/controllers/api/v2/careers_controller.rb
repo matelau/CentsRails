@@ -134,10 +134,17 @@ class Api::V2::CareersController < ApplicationController
 
 					car["career_#{index}"] = Hash.new
 					car["career_#{index}"]["name"] = record[:name]
-					car["career_#{index}"]["career_salary"] = [record[:sal2003], 
+					sals = [record[:sal2003], 
 						record[:sal2004], record[:sal2005], record[:sal2006], record[:sal2007],
 						record[:sal2008], record[:sal2009], record[:sal2010], record[:sal2011], 
 						record[:sal2012], record[:sal2013]]
+
+					min_sal = sals.compact.min
+					max_sal = sals.compact.max
+
+					sals << min_sal
+					sals << max_sal
+					car["career_#{index}"]["career_salary"] = sals
 					car["career_#{index}"]["career_demand"] = [record[:job_openings], 
 							record[:employment_growth_percent], 
 							record[:employment_change_volume]
