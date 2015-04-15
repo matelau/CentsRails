@@ -93,7 +93,7 @@ class Api::V2::SchoolsController < ApplicationController
 	end
 
 	def show_best
-		school = University.order("rank ASC").first
+		school = University.order("CASE WHEN rank IS NULL THEN 1 ELSE 0 END, rank").first
 		schools = [{name: school[:name]}]
 		internal_show_two(schools, "get")
 	end
@@ -124,7 +124,12 @@ class Api::V2::SchoolsController < ApplicationController
 
 	# Get school data for two schools.
 	def show_two
-		operation = params[:operation]
+		if params[:operation].present?
+			operation = params[:operation]
+		else
+			operation = "undefined"
+		end
+
 		schools = params[:schools]
 		internal_show_two(schools, operation)
 	end
