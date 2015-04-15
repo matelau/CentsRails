@@ -99,7 +99,9 @@ class Api::V2::SchoolsController < ApplicationController
 	end
 
 	def show_worst
-		school = University.order("CASE WHEN rank IS NULL THEN 101 ELSE rank END, rank").first
+		school = University.order(
+			"CASE WHEN grad_rate_6_year IS NULL THEN 101 ELSE grad_rate_6_year END, grad_rate_6_year"
+			).first
 		schools = [{name: school[:name]}]
 		internal_show_two(schools, "get")
 	end
