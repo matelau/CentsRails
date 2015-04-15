@@ -1,5 +1,5 @@
 class Api::V2::SchoolsController < ApplicationController
-	require 'rest_client'
+	require 'rest-client'
 
 	# Get school record names for autocomplete.
 	def index
