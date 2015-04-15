@@ -124,6 +124,7 @@ class Api::V2::SchoolsController < ApplicationController
 
 	def show_random
 		ids = University.where(selection: 1).pluck(:id)
+		puts ids
 		school = University.find( ids[Random.rand(ids.length)] )
 		schools = [{name: school[:name]}]
 		internal_show_two(schools, "get")
