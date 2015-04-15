@@ -392,7 +392,7 @@ function sketchProc(processing) {
 
 		//check to see if how many null values for each
 		var null_1 = reduce(data["career_salary_1"]);
-		//var null_2 = reduce(data["career_salary_2"]);
+		var null_2 = reduce(data["career_salary_2"]);
 
 		//calculate min and max for data being shown [17] = min, [18] = max
 		var min, max;
