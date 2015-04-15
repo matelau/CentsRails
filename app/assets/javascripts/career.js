@@ -276,7 +276,6 @@ function sketchProc(processing) {
 		if (!data["career_salary_2"])
   		{
   			hide_2 = true;
-  			console.log("hiding 2");
   			document.getElementById("search_2_button").value = "SHOW";
   			$("#search_2_button").attr("disabled", "true");
   		}
@@ -287,7 +286,6 @@ function sketchProc(processing) {
   		old1 = document.getElementById("search_1_name").value;
 		old2 = document.getElementById("search_2_name").value;
 		nochanges = true;
-
 	};
 
 
@@ -685,7 +683,6 @@ function sketchProc(processing) {
 		}
 		if (!hide_2)
 		{
-			console.log("shouldn't print");
 			processing.fill(gray);
 			processing.noStroke();
 			if (data["career_demand_2"][2] != null)
