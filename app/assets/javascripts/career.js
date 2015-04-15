@@ -333,7 +333,7 @@ function sketchProc(processing) {
 				offset = 80;
 			processing.textFont(font, 30);
 			processing.fill(main);
-			processing.text("$" + (data["career_salary_1"][12]).toLocaleString(), 400+offset, 60);
+			processing.text("$" + (data["career_salary_1"][10]).toLocaleString(), 400+offset, 60);
 			processing.text("" + (data["career_satisfaction_1"]), 400+offset, 130);
 			processing.text((data["career_demand_1"][0]).toLocaleString(), 400+offset, 215);
 			processing.text((data["career_unemploy_1"][0]) + "%", 400+offset, 300);
@@ -348,7 +348,7 @@ function sketchProc(processing) {
 				offset = -80;
 			processing.textFont(font, 30);
 			processing.fill(gray);
-			processing.text("$" + (data["career_salary_2"][12]).toLocaleString(), 560+offset, 60);
+			processing.text("$" + (data["career_salary_2"][10]).toLocaleString(), 560+offset, 60);
 			processing.text("" + (data["career_satisfaction_2"]), 560+offset, 130);
 			processing.text((data["career_demand_2"][0]).toLocaleString(), 560+offset, 215);
 			processing.text((data["career_unemploy_2"][0]) + "%", 560+offset, 300);
@@ -391,26 +391,54 @@ function sketchProc(processing) {
 		}
 
 		//check to see if how many null values for each
-		var null_1 = reduce(data["career_salary_1"]);
-		var null_2 = reduce(data["career_salary_2"]);
+		var null_1, null_2;
+		null_1 = reduce(data["career_salary_1"]);
+		if (data["career_salary_2"])
+			null_2 = reduce(data["career_salary_2"]);
 
 		//calculate min and max for data being shown [17] = min, [18] = max
 		var min, max;
-		if (!hide_1 && !hide_2)
+		if (hide_2 && !hide_1)
 		{
-			min = processing.min(data["career_salary_1"][11], data["career_salary_2"][11]);
-			max = processing.max(data["career_salary_1"][12], data["career_salary_2"][12]);
+			min = data["career_salary_1"][11];
+			max = data["career_salary_1"][12];
 		}
-		else if (hide_1)
+		else if (hide_1 && !hide_2)
 		{
 			min = data["career_salary_2"][11];
 			max = data["career_salary_2"][12];
 		}
 		else
 		{
-			min = data["career_salary_1"][11];
-			max = data["career_salary_1"][12];
+			
+			if (data["career_salary_2"])
+			{
+				min = processing.min(data["career_salary_1"][11], data["career_salary_2"][11]);
+				max = processing.max(data["career_salary_1"][12], data["career_salary_2"][12]);
+			}
+			else
+			{
+				min = data["career_salary_1"][11];
+				max = data["career_salary_1"][12];
+			}
 		}
+
+		// if (!hide_1 && !hide_2)
+		// {
+		// 	min = processing.min(data["career_salary_1"][11], data["career_salary_2"][11]);
+		// 	max = processing.max(data["career_salary_1"][12], data["career_salary_2"][12]);
+		// }
+		// else if (hide_1 && !hide_2)
+		// {
+		// 	min = data["career_salary_2"][11];
+		// 	max = data["career_salary_2"][12];
+		// }
+		// else
+		// {
+
+		// 	min = data["career_salary_1"][11];
+		// 	max = data["career_salary_1"][12];
+		// }
 
 		//draw lines and labels for salary range
 		min = ((processing.round(min/10000))-1)*10000;
@@ -555,6 +583,7 @@ function sketchProc(processing) {
 		//calculate min and max for each graph
 		//***************FIX FOR NEGATIVE NUMBERS
 		var min_1, max_1, min_2, max_2, min_3, max_3;
+
 		if (hide_2 && !hide_1)
 		{
 			min_1 = data["career_demand_1"][2] * 0.8;
@@ -564,7 +593,7 @@ function sketchProc(processing) {
 			min_3 = data["career_demand_1"][0] * 0.8;
 			max_3 = data["career_demand_1"][0] * 1.1;
 		}
-		else if (!hide_2 && hide_1)
+		else if (hide_1 && !hide_2)
 		{
 			min_1 = data["career_demand_2"][2] * 0.8;
 			max_1 = data["career_demand_2"][2] * 1.1;
@@ -575,14 +604,58 @@ function sketchProc(processing) {
 		}
 		else
 		{
-			min_1 = processing.min(data["career_demand_1"][2], data["career_demand_2"][2]) * 0.8;
-			max_1 = processing.max(data["career_demand_1"][2], data["career_demand_2"][2]) * 1.1;
-			min_2 = processing.min(data["career_demand_1"][1], data["career_demand_2"][1]) * 0.8;
-			max_2 = processing.max(data["career_demand_1"][1], data["career_demand_2"][1]) * 1.1;
-			min_3 = processing.min(data["career_demand_1"][0], data["career_demand_2"][0]) * 0.8;
-			max_3 = processing.max(data["career_demand_1"][0], data["career_demand_2"][0]) * 1.1;
-
+			
+			if (data["career_salary_2"])
+			{
+				min_1 = processing.min(data["career_demand_1"][2], data["career_demand_2"][2]) * 0.8;
+				max_1 = processing.max(data["career_demand_1"][2], data["career_demand_2"][2]) * 1.1;
+				min_2 = processing.min(data["career_demand_1"][1], data["career_demand_2"][1]) * 0.8;
+				max_2 = processing.max(data["career_demand_1"][1], data["career_demand_2"][1]) * 1.1;
+				min_3 = processing.min(data["career_demand_1"][0], data["career_demand_2"][0]) * 0.8;
+				max_3 = processing.max(data["career_demand_1"][0], data["career_demand_2"][0]) * 1.1;
+			}
+			else
+			{
+				min_1 = data["career_demand_1"][2] * 0.8;
+			max_1 = data["career_demand_1"][2] * 1.1;
+			min_2 = data["career_demand_1"][1] * 0.8;
+			max_2 = data["career_demand_1"][1] * 1.1;
+			min_3 = data["career_demand_1"][0] * 0.8;
+			max_3 = data["career_demand_1"][0] * 1.1;
+			}
 		}
+
+
+
+		
+		// if (hide_2 && !hide_1)
+		// {
+		// 	min_1 = data["career_demand_1"][2] * 0.8;
+		// 	max_1 = data["career_demand_1"][2] * 1.1;
+		// 	min_2 = data["career_demand_1"][1] * 0.8;
+		// 	max_2 = data["career_demand_1"][1] * 1.1;
+		// 	min_3 = data["career_demand_1"][0] * 0.8;
+		// 	max_3 = data["career_demand_1"][0] * 1.1;
+		// }
+		// else if (!hide_2 && hide_1)
+		// {
+		// 	min_1 = data["career_demand_2"][2] * 0.8;
+		// 	max_1 = data["career_demand_2"][2] * 1.1;
+		// 	min_2 = data["career_demand_2"][1] * 0.8;
+		// 	max_2 = data["career_demand_2"][1] * 1.1;
+		// 	min_3 = data["career_demand_2"][0] * 0.8;
+		// 	max_3 = data["career_demand_2"][0] * 1.1;
+		// }
+		// else
+		// {
+		// 	min_1 = processing.min(data["career_demand_1"][2], data["career_demand_2"][2]) * 0.8;
+		// 	max_1 = processing.max(data["career_demand_1"][2], data["career_demand_2"][2]) * 1.1;
+		// 	min_2 = processing.min(data["career_demand_1"][1], data["career_demand_2"][1]) * 0.8;
+		// 	max_2 = processing.max(data["career_demand_1"][1], data["career_demand_2"][1]) * 1.1;
+		// 	min_3 = processing.min(data["career_demand_1"][0], data["career_demand_2"][0]) * 0.8;
+		// 	max_3 = processing.max(data["career_demand_1"][0], data["career_demand_2"][0]) * 1.1;
+
+		// }
 
 		//draw numerical scales
 		var range_1 = (max_1-min_1)/10;
@@ -651,7 +724,7 @@ function sketchProc(processing) {
 			min = min * 0.9;
 			max = max * 1.05;
 		}
-		else if (!hide_2 && hide_1)
+		else if (hide_1 && !hide_2)
 		{
 			min = processing.min(data["career_unemploy_2"][0], data["career_unemploy_2"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
 			max = processing.max(data["career_unemploy_2"][0], data["career_unemploy_2"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
@@ -660,11 +733,44 @@ function sketchProc(processing) {
 		}
 		else
 		{
-			min = processing.min(data["career_unemploy_1"][0], data["career_unemploy_1"][1], data["career_unemploy_2"][0], data["career_unemploy_2"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
-			max = processing.max(data["career_unemploy_1"][0], data["career_unemploy_1"][1], data["career_unemploy_2"][0], data["career_unemploy_2"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
-			min = min * 0.9;
-			max = max * 1.05;
+			
+			if (data["career_salary_2"])
+			{
+				min = processing.min(data["career_unemploy_1"][0], data["career_unemploy_1"][1], data["career_unemploy_2"][0], data["career_unemploy_2"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
+				max = processing.max(data["career_unemploy_1"][0], data["career_unemploy_1"][1], data["career_unemploy_2"][0], data["career_unemploy_2"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
+				min = min * 0.9;
+				max = max * 1.05;
+			}
+			else
+			{
+				min = processing.min(data["career_unemploy_1"][0], data["career_unemploy_1"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
+				max = processing.max(data["career_unemploy_1"][0], data["career_unemploy_1"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
+				min = min * 0.9;
+				max = max * 1.05;
+			}
 		}
+
+		// if (hide_2 && !hide_1)
+		// {
+		// 	min = processing.min(data["career_unemploy_1"][0], data["career_unemploy_1"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
+		// 	max = processing.max(data["career_unemploy_1"][0], data["career_unemploy_1"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
+		// 	min = min * 0.9;
+		// 	max = max * 1.05;
+		// }
+		// else if (!hide_2 && hide_1)
+		// {
+		// 	min = processing.min(data["career_unemploy_2"][0], data["career_unemploy_2"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
+		// 	max = processing.max(data["career_unemploy_2"][0], data["career_unemploy_2"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
+		// 	min = min * 0.9;
+		// 	max = max * 1.05;
+		// }
+		// else
+		// {
+		// 	min = processing.min(data["career_unemploy_1"][0], data["career_unemploy_1"][1], data["career_unemploy_2"][0], data["career_unemploy_2"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
+		// 	max = processing.max(data["career_unemploy_1"][0], data["career_unemploy_1"][1], data["career_unemploy_2"][0], data["career_unemploy_2"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
+		// 	min = min * 0.9;
+		// 	max = max * 1.05;
+		// }
 
 		//draw scales
 		processing.stroke(235);
