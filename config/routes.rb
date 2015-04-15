@@ -109,7 +109,7 @@ Rails.application.routes.draw do
       get 'schools/worst' => 'schools#show_worst'
       get 'schools/cheapest' => 'schools#show_cheapest'
       get 'schools/priciest' => 'schools#show_priciest'
-      get 'schools/random' => 'schools#show_best'
+      get 'schools/random' => 'schools#show_random'
 
       get 'schools/:name' => 'schools#show'										# Get school by name.
       get 'schools/location/:location' => 'schools#show_location'	# Get schools by location.
