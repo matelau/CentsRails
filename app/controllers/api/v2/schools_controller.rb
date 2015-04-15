@@ -93,13 +93,13 @@ class Api::V2::SchoolsController < ApplicationController
 	end
 
 	def show_best
-		school = University.order("CASE WHEN rank IS NULL THEN 1 ELSE 0 END, rank").first
+		school = University.order("CASE WHEN rank IS NULL THEN 250 ELSE 0 END, rank").first
 		schools = [{name: school[:name]}]
 		internal_show_two(schools, "get")
 	end
 
 	def show_worst
-		school = University.order("rank DESC").first
+		school = University.order("CASE WHEN rank IS NULL THEN 1 ELSE 0 END, rank").first
 		schools = [{name: school[:name]}]
 		internal_show_two(schools, "get")
 	end
