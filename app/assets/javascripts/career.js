@@ -334,7 +334,7 @@ function sketchProc(processing) {
 			processing.textFont(font, 30);
 			processing.fill(main);
 			processing.text("$" + (data["career_salary_1"][12]).toLocaleString(), 400+offset, 60);
-			processing.text("" + (data["career_satisfaction_1"]), 400+offset, 130);
+			processing.text("" + 0.0, 400+offset, 130);
 			processing.text((data["career_demand_1"][0]).toLocaleString(), 400+offset, 215);
 			processing.text((data["career_unemploy_1"][0]) + "%", 400+offset, 300);
 			processing.textFont(font, 12);
@@ -349,7 +349,7 @@ function sketchProc(processing) {
 			processing.textFont(font, 30);
 			processing.fill(gray);
 			processing.text("$" + (data["career_salary_2"][12]).toLocaleString(), 560+offset, 60);
-			processing.text("" + (data["career_satisfaction_2"]), 560+offset, 130);
+			processing.text("" + 0.0, 560+offset, 130);
 			processing.text((data["career_demand_2"][0]).toLocaleString(), 560+offset, 215);
 			processing.text((data["career_unemploy_2"][0]) + "%", 560+offset, 300);
 			processing.textFont(font, 12);
