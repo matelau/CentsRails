@@ -1,5 +1,4 @@
 class Api::V2::SchoolsController < ApplicationController
-	require 'rest-client'
 
 	# Get school record names for autocomplete.
 	def index
@@ -95,8 +94,7 @@ class Api::V2::SchoolsController < ApplicationController
 
 	def show_best
 		school = University.order("rank DESC").first
-		#redirect_to(api_v2_schools_compare_path({schools: [{name: school[:name]}]}})
-			return render json: {}, status: 200
+		redirect_to(api_v2_schools_compare_path({schools: [{name: school[:name]}]}})
 	end
 
 	# Get school by location.
