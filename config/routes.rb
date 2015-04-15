@@ -110,7 +110,6 @@ Rails.application.routes.draw do
       get 'schools/cheapest' => 'schools#show_cheapest'
       get 'schools/priciest' => 'schools#show_priciest'
       get 'schools/random' => 'schools#show_random'
-
       get 'schools/:name' => 'schools#show'										# Get school by name.
       get 'schools/location/:location' => 'schools#show_location'	# Get schools by location.
       post 'schools/compare' => 'schools#show_two', as: 'schools_compare'
@@ -118,6 +117,9 @@ Rails.application.routes.draw do
 
       # Degrees.
       get 'degrees' => 'degrees#index'												# Get degree names for autocomplete.
+      get 'degrees/best' => 'degrees#show_worst'
+      get 'degrees/worst' => 'degrees#show_worst'
+      get 'degrees/random' => 'degrees#show_random'
       get 'degrees/:name' => 'degrees#show'										# Get degree by name.
       get 'degrees/:level/:name' => 'degrees#show_level_name'	# Get degree by level and name.
       post 'degrees/compare' => 'degrees#show_two'						# Get degree data for comparison.

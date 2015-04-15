@@ -98,6 +98,43 @@ class Api::V2::DegreesController < ApplicationController
 		end
 	end
 
+	def show_best
+		degree = Degrees.order(
+			"CASE WHEN salary IS NULL THEN 0 ELSE salary END, salary"
+			).first
+		degrees = [{name: degree[:name]}]
+		internal_show_two(degrees, "get")
+	end
+
+	def show_worst
+		degree = Degrees.order(
+			"CASE WHEN salary IS NULL THEN 100000 ELSE salary END, salary"
+			).first
+		degrees = [{name: degree[:name]}]
+		internal_show_two(degrees, "get")
+	end
+
+	def show_cheapest
+		degree = Degrees.order(
+			"CASE WHEN tuition_nonresident IS NULL THEN 100000 ELSE tuition_nonresident END, tuition_nonresident"
+			).first
+		schools = [{name: school[:name]}]
+		internal_show_two(schools, "get")
+	end
+
+	def show_priciest
+		school = University.order("tuition_nonresident DESC").first
+		schools = [{name: school[:name]}]
+		internal_show_two(schools, "get")
+	end
+
+	def show_random
+		ids = University.select(:id)
+		school = University.find( ids[Random.rand(ids.length)] )
+		schools = [{name: school[:name]}]
+		internal_show_two(schools, "get")
+	end
+
 	# Get degrees by level and name.
 	def show_level_name
 		records = Degree.where(['level like ? and name = ?', "#{params[:level]}%", params[:name]])
@@ -124,29 +161,35 @@ class Api::V2::DegreesController < ApplicationController
 
 	# Get degree data for two degrees.
 	def show_two
+
+	end
+
+private
+
+	def internal_show_two(d, o)
 		result = Hash.new
 
 		# Check for the required fields, and return an appropriate message if
 		# they are not present.
-		unless params[:degrees].present?
+		unless d.present?
 			return render json: 'No objects were in the degrees array.', status: 400
 		end
 
 		# Order the degrees.
 		degrees = Array.new
-		if params[:degrees][0][:order] and params[:degrees][1][:order]
-			params[:degrees].each do |degree|
+		if d[0][:order] and d[1][:order]
+			d.each do |degree|
 				if degree[:order] == 1
 					degrees << degree
 				end
 			end
-			params[:degrees].each do |degree|
+			d.each do |degree|
 				if degree[:order] == 2
 					degrees << degree
 				end
 			end
 		else
-			params[:degrees].each do |degree|
+			d.each do |degree|
 				degrees << degree
 			end
 		end
@@ -234,7 +277,7 @@ class Api::V2::DegreesController < ApplicationController
 			return render json: result, status: 404
 		end
 
-		result[:operation] = params[:operation]
+		result[:operation] = o
 
 		# Return the result, formatted as JSON, and with a 200 OK HTTP code.
 		render json: result, status: 200
