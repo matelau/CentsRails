@@ -93,7 +93,9 @@ class Api::V2::SchoolsController < ApplicationController
 	end
 
 	def show_best
-		school = University.order("CASE WHEN rank IS NULL THEN 250 ELSE rank END, rank").first
+		school = University.order(
+			"CASE WHEN rank IS NULL THEN 250 ELSE rank END, rank"
+			).first
 		schools = [{name: school[:name]}]
 		internal_show_two(schools, "get")
 	end
@@ -102,6 +104,20 @@ class Api::V2::SchoolsController < ApplicationController
 		school = University.order(
 			"CASE WHEN grad_rate_6_year IS NULL THEN 101 ELSE grad_rate_6_year END, grad_rate_6_year"
 			).first
+		schools = [{name: school[:name]}]
+		internal_show_two(schools, "get")
+	end
+
+	def show_cheapest
+		school = University.order(
+			"CASE WHEN tuition_nonresident IS NULL THEN 101 ELSE tuition_nonresident END, tuition_nonresident"
+			).first
+		schools = [{name: school[:name]}]
+		internal_show_two(schools, "get")
+	end
+
+	def show_cheapest
+		school = University.order("tuition_nonresident DESC").first
 		schools = [{name: school[:name]}]
 		internal_show_two(schools, "get")
 	end
