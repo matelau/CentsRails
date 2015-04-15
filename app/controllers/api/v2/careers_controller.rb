@@ -146,7 +146,7 @@ class Api::V2::CareersController < ApplicationController
 					sals << max_sal
 					car["career_#{index}"]["career_salary"] = sals
 					car["career_#{index}"]["career_demand"] = [record[:job_openings], 
-							record[:employment_growth_percent], 
+							record[:employment_change_percent], 
 							record[:employment_change_volume]
 					]
 					car["career_#{index}"]["career_unemploy"] = [record[:unemp11], record[:unemp12]]
