@@ -813,11 +813,14 @@ function sketchProc(processing) {
 		processing.text("NATIONAL", (axis_location[0]+axis_location[1])/2, (line_1+line_2)/2-9);
 		processing.text("AVERAGES", (axis_location[0]+axis_location[1])/2, (line_1+line_2)/2+8);
 
-		var height_1 = (graph_top - graph_bot)*((data["career_unemploy_1"][0] -  min)/(max - min));
-		var height_2 = (graph_top - graph_bot)*((data["career_unemploy_1"][1] -  min)/(max - min));
-		var height_3 = (graph_top - graph_bot)*((data["career_unemploy_2"][0] -  min)/(max - min));
-		var height_4 = (graph_top - graph_bot)*((data["career_unemploy_2"][1] -  min)/(max - min));
-
+		var height_1, height_2, height_3, height_4;
+		height_1 = (graph_top - graph_bot)*((data["career_unemploy_1"][0] -  min)/(max - min));
+		height_2 = (graph_top - graph_bot)*((data["career_unemploy_1"][1] -  min)/(max - min));
+		if (!hide_2)
+		{
+			height_3 = (graph_top - graph_bot)*((data["career_unemploy_2"][0] -  min)/(max - min));
+			height_4 = (graph_top - graph_bot)*((data["career_unemploy_2"][1] -  min)/(max - min));
+		}
 
 		//buffer boxes
 		if (!hide_1)
