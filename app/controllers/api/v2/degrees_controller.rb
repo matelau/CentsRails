@@ -99,7 +99,7 @@ class Api::V2::DegreesController < ApplicationController
 	end
 
 	def show_best
-		degree = Degrees.order(
+		degree = Degree.order(
 			"CASE WHEN salary IS NULL THEN 0 ELSE salary END, salary"
 			).first
 		degrees = [{name: degree[:name]}]
@@ -107,7 +107,7 @@ class Api::V2::DegreesController < ApplicationController
 	end
 
 	def show_worst
-		degree = Degrees.order(
+		degree = Degree.order(
 			"CASE WHEN salary IS NULL THEN 100000 ELSE salary END, salary"
 			).first
 		degrees = [{name: degree[:name]}]
@@ -115,8 +115,8 @@ class Api::V2::DegreesController < ApplicationController
 	end
 
 	def show_random
-		ids = Degrees.select(:id)
-		degree = Degrees.find( ids[Random.rand(ids.length)] )
+		ids = Degree.select(:id)
+		degree = Degree.find( ids[Random.rand(ids.length)] )
 		degrees = [{name: degree[:name], level: degree[:level]}]
 		internal_show_two(degrees, "get")
 	end
