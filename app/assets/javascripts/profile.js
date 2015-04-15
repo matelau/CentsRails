@@ -1,5 +1,9 @@
 var canvas, context, imageObj, x, y, primary, c, search_height, school_rate, degree_rate, career_rate, color;
 
+var progress_cats = [	"View Major Comparison", "View College Comparison", "View Career Comparison", "View Spending Breakdown",
+						"View About", "View City Comparison", "Create Custom Spending", "Create Custom Color", "Use Mobile",
+						"Use Wizard", "Use Main Search", "Use Examples", "Submit Feedback"];
+
 var mods_high = [0, .2, .375, .5, .625, .75, .875, 1];
 //var mods_high = [.125, .25, .375, .5, .625, .75, .875, 1];
 var mods_low = [0, .125, .25, .375, .5, .675, .8];
@@ -100,6 +104,22 @@ $(document).ready(function() {
 		$("#career_ratings").html(a_tags);
 		setRatings(career_rate);
 	});
+
+	//user site progress
+	$.get("/api/v2/users/" + user_id + "/completed", function(response){ 
+		//console.log(response);
+		to_do = [];
+		for (var i=0; i<progress_cats.length; i++)
+		{
+			if (response.indexOf(progress_cats[i]) < 0)
+				to_do[to_do.length] = progress_cats[i];
+		}
+		console.log(progress_cats);
+		console.log(to_do);
+		console.log(response);
+
+	});	
+
 
 });
 
@@ -287,6 +307,8 @@ function applyColor() {
 	}
 	localStorage.setItem("colors", JSON.stringify(new_colors));
 	setRatings(school_rate);
+	setRatings(degree_rate);
+	setRatings(career_rate);
 
 
 };
@@ -326,6 +348,8 @@ function resetColor() {
 		colorScale();
 	}
 	setRatings(school_rate);
+	setRatings(degree_rate);
+	setRatings(career_rate);
 };
 
 function sliderChange() {
@@ -397,14 +421,8 @@ function updateScale(index) {
 
 function colorScale() {
 	//get primary or secondary from
-	
-	
 	for (var i=1; i<9; i++)
-	{
 		document.getElementById("scale_" + i).style.backgroundColor = "rgb(" + Math.round(c[0]*mods_high[i-1]) + "," + Math.round(c[1]*mods_high[i-1]) + "," + Math.round(c[2]*mods_high[i-1]) + ")";
-	}
 	for (var i=9; i<16; i++)
-	{
 		document.getElementById("scale_" + i).style.backgroundColor = "rgb(" + (c[0]+Math.round((255-c[0])*mods_low[i-8])) + "," + (c[1]+Math.round((255-c[1])*mods_low[i-8])) + "," + (c[2]+Math.round((255-c[2])*mods_low[i-8])) + ")";
-	}
 };
