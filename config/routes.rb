@@ -117,7 +117,7 @@ Rails.application.routes.draw do
 
       # Degrees.
       get 'degrees' => 'degrees#index'												# Get degree names for autocomplete.
-      get 'degrees/best' => 'degrees#show_worst'
+      get 'degrees/best' => 'degrees#show_best'
       get 'degrees/worst' => 'degrees#show_worst'
       get 'degrees/random' => 'degrees#show_random'
       get 'degrees/:name' => 'degrees#show'										# Get degree by name.

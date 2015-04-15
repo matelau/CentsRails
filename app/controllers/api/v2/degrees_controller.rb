@@ -99,9 +99,7 @@ class Api::V2::DegreesController < ApplicationController
 	end
 
 	def show_best
-		degree = Degree.order(
-			"salary DESC"
-			).first
+		degree = Degree.order("salary DESC").first
 		degrees = [{name: degree[:name], level: degree[:level]}]
 		internal_show_two(degrees, "get")
 	end
