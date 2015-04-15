@@ -95,7 +95,7 @@ class Api::V2::SchoolsController < ApplicationController
 	def show_best
 		school = University.order("rank ASC").first
 		schools = [{name: school[:name]}]
-		internal_show_two(schools)
+		internal_show_two(schools, "get")
 	end
 
 	# Get school by location.
