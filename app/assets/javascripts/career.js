@@ -254,8 +254,8 @@ function sketchProc(processing) {
   		{
 			data = new Array();
 			//career salary data, 1997-2013, min, max
-			data["career_salary_1"] = [52000, 53500, 53000, 54500, 54500, 55500, 59000, 72000, 73500, 77000, 79000, 81000, 82000, 85000, 86000, 86500, 88000, 52000, 88000];
-			data["career_salary_2"] = [27000, 28000, 29000, 29250, 29500, 30000, 29500, 27750, 25500, 26000, 26250, 26500, 26500, 26500, 25750, 28000, 27250, 25500, 30000];
+			data["career_salary_1"] = [52000, 72000, null, 77000, 79000, 81000, null, null, 86000, 86500, 88000, 52000, 88000];
+			data["career_salary_2"] = [12345, null, null, 15000, null, null, null, 17500, null, null, 25750, 12345, 25750];
 			//career satisfaction
 			data["career_satisfaction_1"] = 4.8;
 			data["career_satisfaction_2"] = 2.9;
@@ -333,7 +333,7 @@ function sketchProc(processing) {
 				offset = 80;
 			processing.textFont(font, 30);
 			processing.fill(main);
-			processing.text("$" + (data["career_salary_1"][16]).toLocaleString(), 400+offset, 60);
+			processing.text("$" + (data["career_salary_1"][12]).toLocaleString(), 400+offset, 60);
 			processing.text("" + (data["career_satisfaction_1"]), 400+offset, 130);
 			processing.text((data["career_demand_1"][0]).toLocaleString(), 400+offset, 215);
 			processing.text((data["career_unemploy_1"][0]) + "%", 400+offset, 300);
@@ -348,7 +348,7 @@ function sketchProc(processing) {
 				offset = -80;
 			processing.textFont(font, 30);
 			processing.fill(gray);
-			processing.text("$" + (data["career_salary_2"][16]).toLocaleString(), 560+offset, 60);
+			processing.text("$" + (data["career_salary_2"][12]).toLocaleString(), 560+offset, 60);
 			processing.text("" + (data["career_satisfaction_2"]), 560+offset, 130);
 			processing.text((data["career_demand_2"][0]).toLocaleString(), 560+offset, 215);
 			processing.text((data["career_unemploy_2"][0]) + "%", 560+offset, 300);
@@ -374,38 +374,42 @@ function sketchProc(processing) {
 		processing.text("AVERAGE NATIONAL SALARIES ($)", 327, 30);
 
 		processing.line(graph_left, graph_top, graph_left, graph_bot-1);
-		processing.line(graph_left, graph_bot, graph_right, graph_bot);
+		processing.line(graph_left, graph_bot, graph_right+2, graph_bot);
 
 		//draw year labels and lines
 		processing.stroke(235);
 		processing.strokeWeight(1);
-		processing.text("1997", graph_left, graph_bot+20);
-		for (var i=1; i<17; i++)
+		processing.text("2003", graph_left, graph_bot+20);
+		for (var i=1; i<11; i++)
 		{
-			var horz_loc = graph_left+i*((graph_right-graph_left)/16);
+			var horz_loc = graph_left+i*((graph_right-graph_left)/10);
 			if (i%2 == 0)
 			{
-				processing.text(String(1997+i), horz_loc, graph_bot+20);
+				processing.text(String(2003+i), horz_loc, graph_bot+20);
 			}
 			processing.line(horz_loc, graph_top+1, horz_loc, graph_bot-2);
 		}
+
+		//check to see if how many null values for each
+		var null_1 = reduce(data["career_salary_1"]);
+		var null_2 = reduce(data["career_salary_2"]);
 
 		//calculate min and max for data being shown [17] = min, [18] = max
 		var min, max;
 		if (!hide_1 && !hide_2)
 		{
-			min = processing.min(data["career_salary_1"][17], data["career_salary_2"][17]);
-			max = processing.max(data["career_salary_1"][18], data["career_salary_2"][18]);
+			min = processing.min(data["career_salary_1"][11], data["career_salary_2"][11]);
+			max = processing.max(data["career_salary_1"][12], data["career_salary_2"][12]);
 		}
 		else if (hide_1)
 		{
-			min = data["career_salary_2"][17];
-			max = data["career_salary_2"][18];
+			min = data["career_salary_2"][11];
+			max = data["career_salary_2"][12];
 		}
 		else
 		{
-			min = data["career_salary_1"][17];
-			max = data["career_salary_1"][18];
+			min = data["career_salary_1"][11];
+			max = data["career_salary_1"][12];
 		}
 
 		//draw lines and labels for salary range
@@ -426,27 +430,91 @@ function sketchProc(processing) {
 			processing.line(graph_left+1, vert_loc, graph_right, vert_loc);
 		}
 
-		//draw data
-		processing.strokeWeight(4);
-		for (var i=0; i<16; i++)
+		// //draw data
+		
+		for (var i=0; i<10; i++)
 		{
+			processing.strokeWeight(2);
 			if (!hide_1)
 			{
+				var horz_1, horz_2, vert_1, vert_2;
 				processing.stroke(main);
-				var horz_1 = graph_left+i*((graph_right-graph_left)/16);
-				var horz_2 = graph_left+(i+1)*((graph_right-graph_left)/16);
-				var vert_1 = graph_top+(1-(data["career_salary_1"][i] - min)/(range))*(graph_bot-graph_top);
-				var vert_2 = graph_top+(1-(data["career_salary_1"][i+1] - min)/(range))*(graph_bot-graph_top);
-				processing.line(horz_1, vert_1, horz_2, vert_2);
+				processing.fill(main);
+				if (data["career_salary_1"][i])
+				{
+					horz_1 = graph_left+i*((graph_right-graph_left)/10);
+					vert_1 = graph_top+(1-(data["career_salary_1"][i] - min)/(range))*(graph_bot-graph_top);
+					//draw dots
+					processing.ellipse(horz_1, vert_1, 5, 5);
+				}
+				//get next non null point
+				var j = i + 1;
+				while (!data["career_salary_1"][j] && j<11)
+					j++;
+				if (j<11)
+				{
+					horz_2 = graph_left+(j)*((graph_right-graph_left)/10);
+					vert_2 = graph_top+(1-(data["career_salary_1"][j] - min)/(range))*(graph_bot-graph_top);
+					processing.ellipse(horz_2, vert_2, 5, 5);
+					if (horz_1)
+						processing.line(horz_1, vert_1, horz_2, vert_2);
+					else
+					{
+						if (null_1 == 1 && i == 9)
+						{
+							processing.textAlign(processing.CENTER);
+							processing.noStroke();
+							processing.text("LIMITED", horz_2, vert_2-25);
+							processing.text("SALARY INFO", horz_2, vert_2-10);
+						}
+					}
+				}
 			}
+		}
+		for (var i=0; i<10; i++)
+		{
+			processing.strokeWeight(2);
 			if (!hide_2)
 			{
+				var horz_3, horz_4, vert_3, vert_4;
 				processing.stroke(gray);
-				var horz_1 = graph_left+i*((graph_right-graph_left)/16);
-				var horz_2 = graph_left+(i+1)*((graph_right-graph_left)/16);
-				var vert_1 = graph_top+(1-(data["career_salary_2"][i] - min)/(range))*(graph_bot-graph_top);
-				var vert_2 = graph_top+(1-(data["career_salary_2"][i+1] - min)/(range))*(graph_bot-graph_top);
-				processing.line(horz_1, vert_1, horz_2, vert_2);
+				processing.fill(gray);
+				if (data["career_salary_2"][i])
+				{
+					horz_3 = graph_left+i*((graph_right-graph_left)/10);
+					vert_3 = graph_top+(1-(data["career_salary_2"][i] - min)/(range))*(graph_bot-graph_top);
+					//draw dots
+					processing.ellipse(horz_3, vert_3, 5, 5);
+				}
+				//get next non null point
+				var j = i + 1;
+				while (!data["career_salary_2"][j] && j<11)
+					j++;
+				//console.log("next at " + j);
+				if (j<11)
+				{
+					horz_4 = graph_left+(j)*((graph_right-graph_left)/10);
+					vert_4 = graph_top+(1-(data["career_salary_2"][j] - min)/(range))*(graph_bot-graph_top);
+					processing.ellipse(horz_4, vert_4, 5, 5);
+					if (horz_3)
+						processing.line(horz_3, vert_3, horz_4, vert_4);
+					else
+					{
+						if (null_2 == 1 && i == 9)
+						{
+							processing.textAlign(processing.CENTER);
+							processing.noStroke();
+							processing.text("LIMITED", horz_4, vert_4-25);
+							processing.text("SALARY INFO", horz_4, vert_4-10);
+						}
+					}
+				}
+				// processing.stroke(gray);
+				// var horz_1 = graph_left+i*((graph_right-graph_left)/16);
+				// var horz_2 = graph_left+(i+1)*((graph_right-graph_left)/16);
+				// var vert_1 = graph_top+(1-(data["career_salary_2"][i] - min)/(range))*(graph_bot-graph_top);
+				// var vert_2 = graph_top+(1-(data["career_salary_2"][i+1] - min)/(range))*(graph_bot-graph_top);
+				// processing.line(horz_1, vert_1, horz_2, vert_2);
 			}
 		}
 	};
@@ -672,6 +740,17 @@ function sketchProc(processing) {
 		}
 
 	};
+};
+
+function reduce(a) {
+	var temp = [];
+	for (var i=0; i<a.length; i++)
+	{
+		if (a[i] != null)
+			temp[temp.length] = a[i];
+		//console.log(a[i]);
+	}
+	return temp.length-2;
 };
 
 function update_tab(name) {
