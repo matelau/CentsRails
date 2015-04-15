@@ -276,6 +276,7 @@ function sketchProc(processing) {
 		if (!data["career_salary_2"])
   		{
   			hide_2 = true;
+  			console.log("hiding 2");
   			document.getElementById("search_2_button").value = "SHOW";
   			$("#search_2_button").attr("disabled", "true");
   		}
