@@ -875,7 +875,7 @@ function update_tab(name) {
 			hide_1 = false;
 			document.getElementById("search_1_button").value = "HIDE";
 		}
-		if(data["career_salary_1"])
+		if(data["career_salary_2"])
 		{
 			hide_2 = false;
 			document.getElementById("search_2_button").value = "HIDE";
