@@ -176,6 +176,8 @@ class Api::V2::DegreesController < ApplicationController
 
 		no_data_for = Array.new
 
+		deg = {}
+
 		# Iterate over each degree, keeping track of the degree's index.
 		# (The index is needed because that's how the view tracks degrees.)
 		index = 1
