@@ -100,7 +100,7 @@ class Api::V2::DegreesController < ApplicationController
 
 	def show_best
 		degree = Degree.order(
-			"CASE WHEN salary IS NULL THEN 0 ELSE salary END, salary DESC"
+			"salary DESC"
 			).first
 		degrees = [{name: degree[:name], level: degree[:level]}]
 		internal_show_two(degrees, "get")
