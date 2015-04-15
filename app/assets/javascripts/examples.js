@@ -327,20 +327,24 @@ function dataRequest(type)
 	if (type == "city" && auto_cities.indexOf(field2) < 0)
 		field2 = "";
 
-	var url = "https://trycents.com:6001/data"
-	var body = ""
+	var url = "https://trycents.com:6001/data";
+	var body = "";
+	var query_string;
 
 	if(field1 == "" && field2 == ""){
 		return;
 	}
 	else if(field2 == ""){
 		body = JSON.stringify({type:type,option:[field1]});
+		query_string = field1;
 	}
 	else if(field1 == ""){
 		body = JSON.stringify({type:type,option:[field2]});
+		query_string = field2;
 	}
 	else{
 		body = JSON.stringify({type:type,option:[field1,field2]});
+		query_string = field1 + " vs " + field2;
 	}
 	var data = new Object();
 	var xmlHttp = new XMLHttpRequest();
@@ -354,6 +358,8 @@ function dataRequest(type)
       			//make api request here with type included
 				localStorage.setItem("query_type", type);
 				localStorage.setItem("data_store",JSON.stringify(data));
+				//ok query, save to user
+				$.post("/api/v2/users/" + user_id + "/query", {"url": query_string});
 				window.location = "../../search/results";
       		}
       	}

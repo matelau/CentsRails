@@ -80,8 +80,9 @@ function school_api_request(query) {
 	field2 = document.getElementById("search_2_name").value;
 
 	url = "https://trycents.com:6001/data";
-	type = "school"
-	body = ""
+	type = "school";
+	body = "";
+	var query_string = "";
 
 	if(field1 == "" && field2 == ""){
 		sent1 = false;
@@ -94,6 +95,7 @@ function school_api_request(query) {
 		body = JSON.stringify({type:type,option:[field1]});
 		processingInstance.noLoop();
 		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
+		query_string = field1;
 	}
 	else if(field1 == ""){
 		sent1 = false;
@@ -101,6 +103,7 @@ function school_api_request(query) {
 		body = JSON.stringify({type:type,option:[field2]});
 		processingInstance.noLoop();
 		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
+		query_string = field2;
 	}
 	else{
 		sent1 = true;
@@ -108,6 +111,7 @@ function school_api_request(query) {
 		body = JSON.stringify({type:type,option:[field1,field2]});
 		processingInstance.noLoop();
 		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
+		query_string = field1 + " vs " + field2;
 	}
 
 	//var data = new Object();
@@ -123,6 +127,8 @@ function school_api_request(query) {
       			//make api request here with type included
 				localStorage.setItem("query_type", type);
 				localStorage.setItem("data_store",JSON.stringify(data));
+				//ok query, save to user
+				$.post("/api/v2/users/" + user_id + "/query", {"url": query_string});
 
 				$("#error_1").empty();
 				$("#error_2").empty();

@@ -81,6 +81,11 @@
     <script src="/assets/processing.js"></script>
     <script src="/assets/application.js"></script>
     <script src="/assets/jquery-ui.js"></script>
+    <% if current_user %>
+        <script>
+            user_id = <%= current_user.id %>;
+        </script>   
+    <% end %>
 
 </body>
 </html>

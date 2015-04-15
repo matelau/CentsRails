@@ -125,8 +125,9 @@ function career_api_request(query) {
 	}
 
 	url = "https://trycents.com:6001/data";
-	type = "career"
-	body = ""
+	type = "career";
+	body = "";
+	var query_string = "";
 
 	if((field1 == "" && field2 == "")){
 		sent1 = false;
@@ -139,6 +140,7 @@ function career_api_request(query) {
 		sent1 = true;
 		processingInstance.noLoop();
 		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
+		query_string = field1;
 	}
 	else if(field1 == ""){
 		body = JSON.stringify({type:type,option:[field2]});
@@ -146,6 +148,7 @@ function career_api_request(query) {
 		sent2 = true;
 		processingInstance.noLoop();
 		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
+		query_string = field2;
 	}
 	else{
 		body = JSON.stringify({type:type,option:[field1,field2]});
@@ -153,6 +156,7 @@ function career_api_request(query) {
 		sent2 = true;
 		processingInstance.noLoop();
 		$("#main_viz").fadeTo(700, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(900, 1);});
+		query_string = field1 + " vs " + field2;
 	}
 
 	var xmlHttp = null;
@@ -166,6 +170,8 @@ function career_api_request(query) {
       			//make api request here with type included
 				localStorage.setItem("query_type", type);
 				localStorage.setItem("data_store",JSON.stringify(data));
+				//ok query, save to user
+				$.post("/api/v2/users/" + user_id + "/query", {"url": query_string});
 
 				auto_1 = undefined;
 				auto_2 = undefined;

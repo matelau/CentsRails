@@ -24,6 +24,8 @@
 //forward declaration
 function changeMade(){};
 
+var user_id;
+
 //determine which js file to load
 var path = window.location.pathname.split('/');
 if (path[1] == "wizard" && path[2] != "start" && path[2] != "education")
@@ -81,6 +83,8 @@ function api_request(query) {
     				localStorage.removeItem("data_store");
 					localStorage.setItem("data_store", JSON.stringify(data));
 					localStorage.setItem("query_type", data["query_type"]);
+					//ok query, save to user
+					$.post("/api/v2/users/" + user_id + "/query", {"url": query});
 					window.location = "/search/results/";
 				}
       		}
@@ -99,5 +103,6 @@ function api_request(query) {
 
   	$('#search-bar').attr("hidden", "true");
     $('#loading').removeAttr("hidden");
+    
 };
 
