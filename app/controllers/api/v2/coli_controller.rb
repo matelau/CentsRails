@@ -170,9 +170,9 @@ class Api::V2::ColiController < ApplicationController
 					match = true
 					loc["location_#{index}"] = extract_coli_data(location, index, record)
 					if location[:city].present?
-						loc["location_#{index}"]["name_#{index}"] = "#{location[:city]}, #{location[:state]}"
+						loc["location_#{index}"]["name"] = "#{location[:city]}, #{location[:state]}"
 					else
-						loc["location_#{index}"]["name_#{index}"] = "#{location[:state]}"
+						loc["location_#{index}"]["name"] = "#{location[:state]}"
 					end
 					break
 				end
@@ -185,7 +185,7 @@ class Api::V2::ColiController < ApplicationController
 						 record[:state] == location[:state] then
 						state_match = true
 						loc["location_#{index}"] = extract_coli_data(location, index, record)
-						loc["location_#{index}"]["name_#{index}"] = location[:state]
+						loc["location_#{index}"]["name"] = location[:state]
 						break
 					end
 				end
@@ -194,8 +194,8 @@ class Api::V2::ColiController < ApplicationController
 			# Add the weather data for this location.
 			weather_data = extract_weather_data(location, records, loc)
 			if loc["location_#{index}"]
-				loc["location_#{index}"]["weather_#{index}"] = weather_data[:weather_high_stats]
-				loc["location_#{index}"]["weatherlow_#{index}"] = weather_data[:weather_low_stats]
+				loc["location_#{index}"]["weather"] = weather_data[:weather_high_stats]
+				loc["location_#{index}"]["weatherlow"] = weather_data[:weather_low_stats]
 			end
 
 			# Keep track of which states we substituted state data for.
@@ -275,7 +275,7 @@ class Api::V2::ColiController < ApplicationController
 		coli_stats << coli_stats.compact.max
 
 		# Add the data to the result.
-		data["cli_#{i}"] = coli_stats
+		data["cli"] = coli_stats
 
 
 		##### -------------------- LABOR --------------------- #####
@@ -295,7 +295,7 @@ class Api::V2::ColiController < ApplicationController
 		labor_stats << labor_stats.compact.min
 		labor_stats << labor_stats.compact.max
 
-		data["labor_#{i}"] = labor_stats
+		data["labor"] = labor_stats
 
 		
 		##### -------------------- TAXES --------------------- #####
@@ -314,7 +314,7 @@ class Api::V2::ColiController < ApplicationController
 		tax_stats << tax_stats.compact.min
 		tax_stats << tax_stats.compact.max
 
-		data["taxes_#{i}"] = tax_stats
+		data["taxes"] = tax_stats
 
 		return data
 	end

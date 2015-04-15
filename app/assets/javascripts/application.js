@@ -133,17 +133,17 @@ function api_request(query) {
 	  					}
 
 			    		Object.keys(o1).forEach(function(key) {
-			    			var nKey = key.slice(0, - 1) + "1";
+			    			var nKey = key + "_1";
 			    			data[nKey] = o1[key];
 						});
 
-						data["name_1"] = o1["name"];
+						//data["name_1"] = o1["name"];
 			    		if(o2 != null){
 							Object.keys(o2).forEach(function(key) {
-								var nKey = key.slice(0, - 1) + "2";
+								var nKey = key + "_2";
 				    			data[nKey] = o2[key];
 							});
-							data["name_2"] = o2["name"];
+							//data["name_2"] = o2["name"];
 						}
 			    		localStorage.setItem("data_store", JSON.stringify(data));
 						localStorage.setItem("query_type", data["query_type"]);

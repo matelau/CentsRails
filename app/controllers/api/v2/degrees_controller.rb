@@ -205,12 +205,12 @@ class Api::V2::DegreesController < ApplicationController
 					cents_rating = cents_rating[0][:average].to_f
 
 					deg["element_#{index}"] = Hash.new
-					deg["element_#{index}"]["name_#{index}"] = "#{record[:degree_name]} (#{record[:level]})"
-					deg["element_#{index}"]["degree_#{index}"] = [salary, recommended, meaningful, cents_rating]
-					deg["element_#{index}"]["jobs_#{index}"] = Array.new
+					deg["element_#{index}"]["name"] = "#{record[:degree_name]} (#{record[:level]})"
+					deg["element_#{index}"]["degree"] = [salary, recommended, meaningful, cents_rating]
+					deg["element_#{index}"]["jobs"] = Array.new
 
 					top_jobs.each do |job|
-						deg["element_#{index}"]["jobs_#{index}"].concat [job[:name], job[:salary]]
+						deg["element_#{index}"]["jobs"].concat [job[:name], job[:salary]]
 					end
 					break
 				end
