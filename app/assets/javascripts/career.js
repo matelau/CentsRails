@@ -685,6 +685,7 @@ function sketchProc(processing) {
 		}
 		if (!hide_2)
 		{
+			console.log("shouldn't print");
 			processing.fill(gray);
 			processing.noStroke();
 			if (data["career_demand_2"][2] != null)
