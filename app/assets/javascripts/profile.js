@@ -1,4 +1,4 @@
-var canvas, context, imageObj, x, y, primary, c, search_height, school_rate, color;
+var canvas, context, imageObj, x, y, primary, c, search_height, school_rate, degree_rate, career_rate, color;
 
 var mods_high = [0, .2, .375, .5, .625, .75, .875, 1];
 //var mods_high = [.125, .25, .375, .5, .625, .75, .875, 1];
@@ -57,28 +57,49 @@ $(document).ready(function() {
 		for (var i=0; i<searches.length; i++)
 			a_tags += "<p class='search_info' onclick='api_request(&quot;" + searches[i] + "&quot;)'>" + searches[i] + "</p>";
 		var l = searches.length;
-		$("#ac-2").attr("onclick", "setHeight()");
+		$("#ac-2").attr("onclick", "setHeight('ac-2', '#recent_article', " + searches.length + ")");
 		document.getElementById("ac-2").value = "0";
 		$("#recent_article").html(a_tags);
-		search_height = searches.length;
 	});
 
 	//request user data
-	$.get("/api/v2/users/" + user_id + "/ratings", function(response){  
+	$.get("/api/v2/users/" + user_id + "/ratings", function(response){ 
 		//major ratings
+		degree_rate = JSON.parse(JSON.stringify(response.degree_ratings));
+		//school_rate = response.school_ratings;
+		var a_tags = "";
+		for (var i=0; i<degree_rate.length; i++)
+			a_tags += "<div class='rating-div'><div class='rating-name'><p class='profile_info'>" + degree_rate[i].name + "</p></div><div class='rating-value'>" + centsRating("degree_rate", degree_rate[i].name) + "</div></div>";
+			//a_tags += "<p class='profile_info'>" + school_rate[i].name + "\t\t\t" + school_rate[i].rating + "</p>";
+		$("#ac-3").attr("onclick", "setHeight('ac-3', '#degree_ratings'," + degree_rate.length + ")");
+		document.getElementById("ac-3").value = "0";
+		$("#degree_ratings").html(a_tags);
+		setRatings(degree_rate);
 
 		//school ratings
 		school_rate = JSON.parse(JSON.stringify(response.school_ratings));
 		//school_rate = response.school_ratings;
-		var a_tags = "";
+		a_tags = "";
 		for (var i=0; i<school_rate.length; i++)
 			a_tags += "<div class='rating-div'><div class='rating-name'><p class='profile_info'>" + school_rate[i].name + "</p></div><div class='rating-value'>" + centsRating("school_rate", school_rate[i].name) + "</div></div>";
 			//a_tags += "<p class='profile_info'>" + school_rate[i].name + "\t\t\t" + school_rate[i].rating + "</p>";
+		$("#ac-4").attr("onclick", "setHeight('ac-4', '#school_ratings'," + school_rate.length + ")");
+		document.getElementById("ac-4").value = "0";
 		$("#school_ratings").html(a_tags);
 		setRatings(school_rate);
+
 		//career ratings
+		career_rate = JSON.parse(JSON.stringify(response.career_ratings));
+		//school_rate = response.school_ratings;
+		a_tags = "";
+		for (var i=0; i<career_rate.length; i++)
+			a_tags += "<div class='rating-div'><div class='rating-name'><p class='profile_info'>" + career_rate[i].name + "</p></div><div class='rating-value'>" + centsRating("career_rate", career_rate[i].name) + "</div></div>";
+			//a_tags += "<p class='profile_info'>" + school_rate[i].name + "\t\t\t" + school_rate[i].rating + "</p>";
+		$("#ac-5").attr("onclick", "setHeight('ac-5', '#career_ratings'," + career_rate.length + ")");
+		document.getElementById("ac-5").value = "0";
+		$("#career_ratings").html(a_tags);
+		setRatings(career_rate);
 	});
-	
 
 });
 
@@ -117,11 +138,14 @@ function colorChange(num, name) {
 };
 
 function updateRating(field, name, num) {
+	var level;
 	for (var index in field)
 	{
 		if (field[index].name == name)
 		{
 			field[index].rating = num;
+			if (field == degree_rate)
+				level = field[index].level;
 			break;
 		}
 	}
@@ -132,6 +156,23 @@ function updateRating(field, name, num) {
 	{
 		$.ajax({
     		url: "/api/v2/schools/" + name_prep + "/" + num,
+    		type: 'PUT',
+    		data: {"user": user_id}
+		});
+	}
+	if (field == degree_rate)
+	{
+		var level_prep = level.replace(/ /g, "%20");
+		$.ajax({
+    		url: "/api/v2/degrees/" + level_prep + "/" + name_prep + "/" + num,
+    		type: 'PUT',
+    		data: {"user": user_id}
+		});
+	}
+	if (field == career_rate)
+	{
+		$.ajax({
+    		url: "/api/v2/careers/" + name_prep + "/" + num,
     		type: 'PUT',
     		data: {"user": user_id}
 		});
@@ -148,22 +189,21 @@ function buildCent(num, name) {
 }
 
 
-function setHeight() {
-	if (document.getElementById("ac-2").value == "0")
+function setHeight(id1, id2, len) {
+	if (document.getElementById(id1).value == "0")
 	{
-		document.getElementById("ac-2").value = "1";
-		$("#recent_article").height(30 + search_height * 30);
+		document.getElementById(id1).value = "1";
+		if (len != 0)
+			$(id2).height(Math.min(310, 30 + len * 30));
+		else
+			$(id2).height(0);
 	}
 	else
 	{
-		document.getElementById("ac-2").value = "0";
-		$("#recent_article").height(0);
+		document.getElementById(id1).value = "0";
+		$(id2).height(0);
 	}
 };
-
-// function setUserID(id) {
-// 	user_id = id;
-// };
 
 function getPixels() {
 	c = context.getImageData(x,y,1,1).data;
