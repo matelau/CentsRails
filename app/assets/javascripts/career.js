@@ -604,7 +604,7 @@ function sketchProc(processing) {
 		else
 		{
 			
-			if (data["career_salary_2"])
+			if (data["career_demand_2"])
 			{
 				min_1 = processing.min(data["career_demand_1"][2], data["career_demand_2"][2]) * 0.8;
 				max_1 = processing.max(data["career_demand_1"][2], data["career_demand_2"][2]) * 1.1;
@@ -616,11 +616,11 @@ function sketchProc(processing) {
 			else
 			{
 				min_1 = data["career_demand_1"][2] * 0.8;
-			max_1 = data["career_demand_1"][2] * 1.1;
-			min_2 = data["career_demand_1"][1] * 0.8;
-			max_2 = data["career_demand_1"][1] * 1.1;
-			min_3 = data["career_demand_1"][0] * 0.8;
-			max_3 = data["career_demand_1"][0] * 1.1;
+				max_1 = data["career_demand_1"][2] * 1.1;
+				min_2 = data["career_demand_1"][1] * 0.8;
+				max_2 = data["career_demand_1"][1] * 1.1;
+				min_3 = data["career_demand_1"][0] * 0.8;
+				max_3 = data["career_demand_1"][0] * 1.1;
 			}
 		}
 
@@ -679,7 +679,6 @@ function sketchProc(processing) {
 				processing.rect(graph_mid_2-20, graph_bot-1, 30, -1*(graph_bot-graph_top)*(data["career_demand_1"][1]-min_2)/(max_2-min_2));
 			if (data["career_demand_1"][0] != null)
 				processing.rect(graph_mid_3-20, graph_bot-1, 30, -1*(graph_bot-graph_top)*(data["career_demand_1"][0]-min_3)/(max_3-min_3));
-
 		}
 		if (!hide_2)
 		{
@@ -739,7 +738,7 @@ function sketchProc(processing) {
 		else
 		{
 			
-			if (data["career_salary_2"])
+			if (data["career_unemploy_2"])
 			{
 				min = processing.min(data["career_unemploy_1"][0], data["career_unemploy_1"][1], data["career_unemploy_2"][0], data["career_unemploy_2"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
 				max = processing.max(data["career_unemploy_1"][0], data["career_unemploy_1"][1], data["career_unemploy_2"][0], data["career_unemploy_2"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
@@ -865,11 +864,27 @@ function reduce(a) {
 };
 
 function update_tab(name) {
-	active_tab = name;
-	hide_1 = false;
-	hide_2 = false;
-	document.getElementById("search_1_button").value = "HIDE";
-	document.getElementById("search_2_button").value = "HIDE";
+	if (name != active_tab)
+	{
+		processingInstance.noLoop();
+		$("#main_viz").fadeTo(500, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(700, 1);});
+		active_tab = name;
+		if(data["career_salary_1"])
+		{
+			hide_1 = false;
+			document.getElementById("search_1_button").value = "HIDE";
+		}
+		if(data["career_salary_1"])
+		{
+			hide_2 = false;
+			document.getElementById("search_2_button").value = "HIDE";
+		}
+	}
+	// active_tab = name;
+	// hide_1 = false;
+	// hide_2 = false;
+	// document.getElementById("search_1_button").value = "HIDE";
+	// document.getElementById("search_2_button").value = "HIDE";
 };
 
 function hide_toggle(num) {
