@@ -94,7 +94,6 @@ class Api::V2::SchoolsController < ApplicationController
 
 	def show_best
 		school = University.order("rank ASC").first
-		redirect_to(api_v2_schools_compare_path({schools: [{name: "Louisiana Tech University"}]})) and return
 	end
 
 	# Get school by location.
@@ -123,29 +122,37 @@ class Api::V2::SchoolsController < ApplicationController
 
 	# Get school data for two schools.
 	def show_two
-		result = Hash.new
+		operation = params[:operation]
+		schools = params[:schools]
+		internal_show_two(schools, operation)
+	end
+
+private
+
+	def internal_show_two(s, o)
+				result = Hash.new
 
 		# Check for the required fields, and return an appropriate message if
 		# they are not present.
-		unless params[:schools].present?
+		unless s.present?
 			return render json: 'No schools were in the schools array', status: 400
 		end
 
 		# Order the schools.
 		schools = Array.new
-		if params[:schools][0][:order] and params[:schools][1][:order]
-			params[:schools].each do |school|
+		if s[0][:order] and s[1][:order]
+			s.each do |school|
 				if school[:order] == 1
 					schools << school
 				end
 			end
-			params[:schools].each do |school|
+			s.each do |school|
 				if school[:order] == 2
 					schools << school
 				end
 			end
 		else
-			schools = params[:schools]
+			schools = s
 		end
 
 		# Create a string of the form 'name = n1 OR name = n2 ...' and a list of 
@@ -240,7 +247,7 @@ class Api::V2::SchoolsController < ApplicationController
 		end
 
 		# Add the operation parameter for the query parser.
-		result[:operation] = params[:operation]
+		result[:operation] = o
 
 		return render json: result, status: 200
 	end
