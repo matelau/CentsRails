@@ -102,7 +102,7 @@ class Api::V2::DegreesController < ApplicationController
 		degree = Degree.order(
 			"CASE WHEN salary IS NULL THEN 0 ELSE salary END, salary"
 			).first
-		degrees = [{name: degree[:name]}]
+		degrees = [{name: degree[:name], level: degree[:level]}]
 		internal_show_two(degrees, "get")
 	end
 
@@ -110,7 +110,7 @@ class Api::V2::DegreesController < ApplicationController
 		degree = Degree.order(
 			"CASE WHEN salary IS NULL THEN 100000 ELSE salary END, salary"
 			).first
-		degrees = [{name: degree[:name]}]
+		degrees = [{name: degree[:name], level: degree[:level]}]
 		internal_show_two(degrees, "get")
 	end
 
