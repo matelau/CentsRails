@@ -110,13 +110,13 @@ class Api::V2::SchoolsController < ApplicationController
 
 	def show_cheapest
 		school = University.order(
-			"CASE WHEN tuition_nonresident IS NULL THEN 101 ELSE tuition_nonresident END, tuition_nonresident"
+			"CASE WHEN tuition_nonresident IS NULL THEN 100000 ELSE tuition_nonresident END, tuition_nonresident"
 			).first
 		schools = [{name: school[:name]}]
 		internal_show_two(schools, "get")
 	end
 
-	def show_cheapest
+	def show_priciest
 		school = University.order("tuition_nonresident DESC").first
 		schools = [{name: school[:name]}]
 		internal_show_two(schools, "get")
