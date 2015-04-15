@@ -82,6 +82,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+    	post 'careers' => 'careers#show'
       post 'coli' => 'coli#show'
       post 'register' => 'register#create'
       post 'login' => 'login#create'

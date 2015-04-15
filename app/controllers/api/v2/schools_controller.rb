@@ -40,6 +40,10 @@ class Api::V2::SchoolsController < ApplicationController
 
 	# Rate a school.
 	def rate
+		unless api_key_is_valid?
+			return render json: 'Invalid API key.', status: 401
+		end
+
 		school = University.where(['name like ?', "#{params[:name]}%"]).first
 		school_rating = RatesSchool.where(user_id: params[:user], university_id: school.id).first
 

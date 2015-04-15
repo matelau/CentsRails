@@ -34,7 +34,8 @@ class Api::V1::SchoolsController < ApplicationController
 		where_string = where_string[0..-5]	# Strip off the last ' OR '.
 
 		# Query the database.
-		records = University.select(:name,
+		records = University.select(:id,
+								:name,
 								:state,
 								:tuition_resident,
 								:tuition_nonresident,
@@ -69,10 +70,18 @@ class Api::V1::SchoolsController < ApplicationController
 					size = size ? size.to_f : nil
 					rank = record[:rank]
 					rank = rank ? rank.to_f : nil
+
+					cents_rating = RatesSchool.find_by_sql [
+						'SELECT avg(rating) AS average
+						FROM rates_schools
+						WHERE university_id = ?',
+						record[:id]
+					]
+					cents_rating = cents_rating[0][:average].to_f
 					
 					# Put the stats in result.
 					result["school_#{index}"] = [tuition_resident, tuition_nonresident, 
-						grad_rate, size, rank, 0]
+						grad_rate, size, rank, cents_rating]
 					result["school_#{index}_image"] = record[:image]
 					break
 				end

@@ -47,6 +47,10 @@ class Api::V2::DegreesController < ApplicationController
 
 	# Rate a degree.
 	def rate
+		unless api_key_is_valid?
+			return render json: 'Invalid API key.', status: 401
+		end
+
 		degree = Degree.where(['level like ? AND name = ?', "#{params[:level]}%", "#{params[:name]}"]).first
 		degree_rating = RatesMajor.where(user_id: params[:user], degree_id: degree.id).first
 
@@ -172,8 +176,6 @@ class Api::V2::DegreesController < ApplicationController
 
 		no_data_for = Array.new
 
-		deg = {}
-
 		# Iterate over each degree, keeping track of the degree's index.
 		# (The index is needed because that's how the view tracks degrees.)
 		index = 1
@@ -218,17 +220,11 @@ class Api::V2::DegreesController < ApplicationController
 
 			# Keep track of which degrees had neither exact nor state data.
 			if not match
-				no_data_for << "#{degree[:degree_name]} (#{degree[:level]})"
+				no_data_for << "#{degree[:name]} (#{degree[:level]})"
 			end
 
 			# Increment for next object.
 			index += 1
-		end
-
-		result["elements"] = []
-
-		deg.each do |k, v|
-		  result["elements"] << v
 		end
 
 		# If there is no data for a degree, send an error message.

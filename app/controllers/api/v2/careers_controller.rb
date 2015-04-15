@@ -22,6 +22,10 @@ class Api::V2::CareersController < ApplicationController
 
 	# Rate a career.
 	def rate
+		unless api_key_is_valid?
+			return render json: 'Invalid API key.', status: 401
+		end
+
 		career = Career.where(['name like ?', "#{params[:name]}%"]).first
 		career_rating = RatesCareer.where(user_id: params[:user], career_id: career.id).first
 

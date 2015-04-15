@@ -92,6 +92,9 @@
           "200":{  
             "description":"Rating was saved."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"Career does not exist."
           }
@@ -99,7 +102,14 @@
         "description":"This will insert a new rating if none is present, or update the current rating if there is one.",
         "summary":"Allows a user to rate a career.",
         "operationId":"Api::V2::CareersController#rate",
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
           {  
             "in":"path",
             "description":"a career name",
@@ -364,6 +374,9 @@
           "200":{  
             "description":"Rating was added."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"Degree does not exist."
           }
@@ -371,7 +384,14 @@
         "description":"This route will add a rating if it doesn't exist, or update the rating if it does.",
         "summary":"Allows a user to rate a degree.",
         "operationId":"Api::V2::DegreesController#rate",
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
           {  
             "in":"path",
             "description":"bachelor, masters, etc.",
@@ -569,6 +589,9 @@
           "200":{  
             "description":"Records were found."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"School does not exist."
           }
@@ -577,6 +600,13 @@
         "summary":"Allows a user to rate a school.",
         "operationId":"Api::V2::SchoolsController#rate",
         "parameters":[  
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          }, 
           {  
             "in":"path",
             "description":"a school name",
@@ -647,6 +677,9 @@
           "200":{  
             "description":"There is a user with that ID."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"There is no user with that ID."
           }
@@ -654,7 +687,14 @@
         "description":"",
         "summary":"Gets profile data for a user.",
         "operationId":"Api::V2::UsersController#show",
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },  
           {  
             "in":"path",
             "description":"a user ID",
@@ -672,6 +712,12 @@
           "200":{  
             "description":"Changes saved."
           },
+          "400":{
+          	"description": "User doesn't have one or more of the fields."
+          },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"There is no user with that ID."
           },
@@ -682,7 +728,14 @@
         "description":"Update any of a user's fields by passing in a list of objects with names a values. Although the value type is listed here as string, the value type must match the field type.",
         "summary":"Updates a user's fields.",
         "operationId":"Api::V2::UsersController#update",
-        "parameters":[  
+        "parameters":[ 
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },  
           {  
             "in":"path",
             "description":"a user ID",
@@ -711,11 +764,21 @@
           "200":{  
             "description":"The user was found."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"No such user was found."
           }
         },
         "parameters":[  
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          }, 
           {  
             "in":"path",
             "description":"a user ID",
@@ -736,6 +799,9 @@
           "200":{  
             "description":"User was found."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"No such user was found."
           }
@@ -743,7 +809,14 @@
         "description":"",
         "summary":"Record that a user has completed a section.",
         "operationId":"Api::V2::UserController#create_completed",
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
           {  
             "in":"path",
             "description":"a user ID",
@@ -772,11 +845,21 @@
           "200":{  
             "description":"The user was found."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"No such user was found."
           }
         },
-        "parameters":[  
+        "parameters":[ 
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },  
           {  
             "in":"path",
             "description":"a user ID",
@@ -797,6 +880,9 @@
           "200":{  
             "description":"User was found."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"No such user was found."
           }
@@ -804,7 +890,14 @@
         "description":"",
         "summary":"Record that a user has made a query.",
         "operationId":"Api::V2::UserController#create_query",
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
           {  
             "in":"path",
             "description":"a user ID",
@@ -833,11 +926,21 @@
           "200":{  
             "description":"The user was found."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"No such user was found."
           }
         },
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
           {  
             "in":"path",
             "description":"a user ID",
@@ -860,6 +963,9 @@
           "200":{  
             "description":"User was found."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"No such user ID was found."
           }
@@ -867,7 +973,14 @@
         "description":"",
         "summary":"Loads all spending breakdown data for a user.",
         "operationId":"Api::V2::SpendingBreakdownController#show",
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
           {  
             "in":"path",
             "description":"a user ID",
@@ -890,6 +1003,9 @@
           "400":{  
             "description":"Each field object must have a name and value."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"No such user was found."
           },
@@ -900,7 +1016,14 @@
         "description":"Use this route to save a few individual spending breakdown items.",
         "summary":"Saves new spending breakdown data.",
         "operationId":"Api::V2::SpendingBreakdownController#update",
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
           {  
             "in":"path",
             "description":"a user ID",
@@ -942,6 +1065,9 @@
           "400":{  
             "description":"Each field object must have a name and value."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"No such user was found."
           },
@@ -952,7 +1078,14 @@
         "description":"Use this route to replace all spending breakdown data for a category with whatever you send. This route could be used to reset to a default.",
         "summary":"Updates all spending breakdown data by category.",
         "operationId":"Api::V2::SpendingBreakdownController#update_all",
-        "parameters":[  
+        "parameters":[ 
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },  
           {  
             "in":"path",
             "description":"a user ID",
@@ -991,6 +1124,9 @@
           "200":{  
             "description":"Records were found."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"No records were found."
           }
@@ -999,6 +1135,13 @@
         "summary":"Gets spending breakdown data by category.",
         "operationId":"Api::V2::SpendingBreakdownController#show_category",
         "parameters":[  
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          }, 
           {  
             "in":"path",
             "description":"a user ID",
@@ -1029,12 +1172,22 @@
         "responses":{  
           "200":{  
             "description":"Data was deleted."
+          },
+          "401":{  
+            "description":"Invalid API key."
           }
         },
         "description":"",
         "summary":"Deletes a single spending breakdown item.",
         "operationId":"Api::V2::SpendingBreakdownController#destroy",
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
           {  
             "in":"path",
             "description":"a user ID",
