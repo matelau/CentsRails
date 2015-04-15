@@ -95,7 +95,7 @@ class Api::V2::SchoolsController < ApplicationController
 	def show_best
 		school = University.order("rank ASC").first
 		#redirect_to(api_v2_schools_compare_path({schools: [{name: "Louisiana Tech University"}]}))
-		redirect_to controller: 'schools', action: 'show_two', schools: [{name: "Louisiana Tech University"}]
+		redirect_to controller: 'schools', action: 'show_one', schools: [{name: "Louisiana Tech University"}]
 	end
 
 	# Get school by location.
