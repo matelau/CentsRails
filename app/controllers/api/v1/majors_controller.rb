@@ -34,7 +34,7 @@ class Api::V1::MajorsController < ApplicationController
 		where_string = ""
 		where_params = Array.new
 		majors.each do |major|
-			where_string += 'd.name = ? OR '
+			where_string += 'name = ? OR '
 			where_params << major[:name].strip
 		end
 		where_string = where_string[0..-5]	# Strip off the last ' OR '.
@@ -96,7 +96,7 @@ class Api::V1::MajorsController < ApplicationController
 
 			# Keep track of which majors had neither exact nor state data.
 			if not match
-				no_data_for << "#{major[:degree_name]} (#{major[:level]})"
+				no_data_for << "#{major[:name]} (#{major[:level]})"
 			end
 
 			# Increment for next object.

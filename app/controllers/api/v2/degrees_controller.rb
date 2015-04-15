@@ -219,7 +219,7 @@ class Api::V2::DegreesController < ApplicationController
 
 			# Keep track of which degrees had neither exact nor state data.
 			if not match
-				no_data_for << "#{degree[:degree_name]} (#{degree[:level]})"
+				no_data_for << "#{degree[:name]} (#{degree[:level]})"
 			end
 
 			# Increment for next object.
