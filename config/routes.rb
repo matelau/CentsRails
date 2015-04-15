@@ -105,9 +105,25 @@ Rails.application.routes.draw do
 
       # Schools.
       get 'schools' => 'schools#index'												# Get school names for autocomplete.
+
+      ### AUSTIN
+      get 'schools/best' => 'schools#show_best'
+
+      ### AUSTIN
+      get 'schools/worst' => 'schools#show_worst'
+
+      ### AUSTIN
+      get 'schools/cheapest' => 'schools#show_cheapest'
+
+      ### AUSTIN
+      get 'schools/priciest' => 'schools#show_priciest'
+
+      ### AUSTIN
+      get 'schools/random' => 'schools#show_best'
+
       get 'schools/:name' => 'schools#show'										# Get school by name.
       get 'schools/location/:location' => 'schools#show_location'	# Get schools by location.
-      post 'schools/compare' => 'schools#show_two'						# Get school data for comparison.
+      post 'schools/compare' => 'schools#show_two', as: 'schools_compare'
       put 'schools/:name/:rating' => 'schools#rate'
 
       # Degrees.
