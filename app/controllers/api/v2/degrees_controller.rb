@@ -229,6 +229,12 @@ class Api::V2::DegreesController < ApplicationController
 			index += 1
 		end
 
+		result["elements"] = []
+
+		deg.each do |k, v|
+		  result["elements"] << v
+		end
+
 		# If there is no data for a degree, send an error message.
 		unless no_data_for.empty?
 			result[:error] = 'No data on some degrees'
