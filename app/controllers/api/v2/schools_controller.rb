@@ -93,9 +93,8 @@ class Api::V2::SchoolsController < ApplicationController
 	end
 
 	def show_best
-		school = University.order("rank DESC").first
-		return render json: school, status: 200
-		#redirect_to(api_v2_schools_compare_path({schools: [{name: school[:name]}]}))
+		school = University.order("rank ASC").first
+		redirect_to(api_v2_schools_compare_path({schools: [{name: "Louisiana Tech University"}]}))
 	end
 
 	# Get school by location.
