@@ -114,25 +114,11 @@ class Api::V2::DegreesController < ApplicationController
 		internal_show_two(degrees, "get")
 	end
 
-	def show_cheapest
-		degree = Degrees.order(
-			"CASE WHEN tuition_nonresident IS NULL THEN 100000 ELSE tuition_nonresident END, tuition_nonresident"
-			).first
-		schools = [{name: school[:name]}]
-		internal_show_two(schools, "get")
-	end
-
-	def show_priciest
-		school = University.order("tuition_nonresident DESC").first
-		schools = [{name: school[:name]}]
-		internal_show_two(schools, "get")
-	end
-
 	def show_random
-		ids = University.select(:id)
-		school = University.find( ids[Random.rand(ids.length)] )
-		schools = [{name: school[:name]}]
-		internal_show_two(schools, "get")
+		ids = Degrees.select(:id)
+		degree = Degrees.find( ids[Random.rand(ids.length)] )
+		degrees = [{name: degree[:name], level: degree[:level]}]
+		internal_show_two(degrees, "get")
 	end
 
 	# Get degrees by level and name.
