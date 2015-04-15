@@ -123,7 +123,8 @@ class Api::V2::SchoolsController < ApplicationController
 	end
 
 	def show_random
-		school = University.order("RAND()").first
+		ids = University.select(:id)
+		school = University.find( ids[Random.rand(ids.length)] )
 		schools = [{name: school[:name]}]
 		internal_show_two(schools, "get")
 	end
