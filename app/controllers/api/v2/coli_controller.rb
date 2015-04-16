@@ -67,7 +67,7 @@ class Api::V2::ColiController < ApplicationController
 	end
 
 	def show_priciest
-		col = Coli.order('cost_of_living').first
+		col = Coli.order('cost_of_living DESC').first
 		cols = [{city: col[:city], state: col[:state]}]
 		internal_show_two(cols, "get")
 	end
