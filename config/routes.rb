@@ -99,6 +99,11 @@ Rails.application.routes.draw do
     namespace :v2 do
     	# Cost of living.
     	get 'cost_of_living' => 'coli#index'										# Get coli names for autocomplete.
+    	get 'cost_of_living/best' => 'coli#show_best'
+      get 'cost_of_living/worst' => 'coli#show_worst'
+      get 'cost_of_living/cheapest' => 'coli#show_cheapest'
+      get 'cost_of_living/priciest' => 'coli#show_priciest'
+      get 'cost_of_living/random' => 'coli#show_random'
     	get 'cost_of_living/:state' => 'coli#show_state'				# Get cost of living data by state.
     	get 'cost_of_living/:state/:city' => 'coli#show_city'		# Get cost of living data by state and city.
     	post 'cost_of_living/compare' => 'coli#show_two'				# Get cost of living data for comparison.

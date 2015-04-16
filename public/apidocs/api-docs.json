@@ -24,6 +24,21 @@
         "operationId":"Api::V2::CareersController#show_two"
       }
     },
+    "/careers/best":{  
+      "get":{  
+        "tags":[  
+          "careers"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the career with highest salary.",
+        "operationId":"Api::V2::CareersController#show_best"
+      }
+    },
     "/careers/compare":{  
       "post":{  
         "tags":[  
@@ -54,6 +69,36 @@
             }
           }
         ]
+      }
+    },
+    "/careers/worst":{  
+      "get":{  
+        "tags":[  
+          "careers"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the career with lowest salary.",
+        "operationId":"Api::V2::CareersController#show_worst"
+      }
+    },
+    "/careers/random":{  
+      "get":{  
+        "tags":[  
+          "careers"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns a random career.",
+        "operationId":"Api::V2::CareersController#show_random"
       }
     },
     "/careers/{name}":{  
@@ -173,6 +218,36 @@
         ]
       }
     },
+    "/cost_of_living/best":{  
+      "get":{  
+        "tags":[  
+          "cost of living"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the city with highest cost-of-living adjusted salary.",
+        "operationId":"Api::V2::ColiController#show_best"
+      }
+    },
+    "/cost_of_living/cheapest":{  
+      "get":{  
+        "tags":[  
+          "cost of living"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the city with lowest cost of living.",
+        "operationId":"Api::V2::ColiController#show_cheapest"
+      }
+    },
     "/cost_of_living/compare":{  
       "post":{  
         "tags":[  
@@ -203,6 +278,36 @@
             }
           }
         ]
+      }
+    },
+    "/cost_of_living/priciest":{  
+      "get":{  
+        "tags":[  
+          "cost of living"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the city with highest cost of living.",
+        "operationId":"Api::V2::ColiController#show_priciest"
+      }
+    },
+    "/cost_of_living/random":{  
+      "get":{  
+        "tags":[  
+          "cost of living"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns cost of living data for a random city or state.",
+        "operationId":"Api::V2::ColiController#show_random"
       }
     },
     "/cost_of_living/{state}":{  
@@ -266,6 +371,21 @@
         ]
       }
     },
+    "/cost_of_living/worst":{  
+      "get":{  
+        "tags":[  
+          "cost of living"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the city with lowest cost-of-living adjusted salary.",
+        "operationId":"Api::V2::ColiController#show_cheapest"
+      }
+    },
     "/degrees":{  
       "get":{  
         "tags":[  
@@ -299,6 +419,21 @@
         ]
       }
     },
+    "/degrees/best":{  
+      "get":{  
+        "tags":[  
+          "degrees"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the degree with highest salary.",
+        "operationId":"Api::V2::DegreesController#show_best"
+      }
+    },
     "/degrees/compare":{  
       "post":{  
         "tags":[  
@@ -329,6 +464,36 @@
             }
           }
         ]
+      }
+    },
+    "/degrees/worst":{  
+      "get":{  
+        "tags":[  
+          "degrees"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the degree with highest salary.",
+        "operationId":"Api::V2::DegreesController#show_worst"
+      }
+    },
+    "/degrees/random":{  
+      "get":{  
+        "tags":[  
+          "degrees"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns a random degree.",
+        "operationId":"Api::V2::CareersController#show_degree"
       }
     },
     "/degrees/{level}/{name}":{  
@@ -493,6 +658,36 @@
         ]
       }
     },
+    "/schools/best":{  
+      "get":{  
+        "tags":[  
+          "schools"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the school with highest rank.",
+        "operationId":"Api::V2::SchoolsController#show_best"
+      }
+    },
+    "/schools/cheapest":{  
+      "get":{  
+        "tags":[  
+          "schools"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the school with lowest nonresident tuition.",
+        "operationId":"Api::V2::SchoolsController#show_cheapest"
+      }
+    },
     "/schools/compare":{  
       "post":{  
         "tags":[  
@@ -634,6 +829,51 @@
             }
           }
         ]
+      }
+    },
+    "/schools/priciest":{  
+      "get":{  
+        "tags":[  
+          "schools"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the school with highest nonresident tuition.",
+        "operationId":"Api::V2::SchoolsController#show_priciest"
+      }
+    },
+    "/schools/random":{  
+      "get":{  
+        "tags":[  
+          "schools"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns a random school.",
+        "operationId":"Api::V2::SchoolsController#show_random"
+      }
+    },
+    "/schools/worst":{  
+      "get":{  
+        "tags":[  
+          "schools"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the school with worst graduation rate.",
+        "operationId":"Api::V2::SchoolsController#show_worst"
       }
     },
     "/users":{  

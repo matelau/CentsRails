@@ -44,6 +44,41 @@ class Api::V2::ColiController < ApplicationController
 		return render json: result, status: 200
   end
 
+  def show_best
+		col = Coli.order(
+			"CASE WHEN cost_of_living >= 0 THEN income_per_capita/(cost_of_living + 1) ELSE ABS(cost_of_living + 1)*income_per_capita END"
+			).first
+		cols = [{city: col[:city], state: col[:state]}]
+		internal_show_two(col, "get")
+	end
+
+	def show_worst
+		col = Coli.order(
+			"CASE WHEN cost_of_living >= 0 THEN income_per_capita/(cost_of_living + 1) ELSE ABS(cost_of_living + 1)*income_per_capita END DESC"
+			).first
+		cols = [{city: col[:city], state: col[:state]}]
+		internal_show_two(col, "get")
+	end
+
+	def show_cheapest
+		col = Coli.order('cost_of_living').first
+		cols = [{city: col[:city], state: col[:state]}]
+		internal_show_two(col, "get")
+	end
+
+	def show_priciest
+		col = Coli.order('cost_of_living').first
+		cols = [{city: col[:city], state: col[:state]}]
+		internal_show_two(col, "get")
+	end
+
+	def show_random
+		ids = Coli.select(:id)
+		col = Coli.find( ids[Random.rand(ids.length)] )
+		cols = [{city: col[:city], state: col[:state]}]
+		internal_show_two(cols, "get")
+	end
+
 	# Get cost of living data by state.
 	def show_state
 		records = Coli.where(state: params[:state])
