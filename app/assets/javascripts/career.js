@@ -163,15 +163,19 @@ function career_api_request(query) {
     	if (xmlHttp.readyState === 4) { 
       		if (xmlHttp.status === 200) {
       			data = jQuery.parseJSON(xmlHttp.responseText);
-      			//make api request here with type included
-				localStorage.setItem("query_type", type);
-				localStorage.setItem("data_store",JSON.stringify(data));
 
 				auto_1 = undefined;
 				auto_2 = undefined;
 
 	  			if (sent1 && sent2)
 	  			{
+	  				for(var i = 0; i < data["elements"].length; i++) {
+	  					Object.keys(data["elements"][i]).forEach(function(key) {
+			    			var nKey = key + "_" + i;
+			    			data[nKey] = data["elements"][i][key];
+						});
+	  				}
+	  				delete data["elements"];
 	  				hide_1 = false; 
 	  				hide_2 = false;
 		  	 		document.getElementById("search_1_button").value = "HIDE";
@@ -181,6 +185,11 @@ function career_api_request(query) {
 	  			}
 	  			else if (!sent1 && sent2)
 	  			{
+	  				Object.keys(data["elements"][0]).forEach(function(key) {
+		    			var nKey = key + "_2";
+		    			data[nKey] = data["elements"][0][key];
+					});
+					delete data["elements"];
 	  				hide_1 = true;
 	  				document.getElementById("search_1_button").value = "SHOW";
 		  	 		$("#search_1_button").attr("disabled", "true");
@@ -203,6 +212,12 @@ function career_api_request(query) {
 	  			}
 	  			else if (sent1 && !sent2)
 	  			{
+	  				Object.keys(data["elements"][0]).forEach(function(key) {
+		    			var nKey = key + "_1";
+		    			data[nKey] = data["elements"][0][key];
+					});
+					delete data["elements"];
+					
 	  				hide_2 = true;
 	  				document.getElementById("search_2_button").value = "SHOW";
 		  	 		$("#search_2_button").attr("disabled", "true");
@@ -211,6 +226,10 @@ function career_api_request(query) {
 		  	 		$("#search_1_button").removeAttr("disabled");
 	  			}
 	  			nochanges = true;
+
+	  			//make api request here with type included
+				localStorage.setItem("query_type", type);
+				localStorage.setItem("data_store",JSON.stringify(data));
       		}
       	}
     }

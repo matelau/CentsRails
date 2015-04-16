@@ -164,6 +164,14 @@ function major_api_request(query) {
     	if (xmlHttp.readyState === 4) { 
       		if (xmlHttp.status === 200) {
       			data = jQuery.parseJSON(xmlHttp.responseText);
+
+      			for(var i = 0; i < data["elements"].length; i++) {
+  					Object.keys(data["elements"][i]).forEach(function(key) {
+		    			var nKey = key + "_" + i;
+		    			data[nKey] = data["elements"][i][key];
+					});
+  				}
+  				delete data["elements"];
       			//make api request here with type included
 				localStorage.setItem("query_type", type);
 				localStorage.setItem("data_store",JSON.stringify(data));
@@ -193,8 +201,8 @@ function major_api_request(query) {
 					data["degree_1"] = null;
 					data["jobs_2"] = $.extend(true, [], data["jobs_1"]);
 					data["jobs_1"] = null;
-					data["major_2_name"] = data["major_1_name"];
-					data["major_1_name"] = null;
+					data["name_2"] = data["name_1"];
+					data["name_1"] = null;
 
 	  			}
 	  			else if (sent1 && !sent2)
@@ -261,8 +269,8 @@ function sketchProc(processing) {
 			data["jobs_1"] = ["Software Developer", 97500, "Database Administrator", 91000, "System Analyst", 89000];
 			data["jobs_2"] = ["Teacher", 43500, "Disc Jockey", 37000, "Performance Artist", 36500];
 
-			data["major_1_name"] = "Computer Science";
-			data["major_2_name"] = "Music";
+			data["name_1"] = "Computer Science";
+			data["name_2"] = "Music";
 		}
 		if (data["jobs_1"].length == 0 && data["jobs_2"].length == 0)
 		{
@@ -270,7 +278,7 @@ function sketchProc(processing) {
 			$("#job_tab").hide();
 		}
 		
-		document.getElementById("search_1_name").value = data["major_1_name"];
+		document.getElementById("search_1_name").value = data["name_1"];
 
 		if (!data["degree_2"])
   		{
@@ -280,7 +288,7 @@ function sketchProc(processing) {
   		}
   		else
   		{
-  			document.getElementById("search_2_name").value = data["major_2_name"];
+  			document.getElementById("search_2_name").value = data["name_2"];
   		}
   		old1 = document.getElementById("search_1_name").value;
 		old2 = document.getElementById("search_2_name").value;

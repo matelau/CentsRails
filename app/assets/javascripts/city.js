@@ -166,6 +166,15 @@ function city_api_request(query) {
     	if (xmlHttp.readyState === 4) { 
       		if (xmlHttp.status === 200) {
       			data = jQuery.parseJSON(xmlHttp.responseText);
+
+      			for(var i = 0; i < data["elements"].length; i++) {
+  					Object.keys(data["elements"][i]).forEach(function(key) {
+		    			var nKey = key + "_" + i;
+		    			data[nKey] = data["elements"][i][key];
+					});
+  				}
+  				delete data["elements"];
+	  				
       			//make api request here with type included
 				localStorage.setItem("query_type", type);
 				localStorage.setItem("data_store",JSON.stringify(data));
@@ -196,13 +205,13 @@ function city_api_request(query) {
 					data["cli_2"] = $.extend(true, [], data["cli_1"])
 					data["labor_2"] = $.extend(true, [], data["labor_1"])
 					data["taxes_2"] = $.extend(true, [], data["taxes_1"])
-					data["location_2"] = data["location_1"];
+					data["name_2"] = data["name_1"];
 					data["weather_1"] = null;
 					data["weatherlow_1"] = null;
 					data["cli_1"] = null;
 					data["labor_1"] = null;
 					data["taxes_1"] = null;
-					data["location_1"] = null;
+					data["name_1"] = null;
 
 	  			}
 	  			else if (sent1 && !sent2)
@@ -258,17 +267,17 @@ function sketchProc(processing) {
   		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));
 
   		if(data["name_1"]){
-  			data["location_1"] = data["name_1"];
+  			data["name_1"] = data["name_1"];
   		}
 
   		if(data["name_2"]){
-  			data["location_2"] = data["name_2"]
+  			data["name_2"] = data["name_2"]
   		}
 
 
-  		//console.log(data["location_1"]);
+  		//console.log(data["name_1"]);
   		//localStorage.removeItem("data_store");
-  		if (!data || (!data["location_1"] && !data["location_2"]))
+  		if (!data || (!data["name_1"] && !data["name_2"]))
   		{
   			//data = new Array();
 
@@ -277,8 +286,8 @@ function sketchProc(processing) {
 			data["weather_2"]    = [67.0, 71.0, 77.0, 85.0, 95.0, 104.0, 106.0, 104.0, 100.0, 89.0, 76.0, 66.0, 66.0, 106.0];
 			data["weatherlow_2"] = [46.0, 49.0, 53.0, 60.0, 69.0, 78.0, 83.0, 83.0, 77.0, 65.0, 53.0, 45.0, 45.0, 83.0];
 
-			data["location_1"] = "Salt Lake City, Utah";
-			data["location_2"] = "Phoenix, Arizona";
+			data["name_1"] = "Salt Lake City, Utah";
+			data["name_2"] = "Phoenix, Arizona";
 
 			data["cli_1"] = [102, 94, 95, 95, 119, 105, 92, 92, 119];
 			data["cli_2"] = [96, 92, 100, 106, 97, 101, 99, 92, 106];
@@ -292,8 +301,8 @@ function sketchProc(processing) {
 			data["taxes_2"] = [8.3, 2.59, 4.54, 1427];
 			data["taxes_3"] = [8.25, 3.5, 7.8, 2065];
   		}
-  		//console.log(data["location_2"]);
-  		if (!data["location_2"])
+  		//console.log(data["name_2"]);
+  		if (!data["name_2"])
   		{
   			hide_2 = true;
   			document.getElementById("search_2_button").value = "SHOW";
@@ -301,10 +310,10 @@ function sketchProc(processing) {
   		}
   		else
   		{
-  			document.getElementById("search_2_name").value = data["location_2"];
+  			document.getElementById("search_2_name").value = data["name_2"];
   		}
 
-		document.getElementById("search_1_name").value = data["location_1"];
+		document.getElementById("search_1_name").value = data["name_1"];
 		old1 = document.getElementById("search_1_name").value;
 		old2 = document.getElementById("search_2_name").value;
 		nochanges = true;
@@ -339,7 +348,7 @@ function sketchProc(processing) {
 						{
 							processing.fill(255);
 							processing.stroke(0);
-							var length = processing.max(data["location_1"].length, category[i]);
+							var length = processing.max(data["name_1"].length, category[i]);
 							var height;
 							if (processing.mouseY < 60)
 								height = 62;
@@ -349,7 +358,7 @@ function sketchProc(processing) {
 							processing.fill(0);
 							processing.textAlign(processing.CENTER);
 							processing.text(category[i], processing.mouseX, height-48);
-							processing.text(data["location_1"], processing.mouseX, height-36);
+							processing.text(data["name_1"], processing.mouseX, height-36);
 							processing.text("are " + String(data1 - 100) + "% above the", processing.mouseX, height-24);
 							processing.text("national average.", processing.mouseX, height-12);
 
@@ -358,7 +367,7 @@ function sketchProc(processing) {
 						{
 							processing.fill(255);
 							processing.stroke(0);
-							var length = processing.max(data["location_1"].length, category[i]);
+							var length = processing.max(data["name_1"].length, category[i]);
 							var height;
 							if (processing.mouseY > 595)
 								height = 593;
@@ -368,7 +377,7 @@ function sketchProc(processing) {
 							processing.fill(0);
 							processing.textAlign(processing.CENTER);
 							processing.text(category[i], processing.mouseX, height-48);
-							processing.text(data["location_1"], processing.mouseX, height-36);
+							processing.text(data["name_1"], processing.mouseX, height-36);
 							processing.text("are " + String(100 - data1) + "% below the", processing.mouseX, height-24);
 							processing.text("national average.", processing.mouseX, height-12);
 
@@ -382,7 +391,7 @@ function sketchProc(processing) {
 					{
 						processing.fill(255);
 						processing.stroke(0);
-						var length = processing.max(data["location_2"].length, category[i]);
+						var length = processing.max(data["name_2"].length, category[i]);
 						var height;
 						if (processing.mouseY < 60)
 							height = 62;
@@ -392,7 +401,7 @@ function sketchProc(processing) {
 						processing.fill(0);
 						processing.textAlign(processing.CENTER);
 						processing.text(category[i], processing.mouseX, height-48);
-						processing.text(data["location_2"], processing.mouseX, height-36);
+						processing.text(data["name_2"], processing.mouseX, height-36);
 						processing.text("are " + String(data2 - 100) + "% above the", processing.mouseX, height-24);
 						processing.text("national average.", processing.mouseX, height-12);
 
@@ -401,7 +410,7 @@ function sketchProc(processing) {
 					{
 						processing.fill(255);
 						processing.stroke(0);
-						var length = processing.max(data["location_2"].length, category[i]);
+						var length = processing.max(data["name_2"].length, category[i]);
 						var height;
 						if (processing.mouseY > 595)
 							height = 593;
@@ -411,7 +420,7 @@ function sketchProc(processing) {
 						processing.fill(0);
 						processing.textAlign(processing.CENTER);
 						processing.text(category[i], processing.mouseX, height-48);
-						processing.text(data["location_2"], processing.mouseX, height-36);
+						processing.text(data["name_2"], processing.mouseX, height-36);
 						processing.text("are " + String(100 - data2) + "% below the", processing.mouseX, height-24);
 						processing.text("national average.", processing.mouseX, height-12);
 
@@ -538,7 +547,7 @@ function sketchProc(processing) {
 		}
 		else
 		{
-			if(data["location_2"])
+			if(data["name_2"])
 			{
 				min = processing.min(data["cli_1"][7], data["cli_2"][7]);
 				max = processing.max(data["cli_1"][8], data["cli_2"][8]);
@@ -731,7 +740,7 @@ function sketchProc(processing) {
 		else
 		{
 			
-			if (data["location_2"])
+			if (data["name_2"])
 			{
 				var temp_max_1 = processing.max(data["labor_1"][0], data["labor_2"][0], data["labor_3"][0]);
 				var temp_max_2 = processing.max(data["labor_1"][2], data["labor_2"][2], data["labor_3"][2]);	
@@ -895,7 +904,7 @@ function sketchProc(processing) {
 		}
 		else
 		{
-			if (data["location_2"])
+			if (data["name_2"])
 			{
 				var temp_max_1 = processing.max(data["taxes_1"][0], data["taxes_2"][0], data["taxes_3"][0]);
 				var temp_max_2 = processing.max(data["taxes_1"][2], data["taxes_2"][2], data["taxes_3"][2]);	
@@ -1034,7 +1043,7 @@ function sketchProc(processing) {
 		}
 		else
 		{
-			if (data["location_2"])
+			if (data["name_2"])
 			{
 				min = processing.min(data["weatherlow_1"][12], data["weatherlow_2"][12]);
 				max = processing.max(data["weather_1"][13], data["weather_2"][13]);
@@ -1150,12 +1159,12 @@ function update_tab(name) {
 		processingInstance.noLoop();
 		$("#main_viz").fadeTo(500, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(700, 1);});
 		active_tab = name;
-		if(data["location_1"])
+		if(data["name_1"])
 		{
 			hide_1 = false;
 			document.getElementById("search_1_button").value = "HIDE";
 		}
-		if(data["location_2"])
+		if(data["name_2"])
 		{
 			hide_2 = false;
 			document.getElementById("search_2_button").value = "HIDE";
