@@ -20,6 +20,8 @@ class UserController < ApplicationController
 					"EMAIL" => user_params[:email]},
 					user_params[:email_type])
 
+		user.api_key = SecureRandom.urlsafe_base64(24)
+
 		if user.save
 			redirect_to registered_path
 		else

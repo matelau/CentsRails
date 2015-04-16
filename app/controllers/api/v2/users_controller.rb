@@ -44,7 +44,8 @@ class Api::V2::UsersController < ApplicationController
 										email: params[:email],
 										password: params[:password],
 										password_confirmation: params[:password_confirmation],
-										email_type: params[:email_type])
+										email_type: params[:email_type],
+										api_key: SecureRandom.urlsafe_base64(24))
 
 		# Check that the first name, last name, etc., meet the User model's requirements.
 		unless user.valid?
@@ -75,6 +76,7 @@ class Api::V2::UsersController < ApplicationController
 		if user.save
 			session[:user_id] = user.id
 			result[:id] = user.id
+			result[:api_key] = user.api_key
 			return render json: result, status: 200
 		else
 			return render json: result, status: 400
@@ -299,6 +301,11 @@ class Api::V2::UsersController < ApplicationController
 		# Try to authenticate the user and finish.
 		if user && user.authenticate(params[:password])
 			result[:id] = user.id
+			unless user.api_key.present?
+				user.api_key = SecureRandom.urlsafe_base64(24)
+				user.save
+			end
+			result[:api_key] = user.api_key
 			return render json: result, status: 200
 		else
 			result[:errors] = 'authentication failed'

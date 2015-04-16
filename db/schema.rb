@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150414205139) do
+ActiveRecord::Schema.define(version: 20150416212543) do
 
   create_table "amounts", force: true do |t|
     t.integer  "user_id"
@@ -206,6 +206,7 @@ ActiveRecord::Schema.define(version: 20150414205139) do
     t.string   "primary_color"
     t.string   "secondary_color"
     t.boolean  "prefers_autocomplete"
+    t.string   "api_key"
   end
 
   create_table "weather_records", force: true do |t|
