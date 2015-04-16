@@ -484,7 +484,7 @@ def data():
 			package['operation'] = "compare"
 
 		for o in query['option']:
-			package["careers"].append(o)
+			package["careers"].append({"Name":o})
 
 		url = "https://trycents.com/api/v2/careers/compare"
 
