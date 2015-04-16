@@ -398,7 +398,7 @@ def data():
 		else:
 			package['operation'] = "compare"
 
-		url = "https://trycents.com/api/v1/coli/"
+		url = "https://trycents.com/api/v2/cost_of_living/compare"
 
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
@@ -431,7 +431,7 @@ def data():
 		else:
 			package['operation'] = "compare"
 
-		url = "https://trycents.com/api/v1/schools/"
+		url = "https://trycents.com/api/v2/schools/compare"
 
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
@@ -459,7 +459,7 @@ def data():
 			mlev = o.split("(")[1].replace(")","").strip()
 			package["majors"].append({"name":mname,"level":mlev})
 
-		url = "https://trycents.com/api/v1/majors/"
+		url = "https://trycents.com/api/v2/degrees/compare"
 
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
