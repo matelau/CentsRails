@@ -1,5 +1,4 @@
 $(document).ready(function() {
-	$.post("/api/v2/users/" + user_id + "/completed", {"section": "View City Comparison"});
 	$.post("/api/v1/record_names", {operation: 'get', tables: ['coli']}, function(response) { 
 		auto_cities = response;
 		$( "#search_1_name" ).autocomplete({
@@ -56,7 +55,9 @@ $(document).ready(function() {
 	  		},
 	  		delay: 0
 		});
-	});	
+	});
+	if (user_id)
+		$.post("/api/v2/users/" + user_id + "/completed", {"section": "View City Comparison"});	
 });
 
 var data, hide_1, hide_2, main, gray, font, active_tab, axis_location, horz_locs, auto_1, auto_2, sent1, sent2, nochanges, old1, old2, auto_cities, canvas, processingInstance;

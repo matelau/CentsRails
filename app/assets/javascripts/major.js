@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$.post("/api/v2/users/" + user_id + "/completed", {"section": "View Major Comparison"});
+
 	$.post("/api/v1/record_names", {operation: 'get', tables: ['majors']}, function(response) { 
 		auto_majors = response;
 		$( "#search_1_name" ).autocomplete({
@@ -55,7 +55,9 @@ $(document).ready(function() {
 	  		},
 	  		delay: 0
 		});
-	});	
+	});
+	if (user_id)
+		$.post("/api/v2/users/" + user_id + "/completed", {"section": "View Major Comparison"});	
 });
 
 var data, hide_1, hide_2, main, gray, font, active_tab, auto_1, auto_2, sent1, sent2, nochanges, old1, old2, canvas, processingInstance;

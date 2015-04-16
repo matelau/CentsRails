@@ -72,7 +72,8 @@
     	//$('#examples_slider').css({"background-color": "#884412"});
     }
     function suggested() {
-        $.post("/api/v2/users/" + user_id + "/completed", {"section": "Submit Feedback"});
+        if (user_id)
+            $.post("/api/v2/users/" + user_id + "/completed", {"section": "Submit Feedback"});
     };
 </script>
 <script>

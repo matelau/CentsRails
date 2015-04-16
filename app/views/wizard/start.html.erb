@@ -38,5 +38,6 @@ wizard and just see some standard questions, see our <a class="help-nav" href="/
 
     ga('create', 'UA-61563557-1', 'auto');
     ga('send', 'pageview');
-    $.post("/api/v2/users/" + user_id + "/completed", {"section": "Use Wizard"});
+    if (user_id)
+        $.post("/api/v2/users/" + user_id + "/completed", {"section": "Use Wizard"});
 </script>

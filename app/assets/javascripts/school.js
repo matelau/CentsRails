@@ -1,5 +1,4 @@
 $(document).ready(function() {
-	$.post("/api/v2/users/" + user_id + "/completed", {"section": "View College Comparison"});
 	$.post("/api/v1/record_names", {operation: 'get', tables: ['schools']}, function(response) { 
 		auto_schools = response;
 		$( "#search_1_name" ).autocomplete({
@@ -53,7 +52,8 @@ $(document).ready(function() {
   			delay: 0
 		});
 	});	
-	
+	if (user_id)
+		$.post("/api/v2/users/" + user_id + "/completed", {"section": "View College Comparison"});
 });
 
 var data, hide_1, hide_2, main, gray, font, old1, old2, sent1, sent2, auto_1, auto_2, canvas, processingInstance;

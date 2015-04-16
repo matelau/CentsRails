@@ -40,7 +40,8 @@ if (path[1] == "wizard" && path[2] != "start" && path[2] != "education")
 else if (path[1] == "search" && path[2] == "results")
 {
 	var query_type = localStorage.getItem("query_type");
-	$.post("/api/v2/users/" + user_id + "/completed", {"section": "Use Main Search"});
+	if (user_id)
+		$.post("/api/v2/users/" + user_id + "/completed", {"section": "Use Main Search"});
 	getPartial(query_type);
 }
 

@@ -12,7 +12,6 @@ var mods_low = [0, .125, .25, .375, .5, .675, .8];
 
 
 $(document).ready(function() {
-
 	//request user data
 	$.get("/api/v2/users/" + user_id + "/query", function(response){  
 		//create set of unrepeated searches
@@ -286,9 +285,9 @@ function applyColor() {
 	document.getElementById("old_div").style.backgroundColor = document.getElementById("new_div").style.backgroundColor;
 	color_array = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
 	new_colors = {};
+	$.post("/api/v2/users/" + user_id + "/completed", {"section": "Create Custom Color"});
 	if (color_array == null)
 	{
-		$.post("/api/v2/users/" + user_id + "/completed", {"section": "Create Custom Color"});
 		//set all hex and rgb for both primary and secondary
 		if (primary)
 		{
