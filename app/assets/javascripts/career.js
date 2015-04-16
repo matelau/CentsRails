@@ -171,7 +171,7 @@ function career_api_request(query) {
 	  			{
 	  				for(var i = 0; i < data["elements"].length; i++) {
 	  					Object.keys(data["elements"][i]).forEach(function(key) {
-			    			var nKey = key + "_" + i+1;
+			    			var nKey = key + "_" + int(i+1);
 			    			data[nKey] = data["elements"][i][key];
 						});
 	  				}
