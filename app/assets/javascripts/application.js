@@ -40,8 +40,6 @@ if (path[1] == "wizard" && path[2] != "start" && path[2] != "education")
 else if (path[1] == "search" && path[2] == "results")
 {
 	var query_type = localStorage.getItem("query_type");
-	if (user_id)
-		$.post("/api/v2/users/" + user_id + "/completed", {"section": "Use Main Search"});
 	getPartial(query_type);
 }
 
@@ -82,6 +80,8 @@ function api_request(query) {
 				}
 				else {
 					$.post("/api/v2/users/" + user_id + "/query", {"url": query});
+					if (user_id)
+						$.post("/api/v2/users/" + user_id + "/completed", {"section": "Use Main Search"});
     				localStorage.removeItem("data_store");
 					localStorage.setItem("data_store", JSON.stringify(data));
 					localStorage.setItem("query_type", data["query_type"]);

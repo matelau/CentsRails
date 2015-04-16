@@ -83,6 +83,12 @@ $(document).ready(function() {
 		}
 		$("#progress-bar").css("background-color", color);
 		$("#progress-bar").css("width", String(100.0*(response.length/progress_cats.length))+ "%");
+		if (response.length == progress_cats.length)
+		{
+			$("#progress-bar").css("border-top-right-radius", "20px");
+			$("#progress-bar").css("border-bottom-right-radius", "20px");
+		}
+
 		$("#progress-text").text("Completed " + String(response.length) + " out of " + String(progress_cats.length) + " steps.");
 		if (progress_cats.length > response.length)
 			$("#progress-remain").text("To Do:");
@@ -241,7 +247,7 @@ function progressHeight(id1, id2, len) {
 		if (len != 0)
 			$(id2).height(120 + len * 30);
 		else
-			$(id2).height(0);
+			$(id2).height(120);
 	}
 	else
 	{
