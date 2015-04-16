@@ -253,10 +253,10 @@ private
 					
 					# Put the stats in result.
 					sch["school_#{index}"] = Hash.new
-					sch["school_#{index}"]["name_#{index}"] = record[:name]
-					sch["school_#{index}"]["school_#{index}"] = [tuition_resident, tuition_nonresident, 
+					sch["school_#{index}"]["name"] = record[:name]
+					sch["school_#{index}"]["school"] = [tuition_resident, tuition_nonresident, 
 						grad_rate, size, rank, cents_rating]
-					sch["school_#{index}"]["school_#{index}_image"] = record[:image]
+					sch["school_#{index}"]["school_image"] = record[:image]
 					break
 				end
 			end

@@ -120,6 +120,15 @@ function school_api_request(query) {
     	if (xmlHttp.readyState === 4) { 
       		if (xmlHttp.status === 200) {
       			data = jQuery.parseJSON(xmlHttp.responseText);
+
+      			for(var i = 0; i < data["elements"].length; i++) {
+  					Object.keys(data["elements"][i]).forEach(function(key) {
+		    			var idx = i+1;
+		    			var nKey = key + "_" + idx;
+		    			data[nKey] = data["elements"][i][key];
+					});
+  				}
+  				delete data["elements"];
       			//make api request here with type included
 				localStorage.setItem("query_type", type);
 				localStorage.setItem("data_store",JSON.stringify(data));
@@ -131,18 +140,18 @@ function school_api_request(query) {
 				if (sent1 && sent2)
 				{
 					//check to see if two results have been returned
-					if (data["school_1_name"] && data["school_2_name"])
+					if (data["name_1"] && data["name_2"])
 					{
 						//two results are returned, check to make sure they line up with the right fields
-						if (data["school_1_name"] != field1)
+						if (data["name_1"] != field1)
 						{
 							//need to swap
 							var tempArray = $.extend(true, [], data["school_1"]);
 							data["school_1"] = $.extend(true, [], data["school_2"]);
 							data["school_2"] = $.extend(true, [], tempArray);
-							var tempName = data["school_1_name"];
-							data["school_1_name"] = data["school_2_name"];
-							data["school_2_name"] = tempName;
+							var tempName = data["name_1"];
+							data["name_1"] = data["name_2"];
+							data["name_2"] = tempName;
 						}
 						hide_1 = false;
 						hide_2 = false;
@@ -153,7 +162,7 @@ function school_api_request(query) {
 
 					}
 					//first search was invalid, write error, disable field and swap arrays
-					else if (data["school_1_name"] == field2 && !data["school_2_name"])
+					else if (data["name_1"] == field2 && !data["name_2"])
 					{
 						hide_1 = true;
 						$("#error_1").append("Invalid school.");
@@ -164,11 +173,11 @@ function school_api_request(query) {
 			  	 		$("#search_2_button").removeAttr("disabled");
 		  	 			data["school_2"] = $.extend(true, [], data["school_1"]);
 		  	 			data["school_1"] = null;
-		  	 			data["school_2_name"] = data["school_1_name"];
-		  	 			data["school_1_name"] = null;
+		  	 			data["name_2"] = data["name_1"];
+		  	 			data["name_1"] = null;
 					}
 					//second search was invalid, just write error, disable field
-					else if (data["school_1_name"] == field1 && !data["school_2_name"])
+					else if (data["name_1"] == field1 && !data["name_2"])
 					{
 						hide_2 = true;
 						$("#error_2").append("Invalid school.");
@@ -199,7 +208,7 @@ function school_api_request(query) {
 		  					document.getElementById("search_2_button").value = "SHOW";
 			  	 			$("#search_2_button").attr("disabled", "true");
 			  	 			document.getElementById("search_2_name").value = "";
-			  	 			document.getElementById("search_1_name").value = data["school_1_name"];
+			  	 			document.getElementById("search_1_name").value = data["name_1"];
 
 			  	 		}
 					}
@@ -208,7 +217,7 @@ function school_api_request(query) {
 				//just 1 sent
 				else if (sent1 && !sent2)
 				{
-					if (!data["school_1_name"])
+					if (!data["name_1"])
 					{
 						hide_1 = true;
 						$("#error_1").append("Invalid school.");
@@ -229,7 +238,7 @@ function school_api_request(query) {
 				//just 2 sent
 				else if (!sent1 && sent2)
 				{
-					if (!data["school_1_name"])
+					if (!data["name_1"])
 					{
 						hide_2 = true;
 						$("#error_2").append("Invalid school.");
@@ -247,8 +256,8 @@ function school_api_request(query) {
 			  	 		$("#search_2_button").removeAttr("disabled");
 						data["school_2"] = $.extend(true, [], data["school_1"]);
 		  	 			data["school_1"] = null;
-		  	 			data["school_2_name"] = data["school_1_name"];
-		  	 			data["school_1_name"] = null;
+		  	 			data["name_2"] = data["name_1"];
+		  	 			data["name_1"] = null;
 					}
 				}
 				else
@@ -304,9 +313,9 @@ function sketchProc(processing) {
 	  			$("#search_2_button").attr("disabled", "true");
 	  		}
 			else {		
-				document.getElementById("search_2_name").value = data["school_2_name"];
+				document.getElementById("search_2_name").value = data["name_2"];
 			}
-			document.getElementById("search_1_name").value = data["school_1_name"];
+			document.getElementById("search_1_name").value = data["name_1"];
 		}
 		old1 = document.getElementById("search_1_name").value;
 		old2 = document.getElementById("search_2_name").value;

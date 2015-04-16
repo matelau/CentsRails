@@ -165,17 +165,24 @@ private
 					cents_rating = cents_rating[0][:average].to_f
 
 					car["career_#{index}"] = Hash.new
-					car["career_#{index}"]["name_#{index}"] = record[:name]
-					car["career_#{index}"]["career_salary_#{index}"] = [record[:sal2003], 
+					car["career_#{index}"]["name"] = record[:name]
+					sals = [record[:sal2003], 
 						record[:sal2004], record[:sal2005], record[:sal2006], record[:sal2007],
 						record[:sal2008], record[:sal2009], record[:sal2010], record[:sal2011], 
 						record[:sal2012], record[:sal2013]]
-					car["career_#{index}"]["career_demand_#{index}"] = [record[:job_openings], 
-							record[:employment_growth_percent], 
+
+					min_sal = sals.compact.min
+					max_sal = sals.compact.max
+
+					sals << min_sal
+					sals << max_sal
+					car["career_#{index}"]["career_salary"] = sals
+					car["career_#{index}"]["career_demand"] = [record[:job_openings], 
+							record[:employment_change_percent], 
 							record[:employment_change_volume]
 					]
-					car["career_#{index}"]["career_unemploy_#{index}"] = [record[:unemp11], record[:unemp12]]
-					car["career_#{index}"]["career_rating_#{index}"] = cents_rating
+					car["career_#{index}"]["career_unemploy"] = [record[:unemp11], record[:unemp12]]
+					car["career_#{index}"]["career_rating"] = cents_rating
 					break
 				end
 			end
@@ -187,6 +194,12 @@ private
 
 			# Increment for next object.
 			index += 1
+		end
+
+		if index == 2
+			result["operation"] = "get"
+		else
+			result["operation"] = "compare"
 		end
 
 		result["elements"] = []

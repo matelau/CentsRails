@@ -41,6 +41,7 @@ class Api::V2::ColiController < ApplicationController
 
 		# Return the record names as a JSON object.
 		result.sort!
+
 		return render json: result, status: 200
   end
 
@@ -201,6 +202,8 @@ private
 		used_state_data_for = Array.new
 		no_data_for = Array.new
 
+		loc = {}
+
 		# Iterate over each location, keeping track of the location's index.
 		# (The index is needed because that's how the view tracks locations.)
 		index = 1
@@ -213,11 +216,11 @@ private
 				if record[:city]  == location[:city]  and 
 					record[:state] == location[:state] then
 					match = true
-					result["location_#{index}"] = extract_coli_data(location, index, record)
+					loc["location_#{index}"] = extract_coli_data(location, index, record)
 					if location[:city].present?
-						result["location_#{index}"][:name] = "#{location[:city]}, #{location[:state]}"
+						loc["location_#{index}"]["name"] = "#{location[:city]}, #{location[:state]}"
 					else
-						result["location_#{index}"][:name] = "#{location[:state]}"
+						loc["location_#{index}"]["name"] = "#{location[:state]}"
 					end
 					break
 				end
@@ -229,18 +232,18 @@ private
 					if record[:city]  == nil and 
 						 record[:state] == location[:state] then
 						state_match = true
-						result["location_#{index}"] = extract_coli_data(location, index, record)
-						result["location_#{index}"][:name] = location[:state]
+						loc["location_#{index}"] = extract_coli_data(location, index, record)
+						loc["location_#{index}"]["name"] = location[:state]
 						break
 					end
 				end
 			end
 
 			# Add the weather data for this location.
-			weather_data = extract_weather_data(location, records, result)
-			if result["location_#{index}"]
-				result["location_#{index}"]["weather_#{index}"] = weather_data[:weather_high_stats]
-				result["location_#{index}"]["weatherlow_#{index}"] = weather_data[:weather_low_stats]
+			weather_data = extract_weather_data(location, records, loc)
+			if loc["location_#{index}"]
+				loc["location_#{index}"]["weather"] = weather_data[:weather_high_stats]
+				loc["location_#{index}"]["weatherlow"] = weather_data[:weather_low_stats]
 			end
 
 			# Keep track of which states we substituted state data for.
@@ -254,6 +257,12 @@ private
 
 			# Increment for next object.
 			index += 1
+		end
+
+		result["elements"] = []
+
+		loc.each do |k,v|
+			result["elements"] << v
 		end
 
 		labor_avg = Array.new
@@ -312,7 +321,7 @@ private
 		coli_stats << coli_stats.compact.max
 
 		# Add the data to the result.
-		data["cli_#{i}"] = coli_stats
+		data["cli"] = coli_stats
 
 
 		##### -------------------- LABOR --------------------- #####
@@ -332,7 +341,7 @@ private
 		labor_stats << labor_stats.compact.min
 		labor_stats << labor_stats.compact.max
 
-		data["labor_#{i}"] = labor_stats
+		data["labor"] = labor_stats
 
 		
 		##### -------------------- TAXES --------------------- #####
@@ -351,7 +360,7 @@ private
 		tax_stats << tax_stats.compact.min
 		tax_stats << tax_stats.compact.max
 
-		data["taxes_#{i}"] = tax_stats
+		data["taxes"] = tax_stats
 
 		return data
 	end
