@@ -69,22 +69,20 @@ class Api::V2::CareersController < ApplicationController
 	end
 
 	def show_best
-		career = Career.order("salary DESC").first
+		career = Career.order("sal2013 DESC").first
 		careers = [{name: career[:name]}]
 		internal_show_two(careers, "get")
 	end
 
 	def show_worst
-		career = Career.order(
-			"CASE WHEN salary IS NULL THEN 100000 ELSE salary END, salary"
-			).first
+		career = Career.order("sal2013").first
 		careers = [{name: career[:name]}]
 		internal_show_two(careers, "get")
 	end
 
 	def show_random
-		ids = Degree.select(:id)
-		degree = Degree.find( ids[Random.rand(ids.length)] )
+		ids = Career.select(:id)
+		career = Career.find( ids[Random.rand(ids.length)] )
 		careers = [{name: career[:name]}]
 		internal_show_two(careers, "get")
 	end

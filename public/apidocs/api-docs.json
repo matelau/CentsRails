@@ -35,7 +35,7 @@
           }
         },
         "description":"",
-        "summary":"Returns the career with highest salary.",
+        "summary":"Returns the career with highest 2013 salary.",
         "operationId":"Api::V2::CareersController#show_best"
       }
     },
@@ -69,36 +69,6 @@
             }
           }
         ]
-      }
-    },
-    "/careers/worst":{  
-      "get":{  
-        "tags":[  
-          "careers"
-        ],
-        "responses":{  
-          "200":{  
-            "description":"Retrieval successful."
-          }
-        },
-        "description":"",
-        "summary":"Returns the career with lowest salary.",
-        "operationId":"Api::V2::CareersController#show_worst"
-      }
-    },
-    "/careers/random":{  
-      "get":{  
-        "tags":[  
-          "careers"
-        ],
-        "responses":{  
-          "200":{  
-            "description":"Retrieval successful."
-          }
-        },
-        "description":"",
-        "summary":"Returns a random career.",
-        "operationId":"Api::V2::CareersController#show_random"
       }
     },
     "/careers/{name}":{  
@@ -182,6 +152,36 @@
             }
           }
         ]
+      }
+    },
+    "/careers/random":{  
+      "get":{  
+        "tags":[  
+          "careers"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns a random career.",
+        "operationId":"Api::V2::CareersController#show_random"
+      }
+    },
+    "/careers/worst":{  
+      "get":{  
+        "tags":[  
+          "careers"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the career with lowest 2013 salary.",
+        "operationId":"Api::V2::CareersController#show_worst"
       }
     },
     "/cost_of_living":{  
