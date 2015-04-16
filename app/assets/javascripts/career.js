@@ -200,8 +200,8 @@ function career_api_request(query) {
 		  	 		//need to flip data to _2 arrays
 					data["career_salary_2"] = $.extend(true, [], data["career_salary_1"]);
 					data["career_salary_1"] = null;
-					data["career_satisfaction_2"] = $.extend(true, [], data["career_satisfaction_1"]);
-					data["career_satisfaction_1"] = null;
+					data["career_rating_2"] = $.extend(true, [], data["career_rating_1"]);
+					data["career_rating_1"] = null;
 					data["career_demand_2"] = $.extend(true, [], data["career_demand_1"]);
 					data["career_demand_1"] = null;
 					data["career_unemploy_2"] = $.extend(true, [], data["career_unemploy_1"]);
@@ -277,8 +277,8 @@ function sketchProc(processing) {
 			data["career_salary_1"] = [52000, 72000, null, 77000, 79000, 81000, null, null, 86000, 86500, 88000, 52000, 88000];
 			data["career_salary_2"] = [12345, null, null, 15000, null, null, null, 17500, null, null, 25750, 12345, 25750];
 			//career satisfaction
-			data["career_satisfaction_1"] = 4.8;
-			data["career_satisfaction_2"] = 2.9;
+			data["career_rating_1"] = 4.8;
+			data["career_rating_2"] = 2.9;
 			//demand
 			data["career_demand_1"] = [353200, 22.4, 252700];
 			data["career_demand_2"] = [35500, 16.0, 18300];
