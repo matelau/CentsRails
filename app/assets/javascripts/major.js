@@ -273,7 +273,17 @@ function sketchProc(processing) {
 			data["name_1"] = "Computer Science";
 			data["name_2"] = "Music";
 		}
-		if (data["jobs_1"].length == 0 && data["jobs_2"].length == 0)
+		if (data["jobs_1"].length == 0 && !data["jobs_2"])
+		{
+			//no top jobs for either major, disable that tab
+			$("#job_tab").hide();
+		}
+		if (data["jobs_2"].length == 0 && !data["jobs_1"])
+		{
+			//no top jobs for either major, disable that tab
+			$("#job_tab").hide();
+		}
+		else if (data["jobs_1"].length == 0 && data["jobs_2"].length == 0)
 		{
 			//no top jobs for either major, disable that tab
 			$("#job_tab").hide();
@@ -407,7 +417,7 @@ function sketchProc(processing) {
 		}
 		else
 		{
-			if (data["name_2"])
+			if (data["job_2"])
 			{
 				min = processing.min(data["jobs_1"][1], data["jobs_1"][3], data["jobs_1"][5], data["jobs_2"][1], data["jobs_2"][3], data["jobs_2"][5]);
 				max = processing.max(data["jobs_1"][1], data["jobs_1"][3], data["jobs_1"][5], data["jobs_2"][1], data["jobs_2"][3], data["jobs_2"][5]);
