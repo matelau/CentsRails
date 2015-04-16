@@ -49,7 +49,7 @@ class Api::V2::ColiController < ApplicationController
 			"CASE WHEN cost_of_living >= 0 THEN income_per_capita/(cost_of_living + 1) ELSE ABS(cost_of_living + 1)*income_per_capita END"
 			).first
 		cols = [{city: col[:city], state: col[:state]}]
-		internal_show_two(col, "get")
+		internal_show_two(cols, "get")
 	end
 
 	def show_worst
@@ -57,19 +57,19 @@ class Api::V2::ColiController < ApplicationController
 			"CASE WHEN cost_of_living >= 0 THEN income_per_capita/(cost_of_living + 1) ELSE ABS(cost_of_living + 1)*income_per_capita END DESC"
 			).first
 		cols = [{city: col[:city], state: col[:state]}]
-		internal_show_two(col, "get")
+		internal_show_two(cols, "get")
 	end
 
 	def show_cheapest
 		col = Coli.order('cost_of_living').first
 		cols = [{city: col[:city], state: col[:state]}]
-		internal_show_two(col, "get")
+		internal_show_two(cols, "get")
 	end
 
 	def show_priciest
 		col = Coli.order('cost_of_living').first
 		cols = [{city: col[:city], state: col[:state]}]
-		internal_show_two(col, "get")
+		internal_show_two(cols, "get")
 	end
 
 	def show_random

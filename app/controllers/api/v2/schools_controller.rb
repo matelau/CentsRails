@@ -168,7 +168,7 @@ class Api::V2::SchoolsController < ApplicationController
 private
 
 	def internal_show_two(s, o)
-				result = Hash.new
+		result = Hash.new
 
 		# Check for the required fields, and return an appropriate message if
 		# they are not present.
