@@ -68,29 +68,63 @@ class Api::V2::CareersController < ApplicationController
 		end
 	end
 
+	def show_best
+		career = Career.order("salary DESC").first
+		careers = [{name: career[:name]}]
+		internal_show_two(careers, "get")
+	end
+
+	def show_worst
+		career = Career.order(
+			"CASE WHEN salary IS NULL THEN 100000 ELSE salary END, salary"
+			).first
+		careers = [{name: career[:name]}]
+		internal_show_two(careers, "get")
+	end
+
+	def show_random
+		ids = Degree.select(:id)
+		degree = Degree.find( ids[Random.rand(ids.length)] )
+		careers = [{name: career[:name]}]
+		internal_show_two(careers, "get")
+	end
+
 	# Get two careers to compare.
 	def show_two
+		if params[:operation].present?
+			operation = params[:operation]
+		else
+			operation = "undefined"
+		end
+
+		careers = params[:careers]
+		internal_show_two(careers, operation)
+	end
+
+private
+
+	def internal_show_two(c, o)
 		result = Hash.new
 
-		unless params[:careers].present?
+		unless c.present?
 			return render json: 'No careers were in the careers array', status: 404
 		end
 
 		# Order the careers.
 		careers = Array.new
-		if params[:careers][0][:order].present? and params[:careers][1][:order].present?
-			params[:careers].each do |career|
+		if c[0][:order].present? and c[1][:order].present?
+			c.each do |career|
 				if career[:order] == 1
 					careers << career
 				end
 			end
-			params[:careers].each do |career|
+			c.each do |career|
 				if career[:order] == 2
 					careers << career
 				end
 			end
 		else
-			careers = params[:careers]
+			careers = c
 		end
 
 		# Create a string of the form 'name = n1 OR name = n2 ...' and a list of 
@@ -168,6 +202,8 @@ class Api::V2::CareersController < ApplicationController
 		if no_data_for.present?
 			result[:no_data_for] = no_data_for
 		end
+
+		result[:operation] = o
 
 		return render json: result, status: 200
 	end
