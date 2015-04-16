@@ -23,6 +23,7 @@ class SessionsController < ApplicationController
 			end
 			if in_list
 				user.api_key = SecureRandom.urlsafe_base64(24)
+				user.save
 				session[:user_id] = user.id
 				redirect_to '/'
 			else

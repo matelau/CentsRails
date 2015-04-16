@@ -301,11 +301,14 @@ class Api::V2::UsersController < ApplicationController
 		# Try to authenticate the user and finish.
 		if user && user.authenticate(params[:password])
 			result[:id] = user.id
+
+			# If the user doesn't have a key, give 'em one.
 			unless user.api_key.present?
 				user.api_key = SecureRandom.urlsafe_base64(24)
 				user.save
 			end
 			result[:api_key] = user.api_key
+			
 			return render json: result, status: 200
 		else
 			result[:errors] = 'authentication failed'
