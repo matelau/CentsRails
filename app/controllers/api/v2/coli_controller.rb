@@ -131,7 +131,7 @@ private
 
 		# Order the locations.
 		locations = Array.new
-		if l[0][:order] and params[:locations][1][:order]
+		if l[0][:order] and l[1][:order]
 			l.each do |location|
 				if location[:order] == 1
 					locations << location
