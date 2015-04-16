@@ -46,9 +46,10 @@ city = []
 state = {}
 #conflicts right now between Louisiana(LA) and Los Angeles(LA) and Indiana(IN) and the word 'in'
 commands = {"compare":"compare","vs.":"compare","vs":"compare","get":"get","find":"get","difference between":"compare"}
-common_abbrs = {"sf":"san francisco, california","nyc":"new york, new york","slc":"salt lake city, utah","la":"los angeles, california"}
-supers = {"best":"","worst":"","cheapest":"","expensive":"","priciest":""}
-datasets = {"schools":"school","universities":"university","cities":"city","majors":"degree","degrees":"degrees"}
+common_abbrs = {"sf":"san francisco, california","nyc":"new york, new york","slc":"salt lake city, utah","la":"los angeles, california","ft.":"fort","ft":"fort","mt.":"mount","mt":"mount"}
+supers = {"best":"","worst":"","cheapest":"","expensive":"","priciest":"","random":""}
+levels = ["associate","bachelor","master","doctorate","certificate"]
+datasets = {"occupation":"career","career":"career","job":"career","school":"school","universities":"school","city":"city","town":"city","cities":"city","major":"degree","degree":"degree"}
 
 states = open("states.csv", "rU")
 
@@ -62,16 +63,8 @@ for line in open("universities.csv"):
 for line in csv.reader(states):
 	state[line[0].lower()] = line[1].lower()
 
-mpac = {
-	"operation":"get",
-	"tables":[
-		"majors"
-	]
-}
-
-mpayload = json.dumps(mpac)
-murl = "https://trycents.com/api/v1/record_names/"
-r = requests.Request("POST",murl,headers={'Content-Type':'application/json','Accept':'application/json'},data=mpayload)
+murl = "https://trycents.com/api/v2/degrees?only_level_names=false"
+r = requests.Request("GET",murl,headers={'Accept':'application/json'})
 mprep = r.prepare()
 ms = requests.Session()
 ms.verify = False
@@ -95,6 +88,15 @@ cs.verify = False
 cresp = cs.send(cprep)
 
 cities = json.loads(cresp.text)
+
+murl = "https://trycents.com/api/v2/careers"
+r = requests.Request("GET",murl,headers={'Accept':'application/json'})
+cprep = r.prepare()
+cs = requests.Session()
+cs.verify = False
+cresp = cs.send(cprep)
+
+cars = json.loads(cresp.text)
 
 # for c in cities:
 # 	cabbr = ""
@@ -148,9 +150,20 @@ def query(query):
 	for abbr, c in common_abbrs.iteritems():
 		if re.search(r"\b" + abbr + r"\b", query):
 			query = re.sub(r"\b" + abbr + r"\b", c, query)
+	lmatch = []
+	for l in levels:
+		if l in query:
+			lmatch.append(l)
 	for m in majs:
 		mname = m.split("(")[0].strip()
 		mlev = m.split("(")[1].replace(")","").strip()
+		stay = True
+		if len(lmatch) > 0:
+			for l in lmatch:
+				if l in mlev.lower():
+					stay = False
+			if stay:
+				continue
 		if " " + mname.lower() + " " in query:
 			majors.append({"name":mname,"level":mlev})
 			maj_names.append(m)
@@ -166,6 +179,9 @@ def query(query):
 		if cname in query:
 			if c not in locations:
 				locations.append(c)
+	for c in cars:
+		if(c.lower() in query):
+			careers.append(c)
 	#tokens = nltk.word_tokenize(query)
 	for s in commands:
 		if s in query:
@@ -205,7 +221,7 @@ def query(query):
 	if command == "" and len(majors) > 1:
 		command = "compare"
 
-	if len(schools) == 0 and len(locations) == 0 and len(majors) == 0:
+	if len(schools) == 0 and len(locations) == 0 and len(majors) == 0 and len(careers) == 0:
 		package = {
 			"operation":"undefined",
 			"query":sent_query
@@ -221,7 +237,7 @@ def query(query):
 		for s in schools:
 			package["schools"].append({"name":s})
 		#url = "https://%s/api/v1/schools/" % (ip)
-		url = "https://trycents.com/api/v1/schools/"
+		url = "https://trycents.com/api/v2/schools/compare"
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
 		prep = r.prepare()
@@ -253,12 +269,12 @@ def query(query):
 		package = {
 			"operation":command,
 			"query":query,
-			"majors":[]
+			"degrees":[]
 		}
 		for m in majors:
-			package["majors"].append(m)
+			package["degrees"].append(m)
 		#url = "https://%s/api/v1/schools/" % (ip)
-		url = "https://trycents.com/api/v1/majors/"
+		url = "https://trycents.com/api/v2/degrees/compare"
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
 		prep = r.prepare()
@@ -295,7 +311,7 @@ def query(query):
 		for l in locations:
 			package["locations"].append({"city":l[:l.index(",")],"state":l[l.index(", ")+2:]})
 		#url = "https://%s/api/v1/coli/" % (ip)
-		url = "https://trycents.com/api/v1/coli"
+		url = "https://trycents.com/api/v2/cost_of_living/compare"
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
 		prep = r.prepare()
@@ -321,6 +337,45 @@ def query(query):
 		package["query_type"] = "city"
 		resp = json.dumps(package)
 		return resp
+	elif len(careers) >= 1:
+		package = {
+			"operation":command,
+			"query":query,
+			"careers":[]
+		}
+		for c in careers:
+			package["careers"].append({"name": c})
+
+		#url = "https://%s/api/v1/schools/" % (ip)
+		url = "https://trycents.com/api/v2/careers/compare"
+		payload = json.dumps(package)
+		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
+		prep = r.prepare()
+		s = requests.Session()
+		s.verify = False
+		resp = s.send(prep)
+
+		if(resp.status_code == 400):
+			package = {
+				"operation":"undefined",
+				"query":sent_query
+			}
+			resp = json.dumps(package)
+			return resp
+		package = json.loads(resp.text)
+		if(package["operation"] == "undefined"):
+			package = {
+				"operation":"undefined",
+				"query":sent_query
+			}
+			resp = json.dumps(package)
+			return resp
+		for i in range(0, len(careers)):
+			package["career_"+`i+1`+"_name"] = careers[i]
+		package["query"] = sent_query
+		package["query_type"] = "career"
+		resp = json.dumps(package)
+		return resp
 
 @app.route('/data', methods=['POST'])
 def data():
@@ -343,7 +398,7 @@ def data():
 		else:
 			package['operation'] = "compare"
 
-		url = "https://trycents.com/api/v1/coli/"
+		url = "https://trycents.com/api/v2/cost_of_living/compare"
 
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
@@ -376,7 +431,7 @@ def data():
 		else:
 			package['operation'] = "compare"
 
-		url = "https://trycents.com/api/v1/schools/"
+		url = "https://trycents.com/api/v2/schools/compare"
 
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
@@ -391,7 +446,7 @@ def data():
 
 	if(query['type'] == 'major'):
 		package = {
-			"majors":[]
+			"degrees":[]
 		}
 
 		if(len(query['option']) == 1):
@@ -402,9 +457,9 @@ def data():
 		for o in query['option']:
 			mname = o.split("(")[0].strip()
 			mlev = o.split("(")[1].replace(")","").strip()
-			package["majors"].append({"name":mname,"level":mlev})
+			package["degrees"].append({"name":mname,"level":mlev})
 
-		url = "https://trycents.com/api/v1/majors/"
+		url = "https://trycents.com/api/v2/degrees/compare"
 
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
@@ -429,9 +484,9 @@ def data():
 			package['operation'] = "compare"
 
 		for o in query['option']:
-			package["careers"].append(o)
+			package["careers"].append({"name":o})
 
-		url = "https://trycents.com/api/v1/careers/"
+		url = "https://trycents.com/api/v2/careers/compare"
 
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)

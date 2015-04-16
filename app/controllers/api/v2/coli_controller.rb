@@ -41,8 +41,44 @@ class Api::V2::ColiController < ApplicationController
 
 		# Return the record names as a JSON object.
 		result.sort!
+
 		return render json: result, status: 200
   end
+
+  def show_best
+		col = Coli.order(
+			"CASE WHEN cost_of_living >= 0 THEN income_per_capita/(cost_of_living + 1) ELSE ABS(cost_of_living + 1)*income_per_capita END DESC"
+			).first
+		cols = [{city: col[:city], state: col[:state]}]
+		internal_show_two(cols, "get")
+	end
+
+	def show_worst
+		col = Coli.order(
+			"CASE WHEN cost_of_living >= 0 THEN income_per_capita/(cost_of_living + 1) ELSE ABS(cost_of_living + 1)*income_per_capita END"
+			).first
+		cols = [{city: col[:city], state: col[:state]}]
+		internal_show_two(cols, "get")
+	end
+
+	def show_cheapest
+		col = Coli.order('cost_of_living').first
+		cols = [{city: col[:city], state: col[:state]}]
+		internal_show_two(cols, "get")
+	end
+
+	def show_priciest
+		col = Coli.order('cost_of_living DESC').first
+		cols = [{city: col[:city], state: col[:state]}]
+		internal_show_two(cols, "get")
+	end
+
+	def show_random
+		ids = Coli.select(:id)
+		col = Coli.find( ids[Random.rand(ids.length)] )
+		cols = [{city: col[:city], state: col[:state]}]
+		internal_show_two(cols, "get")
+	end
 
 	# Get cost of living data by state.
 	def show_state
@@ -73,29 +109,42 @@ class Api::V2::ColiController < ApplicationController
 
 	# Get cost of living data for two locations.
 	def show_two
+		if params[:operation].present?
+			operation = params[:operation]
+		else
+			operation = "undefined"
+		end
+
+		locations = params[:locations]
+		internal_show_two(locations, operation)
+	end
+
+private
+
+	def internal_show_two(l, o)
 		result = Hash.new
 
 		# Check for the required fields, and return an appropriate message if
 		# they are not present.
-		unless params[:locations].present?
+		unless l.present?
 			return render json: 'No objects were in the locations array.', status: 400
 		end
 
 		# Order the locations.
 		locations = Array.new
-		if params[:locations][0][:order] and params[:locations][1][:order]
-			params[:locations].each do |location|
+		if l[0][:order] and l[1][:order]
+			l.each do |location|
 				if location[:order] == 1
 					locations << location
 				end
 			end
-			params[:locations].each do |location|
+			l.each do |location|
 				if location[:order] == 2
 					locations << location
 				end
 			end
 		else
-			locations = params[:locations]
+			locations = l
 		end
 
 		# Create a string of the form '(city = c1 AND state = s1) OR
@@ -153,6 +202,8 @@ class Api::V2::ColiController < ApplicationController
 		used_state_data_for = Array.new
 		no_data_for = Array.new
 
+		loc = {}
+
 		# Iterate over each location, keeping track of the location's index.
 		# (The index is needed because that's how the view tracks locations.)
 		index = 1
@@ -165,11 +216,11 @@ class Api::V2::ColiController < ApplicationController
 				if record[:city]  == location[:city]  and 
 					record[:state] == location[:state] then
 					match = true
-					result["location_#{index}"] = extract_coli_data(location, index, record)
+					loc["location_#{index}"] = extract_coli_data(location, index, record)
 					if location[:city].present?
-						result["location_#{index}"][:name] = "#{location[:city]}, #{location[:state]}"
+						loc["location_#{index}"]["name"] = "#{location[:city]}, #{location[:state]}"
 					else
-						result["location_#{index}"][:name] = "#{location[:state]}"
+						loc["location_#{index}"]["name"] = "#{location[:state]}"
 					end
 					break
 				end
@@ -181,18 +232,18 @@ class Api::V2::ColiController < ApplicationController
 					if record[:city]  == nil and 
 						 record[:state] == location[:state] then
 						state_match = true
-						result["location_#{index}"] = extract_coli_data(location, index, record)
-						result["location_#{index}"][:name] = location[:state]
+						loc["location_#{index}"] = extract_coli_data(location, index, record)
+						loc["location_#{index}"]["name"] = location[:state]
 						break
 					end
 				end
 			end
 
 			# Add the weather data for this location.
-			weather_data = extract_weather_data(location, records, result)
-			if result["location_#{index}"]
-				result["location_#{index}"]["weather_#{index}"] = weather_data[:weather_high_stats]
-				result["location_#{index}"]["weatherlow_#{index}"] = weather_data[:weather_low_stats]
+			weather_data = extract_weather_data(location, records, loc)
+			if loc["location_#{index}"]
+				loc["location_#{index}"]["weather"] = weather_data[:weather_high_stats]
+				loc["location_#{index}"]["weatherlow"] = weather_data[:weather_low_stats]
 			end
 
 			# Keep track of which states we substituted state data for.
@@ -206,6 +257,12 @@ class Api::V2::ColiController < ApplicationController
 
 			# Increment for next object.
 			index += 1
+		end
+
+		result["elements"] = []
+
+		loc.each do |k,v|
+			result["elements"] << v
 		end
 
 		labor_avg = Array.new
@@ -236,13 +293,11 @@ class Api::V2::ColiController < ApplicationController
 			result[:used_state_data_for] = used_state_data_for
 		end
 
-		result[:operation] = params[:operation]
+		result[:operation] = o
 
 		# Return the result, formatted as JSON, and with a 200 OK HTTP code.
 		render json: result, status: 200
 	end
-
-	private
 
 	def extract_coli_data(location, i, record)
 		# Store each locations's data in result.
@@ -266,7 +321,7 @@ class Api::V2::ColiController < ApplicationController
 		coli_stats << coli_stats.compact.max
 
 		# Add the data to the result.
-		data["cli_#{i}"] = coli_stats
+		data["cli"] = coli_stats
 
 
 		##### -------------------- LABOR --------------------- #####
@@ -286,7 +341,7 @@ class Api::V2::ColiController < ApplicationController
 		labor_stats << labor_stats.compact.min
 		labor_stats << labor_stats.compact.max
 
-		data["labor_#{i}"] = labor_stats
+		data["labor"] = labor_stats
 
 		
 		##### -------------------- TAXES --------------------- #####
@@ -305,7 +360,7 @@ class Api::V2::ColiController < ApplicationController
 		tax_stats << tax_stats.compact.min
 		tax_stats << tax_stats.compact.max
 
-		data["taxes_#{i}"] = tax_stats
+		data["taxes"] = tax_stats
 
 		return data
 	end

@@ -19,6 +19,10 @@ files.each do |f|
 	end
 end
 
+puts salaries["15-1132"]
+puts salaries["15-1031"]
+
+=begin
 cars = Career.all
 
 cars.each do |c|
@@ -32,3 +36,4 @@ cars.each do |c|
 		c.update("#{n}" => v)
 	end
 end
+=end

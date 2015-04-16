@@ -171,6 +171,15 @@ function major_api_request(query) {
     	if (xmlHttp.readyState === 4) { 
       		if (xmlHttp.status === 200) {
       			data = jQuery.parseJSON(xmlHttp.responseText);
+
+      			for(var i = 0; i < data["elements"].length; i++) {
+  					Object.keys(data["elements"][i]).forEach(function(key) {
+  						var idx = i+1;
+		    			var nKey = key + "_" + idx;
+		    			data[nKey] = data["elements"][i][key];
+					});
+  				}
+  				delete data["elements"];
       			//make api request here with type included
 				localStorage.setItem("query_type", type);
 				localStorage.setItem("data_store",JSON.stringify(data));
@@ -198,12 +207,12 @@ function major_api_request(query) {
 		  	 		document.getElementById("search_2_button").value = "HIDE";
 		  	 		$("#search_2_button").removeAttr("disabled");
 		  	 		//need to flip data to _2 arrays
-					data["major_2"] = $.extend(true, [], data["major_1"]);
-					data["major_1"] = null;
+					data["degree_2"] = $.extend(true, [], data["degree_1"]);
+					data["degree_1"] = null;
 					data["jobs_2"] = $.extend(true, [], data["jobs_1"]);
 					data["jobs_1"] = null;
-					data["major_2_name"] = data["major_1_name"];
-					data["major_1_name"] = null;
+					data["name_2"] = data["name_1"];
+					data["name_1"] = null;
 
 	  			}
 	  			else if (sent1 && !sent2)
@@ -261,27 +270,37 @@ function sketchProc(processing) {
 		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));
   		//localStorage.removeItem("data_store");
 
-  		if (!data || (!data["major_1"] && !data["major_2"]))
+  		if (!data || (!data["degree_1"] && !data["degree_2"]))
   		{
   			data = new Array();
 			//salary, major recommendation, major satisfaction, cents major rating
-			data["major_1"] = [95000, 89, 77, 4.8];
-			data["major_2"] = [41000, 45, 72, 2.9];
+			data["degree_1"] = [95000, 89, 77, 4.8];
+			data["degree_2"] = [41000, 45, 72, 2.9];
 			data["jobs_1"] = ["Software Developer", 97500, "Database Administrator", 91000, "System Analyst", 89000];
 			data["jobs_2"] = ["Teacher", 43500, "Disc Jockey", 37000, "Performance Artist", 36500];
 
-			data["major_1_name"] = "Computer Science";
-			data["major_2_name"] = "Music";
+			data["name_1"] = "Computer Science";
+			data["name_2"] = "Music";
 		}
-		if (data["jobs_1"].length == 0 && data["jobs_2"].length == 0)
+		if (data["jobs_1"].length == 0 && !data["jobs_2"])
+		{
+			//no top jobs for either major, disable that tab
+			$("#job_tab").hide();
+		}
+		if (data["jobs_2"].length == 0 && !data["jobs_1"])
+		{
+			//no top jobs for either major, disable that tab
+			$("#job_tab").hide();
+		}
+		else if (data["jobs_1"].length == 0 && data["jobs_2"].length == 0)
 		{
 			//no top jobs for either major, disable that tab
 			$("#job_tab").hide();
 		}
 		
-		document.getElementById("search_1_name").value = data["major_1_name"];
+		document.getElementById("search_1_name").value = data["name_1"];
 
-		if (!data["major_2"])
+		if (!data["degree_2"])
   		{
   			hide_2 = true;
   			document.getElementById("search_2_button").value = "SHOW";
@@ -289,7 +308,7 @@ function sketchProc(processing) {
   		}
   		else
   		{
-  			document.getElementById("search_2_name").value = data["major_2_name"];
+  			document.getElementById("search_2_name").value = data["name_2"];
   		}
   		old1 = document.getElementById("search_1_name").value;
 		old2 = document.getElementById("search_2_name").value;
@@ -334,19 +353,19 @@ function sketchProc(processing) {
 				offset = 90;
 			processing.textFont(font, 30);
 			processing.fill(main);
-			if (data["major_1"][0])
-				processing.text("$" + (data["major_1"][0]).toLocaleString(), 360+offset, 70);
+			if (data["degree_1"][0])
+				processing.text("$" + (data["degree_1"][0]).toLocaleString(), 360+offset, 70);
 			else
 				processing.text("N/A", 360+offset, 70);
-			if (data["major_1"][1])
-				processing.text(data["major_1"][1], 360+offset, 140);
+			if (data["degree_1"][1])
+				processing.text(data["degree_1"][1], 360+offset, 140);
 			else
 				processing.text("N/A", 360+offset, 140);
-			if (data["major_1"][2])
-				processing.text(data["major_1"][2], 360+offset, 220);
+			if (data["degree_1"][2])
+				processing.text(data["degree_1"][2], 360+offset, 220);
 			else
 				processing.text("N/A", 360+offset, 220);
-			processing.text((data["major_1"][3]).toFixed(1), 360+offset, 300);
+			processing.text((data["degree_1"][3]).toFixed(1), 360+offset, 300);
 
 
 			processing.textFont(font, 12);
@@ -360,19 +379,19 @@ function sketchProc(processing) {
 				offset = -90;
 			processing.textFont(font, 30);
 			processing.fill(gray);
-			if (data["major_2"][0])
-				processing.text("$" + (data["major_2"][0]).toLocaleString(), 540+offset, 70);
+			if (data["degree_2"][0])
+				processing.text("$" + (data["degree_2"][0]).toLocaleString(), 540+offset, 70);
 			else
 				processing.text("N/A", 540+offset, 70);
-			if (data["major_2"][1])
-				processing.text(data["major_2"][1], 540+offset, 140);
+			if (data["degree_2"][1])
+				processing.text(data["degree_2"][1], 540+offset, 140);
 			else
 				processing.text("N/A", 540+offset, 140);
-			if (data["major_2"][2])
-				processing.text(data["major_2"][2], 540+offset, 220);
+			if (data["degree_2"][2])
+				processing.text(data["degree_2"][2], 540+offset, 220);
 			else
 				processing.text("N/A", 540+offset, 220);
-			processing.text((data["major_2"][3]).toFixed(1), 540+offset, 300);
+			processing.text((data["degree_2"][3]).toFixed(1), 540+offset, 300);
 
 			processing.textFont(font, 12);
 			processing.text("OUT OF 100", 540+offset, 155);
@@ -407,7 +426,7 @@ function sketchProc(processing) {
 		}
 		else
 		{
-			if (data["name_2"])
+			if (data["job_2"])
 			{
 				min = processing.min(data["jobs_1"][1], data["jobs_1"][3], data["jobs_1"][5], data["jobs_2"][1], data["jobs_2"][3], data["jobs_2"][5]);
 				max = processing.max(data["jobs_1"][1], data["jobs_1"][3], data["jobs_1"][5], data["jobs_2"][1], data["jobs_2"][3], data["jobs_2"][5]);
@@ -573,12 +592,12 @@ function update_tab(name) {
 		processingInstance.noLoop();
 		$("#main_viz").fadeTo(500, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(700, 1);});
 		active_tab = name;
-		if(data["major_1"])
+		if(data["degree_1"])
 		{
 			hide_1 = false;
 			document.getElementById("search_1_button").value = "HIDE";
 		}
-		if(data["major_2"])
+		if(data["degree_2"])
 		{
 			hide_2 = false;
 			document.getElementById("search_2_button").value = "HIDE";

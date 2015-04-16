@@ -83,6 +83,10 @@ class Api::V2::UsersController < ApplicationController
 
 	# Record that a user made a query.
 	def create_query
+		unless api_key_is_valid?
+			return render json: 'Invalid API key.', status: 401
+		end
+
 		query = Query.new
 		query.user_id = params[:id]
 		query.url = params[:url]
@@ -97,6 +101,10 @@ class Api::V2::UsersController < ApplicationController
 
 	# Get profile data.
 	def show
+		unless api_key_is_valid?
+			return render json: 'Invalid API key.', status: 401
+		end
+
 		result = Hash.new
 
 		# Search for the user.
@@ -114,6 +122,9 @@ class Api::V2::UsersController < ApplicationController
 
 	# Show which sections a user has completed.
 	def show_completed
+		unless api_key_is_valid?
+			return render json: 'Invalid API key.', status: 401
+		end
 		result = Hash.new
 
 		if User.exists? params[:id]
@@ -133,7 +144,10 @@ class Api::V2::UsersController < ApplicationController
 
 	# Get queries for a user.
 	def show_query
-		#records = Query.where(user_id: params[:id]).order(created_at: :asc).limit(@query_count)
+		unless api_key_is_valid?
+			return render json: 'Invalid API key.', status: 401
+		end
+
 		records = Query.find_by_sql [
 			'SELECT url
 			FROM queries
@@ -153,6 +167,10 @@ class Api::V2::UsersController < ApplicationController
 
 	# Get all the user's ratings.
 	def show_ratings
+		unless api_key_is_valid?
+			return render json: 'Invalid API key.', status: 401
+		end
+
 		result = Hash.new
 
 		# Search for the user.
@@ -216,10 +234,14 @@ class Api::V2::UsersController < ApplicationController
 
 	# Record that a user has completed a section.
 	def create_completed
+		unless api_key_is_valid?
+			return render json: 'Invalid API key.', status: 401
+		end
+
 		# Check that the section isn't already completed.
 		old_section = Completed.where(user_id: params[:id]).where(section: params[:section])
 		if old_section.present?
-			return render json: 'Section already completed.', status: 400
+			return render json: 'Section already completed.', status: 200
 		else
 			new_section = Completed.new
 			new_section.user_id = params[:id]
@@ -235,18 +257,31 @@ class Api::V2::UsersController < ApplicationController
 
 	# Update some of a user's fields.
 	def update
+		unless api_key_is_valid?
+			return render json: 'Invalid API key.', status: 401
+		end
+
 		user = User.find(params[:id])
 
+		saved = false
 		if user.present?
 			params[:fields].each do |field|
-				if user.update("#{field[:name]}" => field[:value])
-					return render json: 'Changes saved.', status: 200
-				else
-					return render json: user.errors, status: 500
+				begin
+					if user.update("#{field[:name]}" => field[:value])
+						saved = true
+					else
+						return render json: user.errors, status: 500
+					end
+				rescue ActiveRecord::UnknownAttributeError
+					return render json: "User has no attribute #{field[:name]}.", status: 400
 				end
 			end
 		else
 			return render json: 'User not found.', status: 404
+		end
+
+		if saved
+			return render json: 'Changes saved.', status: 200
 		end
 	end
 

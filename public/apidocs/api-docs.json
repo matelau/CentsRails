@@ -24,6 +24,21 @@
         "operationId":"Api::V2::CareersController#show_two"
       }
     },
+    "/careers/best":{  
+      "get":{  
+        "tags":[  
+          "careers"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the career with highest 2013 salary.",
+        "operationId":"Api::V2::CareersController#show_best"
+      }
+    },
     "/careers/compare":{  
       "post":{  
         "tags":[  
@@ -92,6 +107,9 @@
           "200":{  
             "description":"Rating was saved."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"Career does not exist."
           }
@@ -99,7 +117,14 @@
         "description":"This will insert a new rating if none is present, or update the current rating if there is one.",
         "summary":"Allows a user to rate a career.",
         "operationId":"Api::V2::CareersController#rate",
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
           {  
             "in":"path",
             "description":"a career name",
@@ -109,12 +134,12 @@
           },
           {  
             "in":"path",
-            "description":"an integer between 0 and 5 inclusive",
+            "description":"an integer between 1 and 5 inclusive",
             "name":"rating",
             "required":true,
             "type":"integer",
             "enum":[
-              "0", "1", "2", "3", "4", "5"
+              "1", "2", "3", "4", "5"
             ]
           },
           {  
@@ -127,6 +152,36 @@
             }
           }
         ]
+      }
+    },
+    "/careers/random":{  
+      "get":{  
+        "tags":[  
+          "careers"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns a random career.",
+        "operationId":"Api::V2::CareersController#show_random"
+      }
+    },
+    "/careers/worst":{  
+      "get":{  
+        "tags":[  
+          "careers"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the career with lowest 2013 salary.",
+        "operationId":"Api::V2::CareersController#show_worst"
       }
     },
     "/cost_of_living":{  
@@ -163,6 +218,36 @@
         ]
       }
     },
+    "/cost_of_living/best":{  
+      "get":{  
+        "tags":[  
+          "cost of living"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the city with highest cost-of-living adjusted salary.",
+        "operationId":"Api::V2::ColiController#show_best"
+      }
+    },
+    "/cost_of_living/cheapest":{  
+      "get":{  
+        "tags":[  
+          "cost of living"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the city with lowest cost of living.",
+        "operationId":"Api::V2::ColiController#show_cheapest"
+      }
+    },
     "/cost_of_living/compare":{  
       "post":{  
         "tags":[  
@@ -193,6 +278,36 @@
             }
           }
         ]
+      }
+    },
+    "/cost_of_living/priciest":{  
+      "get":{  
+        "tags":[  
+          "cost of living"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the city with highest cost of living.",
+        "operationId":"Api::V2::ColiController#show_priciest"
+      }
+    },
+    "/cost_of_living/random":{  
+      "get":{  
+        "tags":[  
+          "cost of living"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns cost of living data for a random city or state.",
+        "operationId":"Api::V2::ColiController#show_random"
       }
     },
     "/cost_of_living/{state}":{  
@@ -256,6 +371,21 @@
         ]
       }
     },
+    "/cost_of_living/worst":{  
+      "get":{  
+        "tags":[  
+          "cost of living"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the city with lowest cost-of-living adjusted salary.",
+        "operationId":"Api::V2::ColiController#show_cheapest"
+      }
+    },
     "/degrees":{  
       "get":{  
         "tags":[  
@@ -287,6 +417,21 @@
             "type":"string"
           }
         ]
+      }
+    },
+    "/degrees/best":{  
+      "get":{  
+        "tags":[  
+          "degrees"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the degree with highest salary.",
+        "operationId":"Api::V2::DegreesController#show_best"
       }
     },
     "/degrees/compare":{  
@@ -364,6 +509,9 @@
           "200":{  
             "description":"Rating was added."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"Degree does not exist."
           }
@@ -371,7 +519,14 @@
         "description":"This route will add a rating if it doesn't exist, or update the rating if it does.",
         "summary":"Allows a user to rate a degree.",
         "operationId":"Api::V2::DegreesController#rate",
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
           {  
             "in":"path",
             "description":"bachelor, masters, etc.",
@@ -388,12 +543,11 @@
           },
           {  
             "in":"path",
-            "description":"an integer between 0 and 5 inclusive",
+            "description":"an integer between 1 and 5 inclusive",
             "name":"rating",
             "required":true,
             "type":"integer",
             "enum":[  
-              "0",
               "1",
               "2",
               "3",
@@ -440,6 +594,36 @@
         ]
       }
     },
+    "/degrees/random":{  
+      "get":{  
+        "tags":[  
+          "degrees"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns a random degree.",
+        "operationId":"Api::V2::CareersController#show_degree"
+      }
+    },
+    "/degrees/worst":{  
+      "get":{  
+        "tags":[  
+          "degrees"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the degree with highest salary.",
+        "operationId":"Api::V2::DegreesController#show_worst"
+      }
+    },
     "/schools":{  
       "get":{  
         "tags":[  
@@ -471,6 +655,36 @@
             "type":"string"
           }
         ]
+      }
+    },
+    "/schools/best":{  
+      "get":{  
+        "tags":[  
+          "schools"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the school with highest rank.",
+        "operationId":"Api::V2::SchoolsController#show_best"
+      }
+    },
+    "/schools/cheapest":{  
+      "get":{  
+        "tags":[  
+          "schools"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the school with lowest nonresident tuition.",
+        "operationId":"Api::V2::SchoolsController#show_cheapest"
       }
     },
     "/schools/compare":{  
@@ -569,6 +783,9 @@
           "200":{  
             "description":"Records were found."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"School does not exist."
           }
@@ -578,6 +795,13 @@
         "operationId":"Api::V2::SchoolsController#rate",
         "parameters":[  
           {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          }, 
+          {  
             "in":"path",
             "description":"a school name",
             "name":"name",
@@ -586,12 +810,12 @@
           },
           {  
             "in":"path",
-            "description":"an integer between 0 and 5 inclusive",
+            "description":"an integer between 1 and 5 inclusive",
             "name":"rating",
             "required":true,
             "type":"integer",
             "enum":[
-              "0", "1", "2", "3", "4", "5"
+              "1", "2", "3", "4", "5"
             ]
           },
           {  
@@ -604,6 +828,51 @@
             }
           }
         ]
+      }
+    },
+    "/schools/priciest":{  
+      "get":{  
+        "tags":[  
+          "schools"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the school with highest nonresident tuition.",
+        "operationId":"Api::V2::SchoolsController#show_priciest"
+      }
+    },
+    "/schools/random":{  
+      "get":{  
+        "tags":[  
+          "schools"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns a random school.",
+        "operationId":"Api::V2::SchoolsController#show_random"
+      }
+    },
+    "/schools/worst":{  
+      "get":{  
+        "tags":[  
+          "schools"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the school with worst graduation rate.",
+        "operationId":"Api::V2::SchoolsController#show_worst"
       }
     },
     "/users":{  
@@ -647,6 +916,9 @@
           "200":{  
             "description":"There is a user with that ID."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"There is no user with that ID."
           }
@@ -654,7 +926,14 @@
         "description":"",
         "summary":"Gets profile data for a user.",
         "operationId":"Api::V2::UsersController#show",
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },  
           {  
             "in":"path",
             "description":"a user ID",
@@ -672,6 +951,12 @@
           "200":{  
             "description":"Changes saved."
           },
+          "400":{
+          	"description": "User doesn't have one or more of the fields."
+          },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"There is no user with that ID."
           },
@@ -682,7 +967,14 @@
         "description":"Update any of a user's fields by passing in a list of objects with names a values. Although the value type is listed here as string, the value type must match the field type.",
         "summary":"Updates a user's fields.",
         "operationId":"Api::V2::UsersController#update",
-        "parameters":[  
+        "parameters":[ 
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },  
           {  
             "in":"path",
             "description":"a user ID",
@@ -711,11 +1003,21 @@
           "200":{  
             "description":"The user was found."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"No such user was found."
           }
         },
         "parameters":[  
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          }, 
           {  
             "in":"path",
             "description":"a user ID",
@@ -736,6 +1038,9 @@
           "200":{  
             "description":"User was found."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"No such user was found."
           }
@@ -743,7 +1048,14 @@
         "description":"",
         "summary":"Record that a user has completed a section.",
         "operationId":"Api::V2::UserController#create_completed",
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
           {  
             "in":"path",
             "description":"a user ID",
@@ -772,11 +1084,21 @@
           "200":{  
             "description":"The user was found."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"No such user was found."
           }
         },
-        "parameters":[  
+        "parameters":[ 
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },  
           {  
             "in":"path",
             "description":"a user ID",
@@ -797,6 +1119,9 @@
           "200":{  
             "description":"User was found."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"No such user was found."
           }
@@ -804,7 +1129,14 @@
         "description":"",
         "summary":"Record that a user has made a query.",
         "operationId":"Api::V2::UserController#create_query",
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
           {  
             "in":"path",
             "description":"a user ID",
@@ -833,11 +1165,21 @@
           "200":{  
             "description":"The user was found."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"No such user was found."
           }
         },
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
           {  
             "in":"path",
             "description":"a user ID",
@@ -860,6 +1202,9 @@
           "200":{  
             "description":"User was found."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"No such user ID was found."
           }
@@ -867,7 +1212,14 @@
         "description":"",
         "summary":"Loads all spending breakdown data for a user.",
         "operationId":"Api::V2::SpendingBreakdownController#show",
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
           {  
             "in":"path",
             "description":"a user ID",
@@ -890,6 +1242,9 @@
           "400":{  
             "description":"Each field object must have a name and value."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"No such user was found."
           },
@@ -900,7 +1255,14 @@
         "description":"Use this route to save a few individual spending breakdown items.",
         "summary":"Saves new spending breakdown data.",
         "operationId":"Api::V2::SpendingBreakdownController#update",
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
           {  
             "in":"path",
             "description":"a user ID",
@@ -942,6 +1304,9 @@
           "400":{  
             "description":"Each field object must have a name and value."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"No such user was found."
           },
@@ -952,7 +1317,14 @@
         "description":"Use this route to replace all spending breakdown data for a category with whatever you send. This route could be used to reset to a default.",
         "summary":"Updates all spending breakdown data by category.",
         "operationId":"Api::V2::SpendingBreakdownController#update_all",
-        "parameters":[  
+        "parameters":[ 
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },  
           {  
             "in":"path",
             "description":"a user ID",
@@ -991,6 +1363,9 @@
           "200":{  
             "description":"Records were found."
           },
+          "401":{  
+            "description":"Invalid API key."
+          },
           "404":{  
             "description":"No records were found."
           }
@@ -999,6 +1374,13 @@
         "summary":"Gets spending breakdown data by category.",
         "operationId":"Api::V2::SpendingBreakdownController#show_category",
         "parameters":[  
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          }, 
           {  
             "in":"path",
             "description":"a user ID",
@@ -1029,12 +1411,22 @@
         "responses":{  
           "200":{  
             "description":"Data was deleted."
+          },
+          "401":{  
+            "description":"Invalid API key."
           }
         },
         "description":"",
         "summary":"Deletes a single spending breakdown item.",
         "operationId":"Api::V2::SpendingBreakdownController#destroy",
-        "parameters":[  
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
           {  
             "in":"path",
             "description":"a user ID",
@@ -1184,8 +1576,8 @@
         "order":{  
           "type":"integer",
           "enum":[  
-            "1",
-            "2"
+            1,
+            2
           ]
         }
       }
@@ -1222,8 +1614,8 @@
         "order":{  
           "type":"integer",
           "enum":[  
-            "1",
-            "2"
+            1,
+            2
           ]
         }
       }
@@ -1360,8 +1752,8 @@
         "order":{  
           "type":"integer",
           "enum":[  
-            "1",
-            "2"
+            1,
+            2
           ]
         }
       }

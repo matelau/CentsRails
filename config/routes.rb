@@ -82,6 +82,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+    	post 'careers' => 'careers#show'
       post 'coli' => 'coli#show'
       post 'register' => 'register#create'
       post 'login' => 'login#create'
@@ -98,19 +99,32 @@ Rails.application.routes.draw do
     namespace :v2 do
     	# Cost of living.
     	get 'cost_of_living' => 'coli#index'										# Get coli names for autocomplete.
+    	get 'cost_of_living/best' => 'coli#show_best'
+      get 'cost_of_living/worst' => 'coli#show_worst'
+      get 'cost_of_living/cheapest' => 'coli#show_cheapest'
+      get 'cost_of_living/priciest' => 'coli#show_priciest'
+      get 'cost_of_living/random' => 'coli#show_random'
     	get 'cost_of_living/:state' => 'coli#show_state'				# Get cost of living data by state.
     	get 'cost_of_living/:state/:city' => 'coli#show_city'		# Get cost of living data by state and city.
     	post 'cost_of_living/compare' => 'coli#show_two'				# Get cost of living data for comparison.
 
       # Schools.
       get 'schools' => 'schools#index'												# Get school names for autocomplete.
+      get 'schools/best' => 'schools#show_best'
+      get 'schools/worst' => 'schools#show_worst'
+      get 'schools/cheapest' => 'schools#show_cheapest'
+      get 'schools/priciest' => 'schools#show_priciest'
+      get 'schools/random' => 'schools#show_random'
       get 'schools/:name' => 'schools#show'										# Get school by name.
       get 'schools/location/:location' => 'schools#show_location'	# Get schools by location.
-      post 'schools/compare' => 'schools#show_two'						# Get school data for comparison.
+      post 'schools/compare' => 'schools#show_two', as: 'schools_compare'
       put 'schools/:name/:rating' => 'schools#rate'
 
       # Degrees.
       get 'degrees' => 'degrees#index'												# Get degree names for autocomplete.
+      get 'degrees/best' => 'degrees#show_best'
+      get 'degrees/worst' => 'degrees#show_worst'
+      get 'degrees/random' => 'degrees#show_random'
       get 'degrees/:name' => 'degrees#show'										# Get degree by name.
       get 'degrees/:level/:name' => 'degrees#show_level_name'	# Get degree by level and name.
       post 'degrees/compare' => 'degrees#show_two'						# Get degree data for comparison.
@@ -118,6 +132,9 @@ Rails.application.routes.draw do
 
       # Careers.
       get 'careers' => 'careers#index'												# Get career names for autocomplete.
+      get 'careers/best' => 'careers#show_best'
+      get 'careers/worst' => 'careers#show_worst'
+      get 'careers/random' => 'careers#show_random'
       get 'careers/:name' => 'careers#show'										# Get career by name.
       post 'careers/compare' => 'careers#show_two'						# Get career data for comparison.
       put 'careers/:name/:rating' => 'careers#rate'
