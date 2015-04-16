@@ -40,7 +40,7 @@ if (path[1] == "wizard" && path[2] != "start" && path[2] != "education")
 else if (path[1] == "search" && path[2] == "results")
 {
 	var query_type = localStorage.getItem("query_type");
-
+	$.post("/api/v2/users/" + user_id + "/completed", {"section": "Use Main Search"});
 	getPartial(query_type);
 }
 
@@ -80,11 +80,11 @@ function api_request(query) {
 					window.location = "/info/examples/";
 				}
 				else {
+					$.post("/api/v2/users/" + user_id + "/query", {"url": query});
     				localStorage.removeItem("data_store");
 					localStorage.setItem("data_store", JSON.stringify(data));
 					localStorage.setItem("query_type", data["query_type"]);
 					//ok query, save to user
-					$.post("/api/v2/users/" + user_id + "/query", {"url": query});
 					window.location = "/search/results/";
 				}
       		}

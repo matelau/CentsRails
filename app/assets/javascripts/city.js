@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	$.post("/api/v2/users/" + user_id + "/completed", {"section": "View City Comparison"});
 	$.post("/api/v1/record_names", {operation: 'get', tables: ['coli']}, function(response) { 
 		auto_cities = response;
 		$( "#search_1_name" ).autocomplete({

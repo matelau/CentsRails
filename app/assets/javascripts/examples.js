@@ -17,7 +17,7 @@ function showSearch(type) {
 };
 
 $(document).ready(function() {
-
+	$.post("/api/v2/users/" + user_id + "/completed", {"section": "Use Examples"});
 	//wait to change bg color until image has loaded
 	//first get color from local storage
 	var bg_color;

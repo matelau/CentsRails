@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	$.post("/api/v2/users/" + user_id + "/completed", {"section": "View Major Comparison"});
 	$.post("/api/v1/record_names", {operation: 'get', tables: ['majors']}, function(response) { 
 		auto_majors = response;
 		$( "#search_1_name" ).autocomplete({

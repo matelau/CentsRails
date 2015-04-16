@@ -1,5 +1,6 @@
 
 $(document).ready(function() {
+	$.post("/api/v2/users/" + user_id + "/completed", {"section": "View Career Comparison"});
 	$.get("/api/v2/careers", function(response) { 
 		auto_careers = response;
 		$( "#search_1_name" ).autocomplete({

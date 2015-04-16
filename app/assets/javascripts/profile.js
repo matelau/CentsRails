@@ -8,41 +8,10 @@ var mods_high = [0, .2, .375, .5, .625, .75, .875, 1];
 //var mods_high = [.125, .25, .375, .5, .625, .75, .875, 1];
 var mods_low = [0, .125, .25, .375, .5, .675, .8];
 
-$(document).ready(function() {
-	canvas = document.getElementById('color_picker');
-	canvas.addEventListener("mousedown", getPosition, false);
-	context = canvas.getContext('2d');
-	imageObj = new Image();
-	primary = true;
-	imageObj.onload = function() {
-	context.drawImage(imageObj, 45, 45);
-	};
-	imageObj.src = '/assets/color wheel.png';
-	//get color from local storage if it exists, set old and new to that stored color
-	if (localStorage.getItem("colors"))
-	{
-		var c_store = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
-		document.getElementById("new_div").style.backgroundColor = c_store["p_hex"];
-		document.getElementById("old_div").style.backgroundColor = c_store["p_hex"];
-		c = c_store["p_rgb"];
-		color = c_store["p_hex"];
-	}
-	else
-	{
-		document.getElementById("new_div").style.backgroundColor = "#884412";
-		document.getElementById("old_div").style.backgroundColor = "#884412";
-		c = [136, 68, 18];
-		color = "#884412";
-	}
-	colorScale();
 
-	//request user data
-	$.get("/api/v2/users/" + user_id, function(response){  
-		$("#email").text("Email:\t\t\t" + response.email);
-		$("#fname").text("First Name:\t\t" + response.first_name);
-		$("#lname").text("Last Name:\t\t" + response.last_name);
-		$("#email_type").text("Email Type:\t\t" + response.email_type);
-	});
+
+
+$(document).ready(function() {
 
 	//request user data
 	$.get("/api/v2/users/" + user_id + "/query", function(response){  
@@ -107,20 +76,59 @@ $(document).ready(function() {
 
 	//user site progress
 	$.get("/api/v2/users/" + user_id + "/completed", function(response){ 
-		//console.log(response);
-		to_do = [];
+		var to_do = [];
 		for (var i=0; i<progress_cats.length; i++)
 		{
 			if (response.indexOf(progress_cats[i]) < 0)
 				to_do[to_do.length] = progress_cats[i];
 		}
-		console.log(progress_cats);
-		console.log(to_do);
-		console.log(response);
-
+		$("#progress-bar").css("background-color", color);
+		$("#progress-bar").css("width", String(100.0*(response.length/progress_cats.length))+ "%");
+		$("#progress-text").text("Completed " + String(response.length) + " out of " + String(progress_cats.length) + " steps.");
+		if (progress_cats.length > response.length)
+			$("#progress-remain").text("To Do:");
+		var a_tags = "";
+		for (var i in to_do)
+			a_tags += "<p class='profile_info'>" + to_do[i] + "</p>";
+		$("#progress_article").append(a_tags);
+		$("#ac-7").attr("onclick", "progressHeight('ac-7','#progress_article'," + to_do.length + ")");
 	});	
 
 
+	canvas = document.getElementById('color_picker');
+	canvas.addEventListener("mousedown", getPosition, false);
+	context = canvas.getContext('2d');
+	imageObj = new Image();
+	primary = true;
+	imageObj.onload = function() {
+	context.drawImage(imageObj, 45, 45);
+	};
+	imageObj.src = '/assets/color wheel.png';
+	//get color from local storage if it exists, set old and new to that stored color
+	if (localStorage.getItem("colors"))
+	{
+		var c_store = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+		document.getElementById("new_div").style.backgroundColor = c_store["p_hex"];
+		document.getElementById("old_div").style.backgroundColor = c_store["p_hex"];
+		c = c_store["p_rgb"];
+		color = c_store["p_hex"];
+	}
+	else
+	{
+		document.getElementById("new_div").style.backgroundColor = "#884412";
+		document.getElementById("old_div").style.backgroundColor = "#884412";
+		c = [136, 68, 18];
+		color = "#884412";
+	}
+	colorScale();
+
+	//request user data
+	$.get("/api/v2/users/" + user_id, function(response){  
+		$("#email").text("Email:\t\t\t" + response.email);
+		$("#fname").text("First Name:\t\t" + response.first_name);
+		$("#lname").text("Last Name:\t\t" + response.last_name);
+		$("#email_type").text("Email Type:\t\t" + response.email_type);
+	});
 });
 
 function setRatings(ratings) {
@@ -217,6 +225,24 @@ function setHeight(id1, id2, len) {
 			$(id2).height(Math.min(310, 30 + len * 30));
 		else
 			$(id2).height(0);
+		if (310 <= (30 + len * 30))
+			$(id2).css("overflow-y", "scroll");
+	}
+	else
+	{
+		document.getElementById(id1).value = "0";
+		$(id2).height(0);
+	}
+};
+
+function progressHeight(id1, id2, len) {
+	if (document.getElementById(id1).value == "0")
+	{
+		document.getElementById(id1).value = "1";
+		if (len != 0)
+			$(id2).height(120 + len * 30);
+		else
+			$(id2).height(0);
 	}
 	else
 	{
@@ -262,6 +288,7 @@ function applyColor() {
 	new_colors = {};
 	if (color_array == null)
 	{
+		$.post("/api/v2/users/" + user_id + "/completed", {"section": "Create Custom Color"});
 		//set all hex and rgb for both primary and secondary
 		if (primary)
 		{
@@ -309,6 +336,7 @@ function applyColor() {
 	setRatings(school_rate);
 	setRatings(degree_rate);
 	setRatings(career_rate);
+	$("#progress-bar").css("background-color", color);
 
 
 };
@@ -350,6 +378,7 @@ function resetColor() {
 	setRatings(school_rate);
 	setRatings(degree_rate);
 	setRatings(career_rate);
+	$("#progress-bar").css("background-color", color);
 };
 
 function sliderChange() {

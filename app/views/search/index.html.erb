@@ -51,7 +51,7 @@
   <img id="loading-image" style="display: block; margin: 0 auto;" src="../assets/circle load.gif" alt="Loading..." />
 </div>
 
-<footer>SUGGESTIONS? <a class="help-nav" href="https://docs.google.com/forms/d/1wrSEhVhGICnqK1hg4kQ6YHSHAn8-zkcJkosS_zIfmXk/viewform">LET US KNOW</a>!</footer>
+<footer>SUGGESTIONS? <a class="help-nav" onclick='suggested()' href="https://docs.google.com/forms/d/1wrSEhVhGICnqK1hg4kQ6YHSHAn8-zkcJkosS_zIfmXk/viewform">LET US KNOW</a>!</footer>
 
 
 <script language="javascript" type="text/javascript">
@@ -71,6 +71,9 @@
     {
     	//$('#examples_slider').css({"background-color": "#884412"});
     }
+    function suggested() {
+        $.post("/api/v2/users/" + user_id + "/completed", {"section": "Submit Feedback"});
+    };
 </script>
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

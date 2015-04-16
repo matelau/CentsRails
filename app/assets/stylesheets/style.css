@@ -77,7 +77,7 @@
 	-o-transition: height 0.5s ease-in-out;
 	-ms-transition: height 0.5s ease-in-out;
 	transition: height 0.5s ease-in-out;
-	overflow: scroll;
+
 }
 
 .ac-container input:checked ~ .ac-container div {
@@ -125,7 +125,7 @@
   box-shadow: none !important;
 }
 .rating-value {
-	height: 30px;
+  height: 30px;
   width: 300px;
   float: left;
   box-shadow: none !important;
@@ -134,7 +134,7 @@
 	height: 20px;  /* Can be anything */
 	width: 450px;
 	position: relative;
-	background: #555;
+	background: #EEEEEE;
 	-moz-border-radius: 25px;
 	-webkit-border-radius: 25px;
 	border-radius: 25px;
@@ -148,7 +148,6 @@
   border-bottom-right-radius: 8px;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
-  background-color: rgb(43,194,83);
   background-image: linear-gradient(
     center bottom,
     rgb(43,194,83) 37%,
