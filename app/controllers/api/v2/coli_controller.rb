@@ -108,29 +108,42 @@ class Api::V2::ColiController < ApplicationController
 
 	# Get cost of living data for two locations.
 	def show_two
+		if params[:operation].present?
+			operation = params[:operation]
+		else
+			operation = "undefined"
+		end
+
+		locations = params[:locations]
+		internal_show_two(locations, operation)
+	end
+
+private
+
+	def internal_show_two(l, o)
 		result = Hash.new
 
 		# Check for the required fields, and return an appropriate message if
 		# they are not present.
-		unless params[:locations].present?
+		unless l.present?
 			return render json: 'No objects were in the locations array.', status: 400
 		end
 
 		# Order the locations.
 		locations = Array.new
-		if params[:locations][0][:order] and params[:locations][1][:order]
-			params[:locations].each do |location|
+		if l[0][:order] and params[:locations][1][:order]
+			l.each do |location|
 				if location[:order] == 1
 					locations << location
 				end
 			end
-			params[:locations].each do |location|
+			l.each do |location|
 				if location[:order] == 2
 					locations << location
 				end
 			end
 		else
-			locations = params[:locations]
+			locations = l
 		end
 
 		# Create a string of the form '(city = c1 AND state = s1) OR
@@ -271,13 +284,11 @@ class Api::V2::ColiController < ApplicationController
 			result[:used_state_data_for] = used_state_data_for
 		end
 
-		result[:operation] = params[:operation]
+		result[:operation] = o
 
 		# Return the result, formatted as JSON, and with a 200 OK HTTP code.
 		render json: result, status: 200
 	end
-
-	private
 
 	def extract_coli_data(location, i, record)
 		# Store each locations's data in result.

@@ -134,12 +134,12 @@
           },
           {  
             "in":"path",
-            "description":"an integer between 0 and 5 inclusive",
+            "description":"an integer between 1 and 5 inclusive",
             "name":"rating",
             "required":true,
             "type":"integer",
             "enum":[
-              "0", "1", "2", "3", "4", "5"
+              "1", "2", "3", "4", "5"
             ]
           },
           {  
@@ -466,36 +466,6 @@
         ]
       }
     },
-    "/degrees/worst":{  
-      "get":{  
-        "tags":[  
-          "degrees"
-        ],
-        "responses":{  
-          "200":{  
-            "description":"Retrieval successful."
-          }
-        },
-        "description":"",
-        "summary":"Returns the degree with highest salary.",
-        "operationId":"Api::V2::DegreesController#show_worst"
-      }
-    },
-    "/degrees/random":{  
-      "get":{  
-        "tags":[  
-          "degrees"
-        ],
-        "responses":{  
-          "200":{  
-            "description":"Retrieval successful."
-          }
-        },
-        "description":"",
-        "summary":"Returns a random degree.",
-        "operationId":"Api::V2::CareersController#show_degree"
-      }
-    },
     "/degrees/{level}/{name}":{  
       "get":{  
         "tags":[  
@@ -573,12 +543,11 @@
           },
           {  
             "in":"path",
-            "description":"an integer between 0 and 5 inclusive",
+            "description":"an integer between 1 and 5 inclusive",
             "name":"rating",
             "required":true,
             "type":"integer",
             "enum":[  
-              "0",
               "1",
               "2",
               "3",
@@ -623,6 +592,36 @@
             "type":"string"
           }
         ]
+      }
+    },
+    "/degrees/random":{  
+      "get":{  
+        "tags":[  
+          "degrees"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns a random degree.",
+        "operationId":"Api::V2::CareersController#show_degree"
+      }
+    },
+    "/degrees/worst":{  
+      "get":{  
+        "tags":[  
+          "degrees"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Retrieval successful."
+          }
+        },
+        "description":"",
+        "summary":"Returns the degree with highest salary.",
+        "operationId":"Api::V2::DegreesController#show_worst"
       }
     },
     "/schools":{  
@@ -811,12 +810,12 @@
           },
           {  
             "in":"path",
-            "description":"an integer between 0 and 5 inclusive",
+            "description":"an integer between 1 and 5 inclusive",
             "name":"rating",
             "required":true,
             "type":"integer",
             "enum":[
-              "0", "1", "2", "3", "4", "5"
+              "1", "2", "3", "4", "5"
             ]
           },
           {  
