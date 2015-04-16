@@ -241,7 +241,7 @@ class Api::V2::UsersController < ApplicationController
 		# Check that the section isn't already completed.
 		old_section = Completed.where(user_id: params[:id]).where(section: params[:section])
 		if old_section.present?
-			return render json: 'Section already completed.', status: 400
+			return render json: 'Section already completed.', status: 200
 		else
 			new_section = Completed.new
 			new_section.user_id = params[:id]
