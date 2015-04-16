@@ -446,7 +446,7 @@ def data():
 
 	if(query['type'] == 'major'):
 		package = {
-			"majors":[]
+			"degrees":[]
 		}
 
 		if(len(query['option']) == 1):
@@ -457,7 +457,7 @@ def data():
 		for o in query['option']:
 			mname = o.split("(")[0].strip()
 			mlev = o.split("(")[1].replace(")","").strip()
-			package["majors"].append({"name":mname,"level":mlev})
+			package["degrees"].append({"name":mname,"level":mlev})
 
 		url = "https://trycents.com/api/v2/degrees/compare"
 

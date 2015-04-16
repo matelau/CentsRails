@@ -169,12 +169,12 @@ function city_api_request(query) {
 
       			for(var i = 0; i < data["elements"].length; i++) {
   					Object.keys(data["elements"][i]).forEach(function(key) {
-		    			var nKey = key + "_" + i;
+		    			var nKey = key + "_" + i+1;
 		    			data[nKey] = data["elements"][i][key];
 					});
   				}
   				delete data["elements"];
-	  				
+
       			//make api request here with type included
 				localStorage.setItem("query_type", type);
 				localStorage.setItem("data_store",JSON.stringify(data));
