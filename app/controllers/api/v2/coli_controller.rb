@@ -46,7 +46,7 @@ class Api::V2::ColiController < ApplicationController
 
   def show_best
 		col = Coli.order(
-			"CASE WHEN cost_of_living >= 0 THEN income_per_capita/(cost_of_living + 1) ELSE ABS(cost_of_living + 1)*income_per_capita END"
+			"CASE WHEN cost_of_living >= 0 THEN income_per_capita/(cost_of_living + 1) ELSE ABS(cost_of_living + 1)*income_per_capita END DESC"
 			).first
 		cols = [{city: col[:city], state: col[:state]}]
 		internal_show_two(cols, "get")
@@ -54,7 +54,7 @@ class Api::V2::ColiController < ApplicationController
 
 	def show_worst
 		col = Coli.order(
-			"CASE WHEN cost_of_living >= 0 THEN income_per_capita/(cost_of_living + 1) ELSE ABS(cost_of_living + 1)*income_per_capita END DESC"
+			"CASE WHEN cost_of_living >= 0 THEN income_per_capita/(cost_of_living + 1) ELSE ABS(cost_of_living + 1)*income_per_capita END"
 			).first
 		cols = [{city: col[:city], state: col[:state]}]
 		internal_show_two(cols, "get")
