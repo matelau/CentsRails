@@ -17,7 +17,7 @@ function showSearch(type) {
 };
 
 $(document).ready(function() {
-
+	
 	//wait to change bg color until image has loaded
 	//first get color from local storage
 	var bg_color;
@@ -28,76 +28,80 @@ $(document).ready(function() {
     }
     else
     	bg_color = "#884412";
-    $('<img/>').attr('src', '/assets/examples/career_blur.jpeg').load(function() {
-    	$('<img/>').attr('src', '/assets/examples/career.png').load(function(){
-    	$('#career_container').css({"background-color":bg_color});
-    	});
-	});
+ //    $('<img/>').attr('src', '/assets/examples/career_blur.jpeg').load(function() {
+ //    	$('<img/>').attr('src', '/assets/examples/career.png').load(function(){
+ //    	$('#career_container').css({"background-color":bg_color});
+ //    	});
+	// });
 
-	$('<img/>').attr('src', '/assets/examples/city_blur.jpeg').load(function() {
-    	$('<img/>').attr('src', '/assets/examples/city.png').load(function(){
-    	$('#city_container').css({"background-color":bg_color});
-    	});
-	});
+	// $('<img/>').attr('src', '/assets/examples/city_blur.jpeg').load(function() {
+ //    	$('<img/>').attr('src', '/assets/examples/city.png').load(function(){
+ //    	$('#city_container').css({"background-color":bg_color});
+ //    	});
+	// });
 
-	$('<img/>').attr('src', '/assets/examples/major_blur.jpeg').load(function() {
-    	$('<img/>').attr('src', '/assets/examples/major.png').load(function(){
-    	$('#major_container').css({"background-color":bg_color});
-    	});
-	});
+	// $('<img/>').attr('src', '/assets/examples/major_blur.jpeg').load(function() {
+ //    	$('<img/>').attr('src', '/assets/examples/major.png').load(function(){
+ //    	$('#major_container').css({"background-color":bg_color});
+ //    	});
+	// });
 
-	$('<img/>').attr('src', '/assets/examples/spending_blur.jpeg').load(function() {
-    	$('<img/>').attr('src', '/assets/examples/spending.png').load(function(){
-    	$('#spending_container').css({"background-color":bg_color});
-    	});
-	});
+	// $('<img/>').attr('src', '/assets/examples/spending_blur.jpeg').load(function() {
+ //    	$('<img/>').attr('src', '/assets/examples/spending.png').load(function(){
+ //    	$('#spending_container').css({"background-color":bg_color});
+ //    	});
+	// });
 
-	$('<img/>').attr('src', '/assets/examples/school_blur.jpeg').load(function() {
-    	$('<img/>').attr('src', '/assets/examples/school.png').load(function(){
-    	$('#school_container').css({"background-color":bg_color});
-    	});
-	});
+	// $('<img/>').attr('src', '/assets/examples/school_blur.jpeg').load(function() {
+ //    	$('<img/>').attr('src', '/assets/examples/school.png').load(function(){
+ //    	$('#school_container').css({"background-color":bg_color});
+ //    	});
+	// });
 
-	$('<img/>').attr('src', '/assets/examples/suggest_blur.jpeg').load(function() {
-    	$('<img/>').attr('src', '/assets/examples/suggest.png').load(function(){
-    	$('#suggest_container').css({"background-color":bg_color});
-    	});
+	// $('<img/>').attr('src', '/assets/examples/suggest_blur.jpeg').load(function() {
+ //    	$('<img/>').attr('src', '/assets/examples/suggest.png').load(function(){
+ //    	$('#suggest_container').css({"background-color":bg_color});
+ //    	});
+	// });
+	$('<img/>').attr('src', '/assets/examples/city.png').load(function() {
+		$('#city_container').css({"background-color":bg_color});
+		$('<img/>').attr('src', '/assets/examples/city_blur.jpeg').load();
+	});
+	$('<img/>').attr('src', '/assets/examples/career.png').load(function() {
+		$('#career_container').css({"background-color":bg_color});
+		$('<img/>').attr('src', '/assets/examples/career_blur.jpeg').load();
+	});
+	$('<img/>').attr('src', '/assets/examples/school.png').load(function() {
+		$('#school_container').css({"background-color":bg_color});
+		$('<img/>').attr('src', '/assets/examples/school_blur.jpeg').load();
+	});
+	$('<img/>').attr('src', '/assets/examples/major.png').load(function() {
+		$('#major_container').css({"background-color":bg_color});
+		$('<img/>').attr('src', '/assets/examples/major_blur.jpeg').load();
+	});
+	$('<img/>').attr('src', '/assets/examples/spending.png').load(function() {
+		$('#spending_container').css({"background-color":bg_color});
+		$('<img/>').attr('src', '/assets/examples/spending_blur.jpeg').load();
+	});
+	$('<img/>').attr('src', '/assets/examples/suggest.png').load(function() {
+		$('#suggest_container').css({"background-color":bg_color});
+		$('<img/>').attr('src', '/assets/examples/suggest_blur.jpeg').load();
 	});
 	// $('<img/>').attr('src', '/assets/examples/career.png').load(function() {
-	// 	$('<img/>').attr('src', '/assets/examples/career_blur.jpeg').load();
- //    	$('#career_container').css({"background-color":bg_color});
+	// 	$('#career_container').css({"background-color":bg_color});
 	// });
 	// $('<img/>').attr('src', '/assets/examples/school.png').load(function() {
-	// 	$('<img/>').attr('src', '/assets/examples/school_blur.jpeg').load();
- //    	$('#school_container').css({"background-color":bg_color});
+	// 	$('#school_container').css({"background-color":bg_color});
 	// });
 	// $('<img/>').attr('src', '/assets/examples/major.png').load(function() {
-	// 	$('<img/>').attr('src', '/assets/examples/major_blur.jpeg').load();
- //    	$('#major_container').css({"background-color":bg_color});
+	// 	$('#major_container').css({"background-color":bg_color});
 	// });
 	// $('<img/>').attr('src', '/assets/examples/spending.png').load(function() {
-	// 	$('<img/>').attr('src', '/assets/examples/spending_blur.jpeg').load();
- //    	$('#spending_container').css({"background-color":bg_color});
+	// 	$('#spending_container').css({"background-color":bg_color});
 	// });
 	// $('<img/>').attr('src', '/assets/examples/suggest.png').load(function() {
-	// 	$('<img/>').attr('src', '/assets/examples/suggest_blur.jpeg').load();
- //    	$('#suggest_container').css({"background-color":bg_color});
+	// 	$('#suggest_container').css({"background-color":bg_color});
 	// });
-		// $('<img/>').attr('src', '/assets/examples/career.png').load(function() {
-		// 	$('#career_container').css({"background-color":bg_color});
-		// });
-		// $('<img/>').attr('src', '/assets/examples/school.png').load(function() {
-		// 	$('#school_container').css({"background-color":bg_color});
-		// });
-		// $('<img/>').attr('src', '/assets/examples/major.png').load(function() {
-		// 	$('#major_container').css({"background-color":bg_color});
-		// });
-		// $('<img/>').attr('src', '/assets/examples/spending.png').load(function() {
-		// 	$('#spending_container').css({"background-color":bg_color});
-		// });
-		// $('<img/>').attr('src', '/assets/examples/suggest.png').load(function() {
-		// 	$('#suggest_container').css({"background-color":bg_color});
-		// });
 
 
 	// var blur_1 = new Image(540, 300);
@@ -228,8 +232,8 @@ $(document).ready(function() {
 		});
 	});
 	stillover = false;
-
-
+	if (user_id)
+		$.post("/api/v2/users/" + user_id + "/completed", {"section": "Use Examples"});
 
 });
 
@@ -327,20 +331,24 @@ function dataRequest(type)
 	if (type == "city" && auto_cities.indexOf(field2) < 0)
 		field2 = "";
 
-	var url = "https://trycents.com:6001/data"
-	var body = ""
+	var url = "https://trycents.com:6001/data";
+	var body = "";
+	var query_string;
 
 	if(field1 == "" && field2 == ""){
 		return;
 	}
 	else if(field2 == ""){
 		body = JSON.stringify({type:type,option:[field1]});
+		query_string = field1;
 	}
 	else if(field1 == ""){
 		body = JSON.stringify({type:type,option:[field2]});
+		query_string = field2;
 	}
 	else{
 		body = JSON.stringify({type:type,option:[field1,field2]});
+		query_string = field1 + " vs " + field2;
 	}
 	var data = new Object();
 	var xmlHttp = new XMLHttpRequest();
@@ -363,6 +371,8 @@ function dataRequest(type)
   				delete data["elements"];
 				localStorage.setItem("query_type", type);
 				localStorage.setItem("data_store",JSON.stringify(data));
+				//ok query, save to user
+				$.post("/api/v2/users/" + user_id + "/query", {"url": query_string});
 				window.location = "../../search/results";
       		}
       	}

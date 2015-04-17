@@ -24,6 +24,8 @@
 //forward declaration
 function changeMade(){};
 
+var user_id;
+
 //determine which js file to load
 var path = window.location.pathname.split('/');
 if (path[1] == "wizard" && path[2] != "start" && path[2] != "education")
@@ -38,7 +40,6 @@ if (path[1] == "wizard" && path[2] != "start" && path[2] != "education")
 else if (path[1] == "search" && path[2] == "results")
 {
 	var query_type = localStorage.getItem("query_type");
-
 	getPartial(query_type);
 }
 
@@ -78,6 +79,9 @@ function api_request(query) {
 					window.location = "/info/examples/";
 				}
 				else {
+					$.post("/api/v2/users/" + user_id + "/query", {"url": query});
+					if (user_id)
+						$.post("/api/v2/users/" + user_id + "/completed", {"section": "Use Main Search"});
     				localStorage.removeItem("data_store");
 
     				var o1 = null;
@@ -166,5 +170,6 @@ function api_request(query) {
 
   	$('#search-bar').attr("hidden", "true");
     $('#loading').removeAttr("hidden");
+    
 };
 
