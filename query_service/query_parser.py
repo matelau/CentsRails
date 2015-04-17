@@ -259,8 +259,7 @@ def query(query):
 			}
 			resp = json.dumps(package)
 			return resp
-		for i in range(0, len(schools)):
-			package["school_"+`i+1`+"_name"] = schools[i]
+
 		package["query"] = sent_query
 		package["query_type"] = "school"
 		resp = json.dumps(package)
@@ -296,8 +295,7 @@ def query(query):
 			}
 			resp = json.dumps(package)
 			return resp
-		for i in range(0, len(majors)):
-			package["major_"+`i+1`+"_name"] = maj_names[i]
+
 		package["query"] = sent_query
 		package["query_type"] = "major"
 		resp = json.dumps(package)
@@ -370,8 +368,7 @@ def query(query):
 			}
 			resp = json.dumps(package)
 			return resp
-		for i in range(0, len(careers)):
-			package["career_"+`i+1`+"_name"] = careers[i]
+
 		package["query"] = sent_query
 		package["query_type"] = "career"
 		resp = json.dumps(package)
@@ -439,10 +436,7 @@ def data():
 		s = requests.Session()
 		s.verify = False
 		resp = s.send(prep)
-		package = json.loads(resp.text)
-		for i in range(0, len(scarr)):
-			package["school_"+`i+1`+"_name"] = scarr[i]
-		return json.dumps(package)
+		return resp.text
 
 	if(query['type'] == 'major'):
 		package = {
@@ -468,10 +462,7 @@ def data():
 		s.verify = False
 		resp = s.send(prep)
 
-		package = json.loads(resp.text)
-		for i in range(0, len(query['option'])):
-			package["major_"+`i+1`+"_name"] = query['option'][i]
-		return json.dumps(package)
+		return resp.text
 
 	if(query['type'] == 'career'):
 		package = {
@@ -494,10 +485,8 @@ def data():
 		s = requests.Session()
 		s.verify = False
 		resp = s.send(prep)
-		package = json.loads(resp.text)
-		for i in range(0, len(query['option'])):
-			package["career_"+`i+1`+"_name"] = query['option'][i]
-		return json.dumps(package)
+
+		return resp.text
 	
 #app.config['SERVER_NAME'] = "trycents.com"
 
