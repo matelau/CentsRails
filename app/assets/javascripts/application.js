@@ -78,7 +78,7 @@ function api_request(query) {
 					localStorage.setItem("stored_query",data["query"]);
 					window.location = "/info/examples/";
 				}
-				else if(data["operation"] == "spending"){
+				else if(data["query_type"] == "spending"){
 					localStorage.setItem("query_type",data["query_type"]);
 					localStorage.setItem("data_store",data);
 					window.location = "/search/results";
