@@ -366,7 +366,6 @@ def query(query):
 			return resp
 		package = json.loads(resp.text)
 
-		print package
 		if(package["operation"] == "undefined"):
 			package = {
 				"operation":"undefined",
