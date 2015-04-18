@@ -17,6 +17,25 @@
 		</ul>
 	</form>
 
+	<!-- ratings -->
+	<div style="height:40px; width:850px;">
+		<div id="rating_1" style="height:40px; width:290px; margin-left:112px; float:left;">
+		<% if current_user %>
+			<a id="rating_1_button" class="btn btn-default" onclick="rate('1')">RATE THIS MAJOR</a>
+		<% else %>
+			<a class="btn btn-default" disabled>LOG IN TO RATE</a>
+		<% end %>	
+		</div>
+		<div id="rating_2" style="height:40px; width:290px; margin-left:48px; float:left;">
+		<% if current_user %>
+			<a id="rating_2_button" class="btn btn-default"onclick="rate('2')">RATE THIS MAJOR</a>
+		<% else %>
+			<a class="btn btn-default" disabled>LOG IN TO RATE</a>
+		<% end %>	
+		</div>
+		
+	</div>
+
 	<ul class="viz_objects">
 		<li><canvas class="process_viz" id="main_viz" width="655" height="375"></canvas></li>
 		<li><ul style="list-style-type: none">

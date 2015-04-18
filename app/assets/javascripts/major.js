@@ -60,7 +60,7 @@ $(document).ready(function() {
 		$.post("/api/v2/users/" + user_id + "/completed", {"section": "View Major Comparison"});	
 });
 
-var data, hide_1, hide_2, main, gray, font, active_tab, auto_1, auto_2, sent1, sent2, nochanges, old1, old2, canvas, processingInstance;
+var data, hide_1, hide_2, main, gray, font, active_tab, auto_1, auto_2, sent1, sent2, nochanges, old1, old2, canvas, processingInstance, color, ratings;
 
 canvas = document.getElementById("main_viz");
 if (canvas != null)
@@ -243,15 +243,18 @@ function major_api_request(query) {
 function sketchProc(processing) {
 	
 	processing.setup = function() {
+		ratings = [0, 0];
 		console.log("loaded major.js successfully");
 		if (localStorage.getItem("colors"))
 		{
 			var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+			color = c["p_hex"];
 			main = processing.color(c["p_rgb"][0], c["p_rgb"][1], c["p_rgb"][2]);
 			gray = processing.color(c["s_rgb"][0], c["s_rgb"][1], c["s_rgb"][2]);
 		}
 		else
 		{
+			color = "#884412";
 			main = processing.color(136, 68, 18);
 			gray = processing.color(138, 136, 137);
 		}
@@ -336,7 +339,7 @@ function sketchProc(processing) {
 		processing.text("AVERAGE SALARY", 235+title_offset, 65);
 		processing.text("MAJOR RECOMMENDATION", 235+title_offset, 145);
 		processing.text("MAJOR SATISFACTION", 235+title_offset, 225);
-		processing.text("CENTS MAJOR RATING", 235+title_offset, 305);
+		processing.text("CENTS USER RATING", 235+title_offset, 305);
 		processing.stroke(225);
 		processing.strokeWeight(1);
 		processing.line(65+title_offset, 103, 235+title_offset, 103);
@@ -426,7 +429,7 @@ function sketchProc(processing) {
 		}
 		else
 		{
-			if (data["job_2"])
+			if (data["jobs_2"])
 			{
 				min = processing.min(data["jobs_1"][1], data["jobs_1"][3], data["jobs_1"][5], data["jobs_2"][1], data["jobs_2"][3], data["jobs_2"][5]);
 				max = processing.max(data["jobs_1"][1], data["jobs_1"][3], data["jobs_1"][5], data["jobs_2"][1], data["jobs_2"][3], data["jobs_2"][5]);
@@ -585,6 +588,94 @@ function sketchProc(processing) {
 	};
 
 };
+
+function rate(id) {
+	$("#rating_" + id).fadeTo(500, 0, function() {
+		//$("#rating_" + id).fadeTo(700, 0, function() {$("#rating_" + id).fadeTo(900, 1);});
+		//remove button
+		$("#rating_" + id).empty();
+		//get users ratings, check to see if already rated
+		$.get("/api/v2/users/" + user_id + "/ratings?api_key=" + api_key, function(response){ 
+			degree_rate = response.degree_ratings;
+			var key = document.getElementById("search_" + id + "_name").value;
+			var split = key.split("(");
+			var name = split[0].substring(0, split[0].length - 1);
+			var level = split[1].substring(0, split[1].length - 1);
+
+			//check to see if its in there
+			for (i in degree_rate)
+			{
+				if (degree_rate[i].name == name && degree_rate[i].level == level)
+				{
+					ratings[id-1] = degree_rate[i].rating;
+					break;
+				}
+			}
+			setRatings(id);
+		});
+
+		var cents = "";
+		for (var i=1; i<6; i++)
+		{
+			cents += "<svg style='width: 35px; height:35px;'";
+			cents += "onmouseleave='setRatings(" + id + ")' ";
+			cents += "onclick='updateRating(" + id + "," + i + ")' ";
+			cents += "onmouseover='colorChange(" + id + "," + i + ")'>";
+			cents += buildCent(id, i);
+			cents += "</svg>";
+		}
+		//add in x for cancel
+		cents += "<a class='btn btn-default' style='margin-left:5px; margin-bottom:30px;' onclick='deleteRate(" + id + ")'>X</a>";
+		$("#rating_" + id).html(cents);
+		$("#rating_" + id).fadeTo(700, 1);
+	});
+};
+
+function deleteRate(id) {
+	$("#rating_" + id).fadeTo(500, 0, function() {
+		$("#rating_" + id).empty();
+		var button = "<a id='rating_" + id + "_button' class='btn btn-default' onclick='rate(" + id + ")'>RATE THIS MAJOR</a>";
+		$("#rating_" + id).html(button);
+		$("#rating_" + id).fadeTo(700, 1);
+	});
+};
+
+function updateRating(id, num) {
+	ratings[id-1] = num;
+	//get name and level from search field
+	var split = document.getElementById("search_" + id + "_name").value.split("(");
+	var name = split[0].substring(0, split[0].length - 1).replace(/ /g, "%20");
+	var level = split[1].substring(0, split[1].length - 1).replace(/ /g, "%20");
+	$.ajax({
+		url: "/api/v2/degrees/" + level + "/" + name + "/" + num + "?api_key=" + api_key,
+		type: 'PUT',
+		data: {"user": user_id}
+	});
+};
+
+function setRatings(id) {
+	var num = ratings[id-1];
+	for (var i=1; i<num+1; i++)
+		$("#rating_" + id + "_" + i).css("fill", color);
+	for (var i=5; i>num; i--)
+		$("#rating_" + id + "_" + i).css("fill", "#CCCCCC");
+};
+
+function colorChange(id, num) {
+	for (var i=1; i<num+1; i++)
+		$("#rating_" + id + "_" + i).css("fill", color);
+	for (var i=5; i>num; i--)
+		$("#rating_" + id + "_" + i).css("fill", "#CCCCCC");
+};
+
+function buildCent(id, num) {
+
+	var cent = "<ellipse id='rating_" + id + "_" + num + "' style='fill:#CCCCCC' id='circle10' cy='17.730486' cx='17.730486' rx='17.730486' ry='17.730486'/>";
+	cent += "<path style='fill:#ffffff;fill-rule:nonzero' d='m 25.106384,20.425538 c -0.567376,1.84398 -1.560282,3.262412 -2.695034,4.255318 -1.134752,0.992912 -2.695037,1.418462 -4.680852,1.418462 -1.560284,0 -2.83688,-0.2838 -3.829788,-0.85107 -1.134752,-0.567392 -1.985815,-1.560298 -2.553192,-2.97873 -0.709219,-1.27659 -0.992907,-2.978729 -0.992907,-4.822678 0,-1.134781 0.141846,-2.269531 0.425532,-3.262411 0.283688,-0.992909 0.567375,-1.702139 0.992908,-2.411369 0.425532,-0.56739 0.851063,-1.13472 1.418439,-1.56027 0.567376,-0.4255197 1.134752,-0.7092295 1.843972,-0.9929095 0.70922,-0.2837998 1.702128,-0.42555 2.83688,-0.42555 3.5461,0 5.957448,1.7021395 7.092198,4.9645485 l -1.985814,0.2838 c -0.70922,-2.411369 -2.411348,-3.687959 -5.106384,-3.687959 -0.851064,0 -1.560284,0.141898 -2.269504,0.42555 -0.70922,0.2838 -1.276596,0.7092 -1.702128,1.41843 -0.425532,0.56736 -0.851064,1.27659 -0.992908,2.127659 -0.283689,0.85104 -0.425532,1.70211 -0.425532,2.695021 0,2.127657 0.425532,3.971638 1.41844,5.248228 0.992908,1.27659 2.269504,1.985822 3.971632,1.985822 2.553192,0 4.25532,-1.418462 5.390072,-4.397161 l 1.84397,0.283799 z'/>";
+	cent += "<rect style='fill:#ffffff' height='2.7567501' width='1.8319293' y='5.2482319' x='16.312059' />";
+	cent += "<path style='fill:#ffffff' d='m 18.156029,35.460995 c -0.141842,0 -0.283689,0 -0.425531,0 -0.425532,0 -0.992908,0 -1.41844,0 l 0,-8.368797 1.843971,0 0,8.368797 z'/>";
+	return cent;
+}
 
 function update_tab(name) {
 	if (name != active_tab)
