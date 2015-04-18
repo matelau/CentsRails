@@ -196,12 +196,6 @@ private
 			index += 1
 		end
 
-		if index == 2
-			result["operation"] = "get"
-		else
-			result["operation"] = "compare"
-		end
-
 		result["elements"] = []
 
 		car.each do |k, v|

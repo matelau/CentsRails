@@ -220,6 +220,10 @@ def query(query):
 		command = "get"
 	if command == "" and len(majors) > 1:
 		command = "compare"
+	if command = "" and len(careers) == 1:
+		command = "compare"
+	if command == "" and len(careers) > 1:
+		command = "compare"
 
 	if len(schools) == 0 and len(locations) == 0 and len(majors) == 0 and len(careers) == 0:
 		package = {
