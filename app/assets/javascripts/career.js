@@ -215,8 +215,8 @@ function career_api_request(query) {
 					data["career_unemploy_2"] = $.extend(true, [], data["career_unemploy_1"]);
 					data["career_unemploy_1"] = null;
 	
-					data["career_2_name"] = data["career_1_name"];
-					data["career_1_name"] = null;
+					data["name_2"] = data["name_1"];
+					data["name_1"] = null;
 
 	  			}
 	  			else if (sent1 && !sent2)
@@ -295,11 +295,11 @@ function sketchProc(processing) {
 			data["career_unemploy_2"] = [8.1, 8.5];
 			data["career_unemploy_3"] = [6.0, 6.8];
 
-			data["career_1_name"] = "Software Engineer";
-			data["career_2_name"] = "Music Teacher";
+			data["name_1"] = "Software Engineer";
+			data["name_2"] = "Music Teacher";
 		}
 
-		document.getElementById("search_1_name").value = data["career_1_name"];
+		document.getElementById("search_1_name").value = data["name_1"];
 
 		if (!data["career_salary_2"])
   		{
@@ -309,7 +309,7 @@ function sketchProc(processing) {
   		}
   		else
   		{
-  			document.getElementById("search_2_name").value = data["career_2_name"];
+  			document.getElementById("search_2_name").value = data["name_2"];
   		}
   		old1 = document.getElementById("search_1_name").value;
 		old2 = document.getElementById("search_2_name").value;
