@@ -220,7 +220,7 @@ def query(query):
 		command = "get"
 	if command == "" and len(majors) > 1:
 		command = "compare"
-	if command = "" and len(careers) == 1:
+	if command == "" and len(careers) == 1:
 		command = "compare"
 	if command == "" and len(careers) > 1:
 		command = "compare"
