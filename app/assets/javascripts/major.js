@@ -287,7 +287,7 @@ function sketchProc(processing) {
 			//no top jobs for either major, disable that tab
 			$("#job_tab").hide();
 		}
-		else if (data["jobs_2"].length == 0 && !data["jobs_1"])
+		else if (data["jobs_2"] && data["jobs_2"].length == 0 && !data["jobs_1"])
 		{
 			//no top jobs for either major, disable that tab
 			$("#job_tab").hide();
