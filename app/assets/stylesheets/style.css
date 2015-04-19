@@ -87,6 +87,9 @@
 .ac-container input:checked ~ article.ac-small{
 	height: 130px;
 }
+.ac-container input:checked ~ article.ac-about{
+	height: 660px;
+}
 .ac-container input:checked ~ article.ac-account{
 	height: 140px;
 }
