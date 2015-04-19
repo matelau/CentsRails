@@ -23,7 +23,6 @@ function sketchProc(processing) {
 			tab_color = [136, 68, 18];
 		}
 
-
 		processing.size(655,375);
 		hide_1 = false;
 		hide_2 = false;
