@@ -147,17 +147,14 @@ def query(sent_query):
 		ordered_keys = sorted(cgrams.items(), key=operator.itemgetter(1), reverse=True)
 
 		mval = cgrams[ordered_keys[0][0]]
+		m = mval
 		idx = 0
 		while(m == mval):
-			print "here"
 			careers.append(ordered_keys[idx][0])
 			m = cgrams[ordered_keys[idx][0]]
 			idx += 1
 			if idx > len(ordered_keys):
 				break
-
-	print ordered_keys
-	print careers
 		#if(c.lower() in query):
 		#	careers.append(c)
 	#tokens = nltk.word_tokenize(query)
