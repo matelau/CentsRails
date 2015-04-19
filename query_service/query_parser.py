@@ -140,8 +140,9 @@ def query(sent_query):
 		cgram.sort(key=lambda t: len(t), reverse=True)
 		for gram in cgram:
 			if gram in qgram:
-				cgrams[c] = len(gram) if len(gram) > cgrams[c]
-				
+				if len(gram) > cgrams[c]:
+					cgrams[c] = len(gram)
+
 	if len(cgrams) > 0:
 		ordered_keys = sorted(cgrams.items(), key=operator.itemgetter(1), reverse=True)
 
