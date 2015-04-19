@@ -73,7 +73,6 @@ function api_request(query) {
     	if (xhr.readyState === 4) { 
       		if (xhr.status === 200) {
       			data = jQuery.parseJSON(xhr.responseText);
-      			console.log(data);
 
 				if(data["operation"] == "undefined") {
 					sessionStorage.setItem("stored_query",data["query"]);
