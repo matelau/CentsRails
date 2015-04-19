@@ -58,7 +58,7 @@ cors = CORS(app)
 @app.route('/query/<string:sent_query>', methods=['GET'])
 def query(sent_query):
 	with open("../data/queries.txt", "a") as logfile:
-		logfile.write(query + "\n")
+		logfile.write(sent_query + "\n")
 
 	ops = []
 	locations = []
