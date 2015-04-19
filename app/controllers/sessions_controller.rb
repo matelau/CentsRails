@@ -36,7 +36,9 @@ class SessionsController < ApplicationController
 	end
 
 	def destroy
-		User.find(session[:user_id]).api_key = nil
+		user = User.find(session[:user_id])
+		user.api_key = nil
+		user.save
 		session[:user_id] = nil
 		redirect_to '/'
 	end
