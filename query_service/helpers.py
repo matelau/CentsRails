@@ -36,8 +36,11 @@ def build_engram(s):
     for x in xrange(2,len(arr)):
         make_tups(arr,x,res)
 
-    res.remove(("of",))
-    res.remove(("in",))
+    if ("of",) in res:
+        res.remove(("of",))
+
+    if ("in",) in res:
+        res.remove(("in",))
 
     return res
 
