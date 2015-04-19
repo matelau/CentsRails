@@ -181,6 +181,11 @@ function api_request(query) {
     
 };
 
+window.onbeforeunload = function (e) {
+	e = e || window.event;
+	console.log(e.path);
+};
+
 function cleanUp() {
 	localStorage.clear();
 };
