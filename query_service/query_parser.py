@@ -146,7 +146,7 @@ def query(sent_query):
 	if len(cgrams) > 0:
 		ordered_keys = sorted(cgrams.items(), key=operator.itemgetter(1), reverse=True)
 
-		mval = cgrams[ordered_keys[0]]
+		mval = cgrams[ordered_keys[0][0]]
 		idx = 0
 		while(m == mval):
 			careers.append(ordered_keys[idx])
