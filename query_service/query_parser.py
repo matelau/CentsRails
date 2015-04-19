@@ -1,7 +1,6 @@
 from flask import Flask, make_response, request, current_app
 from datetime import timedelta
 from functools import update_wrapper
-import nltk
 import json
 import csv
 import urlparse
@@ -75,22 +74,6 @@ def query(sent_query):
 	if query[len(query)-1:] in punc:
 		query = query[:len(query)-1]
 
-	if("afford" in query or "spending" in query):
-		package = {
-			"operation":"get",
-			"query":sent_query,
-			"query_type":"spending"
-		}
-
-		if "salary" in query or "income" in query:
-			tempq = query.replace(",","")
-			salary = [int(s) for s in tempq.split() if s.isdigit()]
-			if len(salary) > 0:
-				package["income"] = salary[0]
-
-		resp = json.dumps(package)
-		return resp
-
 	qgram = hp.build_engram(query)
 
 	query = " " + query + " "
@@ -161,9 +144,59 @@ def query(sent_query):
 			idx += 1
 			if idx >= len(ordered_keys):
 				break
-		#if(c.lower() in query):
-		#	careers.append(c)
-	#tokens = nltk.word_tokenize(query)
+
+	if "spending" in query or "afford" in query:
+		if len(careers) > 0:
+			package = {
+				"operation":command,
+				"query":query,
+				"careers":[]
+			}
+			package["careers"].append({"name": careers[0]})
+
+			url = "https://trycents.com/api/v2/careers/compare"
+			payload = json.dumps(package)
+			r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
+			prep = r.prepare()
+			s = requests.Session()
+			s.verify = False
+			resp = s.send(prep)
+
+			tempp = json.loads(resp.text)
+
+			package = {
+				"operation":"get",
+				"query":sent_query,
+				"query_type":"spending"
+			}
+			package["income"] = tempp["elements"]["career_salary"][10]
+
+			resp = json.dumps(package)
+			return resp
+		elif "salary" in query or "income" in query:
+			package = {
+				"operation":"get",
+				"query":sent_query,
+				"query_type":"spending"
+			}
+
+			tempq = query.replace(",","")
+			salary = [int(s) for s in tempq.split() if s.isdigit()]
+			if len(salary) > 0:
+				package["income"] = salary[0]
+
+			resp = json.dumps(package)
+			return resp
+		else:
+			package = {
+				"operation":"get",
+				"query":sent_query,
+				"query_type":"spending"
+			}
+
+			resp = json.dumps(package)
+			return resp
+
 	for s in commands:
 		if s in query:
 			command = commands[s]
