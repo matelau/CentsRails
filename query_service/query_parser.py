@@ -52,6 +52,8 @@ majs = lb.make_major_list()
 cities = lb.make_city_list()
 cars = lb.make_career_list()
 
+print cars
+
 app = Flask(__name__)
 cors = CORS(app)
 
