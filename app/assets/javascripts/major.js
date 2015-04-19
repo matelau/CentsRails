@@ -247,7 +247,7 @@ function sketchProc(processing) {
 		console.log("loaded major.js successfully");
 		if (sessionStorage.getItem("colors"))
 		{
-			var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+			var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
 			color = c["p_hex"];
 			main = processing.color(c["p_rgb"][0], c["p_rgb"][1], c["p_rgb"][2]);
 			gray = processing.color(c["s_rgb"][0], c["s_rgb"][1], c["s_rgb"][2]);
