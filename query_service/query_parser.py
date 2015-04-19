@@ -1,4 +1,6 @@
 from flask import Flask, make_response, request, current_app
+from datetime import timedelta
+from functools import update_wrapper
 import nltk
 import json
 import csv
@@ -8,9 +10,9 @@ import re
 import string
 import urllib2
 import urllib
-from datetime import timedelta
-from functools import update_wrapper
 import sys
+import helpers
+import list_builders as lb
 
 try:
     from flask.ext.cors import CORS  # The typical way to import flask-cors
@@ -25,35 +27,16 @@ except ImportError:
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
-def pp(req):
-    """
-    At this point it is completely built and ready
-    to be fired; it is "prepared".
-
-    However pay attention at the formatting used in 
-    this function because it is programmed to be pretty 
-    printed and may differ from the actual request.
-    """
-    print('{}\n{}\n{}\n\n{}'.format(
-        '-----------START-----------',
-        req.method + ' ' + req.url,
-        '\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
-        req.body,
-    ))
-
-ip = urllib2.urlopen('http://whatismyip.akamai.com').read()
 city = []
 state = {}
 #conflicts right now between Louisiana(LA) and Los Angeles(LA) and Indiana(IN) and the word 'in'
 commands = {"compare":"compare","vs.":"compare","vs":"compare","get":"get","find":"get","difference between":"compare"}
-common_abbrs = {"sf":"san francisco, california","nyc":"new york, new york","slc":"salt lake city, utah","la":"los angeles, california","ft.":"fort","ft":"fort","mt.":"mount","mt":"mount"}
+common_abbrs = {"sf":"san francisco, california","nyc":"new york, new york","slc":"salt lake city, utah","la":"los angeles, california","ft. ":"fort ","ft ":"fort ","mt. ":"mount ","mt ":"mount "}
 supers = {"best":"","worst":"","cheapest":"","expensive":"","priciest":"","random":""}
 levels = ["associate","bachelor","master","doctorate","certificate"]
 datasets = {"occupation":"career","career":"career","job":"career","school":"school","universities":"school","city":"city","town":"city","cities":"city","major":"degree","degree":"degree"}
 
 states = open("states.csv", "rU")
-
-cities = [line.strip() for line in open("city_state.txt")]
 
 unis = {}
 for line in open("universities.csv"):
@@ -63,62 +46,17 @@ for line in open("universities.csv"):
 for line in csv.reader(states):
 	state[line[0].lower()] = line[1].lower()
 
-murl = "https://trycents.com/api/v2/degrees?only_level_names=false"
-r = requests.Request("GET",murl,headers={'Accept':'application/json'})
-mprep = r.prepare()
-ms = requests.Session()
-ms.verify = False
-mresp = ms.send(mprep)
+punc = [".","?",",","!",";",":"]
 
-majs = json.loads(mresp.text)
-
-cpac = {
-	"operation":"get",
-	"tables":[
-		"cost of living"
-	]
-}
-
-cpayload = json.dumps(cpac)
-murl = "https://trycents.com/api/v1/record_names/"
-r = requests.Request("POST",murl,headers={'Content-Type':'application/json','Accept':'application/json'},data=cpayload)
-cprep = r.prepare()
-cs = requests.Session()
-cs.verify = False
-cresp = cs.send(cprep)
-
-cities = json.loads(cresp.text)
-
-murl = "https://trycents.com/api/v2/careers"
-r = requests.Request("GET",murl,headers={'Accept':'application/json'})
-cprep = r.prepare()
-cs = requests.Session()
-cs.verify = False
-cresp = cs.send(cprep)
-
-cars = json.loads(cresp.text)
-
-# for c in cities:
-# 	cabbr = ""
-# 	for a, s in state.iteritems():
-# 		if s in c:
-# 			li = c.rsplit(s, 1)
-# 			cabbr = a.join(li)
-
-# 	cname = c[:c.index(",")]
-# 	city = c.replace(",","")
-# 	cabbr = cabbr.replace(",","")
-# 	carr = city.split(" ")
-# 	cabbrarr = cabbr.split(" ")
-# 	cnamearr = cname.split(" ")
-#cities = cities[0].split("\r")
+majs = lb.make_major_list()
+cities = lb.make_city_list()
+cars = lb.make_career_list()
 
 app = Flask(__name__)
 cors = CORS(app)
 
-@app.route('/query/<string:query>', methods=['GET'])
-def query(query):
-
+@app.route('/query/<string:sent_query>', methods=['GET'])
+def query(sent_query):
 	with open("../data/queries.txt", "a") as logfile:
 		logfile.write(query + "\n")
 
@@ -130,12 +68,29 @@ def query(query):
 	maj_names = []
 	command = ""
 	package = {}
-	sent_query = query
-	query = query.lower()
+	query = sent_query.lower()
 	
 	#query = str(query).translate(string.maketrans("",""), string.punctuation)
-	if(query[len(query)-1:] == "." or query[len(query)-1:] == "?" or query[len(query)-1:] == "!" or query[len(query)-1:] == ";"):
+	if query[len(query)-1:] in punc:
 		query = query[:len(query)-1]
+
+	if("afford" in query or "spending" in query):
+		package = {
+			"operation":"get",
+			"query":sent_query,
+			"query_type":"spending"
+		}
+
+		if "salary" in query:
+			tempq = query.replace(",","")
+			salary = [int(s) for s in tempq.split() if s.isdigit()]
+			if len(salary) > 0:
+				package["salary"] = salary[0]
+
+		resp = json.dumps(package)
+		return resp
+
+	qgram = helpers.build_engram(query)
 
 	query = " " + query + " "
 
@@ -179,35 +134,21 @@ def query(query):
 		if cname in query:
 			if c not in locations:
 				locations.append(c)
+	cgrams = {}
 	for c in cars:
-		if(c.lower() in query):
-			careers.append(c)
+		cgram = helpers.build_engram(c.lower())
+		cgram.sort(key=lambda t: len(t), reverse=True)
+		for gram in cgram:
+			if gram in qgram:
+				cgrams[c] = len(gram) if len(gram) > cgrams[c]
+
+		#if(c.lower() in query):
+		#	careers.append(c)
 	#tokens = nltk.word_tokenize(query)
 	for s in commands:
 		if s in query:
 			command = commands[s]
 
-	if("afford" in query or "spending" in query):
-		package = {
-			"operation":"get",
-			"query":sent_query,
-			"query_type":"spending"
-		}
-
-		resp = json.dumps(package)
-		return resp
-	#tags = nltk.pos_tag(tokens)
-	#for w,t in tags:
-	#	if t == "JJ":
-	#		object.append(w)
-	#	if t == "NN":
-	#		object.append(w)
-	#	if t == "NNP":
-	#		ops.append(w)
-	#	if t == "VBP":
-	#		ops.append(w)
-	#	if t == "VBN":
-	#		ops.append(w)
 	if command == "" and len(schools) == 1:
 		command = "get"
 	if command == "" and len(schools) > 1:
@@ -276,7 +217,7 @@ def query(query):
 		}
 		for m in majors:
 			package["degrees"].append(m)
-		#url = "https://%s/api/v1/schools/" % (ip)
+
 		url = "https://trycents.com/api/v2/degrees/compare"
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
@@ -312,7 +253,7 @@ def query(query):
 		}
 		for l in locations:
 			package["locations"].append({"city":l[:l.index(",")],"state":l[l.index(", ")+2:]})
-		#url = "https://%s/api/v1/coli/" % (ip)
+
 		url = "https://trycents.com/api/v2/cost_of_living/compare"
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
@@ -348,7 +289,6 @@ def query(query):
 		for c in careers:
 			package["careers"].append({"name": c})
 
-		#url = "https://%s/api/v1/schools/" % (ip)
 		url = "https://trycents.com/api/v2/careers/compare"
 		payload = json.dumps(package)
 		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
@@ -381,8 +321,6 @@ def query(query):
 
 @app.route('/data', methods=['POST'])
 def data():
-	#query = cgi.parse_qs(data)
-
 	query = json.loads(request.data)
 
 	if(query['type'] == 'city'):
