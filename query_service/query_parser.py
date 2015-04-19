@@ -141,7 +141,11 @@ def query(sent_query):
 		cgram.sort(key=lambda t: len(t), reverse=True)
 		for gram in cgram:
 			if gram in qgram:
-				cgrams[c] = len(gram)
+				if c in cgrams:
+					if len(gram) > cgrams[c]:
+						cgrams[c] = len(gram)
+				else:
+					cgrams[c] = len(gram)
 
 	print cgrams
 
