@@ -37,4 +37,4 @@ def make_career_list():
 	cs.verify = False
 	cresp = cs.send(cprep)
 
-	cars = json.loads(cresp.text)
+	return json.loads(cresp.text)
