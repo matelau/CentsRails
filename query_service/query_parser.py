@@ -82,11 +82,11 @@ def query(sent_query):
 			"query_type":"spending"
 		}
 
-		if "salary" in query:
+		if "salary" in query or "income" in query:
 			tempq = query.replace(",","")
 			salary = [int(s) for s in tempq.split() if s.isdigit()]
 			if len(salary) > 0:
-				package["salary"] = salary[0]
+				package["income"] = salary[0]
 
 		resp = json.dumps(package)
 		return resp
