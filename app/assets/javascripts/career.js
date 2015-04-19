@@ -170,7 +170,8 @@ function career_api_request(query) {
       		if (xmlHttp.status === 200) {
       			data = jQuery.parseJSON(xmlHttp.responseText);
 				//ok query, save to user
-				$.post("/api/v2/users/" + user_id + "/query", {"url": query_string});
+				if (user_id)
+					$.post("/api/v2/users/" + user_id + "/query", {"url": query_string});
 
 				auto_1 = undefined;
 				auto_2 = undefined;
