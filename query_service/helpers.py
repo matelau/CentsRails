@@ -34,3 +34,12 @@ def build_engram(s):
         make_tups(arr,x,res)
 
     return res
+
+def send_request(url,package):
+    payload = json.dumps(package)
+    r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
+    prep = r.prepare()
+    s = requests.Session()
+    s.verify = False
+    resp = s.send(prep)
+    return resp.text

@@ -11,7 +11,7 @@ import string
 import urllib2
 import urllib
 import sys
-import helpers
+import helpers as hp
 import list_builders as lb
 
 try:
@@ -90,7 +90,7 @@ def query(sent_query):
 		resp = json.dumps(package)
 		return resp
 
-	qgram = helpers.build_engram(query)
+	qgram = hp.build_engram(query)
 
 	query = " " + query + " "
 
@@ -136,12 +136,21 @@ def query(sent_query):
 				locations.append(c)
 	cgrams = {}
 	for c in cars:
-		cgram = helpers.build_engram(c.lower())
+		cgram = hp.build_engram(c.lower())
 		cgram.sort(key=lambda t: len(t), reverse=True)
 		for gram in cgram:
 			if gram in qgram:
 				cgrams[c] = len(gram) if len(gram) > cgrams[c]
+				
+	if len(cgrams) > 0:
+		ordered_keys = sorted(cgrams.items(), key=operator.itemgetter(1), reverse=True)
 
+		mval = cgrams[ordered_keys[0]]
+		idx = 0
+		while(m == mval):
+			careers.append(ordered_keys[idx])
+			m = cgrams[ordered_keys[idx]]
+			idx += 1
 		#if(c.lower() in query):
 		#	careers.append(c)
 	#tokens = nltk.word_tokenize(query)
@@ -340,13 +349,7 @@ def data():
 
 		url = "https://trycents.com/api/v2/cost_of_living/compare"
 
-		payload = json.dumps(package)
-		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
-		prep = r.prepare()
-		s = requests.Session()
-		s.verify = False
-		resp = s.send(prep)
-		return resp.text
+		return hp.send_request(url,package)
 
 	if(query['type'] == 'school'):
 		package  = {
@@ -362,9 +365,11 @@ def data():
 		for u,l in unis.iteritems():
 			for a in l:
 				if a.lower() in sarr:
-					package["schools"].append({"name":u})
+					package["schools"].append({"name":u, "order":(sarr.index(a.lower())+1)})
 					scarr.append(u)
 
+		if len(package["schools"]) == 1:
+			del package["schools"][0]["order"]
 
 		if(len(query['option']) == 1):
 			package['operation'] = "get"
@@ -373,13 +378,7 @@ def data():
 
 		url = "https://trycents.com/api/v2/schools/compare"
 
-		payload = json.dumps(package)
-		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
-		prep = r.prepare()
-		s = requests.Session()
-		s.verify = False
-		resp = s.send(prep)
-		return resp.text
+		return hp.send_request(url,package)
 
 	if(query['type'] == 'major'):
 		package = {
@@ -398,14 +397,7 @@ def data():
 
 		url = "https://trycents.com/api/v2/degrees/compare"
 
-		payload = json.dumps(package)
-		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
-		prep = r.prepare()
-		s = requests.Session()
-		s.verify = False
-		resp = s.send(prep)
-
-		return resp.text
+		return hp.send_request(url,package)
 
 	if(query['type'] == 'career'):
 		package = {
@@ -422,14 +414,7 @@ def data():
 
 		url = "https://trycents.com/api/v2/careers/compare"
 
-		payload = json.dumps(package)
-		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
-		prep = r.prepare()
-		s = requests.Session()
-		s.verify = False
-		resp = s.send(prep)
-
-		return resp.text
+		return hp.send_request(url,package)
 	
 #app.config['SERVER_NAME'] = "trycents.com"
 

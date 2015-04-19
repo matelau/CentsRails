@@ -1,4 +1,5 @@
 import requests
+import json
 
 def make_major_list():
 	murl = "https://trycents.com/api/v2/degrees?only_level_names=false"
