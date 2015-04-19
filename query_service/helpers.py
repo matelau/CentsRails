@@ -1,3 +1,6 @@
+import requests
+import json
+
 def pp(req):
     """
     At this point it is completely built and ready
