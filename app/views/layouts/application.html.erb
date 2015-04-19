@@ -47,6 +47,13 @@
 <!--Navigation Bar -->
 
 <div class="navbar navbar-cents">
+    <script>
+        if (sessionStorage.getItem("colors"))
+        {
+            var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
+            $('.navbar-cents').css({"background-color":c["p_hex"]});
+        }
+    </script>
    
     <div class="navbar-header">
         <a href="/"><img class="cents-logo" src="/assets/logo trans white.png" height="109" width="259"></a>
@@ -83,7 +90,6 @@
                     if (sessionStorage.getItem("colors"))
                     {
                         var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
-                        $('.navbar-cents').css({"background-color":c["p_hex"]});
                         $('.dropdown-menu').css({"background-color":c["p_hex"]});
                     }
                 </script>
