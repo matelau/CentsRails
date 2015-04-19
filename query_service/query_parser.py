@@ -149,6 +149,7 @@ def query(sent_query):
 		mval = cgrams[ordered_keys[0][0]]
 		idx = 0
 		while(m == mval):
+			print "here"
 			careers.append(ordered_keys[idx][0])
 			m = cgrams[ordered_keys[idx][0]]
 			idx += 1
