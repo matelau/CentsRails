@@ -144,6 +144,7 @@ function setRatings(ratings) {
 		name = name.replace('(', "");
 		name = name.replace(')', "");
 		name = name.replace('\'', "");
+		name = name.replace(',', "");
 		for (var j=1; j<=obj.rating; j++)
 			$("#" + name + "_" + j).css("fill", color);
 		for (var i=5; i>obj.rating; i--)
@@ -156,6 +157,7 @@ function centsRating(field, name) {
 	name_new = name_new.replace('(', "");
 	name_new = name_new.replace(')', "");
 	name_new = name_new.replace('\'', "");
+	name_new = name_new.replace(',', "");
 	var rate = "";
 	for (var i=1; i<6; i++)
 	{
@@ -173,6 +175,7 @@ function colorChange(num, name) {
 	name = name.replace('(', "");
 	name = name.replace(')', "");
 	name = name.replace('\'', "");
+	name = name.replace(',', "");
 	for (var i=1; i<num+1; i++)
 		$("#" + name + "_" + i).css("fill", color);
 	for (var i=5; i>num; i--)

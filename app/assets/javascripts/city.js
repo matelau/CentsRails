@@ -304,16 +304,6 @@ function sketchProc(processing) {
 			data["taxes_2"] = [8.3, 2.59, 4.54, 1427];
 			data["taxes_3"] = [8.25, 3.5, 7.8, 2065];
   		}
-  		else
-  		{
-  			if(data["name_1"]){
-	  			data["name_1"] = data["name_1"];
-	  		}
-
-	  		if(data["name_2"]){
-	  			data["name_2"] = data["name_2"];
-	  		}
-  		}
   		//console.log(data["name_2"]);
   		if (!data["weather_2"])
   		{
