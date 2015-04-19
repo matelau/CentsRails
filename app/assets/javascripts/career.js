@@ -1005,6 +1005,8 @@ function update_tab(name) {
 };
 
 function hide_toggle(num) {
+	processingInstance.noLoop();
+	$("#main_viz").fadeTo(500, 0, function() {processingInstance.loop(); $("#main_viz").fadeTo(700, 1);});
 	if (num == 1)
 	{
 		if (document.getElementById("search_1_button").value == "HIDE") { 
@@ -1026,7 +1028,3 @@ function hide_toggle(num) {
 		hide_2 = !hide_2;
 	}
 };
-
-var canvas = document.getElementById("main_viz");
-if (canvas != null)
-	var processingInstance = new Processing(canvas, sketchProc);

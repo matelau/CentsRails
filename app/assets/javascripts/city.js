@@ -286,7 +286,7 @@ function sketchProc(processing) {
 
   		//console.log(data["name_1"]);
   		//sessionStorage.removeItem("data_store");
-  		if (!data || (!data["name_1"] && !data["name_2"]))
+  		if (!data || (!data["weather_1"] && !data["weather_2"]))
   		{
   			//data = new Array();
 
