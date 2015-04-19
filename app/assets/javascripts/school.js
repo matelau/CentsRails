@@ -53,7 +53,7 @@ $(document).ready(function() {
 		});
 	});	
 	if (user_id)
-		$.post("/api/v2/users/" + user_id + "/completed", {"section": "View College Comparison"});
+		$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "View College Comparison"});
 });
 
 var data, hide_1, hide_2, main, gray, font, old1, old2, sent1, sent2, auto_1, auto_2, canvas, processingInstance;

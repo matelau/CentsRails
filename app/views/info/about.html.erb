@@ -9,7 +9,7 @@
     ga('create', 'UA-61563557-1', 'auto');
     ga('send', 'pageview');
     if (user_id)
-    	$.post("/api/v2/users/" + user_id + "/completed", {"section": "View About"});
+    	$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "View About"});
 </script>
 
 

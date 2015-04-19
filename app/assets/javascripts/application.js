@@ -24,7 +24,7 @@
 //forward declaration
 function changeMade(){};
 
-var user_id;
+var user_id, api_key;
 
 //determine which js file to load
 var path = window.location.pathname.split('/');
@@ -73,15 +73,16 @@ function api_request(query) {
     	if (xhr.readyState === 4) { 
       		if (xhr.status === 200) {
       			data = jQuery.parseJSON(xhr.responseText);
+      			console.log(data);
 
 				if(data["operation"] == "undefined") {
 					localStorage.setItem("stored_query",data["query"])
 					window.location = "/info/examples/";
 				}
 				else {
-					$.post("/api/v2/users/" + user_id + "/query", {"url": query});
+					$.post("/api/v2/users/" + user_id + "/query?api_key=" + api_key, {"url": query});
 					if (user_id)
-						$.post("/api/v2/users/" + user_id + "/completed", {"section": "Use Main Search"});
+						$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "Use Main Search"});
     				localStorage.removeItem("data_store");
 
     				var o1 = null;

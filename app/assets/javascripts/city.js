@@ -57,7 +57,7 @@ $(document).ready(function() {
 		});
 	});
 	if (user_id)
-		$.post("/api/v2/users/" + user_id + "/completed", {"section": "View City Comparison"});	
+		$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "View City Comparison"});	
 });
 
 var data, hide_1, hide_2, main, gray, font, active_tab, axis_location, horz_locs, auto_1, auto_2, sent1, sent2, nochanges, old1, old2, auto_cities, canvas, processingInstance;

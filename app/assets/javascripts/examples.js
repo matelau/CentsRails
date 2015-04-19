@@ -233,7 +233,7 @@ $(document).ready(function() {
 	});
 	stillover = false;
 	if (user_id)
-		$.post("/api/v2/users/" + user_id + "/completed", {"section": "Use Examples"});
+		$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "Use Examples"});
 
 });
 
