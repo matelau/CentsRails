@@ -55,9 +55,9 @@
 
   </script>
 <script>
-    if (localStorage.getItem("colors"))
+    if (sessionStorage.getItem("colors"))
     {
-        var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+        var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
         $('.error_msg').css({"color":c["p_hex"]});
         $('.search_1').css({"border-color":c["p_hex"]});
         $('.search_2').css({"border-color":c["s_hex"]});

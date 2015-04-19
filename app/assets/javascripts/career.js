@@ -57,7 +57,7 @@ $(document).ready(function() {
 		});
 	});
 	if (user_id)
-		$.post("/api/v2/users/" + user_id + "/completed", {"section": "View Career Comparison"});	
+		$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "View Career Comparison"});	
 });
 
 var data, hide_1, hide_2, main, gray, font, active_tab, auto_1, auto_2, sent1, sent2, nochanges, old1, old2, canvas, processingInstance, color, ratings;
@@ -237,8 +237,8 @@ function career_api_request(query) {
 	  			nochanges = true;
 
 	  			//make api request here with type included
-				localStorage.setItem("query_type", type);
-				localStorage.setItem("data_store",JSON.stringify(data));
+				sessionStorage.setItem("query_type", type);
+				sessionStorage.setItem("data_store",JSON.stringify(data));
       		}
       	}
     }
@@ -250,7 +250,7 @@ function sketchProc(processing) {
 	processing.setup = function() {
 		ratings = [0, 0];
 		console.log("loaded career.js successfully");
-		if (localStorage.getItem("colors"))
+		if (sessionStorage.getItem("colors"))
 		{
 			var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
 			color = c["p_hex"];
@@ -266,7 +266,7 @@ function sketchProc(processing) {
 
 		data = new Array();
 
-		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));
+		data = jQuery.parseJSON(unescape(sessionStorage.getItem("data_store")));
 
 
 		//document.getElementById("search_1_name").value = "software engineer";

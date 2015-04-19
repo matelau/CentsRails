@@ -1795,7 +1795,7 @@
     	"type":"object",
       "properties":{ 
         "fields":{  
-          "type":"array",
+          "type":"object",
           "items":{  
             "$ref":"#/definitions/Field"
           }

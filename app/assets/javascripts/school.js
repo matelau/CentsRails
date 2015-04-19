@@ -53,7 +53,7 @@ $(document).ready(function() {
 		});
 	});	
 	if (user_id)
-		$.post("/api/v2/users/" + user_id + "/completed", {"section": "View College Comparison"});
+		$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "View College Comparison"});
 });
 
 var data, hide_1, hide_2, main, gray, font, old1, old2, sent1, sent2, auto_1, auto_2, canvas, processingInstance, color, ratings;
@@ -136,8 +136,8 @@ function school_api_request(query) {
   				}
   				delete data["elements"];
       			//make api request here with type included
-				localStorage.setItem("query_type", type);
-				localStorage.setItem("data_store",JSON.stringify(data));
+				sessionStorage.setItem("query_type", type);
+				sessionStorage.setItem("data_store",JSON.stringify(data));
 				//ok query, save to user
 				$.post("/api/v2/users/" + user_id + "/query", {"url": query_string});
 
@@ -284,7 +284,7 @@ function sketchProc(processing) {
 	processing.setup = function() {
 		ratings = [0, 0];
 		console.log("loaded school.js successfully");
-		if (localStorage.getItem("colors"))
+		if (sessionStorage.getItem("colors"))
 		{
 			var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
 			color = c["p_hex"];
@@ -307,7 +307,7 @@ function sketchProc(processing) {
 		font = processing.loadFont("Roboto");
 		processing.textFont(font, 12);
 		
- 		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));
+ 		data = jQuery.parseJSON(unescape(sessionStorage.getItem("data_store")));
 
  		if(!data || (!data["school_1"] && !data["school_2"])) {
  			data = new Array();

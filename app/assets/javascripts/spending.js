@@ -6,11 +6,11 @@ function sketchProc(processing) {
 	
 	processing.setup = function() {
 		if (user_id)
-			$.post("/api/v2/users/" + user_id + "/completed", {"section": "View Spending Breakdown"});
+			$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "View Spending Breakdown"});
 		//console.log("loaded spending.js successfully");
-		if (localStorage.getItem("colors"))
+		if (sessionStorage.getItem("colors"))
 		{
-			c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+			c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
 			main = processing.color(c["p_rgb"][0], c["p_rgb"][1], c["p_rgb"][2]);
 			gray = processing.color(c["s_rgb"][0], c["s_rgb"][1], c["s_rgb"][2]);
 			tab_color = c["p_rgb"];
@@ -57,10 +57,10 @@ function sketchProc(processing) {
 		shuffle(pie_colors);
 
 
-		if (localStorage.getItem("income") == undefined || localStorage.getItem("income") == "" || isNaN(localStorage.getItem("income")))
+		if (sessionStorage.getItem("income") == undefined || sessionStorage.getItem("income") == "" || isNaN(sessionStorage.getItem("income")))
 			spending_income = 45000;
 		else
-			spending_income = localStorage.getItem("income") * 1.00;
+			spending_income = sessionStorage.getItem("income") * 1.00;
 
 		calculateTaxes();
 		rebuildPercentages();
@@ -192,7 +192,7 @@ function buildCategories() {
 		else
 			document.getElementById(key + "_field").value = ((spending_categories[spending_selected][key]/100)*(spending_income/12)).toFixed(0);
 	}
-	if (localStorage.getItem("colors"))
+	if (sessionStorage.getItem("colors"))
 	{
 		$('.update_spend').css({"border-bottom-color":c["p_hex"]});
 		$('.tax_spend').css({"border-bottom-color":c["p_hex"]});
@@ -226,7 +226,7 @@ function spendingVal(category) {
 
 function updateIncome() {
 	if (user_id)
-		$.post("/api/v2/users/" + user_id + "/completed", {"section": "Create Custom Spending"});
+		$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "Create Custom Spending"});
 	var temp_income = document.getElementById("income_value").value;
 	if (temp_income == 0 || isNaN(temp_income))
 		temp_income = 0.001;
@@ -246,7 +246,7 @@ function updateIncome() {
 
 	//calculate taxes for new income, then rebuild the values according to the new allocation
 	spending_income = temp_income;
-	localStorage.setItem("income", spending_income);
+	sessionStorage.setItem("income", spending_income);
 	calculateTaxes();
 	rebuildPercentages();
 	//populate the fields with the rebuilt values
@@ -332,7 +332,7 @@ function lockToggle(category) {
 
 function deleteCategory(category) {
 	if (user_id)
-		$.post("/api/v2/users/" + user_id + "/completed", {"section": "Create Custom Spending"});
+		$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "Create Custom Spending"});
 	$("#" + category + "_list_item").remove();
 	spending_sum -= spending_categories[spending_selected][category];
 	delete spending_categories[spending_selected][category];
@@ -358,7 +358,7 @@ function addCategoryField() {
 		add += "</svg></li></ul>";
 		$(add).appendTo( "#category_list" );
 		document.getElementById("category_name").focus();
-		if (localStorage.getItem("colors"))
+		if (sessionStorage.getItem("colors"))
 			$('.fil0').css({"fill":c["p_hex"]});
 		else
 			$('.fil0').css({"fill":"#884412"});
@@ -410,7 +410,7 @@ function addCategory() {
 		else
 		{
 			if (user_id)
-				$.post("/api/v2/users/" + user_id + "/completed", {"section": "Create Custom Spending"});
+				$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "Create Custom Spending"});
 			var category = document.getElementById("category_name").value;
 			var no_space = category.replace(/ /g, "_");
 			var sanitized = category.replace(/&/g, '').replace(/</g, '').replace(/"/g, '');
@@ -449,7 +449,7 @@ function cancelCategory() {
 
 function updateTemplate(template) {
 	if (user_id)
-		$.post("/api/v2/users/" + user_id + "/completed", {"section": "Create Custom Spending"});
+		$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "Create Custom Spending"});
 	$('#' + spending_selected + "-button").css("cssText", "background-color: rgb(" + (tab_color[0]) + "," + (tab_color[1]) + "," + (tab_color[2]) + ")");
 	$('#' + template + "-button").css("cssText", "background-color: rgb(" + (tab_color[0]-5) + "," + (tab_color[1]-5) + "," + (tab_color[2]-5) + ") !important");
 	var temp_sum = 0;

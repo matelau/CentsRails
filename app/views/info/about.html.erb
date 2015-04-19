@@ -8,8 +8,9 @@
 
     ga('create', 'UA-61563557-1', 'auto');
     ga('send', 'pageview');
+
     if (user_id)
-    	$.post("/api/v2/users/" + user_id + "/completed", {"section": "View About"});
+    	$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "View About"});
 </script>
 
 
@@ -44,19 +45,68 @@
 	<div>
 		<input id="ac-4" name="accordion-1" type="checkbox" />
 		<label for="ac-4">About us.</label>
-		<article class="ac-small">
+		<article class="ac-about">
 			<p>We are four students finishing our bachelors degree in computer science and the University of Utah. We saw a need for
 			a tool like this and have been working hard ever since. We love feedback, <a id="color-link" href="mailto:admin@trycents.com">tell us </a> what we are doing good, need to improve, or anything else you can think of. Thanks for visiting!</p>
+			<div style="height:120px; width:710px; margin-right:20px; margin-left:20px; margin-bottom:10px; float:left; box-shadow:none;">
+				<img src="" style="height:120px; width:120px; float:left;">
+				<div style="height:120px; width:580px; float:left; box-shadow:none; margin-left:10px;">
+					<p style="margin-top: 0px;padding-top: 0px;padding-left: 0px;padding-right: 0px;padding-bottom: 0px;margin-bottom: 0px;">
+					<h3 style="margin:0px;">Asaeli Matelau</h3>text text text text text text text text text text text text text text text text 
+					text text text text text text text text text text text text text text text text text text text text text text text text 
+					text text text text text text text text text text text text text text text text text text text text text text text text 
+					text text text text text text text text text text text text text text text text text text text text text text text text
+					<a class="about-mail" href="mailto:someone@example.com">Contact Asaeli</a></p>
+				</div>
+			</div>
+			<div style="height:120px; width:710px; margin-right:20px; margin-left:20px; margin-bottom:10px; float:left; box-shadow:none;">
+				<img src="" style="height:120px; width:120px; float:left;">
+				<div style="height:120px; width:580px; float:left; box-shadow:none; margin-left:10px;">
+					<p style="margin-top: 0px;padding-top: 0px;padding-left: 0px;padding-right: 0px;padding-bottom: 0px;margin-bottom: 0px;">
+					<h3 style="margin:0px;">Austin Hammer</h3>text text text text text text text text text text text text text text text text 
+					text text text text text text text text text text text text text text text text text text text text text text text text 
+					text text text text text text text text text text text text text text text text text text text text text text text text 
+					text text text text text text text text text text text text text text text text text text text text text text text text
+					<a class="about-mail" href="mailto:someone@example.com">Contact Austin</a></p>
+				</div>
+			</div>
+			<div style="height:120px; width:710px; margin-right:20px; margin-left:20px; margin-bottom:10px; float:left; box-shadow:none;">
+				<img src="" style="height:120px; width:120px; float:left;">
+				<div style="height:120px; width:580px; float:left; box-shadow:none; margin-left:10px;">
+					<p style="margin-top: 0px;padding-top: 0px;padding-left: 0px;padding-right: 0px;padding-bottom: 0px;margin-bottom: 0px;">
+					<h3 style="margin:0px;">Michael Smith</h3>text text text text text text text text text text text text text text text text 
+					text text text text text text text text text text text text text text text text text text text text text text text text 
+					text text text text text text text text text text text text text text text text text text text text text text text text 
+					text text text text text text text text text text text text text text text text text text text text text text text text
+					<a class="about-mail" href="mailto:someone@example.com">Contact Michael</a></p>
+				</div>
+			</div>
+			<div style="height:120px; width:710px; margin-right:20px; margin-left:20px; margin-bottom:10px; float:left; box-shadow:none;">
+				<img src="/assets/wesley.jpg" style="height:120px; width:120px; float:left;">
+				<div style="height:120px; width:580px; float:left; box-shadow:none; margin-left:10px;">
+					<p style="margin-top: 0px;padding-top: 0px;padding-left: 0px;padding-right: 0px;padding-bottom: 0px;margin-bottom: 0px;">
+					<h3 style="margin:0px;">Wesley Gormley</h3>text text text text text text text text text text text text text text text text 
+					text text text text text text text text text text text text text text text text text text text text text text text text 
+					text text text text text text text text text text text text text text text text text text text text text text text text 
+					text text text text text text text text text text text text text text text text text text text text text text text text
+					<a class="about-mail" href="mailto:wesleypalmer83@gmail.com?subject=Cents">Contact Wesley</a></p>
+				</div>
+			</div>
+
 		</article>
 	</div>
+
 	
 </section>
 </div>
 
 <script>
-if (localStorage.getItem("colors"))
+if (sessionStorage.getItem("colors"))
     {
-        var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+        var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
         $('#color-link').css({"color":c["p_hex"]});
+        $('.about-mail').css({"color":c["p_hex"]});
     }
+    if (user_id)
+    	$.post("/api/v2/users/" + user_id + "/completed", {"section": "View About"});
 </script>

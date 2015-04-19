@@ -13,7 +13,7 @@ var mods_low = [0, .125, .25, .375, .5, .675, .8];
 
 $(document).ready(function() {
 	//request user data
-	$.get("/api/v2/users/" + user_id + "/query", function(response){  
+	$.get("/api/v2/users/" + user_id + "/query?api_key=" + api_key, function(response){  
 		//create set of unrepeated searches
 		var searches = [];
 		var uppers = [];
@@ -35,7 +35,7 @@ $(document).ready(function() {
 	});
 
 	//request user data
-	$.get("/api/v2/users/" + user_id + "/ratings", function(response){ 
+	$.get("/api/v2/users/" + user_id + "/ratings?api_key=" + api_key, function(response){ 
 		//major ratings
 		degree_rate = JSON.parse(JSON.stringify(response.degree_ratings));
 		//school_rate = response.school_ratings;
@@ -74,7 +74,7 @@ $(document).ready(function() {
 	});
 
 	//user site progress
-	$.get("/api/v2/users/" + user_id + "/completed", function(response){ 
+	$.get("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, function(response){ 
 		var to_do = [];
 		for (var i=0; i<progress_cats.length; i++)
 		{
@@ -110,9 +110,9 @@ $(document).ready(function() {
 	};
 	imageObj.src = '/assets/color wheel.png';
 	//get color from local storage if it exists, set old and new to that stored color
-	if (localStorage.getItem("colors"))
+	if (sessionStorage.getItem("colors"))
 	{
-		var c_store = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+		var c_store = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
 		document.getElementById("new_div").style.backgroundColor = c_store["p_hex"];
 		document.getElementById("old_div").style.backgroundColor = c_store["p_hex"];
 		c = c_store["p_rgb"];
@@ -128,7 +128,7 @@ $(document).ready(function() {
 	colorScale();
 
 	//request user data
-	$.get("/api/v2/users/" + user_id, function(response){  
+	$.get("/api/v2/users/" + user_id + "?api_key=" + api_key, function(response){  
 		$("#email").text("Email:\t\t\t" + response.email);
 		$("#fname").text("First Name:\t\t" + response.first_name);
 		$("#lname").text("Last Name:\t\t" + response.last_name);
@@ -188,7 +188,7 @@ function updateRating(field, name, num) {
 	if (field == school_rate)
 	{
 		$.ajax({
-    		url: "/api/v2/schools/" + name_prep + "/" + num,
+    		url: "/api/v2/schools/" + name_prep + "/" + num + "?api_key=" + api_key,
     		type: 'PUT',
     		data: {"user": user_id}
 		});
@@ -197,7 +197,7 @@ function updateRating(field, name, num) {
 	{
 		var level_prep = level.replace(/ /g, "%20");
 		$.ajax({
-    		url: "/api/v2/degrees/" + level_prep + "/" + name_prep + "/" + num,
+    		url: "/api/v2/degrees/" + level_prep + "/" + name_prep + "/" + num + "?api_key=" + api_key,
     		type: 'PUT',
     		data: {"user": user_id}
 		});
@@ -205,7 +205,7 @@ function updateRating(field, name, num) {
 	if (field == career_rate)
 	{
 		$.ajax({
-    		url: "/api/v2/careers/" + name_prep + "/" + num,
+    		url: "/api/v2/careers/" + name_prep + "/" + num + "?api_key=" + api_key,
     		type: 'PUT',
     		data: {"user": user_id}
 		});
@@ -289,9 +289,9 @@ function applyColor() {
 	//save to local storage
 	//document.getElementByClass("navbar-cents").style.backgroundColor = document.getElementById("new_div").style.backgroundColor;
 	document.getElementById("old_div").style.backgroundColor = document.getElementById("new_div").style.backgroundColor;
-	color_array = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+	color_array = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
 	new_colors = {};
-	$.post("/api/v2/users/" + user_id + "/completed", {"section": "Create Custom Color"});
+	$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "Create Custom Color"});
 	if (color_array == null)
 	{
 		//set all hex and rgb for both primary and secondary
@@ -337,7 +337,13 @@ function applyColor() {
 			new_colors["s_rgb"] = [c[0], c[1], c[2]];
 		}
 	}
-	localStorage.setItem("colors", JSON.stringify(new_colors));
+	sessionStorage.setItem("colors", JSON.stringify(new_colors));
+	//get new colors and save to server
+	$.ajax({
+		url: "/api/v2/users/" + user_id + "?api_key=" + api_key,
+		type: 'PATCH',
+		data: {"fields": { "primary_color": new_colors["p_hex"], "secondary_color": new_colors["s_hex"] } }
+	});
 	setRatings(school_rate);
 	setRatings(degree_rate);
 	setRatings(career_rate);
@@ -348,10 +354,10 @@ function applyColor() {
 
 function resetColor() {
 	//reset to cents orange
-	if (localStorage.getItem("colors"))
+	if (sessionStorage.getItem("colors"))
 	{
 		new_colors = {};
-		color_array = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+		color_array = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
 		if (primary)
 		{
 			document.getElementById("new_div").style.backgroundColor = "rgb(136, 68, 18)";
@@ -377,9 +383,15 @@ function resetColor() {
 			new_colors["s_rgb"] = [138, 136, 137];
 			c = [138, 136, 137];
 		}
-		localStorage.setItem("colors", JSON.stringify(new_colors));
+		sessionStorage.setItem("colors", JSON.stringify(new_colors));
 		colorScale();
 	}
+	//get colors and save to server
+	$.ajax({
+		url: "/api/v2/users/" + user_id + "?api_key=" + api_key,
+		type: 'PATCH',
+		data: {"fields": { "primary_color": new_colors["p_hex"], "secondary_color": new_colors["s_hex"] } }
+	});
 	setRatings(school_rate);
 	setRatings(degree_rate);
 	setRatings(career_rate);
@@ -403,9 +415,9 @@ function primaryShow() {
 	$("#secondary_btn").attr("class", "btn btn-color_not_select");
 	primary = true;
 	//set c to primary color in local storage or default, set new and old color divs
-	if (localStorage.getItem("colors"))
+	if (sessionStorage.getItem("colors"))
 	{
-		var c_store = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+		var c_store = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
 		document.getElementById("new_div").style.backgroundColor = c_store["p_hex"];
 		document.getElementById("old_div").style.backgroundColor = c_store["p_hex"];
 		c = c_store["p_rgb"];
@@ -424,9 +436,9 @@ function secondaryShow() {
 	$("#secondary_btn").attr("class", "btn btn-color_select");
 	primary = false;
 	//set c to secondary color in local storage or default, set new and old color divs
-	if (localStorage.getItem("colors"))
+	if (sessionStorage.getItem("colors"))
 	{
-		var c_store = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+		var c_store = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
 		document.getElementById("new_div").style.backgroundColor = c_store["s_hex"];
 		document.getElementById("old_div").style.backgroundColor = c_store["s_hex"];
 		c = c_store["s_rgb"];
