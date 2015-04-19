@@ -110,9 +110,9 @@ $(document).ready(function() {
 	};
 	imageObj.src = '/assets/color wheel.png';
 	//get color from local storage if it exists, set old and new to that stored color
-	if (localStorage.getItem("colors"))
+	if (sessionStorage.getItem("colors"))
 	{
-		var c_store = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+		var c_store = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
 		document.getElementById("new_div").style.backgroundColor = c_store["p_hex"];
 		document.getElementById("old_div").style.backgroundColor = c_store["p_hex"];
 		c = c_store["p_rgb"];
@@ -289,7 +289,7 @@ function applyColor() {
 	//save to local storage
 	//document.getElementByClass("navbar-cents").style.backgroundColor = document.getElementById("new_div").style.backgroundColor;
 	document.getElementById("old_div").style.backgroundColor = document.getElementById("new_div").style.backgroundColor;
-	color_array = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+	color_array = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
 	new_colors = {};
 	$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "Create Custom Color"});
 	if (color_array == null)
@@ -337,7 +337,7 @@ function applyColor() {
 			new_colors["s_rgb"] = [c[0], c[1], c[2]];
 		}
 	}
-	localStorage.setItem("colors", JSON.stringify(new_colors));
+	sessionStorage.setItem("colors", JSON.stringify(new_colors));
 	//get new colors and save to server
 	$.ajax({
 		url: "/api/v2/users/" + user_id + "?api_key=" + api_key,
@@ -354,10 +354,10 @@ function applyColor() {
 
 function resetColor() {
 	//reset to cents orange
-	if (localStorage.getItem("colors"))
+	if (sessionStorage.getItem("colors"))
 	{
 		new_colors = {};
-		color_array = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+		color_array = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
 		if (primary)
 		{
 			document.getElementById("new_div").style.backgroundColor = "rgb(136, 68, 18)";
@@ -383,7 +383,7 @@ function resetColor() {
 			new_colors["s_rgb"] = [138, 136, 137];
 			c = [138, 136, 137];
 		}
-		localStorage.setItem("colors", JSON.stringify(new_colors));
+		sessionStorage.setItem("colors", JSON.stringify(new_colors));
 		colorScale();
 	}
 	//get colors and save to server
@@ -415,9 +415,9 @@ function primaryShow() {
 	$("#secondary_btn").attr("class", "btn btn-color_not_select");
 	primary = true;
 	//set c to primary color in local storage or default, set new and old color divs
-	if (localStorage.getItem("colors"))
+	if (sessionStorage.getItem("colors"))
 	{
-		var c_store = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+		var c_store = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
 		document.getElementById("new_div").style.backgroundColor = c_store["p_hex"];
 		document.getElementById("old_div").style.backgroundColor = c_store["p_hex"];
 		c = c_store["p_rgb"];
@@ -436,9 +436,9 @@ function secondaryShow() {
 	$("#secondary_btn").attr("class", "btn btn-color_select");
 	primary = false;
 	//set c to secondary color in local storage or default, set new and old color divs
-	if (localStorage.getItem("colors"))
+	if (sessionStorage.getItem("colors"))
 	{
-		var c_store = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+		var c_store = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
 		document.getElementById("new_div").style.backgroundColor = c_store["s_hex"];
 		document.getElementById("old_div").style.backgroundColor = c_store["s_hex"];
 		c = c_store["s_rgb"];

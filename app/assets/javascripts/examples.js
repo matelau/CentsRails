@@ -21,9 +21,9 @@ $(document).ready(function() {
 	//wait to change bg color until image has loaded
 	//first get color from local storage
 	var bg_color;
-    if (localStorage.getItem("colors"))
+    if (sessionStorage.getItem("colors"))
     {
-        var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+        var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
         bg_color = c["p_hex"];
     }
     else
@@ -317,8 +317,8 @@ function resort(type) {
 };
 
 function spendingRedirect() {
-	localStorage.setItem("income", document.getElementById("search_1_spending").value);
-	localStorage.setItem("query_type", "spending");
+	sessionStorage.setItem("income", document.getElementById("search_1_spending").value);
+	sessionStorage.setItem("query_type", "spending");
 	window.location = "../../search/results";
 };
 
@@ -369,8 +369,8 @@ function dataRequest(type)
 					});
   				}
   				delete data["elements"];
-				localStorage.setItem("query_type", type);
-				localStorage.setItem("data_store",JSON.stringify(data));
+				sessionStorage.setItem("query_type", type);
+				sessionStorage.setItem("data_store",JSON.stringify(data));
 				//ok query, save to user
 				$.post("/api/v2/users/" + user_id + "/query", {"url": query_string});
 				window.location = "../../search/results";

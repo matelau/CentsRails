@@ -54,9 +54,9 @@
 </div>
 
 <script>
-if (localStorage.getItem("colors"))
+if (sessionStorage.getItem("colors"))
     {
-        var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+        var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
         $('#color-link').css({"color":c["p_hex"]});
     }
 </script>

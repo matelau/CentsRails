@@ -183,8 +183,8 @@ function city_api_request(query) {
   				delete data["elements"];
 
       			//make api request here with type included
-				localStorage.setItem("query_type", type);
-				localStorage.setItem("data_store",JSON.stringify(data));
+				sessionStorage.setItem("query_type", type);
+				sessionStorage.setItem("data_store",JSON.stringify(data));
 				//ok query, save to user
 				$.post("/api/v2/users/" + user_id + "/query", {"url": query_string});
 
@@ -245,9 +245,9 @@ function sketchProc(processing) {
 	processing.setup = function() {
 
 		console.log("loaded city.js successfully");
-		if (localStorage.getItem("colors"))
+		if (sessionStorage.getItem("colors"))
 		{
-			var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+			var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
 			main = processing.color(c["p_rgb"][0], c["p_rgb"][1], c["p_rgb"][2]);
 			gray = processing.color(c["s_rgb"][0], c["s_rgb"][1], c["s_rgb"][2]);
 		}
@@ -273,7 +273,7 @@ function sketchProc(processing) {
 		below_2 = new Array();
 		data = new Array();
 
-  		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));
+  		data = jQuery.parseJSON(unescape(sessionStorage.getItem("data_store")));
 
   		if(data["name_1"]){
   			data["name_1"] = data["name_1"];
@@ -285,7 +285,7 @@ function sketchProc(processing) {
 
 
   		//console.log(data["name_1"]);
-  		//localStorage.removeItem("data_store");
+  		//sessionStorage.removeItem("data_store");
   		if (!data || (!data["name_1"] && !data["name_2"]))
   		{
   			//data = new Array();

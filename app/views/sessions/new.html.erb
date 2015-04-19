@@ -19,9 +19,9 @@
 
 
 <script>
-    if (localStorage.getItem("colors"))
+    if (sessionStorage.getItem("colors"))
     {
-        var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+        var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
         $('input').css({"border-color":c["p_hex"]});
         $('.error').css({"color":c["p_hex"]});
         $('.btn-primary').css({"background-color":c["p_hex"]});

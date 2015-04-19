@@ -237,8 +237,8 @@ function career_api_request(query) {
 	  			nochanges = true;
 
 	  			//make api request here with type included
-				localStorage.setItem("query_type", type);
-				localStorage.setItem("data_store",JSON.stringify(data));
+				sessionStorage.setItem("query_type", type);
+				sessionStorage.setItem("data_store",JSON.stringify(data));
       		}
       	}
     }
@@ -249,9 +249,9 @@ function sketchProc(processing) {
 	
 	processing.setup = function() {
 		console.log("loaded career.js successfully");
-		if (localStorage.getItem("colors"))
+		if (sessionStorage.getItem("colors"))
 		{
-			var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+			var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
 			main = processing.color(c["p_rgb"][0], c["p_rgb"][1], c["p_rgb"][2]);
 			gray = processing.color(c["s_rgb"][0], c["s_rgb"][1], c["s_rgb"][2]);
 		}
@@ -263,7 +263,7 @@ function sketchProc(processing) {
 
 		data = new Array();
 
-		data = jQuery.parseJSON(unescape(localStorage.getItem("data_store")));
+		data = jQuery.parseJSON(unescape(sessionStorage.getItem("data_store")));
 
 
 		//document.getElementById("search_1_name").value = "software engineer";

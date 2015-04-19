@@ -4,11 +4,11 @@
     	<p id="error"></p>
 	</div>
 	<script>
-		var qError = localStorage.getItem("stored_query");
+		var qError = sessionStorage.getItem("stored_query");
 		if(qError != null){
 			document.getElementById("erModal").style.display = "block";
 			document.getElementById("error").innerHTML = "Your question '" + qError + "' hasn't returned any data. Here are some categories you can use to search for something more specific."
-			localStorage.removeItem("stored_query");
+			sessionStorage.removeItem("stored_query");
 		}
 
 		function clear_alert(){
@@ -167,9 +167,9 @@
     ga('send', 'pageview');
 </script>
 <script>
-    if (localStorage.getItem("colors"))
+    if (sessionStorage.getItem("colors"))
     {
-        var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+        var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
         $('.search_1_examples').css({"border-color":c["p_hex"]});
         $('.search_2_examples').css({"border-color":c["s_hex"]});
         $('.search_1_examples_suggest').css({"border-color":c["p_hex"]});

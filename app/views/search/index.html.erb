@@ -25,9 +25,9 @@
 	</form>
 
 <script>
-    if (localStorage.getItem("colors"))
+    if (sessionStorage.getItem("colors"))
     {
-        var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+        var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
         $('.main-search').css({"border-color":c["p_hex"]});
         $('.help-nav').css({"color":c["p_hex"]});
         $('.fill_circle').css({"fill": c["p_hex"]});

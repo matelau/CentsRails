@@ -2,7 +2,7 @@
 <html>
 <% if current_user %>
 <script>
-    if (!localStorage.getItem("colors"))
+    if (!sessionStorage.getItem("colors"))
     {   
         //build rgb values
         var hex_1, hex_2;
@@ -20,7 +20,7 @@
         new_colors["s_hex"] = hex_2;
         new_colors["s_rgb"] = hexToRgb(hex_2); 
         //console.log(new_colors);
-        localStorage.setItem("colors", JSON.stringify(new_colors));
+        sessionStorage.setItem("colors", JSON.stringify(new_colors));
     }
     function hexToRgb(hex) {
         var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -80,9 +80,9 @@
                     </form>
                 </ul>
                 <script>
-                    if (localStorage.getItem("colors"))
+                    if (sessionStorage.getItem("colors"))
                     {
-                        var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+                        var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
                         $('.navbar-cents').css({"background-color":c["p_hex"]});
                         $('.dropdown-menu').css({"background-color":c["p_hex"]});
                     }

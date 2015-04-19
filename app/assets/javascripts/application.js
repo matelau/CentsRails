@@ -30,7 +30,7 @@ var user_id, api_key;
 var path = window.location.pathname.split('/');
 if (path[1] == "wizard" && path[2] != "start" && path[2] != "education")
 {
-	//localStorage.removeItem("data_store");
+	//sessionStorage.removeItem("data_store");
 	var script = document.createElement("script");
 	script.type = "application/javascript";
 	script.src = "../assets/" + path[2] + ".js";
@@ -39,7 +39,7 @@ if (path[1] == "wizard" && path[2] != "start" && path[2] != "education")
 
 else if (path[1] == "search" && path[2] == "results")
 {
-	var query_type = localStorage.getItem("query_type");
+	var query_type = sessionStorage.getItem("query_type");
 	getPartial(query_type);
 }
 
@@ -76,19 +76,19 @@ function api_request(query) {
       			console.log(data);
 
 				if(data["operation"] == "undefined") {
-					localStorage.setItem("stored_query",data["query"]);
+					sessionStorage.setItem("stored_query",data["query"]);
 					window.location = "/info/examples/";
 				}
 				else if(data["query_type"] == "spending"){
-					localStorage.setItem("query_type",data["query_type"]);
-					localStorage.setItem("data_store",data);
+					sessionStorage.setItem("query_type",data["query_type"]);
+					sessionStorage.setItem("data_store",data);
 					window.location = "/search/results";
 				}
 				else {
 					$.post("/api/v2/users/" + user_id + "/query?api_key=" + api_key, {"url": query});
 					if (user_id)
 						$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "Use Main Search"});
-    				localStorage.removeItem("data_store");
+    				sessionStorage.removeItem("data_store");
 
     				var o1 = null;
 			  		var o2 = null;
@@ -131,8 +131,8 @@ function api_request(query) {
 									}
 				  					$('#disModal').hide();
 
-				  					localStorage.setItem("data_store", JSON.stringify(data));
-									localStorage.setItem("query_type", data["query_type"]);
+				  					sessionStorage.setItem("data_store", JSON.stringify(data));
+									sessionStorage.setItem("query_type", data["query_type"]);
 									window.location = "/search/results/";
 				  				}
 				  			});
@@ -156,8 +156,8 @@ function api_request(query) {
 								});
 								//data["name_2"] = o2["name"];
 							}
-				    		localStorage.setItem("data_store", JSON.stringify(data));
-							localStorage.setItem("query_type", data["query_type"]);
+				    		sessionStorage.setItem("data_store", JSON.stringify(data));
+							sessionStorage.setItem("query_type", data["query_type"]);
 							window.location = "/search/results/";
 				    	}
 					}
@@ -182,6 +182,8 @@ function api_request(query) {
 };
 
 function cleanUp() {
-	localStorage.clear();
+	user_id = null;
+	api_key = null;
+	sessionStorage.clear();
 };
 
