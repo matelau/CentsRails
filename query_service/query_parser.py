@@ -149,8 +149,8 @@ def query(sent_query):
 		mval = cgrams[ordered_keys[0][0]]
 		idx = 0
 		while(m == mval):
-			careers.append(ordered_keys[idx])
-			m = cgrams[ordered_keys[idx]]
+			careers.append(ordered_keys[idx][0])
+			m = cgrams[ordered_keys[idx][0]]
 			idx += 1
 		#if(c.lower() in query):
 		#	careers.append(c)
