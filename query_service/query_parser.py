@@ -169,7 +169,7 @@ def query(sent_query):
 				"query":sent_query,
 				"query_type":"spending"
 			}
-			package["income"] = tempp["elements"]["career_salary"][10]
+			package["income"] = tempp["elements"][0]["career_salary"][10]
 
 			resp = json.dumps(package)
 			return resp
