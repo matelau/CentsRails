@@ -141,6 +141,9 @@ function setRatings(ratings) {
 	{
 		var obj = ratings[index];
 		var name = obj.name.replace(/ /g, "_");
+		name = name.replace('(', "");
+		name = name.replace(')', "");
+		name = name.replace('\'', "");
 		for (var j=1; j<=obj.rating; j++)
 			$("#" + name + "_" + j).css("fill", color);
 		for (var i=5; i>obj.rating; i--)
@@ -149,7 +152,10 @@ function setRatings(ratings) {
 };
 
 function centsRating(field, name) {
-	name_new = name.replace(/ /g, "_");
+	var name_new = name.replace(/ /g, "_");
+	name_new = name_new.replace('(', "");
+	name_new = name_new.replace(')', "");
+	name_new = name_new.replace('\'', "");
 	var rate = "";
 	for (var i=1; i<6; i++)
 	{
@@ -164,6 +170,9 @@ function centsRating(field, name) {
 };
 
 function colorChange(num, name) {
+	name = name.replace('(', "");
+	name = name.replace(')', "");
+	name = name.replace('\'', "");
 	for (var i=1; i<num+1; i++)
 		$("#" + name + "_" + i).css("fill", color);
 	for (var i=5; i>num; i--)
@@ -227,10 +236,10 @@ function setHeight(id1, id2, len) {
 	{
 		document.getElementById(id1).value = "1";
 		if (len != 0)
-			$(id2).height(Math.min(310, 30 + len * 30));
+			$(id2).height(Math.min(312, 42 + len * 30));
 		else
 			$(id2).height(0);
-		if (310 <= (30 + len * 30))
+		if (312 <= (42 + len * 30))
 			$(id2).css("overflow-y", "scroll");
 	}
 	else
