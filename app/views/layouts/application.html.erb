@@ -1,5 +1,33 @@
 <!DOCTYPE html>
 <html>
+<% if current_user %>
+<script>
+    if (!localStorage.getItem("colors"))
+    {   
+        //build rgb values
+        var hex_1, hex_2;
+        if ("<%= current_user.primary_color %>" == null)
+            hex_1 = "#884412";
+        else
+            hex_1 = "<%= current_user.primary_color.to_s %>";
+        if ("<%= current_user.secondary_color.to_s %>" == null)
+            hex_2 = "#8A8889";
+        else
+            hex_2 = "<%= current_user.secondary_color.to_s %>";
+        var new_colors = {};//{"p_hex":hex_1, "s_hex":hex_2, "p_rgb":hexToRgb(hex_1), "s_rgb":hexToRgb(hex_2)};
+        new_colors["p_hex"] = hex_1;
+        new_colors["p_rgb"] = hexToRgb(hex_1);
+        new_colors["s_hex"] = hex_2;
+        new_colors["s_rgb"] = hexToRgb(hex_2); 
+        //console.log(new_colors);
+        localStorage.setItem("colors", JSON.stringify(new_colors));
+    }
+    function hexToRgb(hex) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)] : null;
+    };
+</script>
+<% end %>
 <head>
   <title><%= content_for?(:title) ? content_for(:title) : "Cents" %></title>
     <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">-->
@@ -33,7 +61,7 @@
         <!--check session variables to see if logged in -->
             <% if current_user %>
                 <li><a id="profile_nav" href="/user/profile"><%= current_user.first_name.upcase %></a></li>
-                <li><a id="logout_nav" href="/user/logout">LOGOUT</a></li>
+                <li><a id="logout_nav" onclick='cleanUp();' href="/user/logout">LOGOUT</a></li>
             <% else %>
                 <li><a id="login_nav" href="/user/login">LOG IN</a></li>
                 <li><a id="register_nav" href="/user/register">REGISTER</a></li>
@@ -51,20 +79,21 @@
                         <button class="arrow-button" onclick="api_request(document.getElementById('drop-search').value); return false;"><img src="/assets/arrow white.png" height="15" width="15"></button>
                     </form>
                 </ul>
+                <script>
+                    if (localStorage.getItem("colors"))
+                    {
+                        var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+                        $('.navbar-cents').css({"background-color":c["p_hex"]});
+                        $('.dropdown-menu').css({"background-color":c["p_hex"]});
+                    }
+                </script>
                 
             </li>
         </ul>
     </div>
 </div>
 
-<script>
-    if (localStorage.getItem("colors"))
-    {
-        var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
-        $('.navbar-cents').css({"background-color":c["p_hex"]});
-        $('.dropdown-menu').css({"background-color":c["p_hex"]});
-    }
-</script>
+
 
 
 <%= yield %>
@@ -86,6 +115,11 @@
             user_id = <%= current_user.id %>;
             //api_key = <%= current_user.api_key %>;
             api_key = "re5-fHO6-5CnUSglEAioWg";
+            //save colors to local storage
+
+            
+
+            
         </script>   
     <% end %>
 

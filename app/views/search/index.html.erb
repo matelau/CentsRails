@@ -24,7 +24,16 @@
 	<p class="help-text">NEW HERE? CHECK OUT OUR <a class="help-nav" href="/wizard/start">WIZARD</a> OR SOME <a class="help-nav" href="/info/examples">EXAMPLES</a>.</p>
 	</form>
 
-
+<script>
+    if (localStorage.getItem("colors"))
+    {
+        var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+        $('.main-search').css({"border-color":c["p_hex"]});
+        $('.help-nav').css({"color":c["p_hex"]});
+        $('.fill_circle').css({"fill": c["p_hex"]});
+        //$('#examples_slider').css({"background-color": c["p_hex"]});
+    }
+</script>
 
 <link rel="stylesheet" href="/assets/ideal-image-slider.css">
 
@@ -74,18 +83,6 @@
     $('#loading').attr("hidden", "true");
     $('#search-bar').removeAttr("hidden");
   });
-    if (localStorage.getItem("colors"))
-    {
-        var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
-        $('.main-search').css({"border-color":c["p_hex"]});
-        $('.help-nav').css({"color":c["p_hex"]});
-        $('.fill_circle').css({"fill": c["p_hex"]});
-        //$('#examples_slider').css({"background-color": c["p_hex"]});
-    }
-    else
-    {
-    	//$('#examples_slider').css({"background-color": "#884412"});
-    }
     function suggested() {
         if (user_id)
             $.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "Submit Feedback"});

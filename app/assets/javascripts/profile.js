@@ -339,11 +339,10 @@ function applyColor() {
 	}
 	localStorage.setItem("colors", JSON.stringify(new_colors));
 	//get new colors and save to server
-	console.log(JSON.stringify([{ "name": "primary_color", "value": new_colors["p_hex"]} ]));
 	$.ajax({
 		url: "/api/v2/users/" + user_id + "?api_key=" + api_key,
 		type: 'PATCH',
-		data: {"fields": { "name": "primary_color", "value": "made it" } }
+		data: {"fields": { "primary_color": new_colors["p_hex"], "secondary_color": new_colors["s_hex"] } }
 	});
 	setRatings(school_rate);
 	setRatings(degree_rate);
@@ -387,6 +386,12 @@ function resetColor() {
 		localStorage.setItem("colors", JSON.stringify(new_colors));
 		colorScale();
 	}
+	//get colors and save to server
+	$.ajax({
+		url: "/api/v2/users/" + user_id + "?api_key=" + api_key,
+		type: 'PATCH',
+		data: {"fields": { "primary_color": new_colors["p_hex"], "secondary_color": new_colors["s_hex"] } }
+	});
 	setRatings(school_rate);
 	setRatings(degree_rate);
 	setRatings(career_rate);

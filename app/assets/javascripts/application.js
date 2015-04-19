@@ -181,3 +181,7 @@ function api_request(query) {
     
 };
 
+function cleanUp() {
+	localStorage.clear();
+};
+
