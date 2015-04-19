@@ -143,6 +143,8 @@ def query(sent_query):
 			if gram in qgram:
 				cgrams[c] = len(gram)
 
+	print cgrams
+
 	if len(cgrams) > 0:
 		ordered_keys = sorted(cgrams.items(), key=operator.itemgetter(1), reverse=True)
 
