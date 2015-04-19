@@ -81,7 +81,6 @@ function api_request(query) {
 				}
 				else if(data["query_type"] == "spending"){
 					sessionStorage.setItem("query_type",data["query_type"]);
-					sessionStorage.setItem("data_store",data);
 					sessionStorage.setItem("income",data["income"]);
 					window.location = "/search/results";
 				}

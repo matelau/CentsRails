@@ -26,13 +26,28 @@ function startSlider() {
 
 function popular_populate(type) {
 	if (type == "city")
-		document.getElementById("search").value = "Dallas, TX vs Madison, WI";
+	{
+		var arr = ["Dallas, TX vs Madison, WI","Las Vegas vs Seattle","slc vs sf","Boston, MA vs Detroit, MI","Omaha, NE vs NYC"];
+		document.getElementById("search").value = arr[Math.random() * 5];
+	}
 	if (type == "major")
-		document.getElementById("search").value = "Computer Science vs Civil Engineering";
+	{
+		var arr = ["Computer Science vs Civil Engineering","Art History","Business Management Bachelors","Law","Computer Science Masters"]
+		document.getElementById("search").value = arr[Math.random() * 5];
+	}
 	if (type == "school")
+	{
 		document.getElementById("search").value = "Stanford vs Bama";
+
+	}
 	if (type == "career")
-		document.getElementById("search").value = "future career seach";
+	{
+		document.getElementById("search").value = "Software Developer vs Account Manager";
+
+	}
 	if (type == "spend")
+	{
 		document.getElementById("search").value = "What can I afford with my salary?";
+
+	}
 };
