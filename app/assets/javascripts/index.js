@@ -25,7 +25,7 @@ function startSlider() {
 };
 
 function popular_populate(type) {
-	var idx = Math.floor(Math.random() * 6);
+	var idx = Math.floor(Math.random() * 5);
 	if (type == "city")
 	{
 		var arr = ["Dallas, TX vs Madison, WI","Las Vegas vs Seattle","slc vs sf","Boston, MA vs Detroit, MI","Omaha, NE vs NYC"];
