@@ -43,7 +43,7 @@ function popular_populate(type) {
 	}
 	if (type == "career")
 	{
-		var arr = ["Software Developer vs Account Manager","Registered Nurse","Director of Operations","Anesthesiologist vs General Surgeon","Sales Associate"];
+		var arr = ["Software Developer vs Account Manager","Registered Nurse","Director of Operations","Anesthesiologist vs Surgeon","Sales Associate"];
 		document.getElementById("search").value = arr[idx];
 	}
 	if (type == "spend")
