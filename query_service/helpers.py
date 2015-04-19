@@ -36,6 +36,9 @@ def build_engram(s):
     for x in xrange(2,len(arr)):
         make_tups(arr,x,res)
 
+    res.remove(("of",))
+    res.remove(("in",))
+
     return res
 
 def send_request(url,package):
