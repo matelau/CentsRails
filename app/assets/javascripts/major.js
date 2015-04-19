@@ -225,6 +225,14 @@ function major_api_request(query) {
 		  	 		$("#search_1_button").removeAttr("disabled");
 	  			}
 	  			nochanges = true;
+	  			//clear out the ability to rate
+				$("#rating_1").empty();
+				var button = "<a id='rating_1_button' class='btn btn-default' onclick='rate(1)'>RATE THIS CAREER</a>";
+				$("#rating_1").html(button);
+				$("#rating_2").empty();
+				button = "<a id='rating_2_button' class='btn btn-default' onclick='rate(2)'>RATE THIS CAREER</a>";
+				$("#rating_2").html(button);
+				$('.btn-default').css({"color":color});
 	  			if (data["jobs_1"].length == 0 && data["jobs_2"].length == 0)
 				{
 					//no top jobs for either major, disable that tab
@@ -627,6 +635,7 @@ function rate(id) {
 		//add in x for cancel
 		cents += "<a class='btn btn-default' style='margin-left:5px; margin-bottom:30px;' onclick='deleteRate(" + id + ")'>X</a>";
 		$("#rating_" + id).html(cents);
+		$('.btn-default').css({"color":color});
 		$("#rating_" + id).fadeTo(700, 1);
 	});
 };
@@ -636,6 +645,7 @@ function deleteRate(id) {
 		$("#rating_" + id).empty();
 		var button = "<a id='rating_" + id + "_button' class='btn btn-default' onclick='rate(" + id + ")'>RATE THIS MAJOR</a>";
 		$("#rating_" + id).html(button);
+		$('.btn-default').css({"color":color});
 		$("#rating_" + id).fadeTo(700, 1);
 	});
 };
