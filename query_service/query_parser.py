@@ -150,8 +150,10 @@ def query(sent_query):
 		m = mval
 		idx = 0
 		while(m == mval):
-			careers.append(ordered_keys[idx][0])
 			m = cgrams[ordered_keys[idx][0]]
+			if m < mval:
+				break
+			careers.append(ordered_keys[idx][0])
 			idx += 1
 			if idx >= len(ordered_keys):
 				break
