@@ -76,8 +76,13 @@ function api_request(query) {
       			console.log(data);
 
 				if(data["operation"] == "undefined") {
-					localStorage.setItem("stored_query",data["query"])
+					localStorage.setItem("stored_query",data["query"]);
 					window.location = "/info/examples/";
+				}
+				else if(data["query_type"] == "spending"){
+					localStorage.setItem("query_type",data["query_type"]);
+					localStorage.setItem("data_store",data);
+					window.location = "/search/results";
 				}
 				else {
 					$.post("/api/v2/users/" + user_id + "/query?api_key=" + api_key, {"url": query});
@@ -87,73 +92,75 @@ function api_request(query) {
 
     				var o1 = null;
 			  		var o2 = null;
+			  		if(data["elements"])
+			  		{
+	    				if(data["elements"].length > 2) {
+	    					for(var i = 0; i < data["elements"].length; i++) {
+				  				$('#disSelections > tbody:last').append("<tr><td><input type='checkbox' name='"+i+"' class='obj'/></td><td>"+data['elements'][i]['name']+"</td></tr>");
+				  			}
 
-    				if(data["elements"].length > 2) {
-    					for(var i = 0; i < data["elements"].length; i++) {
-			  				$('#disSelections > tbody:last').append("<tr><td><input type='checkbox' name='"+i+"' class='obj'/></td><td>"+data['elements'][i]['name']+"</td></tr>");
-			  			}
+				  			$('#disModal').show();
 
-			  			$('#disModal').show();
+				  			$('#sub').click(function(event){
+				  				var obs = $('input:checkbox:checked.obj').map(function () {
+								  return this.name;
+								}).get();
 
-			  			$('#sub').click(function(event){
-			  				var obs = $('input:checkbox:checked.obj').map(function () {
-							  return this.name;
-							}).get();
+				  				if(obs.length == 0 || obs.length > 2){
+				  					alert("Please click one or two only.");
+				  				}
+				  				else{
+				  					o1 = data["elements"][obs[0]];
+				  					if(obs.length == 2){
+				  						o2 = data["elements"][obs[1]];
+				  					}
 
-			  				if(obs.length == 0 || obs.length > 2){
-			  					alert("Please click one or two only.");
-			  				}
-			  				else{
-			  					o1 = data["elements"][obs[0]];
-			  					if(obs.length == 2){
-			  						o2 = data["elements"][obs[1]];
-			  					}
+				  					delete data["elements"];
 
-			  					delete data["elements"];
-
-					    		Object.keys(o1).forEach(function(key) {
-					    			var nKey = key + "_1";
-					    			data[nKey] = o1[key];
-								});
-								data["name_1"] = o1["name"];
-					    		if(o2 != null){
-									Object.keys(o2).forEach(function(key) {
-										var nKey = key + "_2";
-						    			data[nKey] = o2[key];
+						    		Object.keys(o1).forEach(function(key) {
+						    			var nKey = key + "_1";
+						    			data[nKey] = o1[key];
 									});
-									data["name_2"] = o2["name"];
-								}
-			  					$('#disModal').hide();
+									data["name_1"] = o1["name"];
+						    		if(o2 != null){
+										Object.keys(o2).forEach(function(key) {
+											var nKey = key + "_2";
+							    			data[nKey] = o2[key];
+										});
+										data["name_2"] = o2["name"];
+									}
+				  					$('#disModal').hide();
 
-			  					localStorage.setItem("data_store", JSON.stringify(data));
-								localStorage.setItem("query_type", data["query_type"]);
-								window.location = "/search/results/";
-			  				}
-			  			});
-			    	}
-			    	else {
-			    		o1 = data["elements"][0];
-	  					if(data["elements"].length == 2){
-	  						o2 = data["elements"][1];
-	  					}
+				  					localStorage.setItem("data_store", JSON.stringify(data));
+									localStorage.setItem("query_type", data["query_type"]);
+									window.location = "/search/results/";
+				  				}
+				  			});
+				    	}
+				    	else {
+				    		o1 = data["elements"][0];
+		  					if(data["elements"].length == 2){
+		  						o2 = data["elements"][1];
+		  					}
 
-			    		Object.keys(o1).forEach(function(key) {
-			    			var nKey = key + "_1";
-			    			data[nKey] = o1[key];
-						});
-
-						//data["name_1"] = o1["name"];
-			    		if(o2 != null){
-							Object.keys(o2).forEach(function(key) {
-								var nKey = key + "_2";
-				    			data[nKey] = o2[key];
+				    		Object.keys(o1).forEach(function(key) {
+				    			var nKey = key + "_1";
+				    			data[nKey] = o1[key];
 							});
-							//data["name_2"] = o2["name"];
-						}
-			    		localStorage.setItem("data_store", JSON.stringify(data));
-						localStorage.setItem("query_type", data["query_type"]);
-						window.location = "/search/results/";
-			    	}
+
+							//data["name_1"] = o1["name"];
+				    		if(o2 != null){
+								Object.keys(o2).forEach(function(key) {
+									var nKey = key + "_2";
+					    			data[nKey] = o2[key];
+								});
+								//data["name_2"] = o2["name"];
+							}
+				    		localStorage.setItem("data_store", JSON.stringify(data));
+							localStorage.setItem("query_type", data["query_type"]);
+							window.location = "/search/results/";
+				    	}
+					}
 				}
       		}
   		}
