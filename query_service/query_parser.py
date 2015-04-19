@@ -153,7 +153,7 @@ def query(sent_query):
 			careers.append(ordered_keys[idx][0])
 			m = cgrams[ordered_keys[idx][0]]
 			idx += 1
-			if idx > len(ordered_keys):
+			if idx >= len(ordered_keys):
 				break
 		#if(c.lower() in query):
 		#	careers.append(c)
