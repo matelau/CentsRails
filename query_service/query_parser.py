@@ -103,14 +103,14 @@ def query(sent_query):
 			sfault = True
 
 	if sval == "random" and dval == "":
-		dval = dvals[randint(0,3)]
+		idx = randint(0,3)
+		print idx
+		dval = dvals[idx]
 
 	if not sfault:
 		url = "https://trycents.com/api/v2/" + dval + "/" + sval
 
 		qtype = nvals[dval]
-
-		print url
 
 		return hp.send_get(url, qtype)
 
