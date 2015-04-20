@@ -150,7 +150,7 @@ def query(sent_query):
 				if next:
 					continue
 			careers.append(ordered_keys[x][0])
-			grams.append(mgrams[ordered_keys[x][0]])
+			grams.add(mgrams[ordered_keys[x][0]])
 
 	if "spending" in query or "afford" in query:
 		if len(careers) > 0:
