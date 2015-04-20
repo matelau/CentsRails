@@ -144,8 +144,6 @@ def query(sent_query):
 			if m < mval:
 				next = False
 				for g in grams:
-					print set(mgrams[ordered_keys[x][0]])
-					print set(g)
 					if set(mgrams[ordered_keys[x][0]]) < set(g):
 						next = True
 				if next:
