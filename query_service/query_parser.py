@@ -119,6 +119,7 @@ def query(sent_query):
 			if c not in locations:
 				locations.append(c)
 	cgrams = {}
+	mgrams = {}
 	for c in cars:
 		cgram = hp.build_engram(c.lower())
 		cgram.sort(key=lambda t: len(t), reverse=True)
@@ -127,23 +128,29 @@ def query(sent_query):
 				if c in cgrams:
 					if len(gram) > cgrams[c]:
 						cgrams[c] = len(gram)
+						mgrams[c] = gram
 				else:
 					cgrams[c] = len(gram)
+					mgrams[c] = gram
 
 	if len(cgrams) > 0:
 		ordered_keys = sorted(cgrams.items(), key=operator.itemgetter(1), reverse=True)
 
 		mval = cgrams[ordered_keys[0][0]]
 		m = mval
-		idx = 0
-		while(m == mval):
-			m = cgrams[ordered_keys[idx][0]]
+		grams = set()
+		for x in range(0,len(ordered_keys)):
+			m = cgrams[ordered_keys[x][0]]
 			if m < mval:
-				break
-			careers.append(ordered_keys[idx][0])
-			idx += 1
-			if idx >= len(ordered_keys):
-				break
+				next = False
+				for g in gram:
+					if set(mgrams[ordered_keys[x]]) < set(g):
+						next = True
+
+				if next:
+					continue
+			careers.append(ordered_keys[x][0])
+			grams.append(mgrams[ordered_keys[x][0]])
 
 	if "spending" in query or "afford" in query:
 		if len(careers) > 0:
