@@ -53,10 +53,12 @@ def send_request(url,package):
     resp = s.send(prep)
     return resp.text
 
-def send_get(url):
+def send_get(url,qtype):
     r = requests.Request("GET",url,headers={'Content-Type':'application/json','Accept':'application/json'})
     prep = r.prepare()
     s = requests.Session()
     s.verify = False
     resp = s.send(prep)
-    return resp.text
+    package = json.loads(resp.text)
+    package["query_type"] = qtype
+    return json.dumps(package)

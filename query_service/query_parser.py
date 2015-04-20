@@ -39,6 +39,7 @@ supers = {"best":"best","worst":"worst","cheapest":"cheapest","least expensive":
 levels = ["associate","bachelor","master","doctorate","certificate"]
 datasets = {"occupation":"careers","career":"careers","job":"careers","school":"schools","universities":"schools","city":"cost_of_living","town":"cost_of_living","cities":"cost_of_living","major":"degrees","degree":"degrees"}
 dvals = ["cost_of_living","schools","careers","degrees"]
+nvals = {"cost_of_living":"city","schools":"school","careers":"career","degrees":"major"}
 
 states = open("states.csv", "rU")
 
@@ -107,9 +108,11 @@ def query(sent_query):
 	if not sfault:
 		url = "https://trycents.com/api/v2/" + dval + "/" + sval
 
+		qtype = nvals[dval]
+
 		print url
 
-		return hp.send_get(url)
+		return hp.send_get(url, qtype)
 
 	for u,l in unis.iteritems():
 		for a in l:
