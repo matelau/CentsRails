@@ -89,6 +89,8 @@ def query(sent_query):
 	for abbr, c in common_abbrs.iteritems():
 		if re.search(r"\b" + abbr + r"\b", query):
 			query = re.sub(r"\b" + abbr + r"\b", c, query)
+
+	print query
 	lmatch = []
 	for l in levels:
 		if l in query:
