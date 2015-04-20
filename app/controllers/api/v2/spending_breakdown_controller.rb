@@ -64,26 +64,9 @@ class Api::V2::SpendingBreakdownController < ApplicationController
 		end
 
 		result = Hash.new
-		error_list = []
 
-		# Check for the required fields, and return an appropriate message if
-		# they are not present.
-		unless params[:fields].present? and params[:fields].kind_of?(Array)
-			error_list << 'The fields param was not an array or was empty'
-			result[:errors] = error_list
-			return render json: result, status: 400
-		end 
-
-		params[:fields].each do |field|
-			unless field[:name].present? and 
-					field[:value].present?
-				error_list << 'Each field object must have a name and value'
-			end
-		end
-
-		unless error_list.empty?
-			result[:errors] = error_list
-			return render json: result, status: 400
+		unless params[:fields].present? and params[:fields].kind_of?(Hash)
+			return render json: 'The fields param was not present or not a hash.', status: 400
 		end
 
 		unless User.exists? params[:id]
@@ -91,20 +74,20 @@ class Api::V2::SpendingBreakdownController < ApplicationController
 		end
 
 		# Save the data.
-		params[:fields].each do |field|
+		params[:fields].each do |k, v|
 
 			# Check if this item already exists.
 			amount = Amount.where(user_id: params[:id])
 										.where(category: params[:category])
-										.where(name: field[:name])
+										.where(name: k)
 										.first
 			unless amount.present?
 				amount = Amount.new
 			end
 
 			amount.user_id = params[:id]
-			amount.name = field[:name]
-			amount.value = field[:value]
+			amount.name = k
+			amount.value = v
 			amount.category = params[:category]
 			
 			return render json: result, status: 500 unless amount.save
