@@ -11,7 +11,6 @@ import urllib2
 import urllib
 import sys
 import operator
-import random
 import os
 import struct
 import helpers as hp
@@ -106,9 +105,7 @@ def query(sent_query):
 
 	if sval == "random" and dval == "":
 		value = struct.unpack("<L", os.urandom(4))[0] % 4
-		print value
-		idx = 0
-		dval = dvals[idx]
+		dval = dvals[value]
 
 	if not sfault:
 		url = "https://trycents.com/api/v2/" + dval + "/" + sval

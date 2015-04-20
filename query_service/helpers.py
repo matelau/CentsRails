@@ -1,6 +1,5 @@
 import requests
 import json
-from random import randint
 
 def pp(req):
     """
