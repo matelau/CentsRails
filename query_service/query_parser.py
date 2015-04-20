@@ -104,7 +104,7 @@ def query(sent_query):
 			sfault = True
 
 	if sval == "random" and dval == "":
-		print os.urandom(1)
+		print int(os.urandom(1)) % 4
 		print random.uniform(0,0.3)
 		idx = hp.get_rand(0,3)
 		print idx
