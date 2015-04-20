@@ -1299,10 +1299,10 @@
         ],
         "responses":{  
           "200":{  
-            "description":"Data was deleted."
+            "description":"Data was updated."
           },
           "400":{  
-            "description":"Each field object must have a name and value."
+            "description":"The fields param was not present or not a hash."
           },
           "401":{  
             "description":"Invalid API key."
@@ -1350,7 +1350,7 @@
             "name":"body",
             "required":true,
             "schema":{  
-              "$ref":"#/definitions/SB_body"
+              "$ref":"#/definitions/Fields"
             }
           }
         ]
