@@ -68,29 +68,61 @@ class Api::V2::CareersController < ApplicationController
 		end
 	end
 
+	def show_best
+		career = Career.order("sal2013 DESC").first
+		careers = [{name: career[:name]}]
+		internal_show_two(careers, "get")
+	end
+
+	def show_worst
+		career = Career.order("sal2013").first
+		careers = [{name: career[:name]}]
+		internal_show_two(careers, "get")
+	end
+
+	def show_random
+		ids = Career.select(:id)
+		career = Career.find( ids[Random.rand(ids.length)] )
+		careers = [{name: career[:name]}]
+		internal_show_two(careers, "get")
+	end
+
 	# Get two careers to compare.
 	def show_two
+		if params[:operation].present?
+			operation = params[:operation]
+		else
+			operation = "undefined"
+		end
+
+		careers = params[:careers]
+		internal_show_two(careers, operation)
+	end
+
+private
+
+	def internal_show_two(c, o)
 		result = Hash.new
 
-		unless params[:careers].present?
+		unless c.present?
 			return render json: 'No careers were in the careers array', status: 404
 		end
 
 		# Order the careers.
 		careers = Array.new
-		if params[:careers][0][:order].present? and params[:careers][1][:order].present?
-			params[:careers].each do |career|
+		if c[0][:order].present? and c[1][:order].present?
+			c.each do |career|
 				if career[:order] == 1
 					careers << career
 				end
 			end
-			params[:careers].each do |career|
+			c.each do |career|
 				if career[:order] == 2
 					careers << career
 				end
 			end
 		else
-			careers = params[:careers]
+			careers = c
 		end
 
 		# Create a string of the form 'name = n1 OR name = n2 ...' and a list of 
@@ -133,17 +165,24 @@ class Api::V2::CareersController < ApplicationController
 					cents_rating = cents_rating[0][:average].to_f
 
 					car["career_#{index}"] = Hash.new
-					car["career_#{index}"]["name_#{index}"] = record[:name]
-					car["career_#{index}"]["career_salary_#{index}"] = [record[:sal2003], 
+					car["career_#{index}"]["name"] = record[:name]
+					sals = [record[:sal2003], 
 						record[:sal2004], record[:sal2005], record[:sal2006], record[:sal2007],
 						record[:sal2008], record[:sal2009], record[:sal2010], record[:sal2011], 
 						record[:sal2012], record[:sal2013]]
-					car["career_#{index}"]["career_demand_#{index}"] = [record[:job_openings], 
-							record[:employment_growth_percent], 
+
+					min_sal = sals.compact.min
+					max_sal = sals.compact.max
+
+					sals << min_sal
+					sals << max_sal
+					car["career_#{index}"]["career_salary"] = sals
+					car["career_#{index}"]["career_demand"] = [record[:job_openings], 
+							record[:employment_change_percent], 
 							record[:employment_change_volume]
 					]
-					car["career_#{index}"]["career_unemploy_#{index}"] = [record[:unemp11], record[:unemp12]]
-					car["career_#{index}"]["career_rating_#{index}"] = cents_rating
+					car["career_#{index}"]["career_unemploy"] = [record[:unemp11], record[:unemp12]]
+					car["career_#{index}"]["career_rating"] = cents_rating
 					break
 				end
 			end
@@ -168,6 +207,8 @@ class Api::V2::CareersController < ApplicationController
 		if no_data_for.present?
 			result[:no_data_for] = no_data_for
 		end
+
+		result[:operation] = o
 
 		return render json: result, status: 200
 	end

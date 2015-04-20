@@ -1,10 +1,10 @@
 <div  class="center" style="width:980px; padding-top:10px;">
 	<ul class="viz_objects">
 		<canvas class="process_viz" id="main_viz" width="655" height="375"></canvas>
-		<ul style="padding-left:0px; list-style:none">
+		<ul style="padding-left:0px; list-style:none; height:450px;">
 			<li style="margin-top:25px"><a class="btn btn-default" id="add_cat_button" onclick="addCategoryField()" >ADD CATEGORY</a></li>
 			<!-- <a class="btn btn-default" onclick="addCategoryField()" >ADD CATEGORY</a> -->
-			<li id="category_list" style="overflow-y:auto; overflow-x:hidden; height:375px; width:275px; position:relative; margin-bottom:20px;"></li>
+			<li id="category_list" style="overflow-y:auto; overflow-x:hidden; height:355px; width:290px; position:relative; margin-bottom:20px;"></li>
 			<!-- <ul style="list-style-type: none">
 				<li><a class="btn btn-default" onclick="addCategoryField()">ADD CATEGORY</a></li>
 				<li><a class="btn btn-default" onclick="update_tab(2)">SALARY</a></li>
@@ -41,9 +41,9 @@
 
   </script>
 	<script>
-    if (localStorage.getItem("colors"))
+    if (sessionStorage.getItem("colors"))
     {
-    	var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+    	var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
         $('.btn-default').css({"color":c["p_hex"]});
         $('.main-search').css({"border-color":c["p_hex"]});
         $('#income-text').css({"color":c["p_hex"]});

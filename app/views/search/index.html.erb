@@ -24,7 +24,16 @@
 	<p class="help-text">NEW HERE? CHECK OUT OUR <a class="help-nav" href="/wizard/start">WIZARD</a> OR SOME <a class="help-nav" href="/info/examples">EXAMPLES</a>.</p>
 	</form>
 
-
+<script>
+    if (sessionStorage.getItem("colors"))
+    {
+        var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
+        $('.main-search').css({"border-color":c["p_hex"]});
+        $('.help-nav').css({"color":c["p_hex"]});
+        $('.fill_circle').css({"fill": c["p_hex"]});
+        //$('#examples_slider').css({"background-color": c["p_hex"]});
+    }
+</script>
 
 <link rel="stylesheet" href="/assets/ideal-image-slider.css">
 
@@ -45,13 +54,29 @@
 
 </div>
 
-
-
 <div id="loading" hidden="hidden" style="padding-top:100px">
   <img id="loading-image" style="display: block; margin: 0 auto;" src="../assets/circle load.gif" alt="Loading..." />
 </div>
 
-<footer>SUGGESTIONS? <a class="help-nav" href="https://docs.google.com/forms/d/1wrSEhVhGICnqK1hg4kQ6YHSHAn8-zkcJkosS_zIfmXk/viewform">LET US KNOW</a>!</footer>
+<div class="modal" id="disModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Disambiguation Alert!</h4>
+            </div>
+            <div class="modal-body">
+                <p>Your search has returned more than two results. Please select two from this menu:</p>
+                <table id="disSelections"><tbody></tbody></table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="sub" class="btn btn-primary">Select</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer><img src="/assets/play_store_logo.png" style="width: 230px; height: 83px; cursor:pointer;" onclick="window.open('https://play.google.com/store/apps/details?id=com.matelau.junior.centsproject')"></img>
+<br>SUGGESTIONS? <a class="help-nav" href="https://docs.google.com/forms/d/1wrSEhVhGICnqK1hg4kQ6YHSHAn8-zkcJkosS_zIfmXk/viewform">LET US KNOW</a>!</footer>
 
 
 <script language="javascript" type="text/javascript">
@@ -59,18 +84,10 @@
     $('#loading').attr("hidden", "true");
     $('#search-bar').removeAttr("hidden");
   });
-    if (localStorage.getItem("colors"))
-    {
-        var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
-        $('.main-search').css({"border-color":c["p_hex"]});
-        $('.help-nav').css({"color":c["p_hex"]});
-        $('.fill_circle').css({"fill": c["p_hex"]});
-        //$('#examples_slider').css({"background-color": c["p_hex"]});
-    }
-    else
-    {
-    	//$('#examples_slider').css({"background-color": "#884412"});
-    }
+    function suggested() {
+        if (user_id)
+            $.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "Submit Feedback"});
+    };
 </script>
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

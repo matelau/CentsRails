@@ -12,6 +12,8 @@
 
 </script>
 
+<script src="/assets/profile.js"></script>
+
 <div style="padding-top:15px;" class="center">
 <h2>Profile and Preferences</h2>
 <h5>Click below to view or change your preferences.</h5>
@@ -20,20 +22,40 @@
 		<div>
 			<input id="ac-1" name="accordion-1" type="checkbox" />
 			<label for="ac-1">Your account information.</label>
-			<article class="ac-small">
-				<p>Lots of account info.</p>
+			<article class="ac-account">
+				<p id="email" class="profile_info">Email: </p>
+				<p id="fname" class="profile_info">First Name: </p>
+				<p id="lname" class="profile_info">Last Name: </p>
+				<p id="email_type" class="profile_info">Email Type: </p>
 			</article>
 		</div>
 		<div>
-			<input id="ac-2" name="accordion-1" type="checkbox" />
+			<input id="ac-2" name="accordion-1" type="checkbox"/>
 			<label for="ac-2">Recent searches.</label>
-			<article class="ac-small">
-				<p>List of recent searches.</p>
+			<article id="recent_article" class="ac-search">
 			</article>
 		</div>
 		<div>
 			<input id="ac-3" name="accordion-1" type="checkbox" />
-			<label for="ac-3">Color Preferences.</label>
+			<label for="ac-3">Major Ratings.</label>
+			<article id="degree_ratings" class="ac-search">
+			</article>
+		</div>
+		<div>
+			<input id="ac-4" name="accordion-1" type="checkbox" />
+			<label for="ac-4">University Ratings.</label>
+			<article id="school_ratings" class="ac-search">
+			</article>
+		</div>
+		<div>
+			<input id="ac-5" name="accordion-1" type="checkbox" />
+			<label for="ac-5">Career Ratings.</label>
+			<article id="career_ratings" class="ac-search">
+			</article>
+		</div>
+		<div>
+			<input id="ac-6" name="accordion-1" type="checkbox" />
+			<label for="ac-6">Color Preferences.</label>
 			<article class="ac-colors">
 				<div style="width: 750px; height:400px;">
 					<div style="width: 350px; float:left; height:400px; box-shadow: none;">
@@ -91,17 +113,34 @@
 			</article>
 		</div>
 		<div>
-			<input id="ac-4" name="accordion-1" type="checkbox" />
-			<label for="ac-4">Custom home pages.</label>
+			<input id="ac-7" name="accordion-1" type="checkbox" value="0"/>
+			<label for="ac-7">Progress.</label>
+			<article id="progress_article" class="ac-search">
+				<div style="width:710px; height:60px; box-shadow:none;">
+					<div style="width:250px; height:60px; float:left; box-shadow:none;"><p id="progress-text" class="profile-info" style="font-size:15px; padding-bottom:25px; padding-top:15px;"></p></div>
+					<div class="meter orange nostripes" style="width:410px; height:26px; float:left; margin-top:20px; margin-left:15px;">
+						<span id="progress-bar" style="height:12px; bottom:2px;"></span>
+					</div>
+				</div>
+				<p id="progress-remain" class="profile-info" style="font-size:15px; padding-bottom:0px; padding-top:0px"></p>
+				<!-- <div class="meter orange nostripes">
+					<span style="width: 33.3%"></span>
+				</div> -->
+			</article>
+		</div>
+		<!-- <div>
+			<input id="ac-8" name="accordion-1" type="checkbox" />
+			<label for="ac-8">Custom home pages.</label>
 			<article class="ac-small">
 				<p>Examples or main search.</p>
 			</article>
-		</div>
+		</div> -->
 		
 	</section>
 </div>
 
-<script src="/assets/profile.js"></script>
+
+
 
 <% else %>
 	<script> window.location = "/user/login/";</script>

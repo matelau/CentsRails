@@ -5,10 +5,12 @@ var sketch = new Processing.Sketch();
 function sketchProc(processing) {
 	
 	processing.setup = function() {
+		if (user_id)
+			$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "View Spending Breakdown"});
 		//console.log("loaded spending.js successfully");
-		if (localStorage.getItem("colors"))
+		if (sessionStorage.getItem("colors"))
 		{
-			c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+			c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
 			main = processing.color(c["p_rgb"][0], c["p_rgb"][1], c["p_rgb"][2]);
 			gray = processing.color(c["s_rgb"][0], c["s_rgb"][1], c["s_rgb"][2]);
 			tab_color = c["p_rgb"];
@@ -55,10 +57,10 @@ function sketchProc(processing) {
 		shuffle(pie_colors);
 
 
-		if (localStorage.getItem("income") == undefined || localStorage.getItem("income") == "" || isNaN(localStorage.getItem("income")))
+		if (sessionStorage.getItem("income") == undefined || sessionStorage.getItem("income") == "" || isNaN(sessionStorage.getItem("income")))
 			spending_income = 45000;
 		else
-			spending_income = localStorage.getItem("income") * 1.00;
+			spending_income = sessionStorage.getItem("income") * 1.00;
 
 		calculateTaxes();
 		rebuildPercentages();
@@ -190,7 +192,7 @@ function buildCategories() {
 		else
 			document.getElementById(key + "_field").value = ((spending_categories[spending_selected][key]/100)*(spending_income/12)).toFixed(0);
 	}
-	if (localStorage.getItem("colors"))
+	if (sessionStorage.getItem("colors"))
 	{
 		$('.update_spend').css({"border-bottom-color":c["p_hex"]});
 		$('.tax_spend').css({"border-bottom-color":c["p_hex"]});
@@ -223,6 +225,8 @@ function spendingVal(category) {
 };
 
 function updateIncome() {
+	if (user_id)
+		$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "Create Custom Spending"});
 	var temp_income = document.getElementById("income_value").value;
 	if (temp_income == 0 || isNaN(temp_income))
 		temp_income = 0.001;
@@ -242,7 +246,7 @@ function updateIncome() {
 
 	//calculate taxes for new income, then rebuild the values according to the new allocation
 	spending_income = temp_income;
-	localStorage.setItem("income", spending_income);
+	sessionStorage.setItem("income", spending_income);
 	calculateTaxes();
 	rebuildPercentages();
 	//populate the fields with the rebuilt values
@@ -327,6 +331,8 @@ function lockToggle(category) {
 };
 
 function deleteCategory(category) {
+	if (user_id)
+		$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "Create Custom Spending"});
 	$("#" + category + "_list_item").remove();
 	spending_sum -= spending_categories[spending_selected][category];
 	delete spending_categories[spending_selected][category];
@@ -352,8 +358,10 @@ function addCategoryField() {
 		add += "</svg></li></ul>";
 		$(add).appendTo( "#category_list" );
 		document.getElementById("category_name").focus();
-		if (localStorage.getItem("colors"))
+		if (sessionStorage.getItem("colors"))
+		{
 			$('.fil0').css({"fill":c["p_hex"]});
+		}
 		else
 			$('.fil0').css({"fill":"#884412"});
 	}
@@ -403,6 +411,8 @@ function addCategory() {
 		}
 		else
 		{
+			if (user_id)
+				$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "Create Custom Spending"});
 			var category = document.getElementById("category_name").value;
 			var no_space = category.replace(/ /g, "_");
 			var sanitized = category.replace(/&/g, '').replace(/</g, '').replace(/"/g, '');
@@ -413,7 +423,12 @@ function addCategory() {
 			//add the new category to the html
 			var add = "<ul id='" + no_space + "_list_item' style='list-style-type: none; padding: 0; width:280px; height:30px;'>";
 			add += "<li style='display:inline;'><input class='update_spend' id='" + no_space + "_field' oninput='spendingVal(&quot;" + no_space +"&quot;)' pattern='[0-9.]+'' type='text'/></li>";
-			add += "<li style='display:inline;'><a style='padding-left:5px' onclick='deleteCategory(&quot;" + no_space + "&quot;)'><img src='/assets/delete-color.png' height='9' width='9'></a></li>";
+			add += "<li style='display:inline;'>"//<a style='padding-left:5px' onclick='deleteCategory(&quot;" + no_space + "&quot;)'>";
+			add += "<svg onclick='deleteCategory(&quot;" + no_space + "&quot;)' height='15px' width='15px' style='padding-left:3px; padding-top:3px'>";
+			add += "<path class='fil0' d='M 0.49824641,11.476595 0.25881484,11.239868 C 0.01938328,11.003141 0.13639403,10.645347 0.25476126,10.52563 L 4.8709305,5.8567194 0.20201913,1.2405466 C -0.03741244,1.0038201 0.0795983,0.64602507 0.19796555,0.52630955 L 0.43469208,0.28687796 C 0.67141861,0.04744637 1.0292137,0.16445708 1.1489292,0.28282415 L 5.817841,4.8989948 10.434013,0.23008298 c 0.236727,-0.23943145 0.594522,-0.12242048 0.714237,-0.004058 l 0.239432,0.23672664 c 0.239432,0.23672651 0.122421,0.59452151 0.0041,0.71423711 L 6.7755632,5.8459011 11.444475,10.462074 c 0.239431,0.236726 0.12242,0.594521 0.0041,0.714237 l -0.236731,0.239431 c -0.236727,0.239432 -0.594522,0.122418 -0.714237,0.004 L 5.8286561,6.8036266 1.2124836,11.472538 c -0.23672656,0.239432 -0.59452167,0.122418 -0.71423719,0.004 z'";
+			add += " id='path10' style='fill-opacity:1'/>";
+			add += "</svg></li>";
+			//<img src='/assets/delete-color.png' height='9' width='9'></a></li>";
 			add += "<li style='display:inline;'><a style='padding-left:5px' onclick='lockToggle(&quot;" + no_space + "&quot;)'><img src='/assets/unlock-gray.png' value='false' id='" + no_space + "_lock' height='15' width='11'></a></li>";
 			add += ("<li style='display:inline;'><p style='display:inline; float:left; margin:10px 0px 0px 0px; width:140px; text-align:right;'>" + sanitized.toUpperCase() + "</p></li></ul>");
 			$(add).appendTo("#category_list");
@@ -433,6 +448,18 @@ function addCategory() {
 			document.getElementById(no_space + "_field").focus();
 		}
 	}
+	if (sessionStorage.getItem("colors"))
+	{
+		$('.update_spend').css({"border-bottom-color":c["p_hex"]});
+		$('.tax_spend').css({"border-bottom-color":c["p_hex"]});
+		$('.fil0').css({"fill":c["p_hex"]});
+	}
+	else
+	{
+		$('.update_spend').css({"border-bottom-color":"#884412"});
+		$('.tax_spend').css({"border-bottom-color":"#884412"});
+		$('.fil0').css({"fill":"#884412"});
+	}
 };
 
 function cancelCategory() {
@@ -440,6 +467,8 @@ function cancelCategory() {
 };
 
 function updateTemplate(template) {
+	if (user_id)
+		$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "Create Custom Spending"});
 	$('#' + spending_selected + "-button").css("cssText", "background-color: rgb(" + (tab_color[0]) + "," + (tab_color[1]) + "," + (tab_color[2]) + ")");
 	$('#' + template + "-button").css("cssText", "background-color: rgb(" + (tab_color[0]-5) + "," + (tab_color[1]-5) + "," + (tab_color[2]-5) + ") !important");
 	var temp_sum = 0;

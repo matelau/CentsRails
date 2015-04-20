@@ -98,6 +98,27 @@ class Api::V2::DegreesController < ApplicationController
 		end
 	end
 
+	def show_best
+		degree = Degree.order("salary DESC").first
+		degrees = [{name: degree[:name], level: degree[:level]}]
+		internal_show_two(degrees, "get")
+	end
+
+	def show_worst
+		degree = Degree.order(
+			"CASE WHEN salary IS NULL THEN 100000 ELSE salary END, salary"
+			).first
+		degrees = [{name: degree[:name], level: degree[:level]}]
+		internal_show_two(degrees, "get")
+	end
+
+	def show_random
+		ids = Degree.select(:id)
+		degree = Degree.find( ids[Random.rand(ids.length)] )
+		degrees = [{name: degree[:name], level: degree[:level]}]
+		internal_show_two(degrees, "get")
+	end
+
 	# Get degrees by level and name.
 	def show_level_name
 		records = Degree.where(['level like ? and name = ?', "#{params[:level]}%", params[:name]])
@@ -124,29 +145,42 @@ class Api::V2::DegreesController < ApplicationController
 
 	# Get degree data for two degrees.
 	def show_two
+		if params[:operation].present?
+			operation = params[:operation]
+		else
+			operation = "undefined"
+		end
+
+		degrees = params[:degrees]
+		internal_show_two(degrees, operation)
+	end
+
+private
+
+	def internal_show_two(d, o)
 		result = Hash.new
 
 		# Check for the required fields, and return an appropriate message if
 		# they are not present.
-		unless params[:degrees].present?
+		unless d.present?
 			return render json: 'No objects were in the degrees array.', status: 400
 		end
 
 		# Order the degrees.
 		degrees = Array.new
-		if params[:degrees][0][:order] and params[:degrees][1][:order]
-			params[:degrees].each do |degree|
+		if d[0][:order] and d[1][:order]
+			d.each do |degree|
 				if degree[:order] == 1
 					degrees << degree
 				end
 			end
-			params[:degrees].each do |degree|
+			d.each do |degree|
 				if degree[:order] == 2
 					degrees << degree
 				end
 			end
 		else
-			params[:degrees].each do |degree|
+			d.each do |degree|
 				degrees << degree
 			end
 		end
@@ -175,6 +209,8 @@ class Api::V2::DegreesController < ApplicationController
 		]
 
 		no_data_for = Array.new
+
+		deg = {}
 
 		# Iterate over each degree, keeping track of the degree's index.
 		# (The index is needed because that's how the view tracks degrees.)
@@ -206,12 +242,13 @@ class Api::V2::DegreesController < ApplicationController
 					]
 					cents_rating = cents_rating[0][:average].to_f
 
-					result["name_#{index}"] = "#{record[:degree_name]} (#{record[:level]})"
-					result["degree_#{index}"] = [salary, recommended, meaningful, cents_rating]
-					result["jobs_#{index}"] = Array.new
+					deg["element_#{index}"] = Hash.new
+					deg["element_#{index}"]["name"] = "#{record[:degree_name]} (#{record[:level]})"
+					deg["element_#{index}"]["degree"] = [salary, recommended, meaningful, cents_rating]
+					deg["element_#{index}"]["jobs"] = Array.new
 
 					top_jobs.each do |job|
-						result["jobs_#{index}"].concat [job[:name], job[:salary]]
+						deg["element_#{index}"]["jobs"].concat [job[:name], job[:salary]]
 					end
 					break
 				end
@@ -226,6 +263,12 @@ class Api::V2::DegreesController < ApplicationController
 			index += 1
 		end
 
+		result["elements"] = []
+
+		deg.each do |k, v|
+		  result["elements"] << v
+		end
+
 		# If there is no data for a degree, send an error message.
 		unless no_data_for.empty?
 			result[:error] = 'No data on some degrees'
@@ -234,7 +277,7 @@ class Api::V2::DegreesController < ApplicationController
 			return render json: result, status: 404
 		end
 
-		result[:operation] = params[:operation]
+		result[:operation] = o
 
 		# Return the result, formatted as JSON, and with a 200 OK HTTP code.
 		render json: result, status: 200

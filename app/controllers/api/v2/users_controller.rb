@@ -267,15 +267,15 @@ class Api::V2::UsersController < ApplicationController
 
 		saved = false
 		if user.present?
-			params[:fields].each do |field|
+			params[:fields].each do |k, v|
 				begin
-					if user.update("#{field[:name]}" => field[:value])
+					if user.update("#{k}" => "#{v}")
 						saved = true
 					else
 						return render json: user.errors, status: 500
 					end
 				rescue ActiveRecord::UnknownAttributeError
-					return render json: "User has no attribute #{field[:name]}.", status: 400
+					return render json: "User has no attribute #{k}.", status: 400
 				end
 			end
 		else

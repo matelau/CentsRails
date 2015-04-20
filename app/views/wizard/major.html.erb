@@ -37,9 +37,9 @@
 <br>
 
 <script>
-    if (localStorage.getItem("colors"))
+    if (sessionStorage.getItem("colors"))
     {
-        var c = jQuery.parseJSON(unescape(localStorage.getItem("colors")));
+        var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
         $('.wizard-bar').css({"background-color":c["p_hex"]});
         $('.wizard-triangle').css({"border-top-color":c["p_hex"]});
         $('#nav_selected').css({"color":c["p_hex"]});

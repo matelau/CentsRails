@@ -1,4 +1,5 @@
 class Api::V2::SchoolsController < ApplicationController
+
 	# Get school record names for autocomplete.
 	def index
 		result = Array.new
@@ -91,6 +92,43 @@ class Api::V2::SchoolsController < ApplicationController
 		end
 	end
 
+	def show_best
+		school = University.order(
+			"CASE WHEN rank IS NULL THEN 250 ELSE rank END, rank"
+			).first
+		schools = [{name: school[:name]}]
+		internal_show_two(schools, "get")
+	end
+
+	def show_worst
+		school = University.order(
+			"CASE WHEN grad_rate_6_year IS NULL THEN 101 ELSE grad_rate_6_year END, grad_rate_6_year"
+			).first
+		schools = [{name: school[:name]}]
+		internal_show_two(schools, "get")
+	end
+
+	def show_cheapest
+		school = University.order(
+			"CASE WHEN tuition_nonresident IS NULL THEN 100000 ELSE tuition_nonresident END, tuition_nonresident"
+			).first
+		schools = [{name: school[:name]}]
+		internal_show_two(schools, "get")
+	end
+
+	def show_priciest
+		school = University.order("tuition_nonresident DESC").first
+		schools = [{name: school[:name]}]
+		internal_show_two(schools, "get")
+	end
+
+	def show_random
+		ids = University.select(:id)
+		school = University.find( ids[Random.rand(ids.length)] )
+		schools = [{name: school[:name]}]
+		internal_show_two(schools, "get")
+	end
+
 	# Get school by location.
 	def show_location
 		records = University.where(['state LIKE ?', "%#{params[:location]}%"])
@@ -117,29 +155,42 @@ class Api::V2::SchoolsController < ApplicationController
 
 	# Get school data for two schools.
 	def show_two
+		if params[:operation].present?
+			operation = params[:operation]
+		else
+			operation = "undefined"
+		end
+
+		schools = params[:schools]
+		internal_show_two(schools, operation)
+	end
+
+private
+
+	def internal_show_two(s, o)
 		result = Hash.new
 
 		# Check for the required fields, and return an appropriate message if
 		# they are not present.
-		unless params[:schools].present?
+		unless s.present?
 			return render json: 'No schools were in the schools array', status: 400
 		end
 
 		# Order the schools.
 		schools = Array.new
-		if params[:schools][0][:order] and params[:schools][1][:order]
-			params[:schools].each do |school|
+		if s[0][:order] and s[1][:order]
+			s.each do |school|
 				if school[:order] == 1
 					schools << school
 				end
 			end
-			params[:schools].each do |school|
+			s.each do |school|
 				if school[:order] == 2
 					schools << school
 				end
 			end
 		else
-			schools = params[:schools]
+			schools = s
 		end
 
 		# Create a string of the form 'name = n1 OR name = n2 ...' and a list of 
@@ -202,10 +253,10 @@ class Api::V2::SchoolsController < ApplicationController
 					
 					# Put the stats in result.
 					sch["school_#{index}"] = Hash.new
-					sch["school_#{index}"]["name_#{index}"] = record[:name]
-					sch["school_#{index}"]["school_#{index}"] = [tuition_resident, tuition_nonresident, 
+					sch["school_#{index}"]["name"] = record[:name]
+					sch["school_#{index}"]["school"] = [tuition_resident, tuition_nonresident, 
 						grad_rate, size, rank, cents_rating]
-					sch["school_#{index}"]["school_#{index}_image"] = record[:image]
+					sch["school_#{index}"]["school_image"] = record[:image]
 					break
 				end
 			end
@@ -234,7 +285,7 @@ class Api::V2::SchoolsController < ApplicationController
 		end
 
 		# Add the operation parameter for the query parser.
-		result[:operation] = params[:operation]
+		result[:operation] = o
 
 		return render json: result, status: 200
 	end
