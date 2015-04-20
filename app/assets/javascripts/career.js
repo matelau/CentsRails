@@ -171,10 +171,19 @@ function career_api_request(query) {
       			data = jQuery.parseJSON(xmlHttp.responseText);
 				//ok query, save to user
 				if (user_id)
-					$.post("/api/v2/users/" + user_id + "/query", {"url": query_string});
+					$.post("/api/v2/users/" + user_id + "/query?api_key=" + api_key, {"url": query_string});
 
 				auto_1 = undefined;
 				auto_2 = undefined;
+
+				//clear out the ability to rate
+				$("#rating_1").empty();
+				var button = "<a id='rating_1_button' class='btn btn-default' onclick='rate(1)'>RATE THIS CAREER</a>";
+				$("#rating_1").html(button);
+				$("#rating_2").empty();
+				button = "<a id='rating_2_button' class='btn btn-default' onclick='rate(2)'>RATE THIS CAREER</a>";
+				$("#rating_2").html(button);
+				$('.btn-default').css({"color":color});
 
 	  			if (sent1 && sent2)
 	  			{
@@ -190,8 +199,10 @@ function career_api_request(query) {
 	  				hide_2 = false;
 		  	 		document.getElementById("search_1_button").value = "HIDE";
 		  	 		$("#search_1_button").removeAttr("disabled");
+		  	 		$("#rating_1_button").removeAttr("disabled");
 		  	 		document.getElementById("search_2_button").value = "HIDE";
 		  	 		$("#search_2_button").removeAttr("disabled");
+		  	 		$("#rating_2_button").removeAttr("disabled");
 	  			}
 	  			else if (!sent1 && sent2)
 	  			{
@@ -203,23 +214,23 @@ function career_api_request(query) {
 	  				hide_1 = true;
 	  				document.getElementById("search_1_button").value = "SHOW";
 		  	 		$("#search_1_button").attr("disabled", "true");
+		  	 		$("#rating_1_button").attr("disabled", "true");
 		  	 		hide_2 = false;
 		  	 		document.getElementById("search_2_button").value = "HIDE";
 		  	 		$("#search_2_button").removeAttr("disabled");
+		  	 		$("#rating_2_button").removeAttr("disabled");
 		  	 		//need to flip data to _2 arrays
-					data["career_salary_2"] = $.extend(true, [], data["career_salary_1"]);
-					data["career_salary_1"] = null;
-					data["career_rating_2"] = $.extend(true, [], data["career_rating_1"]);
-					data["career_rating_1"] = null;
-					data["career_demand_2"] = $.extend(true, [], data["career_demand_1"]);
-					data["career_demand_1"] = null;
-					data["career_unemploy_2"] = $.extend(true, [], data["career_unemploy_1"]);
-					data["career_unemploy_1"] = null;
+					// data["career_salary_2"] = $.extend(true, [], data["career_salary_1"]);
+					// data["career_salary_1"] = null;
+					// data["career_rating_2"] = $.extend(true, [], data["career_rating_1"]);
+					// data["career_rating_1"] = null;
+					// data["career_demand_2"] = $.extend(true, [], data["career_demand_1"]);
+					// data["career_demand_1"] = null;
+					// data["career_unemploy_2"] = $.extend(true, [], data["career_unemploy_1"]);
+					// data["career_unemploy_1"] = null;
 	
-					data["name_2"] = data["name_1"];
-					data["name_1"] = null;
-
-					
+					// data["name_2"] = data["name_1"];
+					// data["name_1"] = null;
 
 	  			}
 	  			else if (sent1 && !sent2)
@@ -233,19 +244,13 @@ function career_api_request(query) {
 	  				hide_2 = true;
 	  				document.getElementById("search_2_button").value = "SHOW";
 		  	 		$("#search_2_button").attr("disabled", "true");
+		  	 		$("#rating_2_button").attr("disabled", "true");
 		  	 		hide_1 = false;
 		  	 		document.getElementById("search_1_button").value = "HIDE";
 		  	 		$("#search_1_button").removeAttr("disabled");
+		  	 		$("#rating_1_button").removeAttr("disabled");
 	  			}
 	  			nochanges = true;
-	  			//clear out the ability to rate
-				$("#rating_1").empty();
-				var button = "<a id='rating_1_button' class='btn btn-default' onclick='rate(1)'>RATE THIS CAREER</a>";
-				$("#rating_1").html(button);
-				$("#rating_2").empty();
-				button = "<a id='rating_2_button' class='btn btn-default' onclick='rate(2)'>RATE THIS CAREER</a>";
-				$("#rating_2").html(button);
-				$('.btn-default').css({"color":color});
 
 	  			//make api request here with type included
 				sessionStorage.setItem("query_type", type);
@@ -320,6 +325,7 @@ function sketchProc(processing) {
   			hide_2 = true;
   			document.getElementById("search_2_button").value = "SHOW";
   			$("#search_2_button").attr("disabled", "true");
+  			$("#rating_2_button").attr("disabled", "true");
   		}
   		else
   		{
