@@ -124,9 +124,10 @@ class Api::V2::SchoolsController < ApplicationController
 
 	def show_random
 		ids = University.select(:id)
-		school = University.find( ids[Random.rand(ids.length)] )
-		schools = [{name: school[:name]}]
-		internal_show_two(schools, "get")
+		school1 = University.find( ids[Random.rand(ids.length)] )
+		school2 = University.find( ids[Random.rand(ids.length)] )
+		schools = [{name: school1[:name]},{name: school2[:name]}]
+		internal_show_two(schools, "compare")
 	end
 
 	# Get school by location.

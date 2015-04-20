@@ -75,9 +75,10 @@ class Api::V2::ColiController < ApplicationController
 
 	def show_random
 		ids = Coli.select(:id)
-		col = Coli.find( ids[Random.rand(ids.length)] )
-		cols = [{city: col[:city], state: col[:state]}]
-		internal_show_two(cols, "get")
+		col1 = Coli.find( ids[Random.rand(ids.length)] )
+		col2 = Coli.find( ids[Random.rand(ids.length)] )
+		cols = [{city: col1[:city], state: col1[:state]},{city: col2[:city], state: col2[:state]}]
+		internal_show_two(cols, "compare")
 	end
 
 	# Get cost of living data by state.

@@ -11,6 +11,7 @@ import urllib2
 import urllib
 import sys
 import operator
+from random import randint
 import helpers as hp
 import list_builders as lb
 
@@ -34,9 +35,10 @@ state = {}
 commands = {"compare":"compare","vs.":"compare","vs":"compare","get":"get","find":"get","difference between":"compare"}
 state_catch = {", mt":", montana",", la":", louisiana"}
 common_abbrs = {"sf":"san francisco, california","nyc":"new york, new york","slc":"salt lake city, utah","la":"los angeles, california","ft":"fort","mt":"mount"}
-supers = {"best":"best","worst":"worst","cheapest":"cheapest","expensive":"priciest","priciest":"priciest","random":"random"}
+supers = {"best":"best","worst":"worst","cheapest":"cheapest","least expensive":"cheapest","most expensive":"priciest","priciest":"priciest","random":"random","any","random"}
 levels = ["associate","bachelor","master","doctorate","certificate"]
-datasets = {"occupation":"career","career":"career","job":"career","school":"school","universities":"school","city":"city","town":"city","cities":"city","major":"degree","degree":"degree"}
+datasets = {"occupation":"careers","career":"careers","job":"careers","school":"schools","universities":"schools","city":"cost_of_living","town":"cost_of_living","cities":"cost_of_living","major":"degrees","degree":"degrees"}
+dvals = ["cost_of_living","schools","careers","degrees"]
 
 states = open("states.csv", "rU")
 
@@ -76,24 +78,31 @@ def query(sent_query):
 	if query[len(query)-1:] in punc:
 		query = query[:len(query)-1]
 
-	#superlatve checker
-	url = "https://trycents.com/api/v2/careers/best"
-	url = "https://trycents.com/api/v2/careers/worst"
-	url = "https://trycents.com/api/v2/careers/random"
-	url = "https://trycents.com/api/v2/cost_of_living/best"
-	url = "https://trycents.com/api/v2/cost_of_living/worse"
-	url = "https://trycents.com/api/v2/cost_of_living/cheapest"
-	url = "https://trycents.com/api/v2/cost_of_living/priciest"
-	url = "https://trycents.com/api/v2/cost_of_living/random"
-	url = "https://trycents.com/api/v2/schools/best"
-	url = "https://trycents.com/api/v2/schools/worst"
-	url = "https://trycents.com/api/v2/schools/cheapest"
-	url = "https://trycents.com/api/v2/schools/priciest"
-	url = "https://trycents.com/api/v2/schools/random"
-	url = "https://trycents.com/api/v2/degrees/best"
-	url = "https://trycents.com/api/v2/degrees/worst"
-	url = "https://trycents.com/api/v2/degrees/random"
+	sval = ""
+	dval = ""
 
+	for s,v in supers.iteritems():
+		if " " + s + " " in query:
+			sval = s
+			break
+
+	for d,v in datasets.iteritems():
+		if " " + d + " " in query:
+			dval = d
+			break
+
+	sfault = False
+	if s == "cheapest" or s == "priciest":
+		if d == "careers" or d == "degrees":
+			sfault = True
+
+	if sval == "random" and dval == "":
+		dval = dvals[randint(0,3)]
+
+	if !sfault:
+		url = "https://trycents.com/api/v2/" + dval + "/" + sval
+
+		return hp.send_get(url)
 
 	qgram = hp.build_engram(query)
 
