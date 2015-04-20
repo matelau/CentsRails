@@ -62,3 +62,6 @@ def send_get(url,qtype):
     package = json.loads(resp.text)
     package["query_type"] = qtype
     return json.dumps(package)
+
+def send_with_response(url):
+    

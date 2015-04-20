@@ -112,11 +112,11 @@ def query(sent_query):
 
 	if not sfault:
 		url = "https://trycents.com/api/v2/" + dval + "/" + sval
-
 		qtype = nvals[dval]
 
 		return hp.send_get(url, qtype)
 
+	#query normalization steps
 	for u,l in unis.iteritems():
 		for a in l:
 			if " " + a.lower() + " " in query:
@@ -132,6 +132,7 @@ def query(sent_query):
 		if re.search(r"\b" + abbr + r"\b", query):
 			query = re.sub(r"\b" + abbr + r"\b", st, query)
 
+	#major parsing steps
 	lmatch = []
 	for l in levels:
 		if l in query:
@@ -149,6 +150,8 @@ def query(sent_query):
 		if " " + mname.lower() + " " in query:
 			majors.append({"name":mname,"level":mlev})
 			maj_names.append(m)
+
+	#city parsing steps
 	for c in cities:
 		temp = " " + c.replace(",", "").lower() + " "
 		if(temp in query):
@@ -163,6 +166,8 @@ def query(sent_query):
 				locations.append(c)
 	cgrams = {}
 	mgrams = {}
+
+	#career parsing steps
 	for c in cars:
 		cgram = hp.build_engram(c.lower())
 		cgram.sort(key=lambda t: len(t), reverse=True)
@@ -194,6 +199,7 @@ def query(sent_query):
 			careers.append(ordered_keys[x][0])
 			grams.add(mgrams[ordered_keys[x][0]])
 
+	#spending breakdown parsing
 	if "spending" in query or "afford" in query:
 		if len(careers) > 0:
 			package = {
@@ -246,6 +252,7 @@ def query(sent_query):
 			resp = json.dumps(package)
 			return resp
 
+	#extracting command structure
 	for s in commands:
 		if s in query:
 			command = commands[s]
@@ -267,6 +274,7 @@ def query(sent_query):
 	if command == "" and len(careers) > 1:
 		command = "compare"
 
+	#if we have no matches, redirect to examples
 	if len(schools) == 0 and len(locations) == 0 and len(majors) == 0 and len(careers) == 0:
 		package = {
 			"operation":"undefined",
