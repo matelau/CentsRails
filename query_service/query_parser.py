@@ -38,7 +38,7 @@ state_catch = {", mt":", montana",", la":", louisiana"}
 common_abbrs = {"sf":"san francisco, california","nyc":"new york, new york","slc":"salt lake city, utah","la":"los angeles, california","ft":"fort","mt":"mount"}
 supers = {"best":"best","worst":"worst","cheapest":"cheapest","least expensive":"cheapest","most expensive":"priciest","priciest":"priciest","random":"random","any":"random"}
 levels = ["associate","bachelor","master","doctorate","certificate"]
-datasets = {"occupation":"careers","career":"careers","job":"careers","school":"schools","universities":"schools","city":"cost_of_living","town":"cost_of_living","cities":"cost_of_living","major":"degrees","degree":"degrees"}
+datasets = {"occupation":"careers","occupations":"careers","career":"careers","careers":"careers","job":"careers","jobs":"careers","school":"schools","schools":"schools","universities":"schools","university":"schools","city":"cost_of_living","town":"cost_of_living","towns":"cost_of_living","cities":"cost_of_living","major":"degrees","majors":"degrees","degree":"degrees","degrees":"degrees"}
 dvals = ["cost_of_living","schools","careers","degrees"]
 nvals = {"cost_of_living":"city","schools":"school","careers":"career","degrees":"major"}
 
