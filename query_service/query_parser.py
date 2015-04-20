@@ -91,6 +91,8 @@ def query(sent_query):
 		if re.search(r"\b" + abbr + r"\b", query):
 			query = re.sub(r"\b" + abbr + r"\b", st, query)
 
+	print query
+
 	lmatch = []
 	for l in levels:
 		if l in query:
