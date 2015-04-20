@@ -13,6 +13,7 @@ import sys
 import operator
 import random
 import os
+import struct
 import helpers as hp
 import list_builders as lb
 
@@ -104,7 +105,8 @@ def query(sent_query):
 			sfault = True
 
 	if sval == "random" and dval == "":
-		print int(os.urandom(1)) % 4
+		value = struct.unpack(os.urandom(1), data[0])[0] % 4
+		print value
 		print random.uniform(0,0.3)
 		idx = hp.get_rand(0,3)
 		print idx
