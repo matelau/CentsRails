@@ -24,7 +24,7 @@ def make_tups(s,n,r):
             el = el + (s[i+j],)
         r.append(el)
 
-def build_engram(s):
+def build_ngram(s):
     arr = s.split(" ")
     res = []
 
@@ -63,5 +63,10 @@ def send_get(url,qtype):
     package["query_type"] = qtype
     return json.dumps(package)
 
-def send_with_response(url):
-    
+def post_with_response(url,package):
+    payload = json.dumps(package)
+    r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
+    prep = r.prepare()
+    s = requests.Session()
+    s.verify = False
+    return s.send(prep)

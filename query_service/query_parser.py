@@ -44,16 +44,19 @@ nvals = {"cost_of_living":"city","schools":"school","careers":"career","degrees"
 
 states = open("states.csv", "rU")
 
+#set up universities alias checker list
 unis = {}
 for line in open("universities.csv"):
 	arr = line.strip().split(",")
 	unis[arr[0]] = arr
 
+#set up states hash for replacing state codes
 for line in csv.reader(states):
 	state[line[0].lower()] = line[1].lower()
 
 punc = [".","?",",","!",";",":"]
 
+# set up lists
 majs = lb.make_major_list()
 cities = lb.make_city_list()
 cars = lb.make_career_list()
@@ -76,11 +79,12 @@ def query(sent_query):
 	package = {}
 	query = sent_query.lower()
 	
-	#query = str(query).translate(string.maketrans("",""), string.punctuation)
+	#formatting query to cut down on errors
 	if query[len(query)-1:] in punc:
 		query = query[:len(query)-1]
 
-	qgram = hp.build_engram(query)
+	#build a subset of ngrams from query
+	qgram = hp.build_ngram(query)
 
 	query = query.replace(".", "")
 	query = " " + query + " "
@@ -88,11 +92,13 @@ def query(sent_query):
 	sval = ""
 	dval = ""
 
+	#checking for super key words, normalizing
 	for s,v in supers.iteritems():
 		if " " + s + " " in query:
 			sval = v
 			break
 
+	#checking for dataset key words, normalizing
 	for d,v in datasets.iteritems():
 		if " " + d + " " in query:
 			dval = v
@@ -169,7 +175,7 @@ def query(sent_query):
 
 	#career parsing steps
 	for c in cars:
-		cgram = hp.build_engram(c.lower())
+		cgram = hp.build_ngram(c.lower())
 		cgram.sort(key=lambda t: len(t), reverse=True)
 		for gram in cgram:
 			if gram in qgram:
@@ -210,21 +216,16 @@ def query(sent_query):
 			package["careers"].append({"name": careers[0]})
 
 			url = "https://trycents.com/api/v2/careers/compare"
-			payload = json.dumps(package)
-			r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
-			prep = r.prepare()
-			s = requests.Session()
-			s.verify = False
-			resp = s.send(prep)
+			resp = hp.post_with_response(url,package)
 
-			tempp = json.loads(resp.text)
+			csal = json.loads(resp.text)
 
 			package = {
 				"operation":"get",
 				"query":sent_query,
 				"query_type":"spending"
 			}
-			package["income"] = tempp["elements"][0]["career_salary"][10]
+			package["income"] = csal["elements"][0]["career_salary"][10]
 
 			resp = json.dumps(package)
 			return resp
@@ -282,6 +283,8 @@ def query(sent_query):
 		}
 		resp = json.dumps(package)
 		return resp
+
+	#api calls and responses
 	if len(schools) >= 1:
 		package = {
 			"operation":command,
@@ -290,14 +293,10 @@ def query(sent_query):
 		}
 		for s in schools:
 			package["schools"].append({"name":s})
-		#url = "https://%s/api/v1/schools/" % (ip)
+
 		url = "https://trycents.com/api/v2/schools/compare"
-		payload = json.dumps(package)
-		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
-		prep = r.prepare()
-		s = requests.Session()
-		s.verify = False
-		resp = s.send(prep)
+		resp = hp.post_with_response(url,package)
+
 		if(resp.status_code == 400):
 			package = {
 				"operation":"undefined",
@@ -305,6 +304,7 @@ def query(sent_query):
 			}
 			resp = json.dumps(package)
 			return resp
+
 		package = json.loads(resp.text)
 		if(package["operation"] == "undefined"):
 			package = {
@@ -328,12 +328,8 @@ def query(sent_query):
 			package["degrees"].append(m)
 
 		url = "https://trycents.com/api/v2/degrees/compare"
-		payload = json.dumps(package)
-		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
-		prep = r.prepare()
-		s = requests.Session()
-		s.verify = False
-		resp = s.send(prep)
+		resp = hp.post_with_response(url,package)
+
 		if(resp.status_code == 400):
 			package = {
 				"operation":"undefined",
@@ -341,6 +337,7 @@ def query(sent_query):
 			}
 			resp = json.dumps(package)
 			return resp
+
 		package = json.loads(resp.text)
 		if(package["operation"] == "undefined"):
 			package = {
@@ -364,12 +361,8 @@ def query(sent_query):
 			package["locations"].append({"city":l[:l.index(",")],"state":l[l.index(", ")+2:]})
 
 		url = "https://trycents.com/api/v2/cost_of_living/compare"
-		payload = json.dumps(package)
-		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
-		prep = r.prepare()
-		s = requests.Session()
-		s.verify = False
-		resp = s.send(prep)
+		resp = hp.post_with_response(url,package)
+
 		if(resp.status_code == 400):
 			package = {
 				"operation":"undefined",
@@ -399,12 +392,7 @@ def query(sent_query):
 			package["careers"].append({"name": c})
 
 		url = "https://trycents.com/api/v2/careers/compare"
-		payload = json.dumps(package)
-		r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'},data=payload)
-		prep = r.prepare()
-		s = requests.Session()
-		s.verify = False
-		resp = s.send(prep)
+		resp = hp.post_with_response(url,package)
 
 		if(resp.status_code == 400):
 			package = {
@@ -428,6 +416,13 @@ def query(sent_query):
 		resp = json.dumps(package)
 		return resp
 
+###################################################################
+#
+#	Flask route for 1 or 2 field requests from examples/data pages
+#	
+#	Author: Austin Hammer
+#
+###################################################################
 @app.route('/data', methods=['POST'])
 def data():
 	query = json.loads(request.data)
