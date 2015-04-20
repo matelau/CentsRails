@@ -99,7 +99,7 @@ def query(sent_query):
 	if sval == "random" and dval == "":
 		dval = dvals[randint(0,3)]
 
-	if !sfault:
+	if not sfault:
 		url = "https://trycents.com/api/v2/" + dval + "/" + sval
 
 		return hp.send_get(url)
