@@ -42,8 +42,6 @@
 
 </head>
 <body id="main_body" style="height: 950px">
-
-
 <!--Navigation Bar -->
 
 <div class="navbar navbar-cents">
@@ -119,9 +117,8 @@
     <% if current_user %>
         <script>
             user_id = <%= current_user.id %>;
-            api_key = "re5-fHO6-5CnUSglEAioWg";
-            //api_key = <%= current_user.api_key %>;
 
+				    api_key = "<%= session[:api_key] %>";
         </script>   
     <% end %>
 
