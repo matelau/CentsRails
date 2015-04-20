@@ -88,12 +88,12 @@ def query(sent_query):
 
 	for s,v in supers.iteritems():
 		if " " + s + " " in query:
-			sval = s
+			sval = v
 			break
 
 	for d,v in datasets.iteritems():
 		if " " + d + " " in query:
-			dval = d
+			dval = v
 			break
 
 	sfault = False
