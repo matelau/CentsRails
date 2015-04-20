@@ -439,7 +439,8 @@ function sketchProc(processing) {
 
 		//check to see if how many null values for each
 		var null_1, null_2;
-		null_1 = reduce(data["career_salary_1"]);
+		if (data["career_salary_1"])
+			null_1 = reduce(data["career_salary_1"]);
 		if (data["career_salary_2"])
 			null_2 = reduce(data["career_salary_2"]);
 
@@ -861,8 +862,11 @@ function sketchProc(processing) {
 		processing.text("AVERAGES", (axis_location[0]+axis_location[1])/2, (line_1+line_2)/2+8);
 
 		var height_1, height_2, height_3, height_4;
-		height_1 = (graph_top - graph_bot)*((data["career_unemploy_1"][0] -  min)/(max - min));
-		height_2 = (graph_top - graph_bot)*((data["career_unemploy_1"][1] -  min)/(max - min));
+		if (!hide_1)
+		{
+			height_1 = (graph_top - graph_bot)*((data["career_unemploy_1"][0] -  min)/(max - min));
+			height_2 = (graph_top - graph_bot)*((data["career_unemploy_1"][1] -  min)/(max - min));
+		}
 		if (!hide_2)
 		{
 			height_3 = (graph_top - graph_bot)*((data["career_unemploy_2"][0] -  min)/(max - min));
