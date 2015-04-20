@@ -11,7 +11,6 @@ import urllib2
 import urllib
 import sys
 import operator
-from random import randint
 import helpers as hp
 import list_builders as lb
 
@@ -103,7 +102,7 @@ def query(sent_query):
 			sfault = True
 
 	if sval == "random" and dval == "":
-		idx = randint(0,1000) % 3
+		idx = hp.get_rand(0,3)
 		print idx
 		dval = dvals[idx]
 
