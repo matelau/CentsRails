@@ -82,9 +82,10 @@ class Api::V2::CareersController < ApplicationController
 
 	def show_random
 		ids = Career.select(:id)
-		career = Career.find( ids[Random.rand(ids.length)] )
-		careers = [{name: career[:name]}]
-		internal_show_two(careers, "get")
+		career1 = Career.find( ids[Random.rand(ids.length)] )
+		career2 = Career.find( ids[Random.rand(ids.length)] )
+		careers = [{name: career1[:name]},{name: career2[:name]}]
+		internal_show_two(careers, "compare")
 	end
 
 	# Get two careers to compare.

@@ -76,6 +76,25 @@ def query(sent_query):
 	if query[len(query)-1:] in punc:
 		query = query[:len(query)-1]
 
+	#superlatve checker
+	url = "https://trycents.com/api/v2/careers/best"
+	url = "https://trycents.com/api/v2/careers/worst"
+	url = "https://trycents.com/api/v2/careers/random"
+	url = "https://trycents.com/api/v2/cost_of_living/best"
+	url = "https://trycents.com/api/v2/cost_of_living/worse"
+	url = "https://trycents.com/api/v2/cost_of_living/cheapest"
+	url = "https://trycents.com/api/v2/cost_of_living/priciest"
+	url = "https://trycents.com/api/v2/cost_of_living/random"
+	url = "https://trycents.com/api/v2/schools/best"
+	url = "https://trycents.com/api/v2/schools/worst"
+	url = "https://trycents.com/api/v2/schools/cheapest"
+	url = "https://trycents.com/api/v2/schools/priciest"
+	url = "https://trycents.com/api/v2/schools/random"
+	url = "https://trycents.com/api/v2/degrees/best"
+	url = "https://trycents.com/api/v2/degrees/worst"
+	url = "https://trycents.com/api/v2/degrees/random"
+
+
 	qgram = hp.build_engram(query)
 
 	query = query.replace(".", "")
@@ -95,8 +114,6 @@ def query(sent_query):
 	for abbr, st in state.iteritems():
 		if re.search(r"\b" + abbr + r"\b", query):
 			query = re.sub(r"\b" + abbr + r"\b", st, query)
-
-	print query
 
 	lmatch = []
 	for l in levels:
