@@ -105,7 +105,7 @@ def query(sent_query):
 			sfault = True
 
 	if sval == "random" and dval == "":
-		value = os.urandom(1)[0]
+		value = struct.unpack("<L", os.urandom(1))
 		print value
 		print random.uniform(0,0.3)
 		idx = hp.get_rand(0,3)
