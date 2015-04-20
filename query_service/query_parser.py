@@ -32,7 +32,7 @@ state = {}
 #conflicts right now between Louisiana(LA) and Los Angeles(LA) and Indiana(IN) and the word 'in'
 #conflict between mt and montana
 commands = {"compare":"compare","vs.":"compare","vs":"compare","get":"get","find":"get","difference between":"compare"}
-common_abbrs = {", mt":", montana",", la":", louisiana","sf":"san francisco, california","nyc":"new york, new york","slc":"salt lake city, utah","la":"los angeles, california","ft.":"fort","ft":"fort","mt.":"mount","mt":"mount"}
+common_abbrs = {", mt":", montana",", la":", louisiana","sf":"san francisco, california","nyc":"new york, new york","slc":"salt lake city, utah","la":"los angeles, california","ft":"fort","mt":"mount"}
 supers = {"best":"","worst":"","cheapest":"","expensive":"","priciest":"","random":""}
 levels = ["associate","bachelor","master","doctorate","certificate"]
 datasets = {"occupation":"career","career":"career","job":"career","school":"school","universities":"school","city":"city","town":"city","cities":"city","major":"degree","degree":"degree"}
@@ -77,6 +77,7 @@ def query(sent_query):
 
 	qgram = hp.build_engram(query)
 
+	query = query.replace(".", "")
 	query = " " + query + " "
 
 	for u,l in unis.iteritems():
