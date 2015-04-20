@@ -143,6 +143,18 @@ function school_api_request(query) {
 
 				$("#error_1").empty();
 				$("#error_2").empty();
+
+				//clear out the ability to rate
+				$("#rating_1").empty();
+				var button = "<a id='rating_1_button' class='btn btn-default' onclick='rate(1)'>RATE THIS SCHOOL</a>";
+				$("#rating_1").html(button);
+				$("#rating_2").empty();
+				button = "<a id='rating_2_button' class='btn btn-default' onclick='rate(2)'>RATE THIS SCHOOL</a>";
+				$("#rating_2").html(button);
+				$('.btn-default').css({"color":color});
+				auto_1 = "";
+				auto_2 = "";
+
 				//invalid searches could have been made, check to see what all was sent and returned
 				//both sent
 				if (sent1 && sent2)
@@ -167,6 +179,8 @@ function school_api_request(query) {
 			  	 		$("#search_1_button").removeAttr("disabled");
 			  	 		document.getElementById("search_2_button").value = "HIDE";
 			  	 		$("#search_2_button").removeAttr("disabled");
+			  	 		$("#rating_1_button").removeAttr("disabled");
+			  	 		$("#rating_2_button").removeAttr("disabled");
 
 					}
 					//first search was invalid, write error, disable field and swap arrays
@@ -176,9 +190,11 @@ function school_api_request(query) {
 						$("#error_1").append("Invalid school.");
 	  					document.getElementById("search_1_button").value = "SHOW";
 		  	 			$("#search_1_button").attr("disabled", "true");
+		  	 			$("#rating_1_button").attr("disabled", "true");
 		  	 			hide_2 = false;
 		  	 			document.getElementById("search_2_button").value = "HIDE";
 			  	 		$("#search_2_button").removeAttr("disabled");
+			  	 		$("#rating_2_button").removeAttr("disabled");
 		  	 			data["school_2"] = $.extend(true, [], data["school_1"]);
 		  	 			data["school_1"] = null;
 		  	 			data["name_2"] = data["name_1"];
@@ -191,9 +207,11 @@ function school_api_request(query) {
 						$("#error_2").append("Invalid school.");
 	  					document.getElementById("search_2_button").value = "SHOW";
 		  	 			$("#search_2_button").attr("disabled", "true");
+		  	 			$("#rating_2_button").attr("disabled", "true");
 		  	 			hide_1 = false;
 		  	 			document.getElementById("search_1_button").value = "HIDE";
 			  	 		$("#search_1_button").removeAttr("disabled");
+			  	 		$("#rating_1_button").removeAttr("disabled");
 					}
 					//write both erros
 					else
@@ -204,10 +222,12 @@ function school_api_request(query) {
 							$("#error_1").append("Invalid school.");
 		  					document.getElementById("search_1_button").value = "SHOW";
 			  	 			$("#search_1_button").attr("disabled", "true");
+			  	 			$("#rating_1_button").attr("disabled", "true");
 			  	 			hide_2 = true;
 							$("#error_2").append("Invalid school.");
 		  					document.getElementById("search_2_button").value = "SHOW";
 			  	 			$("#search_2_button").attr("disabled", "true");
+			  	 			$("#rating_2_button").attr("disabled", "true");
 			  	 		}
 			  	 		else
 			  	 		{
@@ -215,6 +235,7 @@ function school_api_request(query) {
 							$("#error_2").append("Invalid school.");
 		  					document.getElementById("search_2_button").value = "SHOW";
 			  	 			$("#search_2_button").attr("disabled", "true");
+			  	 			$("#rating_2_button").attr("disabled", "true");
 			  	 			document.getElementById("search_2_name").value = "";
 			  	 			document.getElementById("search_1_name").value = data["name_1"];
 
@@ -231,15 +252,18 @@ function school_api_request(query) {
 						$("#error_1").append("Invalid school.");
 	  					document.getElementById("search_1_button").value = "SHOW";
 		  	 			$("#search_1_button").attr("disabled", "true");
+		  	 			$("#rating_1_button").attr("disabled", "true");
 					}
 					else
 					{
 						hide_2 = true;
 	  					document.getElementById("search_2_button").value = "SHOW";
 		  	 			$("#search_2_button").attr("disabled", "true");
+		  	 			$("#rating_2_button").attr("disabled", "true");
 						hide_1 = false;
 		  	 			document.getElementById("search_1_button").value = "HIDE";
 			  	 		$("#search_1_button").removeAttr("disabled");
+			  	 		$("#rating_1_button").removeAttr("disabled");
 					}
 
 				}
@@ -252,6 +276,7 @@ function school_api_request(query) {
 						$("#error_2").append("Invalid school.");
 	  					document.getElementById("search_2_button").value = "SHOW";
 		  	 			$("#search_2_button").attr("disabled", "true");
+		  	 			$("#rating_2_button").attr("disabled", "true");
 					}
 					//swap to 2 spot
 					else
@@ -259,9 +284,11 @@ function school_api_request(query) {
 						hide_1 = true;
 	  					document.getElementById("search_1_button").value = "SHOW";
 		  	 			$("#search_1_button").attr("disabled", "true");
+		  	 			$("#rating_1_button").attr("disabled", "true");
 						hide_2 = false;
 		  	 			document.getElementById("search_2_button").value = "HIDE";
 			  	 		$("#search_2_button").removeAttr("disabled");
+			  	 		$("#rating_2_button").removeAttr("disabled");
 						data["school_2"] = $.extend(true, [], data["school_1"]);
 		  	 			data["school_1"] = null;
 		  	 			data["name_2"] = data["name_1"];
@@ -271,8 +298,7 @@ function school_api_request(query) {
 				else
 					window.alert("serious logic error here...");
 				nochanges = true;
-				auto_1 = "";
-				auto_2 = "";
+
       		}
       	}
     }
@@ -322,6 +348,7 @@ function sketchProc(processing) {
 	  			hide_2 = true;
 	  			document.getElementById("search_2_button").value = "SHOW";
 	  			$("#search_2_button").attr("disabled", "true");
+	  			$("#rating_2_button").attr("disabled", "true");
 	  		}
 			else {		
 				document.getElementById("search_2_name").value = data["name_2"];
@@ -499,6 +526,7 @@ function rate(id) {
 		//add in x for cancel
 		cents += "<a class='btn btn-default' style='margin-left:5px; margin-bottom:30px;' onclick='deleteRate(" + id + ")'>X</a>";
 		$("#rating_" + id).html(cents);
+		$('.btn-default').css({"color":color});
 		$("#rating_" + id).fadeTo(700, 1);
 	});
 };
@@ -508,6 +536,7 @@ function deleteRate(id) {
 		$("#rating_" + id).empty();
 		var button = "<a id='rating_" + id + "_button' class='btn btn-default' onclick='rate(" + id + ")'>RATE THIS SCHOOL</a>";
 		$("#rating_" + id).html(button);
+		$('.btn-default').css({"color":color});
 		$("#rating_" + id).fadeTo(700, 1);
 	});
 };

@@ -275,20 +275,14 @@ function sketchProc(processing) {
 
   		data = jQuery.parseJSON(unescape(sessionStorage.getItem("data_store")));
 
-  		if(data["name_1"]){
-  			data["name_1"] = data["name_1"];
-  		}
-
-  		if(data["name_2"]){
-  			data["name_2"] = data["name_2"]
-  		}
+  		
 
 
   		//console.log(data["name_1"]);
   		//sessionStorage.removeItem("data_store");
   		if (!data || (!data["weather_1"] && !data["weather_2"]))
   		{
-  			//data = new Array();
+  			data = new Array();
 
   			data["weather_1"] =    [38.0, 44.0, 53.0, 61.0, 71.0, 82.0, 90.0, 89.0, 78.0, 65.0, 50.0, 40.0, 38.0, 90.0];
 			data["weatherlow_1"] = [26.0, 31.0, 38.0, 43.0, 52.0, 61.0, 69.0, 67.0, 58.0, 46.0, 36.0, 27.0, 26.0, 69.0];
@@ -311,7 +305,7 @@ function sketchProc(processing) {
 			data["taxes_3"] = [8.25, 3.5, 7.8, 2065];
   		}
   		//console.log(data["name_2"]);
-  		if (!data["name_2"])
+  		if (!data["weather_2"])
   		{
   			hide_2 = true;
   			document.getElementById("search_2_button").value = "SHOW";

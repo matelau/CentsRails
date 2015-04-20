@@ -184,10 +184,20 @@ function major_api_request(query) {
 				sessionStorage.setItem("query_type", type);
 				sessionStorage.setItem("data_store",JSON.stringify(data));
 				//ok query, save to user
-				$.post("/api/v2/users/" + user_id + "/query", {"url": query_string});
+				if (user_id)
+					$.post("/api/v2/users/" + user_id + "/query?api_key=" + api_key, {"url": query_string});
 
 				auto_1 = undefined;
 				auto_2 = undefined;
+
+				//clear out the ability to rate
+				$("#rating_1").empty();
+				var button = "<a id='rating_1_button' class='btn btn-default' onclick='rate(1)'>RATE THIS MAJOR</a>";
+				$("#rating_1").html(button);
+				$("#rating_2").empty();
+				button = "<a id='rating_2_button' class='btn btn-default' onclick='rate(2)'>RATE THIS MAJOR</a>";
+				$("#rating_2").html(button);
+				$('.btn-default').css({"color":color});
 
 	  			if (sent1 && sent2)
 	  			{
@@ -195,17 +205,21 @@ function major_api_request(query) {
 	  				hide_2 = false;
 		  	 		document.getElementById("search_1_button").value = "HIDE";
 		  	 		$("#search_1_button").removeAttr("disabled");
+		  	 		$("#rating_1_button").removeAttr("disabled");
 		  	 		document.getElementById("search_2_button").value = "HIDE";
 		  	 		$("#search_2_button").removeAttr("disabled");
+		  	 		$("#rating_2_button").removeAttr("disabled");
 	  			}
 	  			else if (!sent1 && sent2)
 	  			{
 	  				hide_1 = true;
 	  				document.getElementById("search_1_button").value = "SHOW";
 		  	 		$("#search_1_button").attr("disabled", "true");
+		  	 		$("#rating_1_button").attr("disabled", "true");
 		  	 		hide_2 = false;
 		  	 		document.getElementById("search_2_button").value = "HIDE";
 		  	 		$("#search_2_button").removeAttr("disabled");
+		  	 		$("#rating_2_button").removeAttr("disabled");
 		  	 		//need to flip data to _2 arrays
 					data["degree_2"] = $.extend(true, [], data["degree_1"]);
 					data["degree_1"] = null;
@@ -220,20 +234,31 @@ function major_api_request(query) {
 	  				hide_2 = true;
 	  				document.getElementById("search_2_button").value = "SHOW";
 		  	 		$("#search_2_button").attr("disabled", "true");
+		  	 		$("#rating_2_button").attr("disabled", "true");
 		  	 		hide_1 = false;
 		  	 		document.getElementById("search_1_button").value = "HIDE";
 		  	 		$("#search_1_button").removeAttr("disabled");
+		  	 		$("#rating_1_button").removeAttr("disabled");
 	  			}
 	  			nochanges = true;
-	  			if (data["jobs_1"].length == 0 && data["jobs_2"].length == 0)
+	  			
+	  			if (data["jobs_1"] && data["jobs_1"].length == 0 && !data["jobs_2"])
+				{
+					//no top jobs for either major, disable that tab
+					$("#job_tab").hide();
+				}
+				else if (data["jobs_2"] && data["jobs_2"].length == 0 && !data["jobs_1"])
+				{
+					//no top jobs for either major, disable that tab
+					$("#job_tab").hide();
+				}
+				else if (data["jobs_1"].length == 0 && data["jobs_2"].length == 0)
 				{
 					//no top jobs for either major, disable that tab
 					$("#job_tab").hide();
 				}
 				else
-				{
 					$("#job_tab").show();
-				}
       		}
       	}
     }
@@ -308,6 +333,7 @@ function sketchProc(processing) {
   			hide_2 = true;
   			document.getElementById("search_2_button").value = "SHOW";
   			$("#search_2_button").attr("disabled", "true");
+  			$("#rating_2_button").attr("disabled", "true");
   		}
   		else
   		{
@@ -409,7 +435,7 @@ function sketchProc(processing) {
 	function top_jobs() {
 		var bar_left = 295;
 		var bar_width = 275; 
-		var min, max
+		var min, max;
 		processing.textAlign(processing.CENTER);
 		processing.text("TOP JOBS BY AVERAGE SALARY", 327, 30);
 		processing.stroke(0);
@@ -429,17 +455,26 @@ function sketchProc(processing) {
 		}
 		else
 		{
-			if (data["jobs_2"])
-			{
-				min = processing.min(data["jobs_1"][1], data["jobs_1"][3], data["jobs_1"][5], data["jobs_2"][1], data["jobs_2"][3], data["jobs_2"][5]);
-				max = processing.max(data["jobs_1"][1], data["jobs_1"][3], data["jobs_1"][5], data["jobs_2"][1], data["jobs_2"][3], data["jobs_2"][5]);
-			}
-			else
+			//if top jobs on data 1 but not 2
+			if (data["jobs_1"].length != 0 && data["jobs_2"].length == 0)
 			{
 				min = processing.min(data["jobs_1"][1], data["jobs_1"][3], data["jobs_1"][5]);
 				max = processing.max(data["jobs_1"][1], data["jobs_1"][3], data["jobs_1"][5]);
 			}
+			//if top jobs on data 2 but not 1
+			else if (data["jobs_1"].length == 0 && data["jobs_2"].length != 0)
+			{
+				min = processing.min(data["jobs_2"][1], data["jobs_2"][3], data["jobs_2"][5]);
+				max = processing.max(data["jobs_2"][1], data["jobs_2"][3], data["jobs_2"][5]);
+			}
+			//if top jobs on both
+			else if (data["jobs_1"].length != 0 && data["jobs_2"].length != 0)
+			{
+				min = processing.min(data["jobs_1"][1], data["jobs_1"][3], data["jobs_1"][5], data["jobs_2"][1], data["jobs_2"][3], data["jobs_2"][5]);
+				max = processing.max(data["jobs_1"][1], data["jobs_1"][3], data["jobs_1"][5], data["jobs_2"][1], data["jobs_2"][3], data["jobs_2"][5]);
+			}
 		}
+
 		max = max * 1.1;
 		min = min * 0.7;
 
@@ -627,6 +662,7 @@ function rate(id) {
 		//add in x for cancel
 		cents += "<a class='btn btn-default' style='margin-left:5px; margin-bottom:30px;' onclick='deleteRate(" + id + ")'>X</a>";
 		$("#rating_" + id).html(cents);
+		$('.btn-default').css({"color":color});
 		$("#rating_" + id).fadeTo(700, 1);
 	});
 };
@@ -636,6 +672,7 @@ function deleteRate(id) {
 		$("#rating_" + id).empty();
 		var button = "<a id='rating_" + id + "_button' class='btn btn-default' onclick='rate(" + id + ")'>RATE THIS MAJOR</a>";
 		$("#rating_" + id).html(button);
+		$('.btn-default').css({"color":color});
 		$("#rating_" + id).fadeTo(700, 1);
 	});
 };
