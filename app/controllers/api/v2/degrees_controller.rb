@@ -114,9 +114,10 @@ class Api::V2::DegreesController < ApplicationController
 
 	def show_random
 		ids = Degree.select(:id)
-		degree = Degree.find( ids[Random.rand(ids.length)] )
-		degrees = [{name: degree[:name], level: degree[:level]}]
-		internal_show_two(degrees, "get")
+		degree1 = Degree.find( ids[Random.rand(ids.length)] )
+		degree2 = Degree.find( ids[Random.rand(ids.length)] )
+		degrees = [{name: degree1[:name], level: degree1[:level]},{name: degree2[:name], level: degree2[:level]}]
+		internal_show_two(degrees, "compare")
 	end
 
 	# Get degrees by level and name.
