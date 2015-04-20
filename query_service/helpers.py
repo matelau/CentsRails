@@ -54,7 +54,7 @@ def send_request(url,package):
     return resp.text
 
 def send_get(url):
-    r = requests.Request("POST",url,headers={'Content-Type':'application/json','Accept':'application/json'})
+    r = requests.Request("GET",url,headers={'Content-Type':'application/json','Accept':'application/json'})
     prep = r.prepare()
     s = requests.Session()
     s.verify = False
