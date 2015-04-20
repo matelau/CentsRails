@@ -102,6 +102,8 @@ def query(sent_query):
 	if not sfault:
 		url = "https://trycents.com/api/v2/" + dval + "/" + sval
 
+		print url
+
 		return hp.send_get(url)
 
 	qgram = hp.build_engram(query)
