@@ -78,6 +78,11 @@ def query(sent_query):
 	if query[len(query)-1:] in punc:
 		query = query[:len(query)-1]
 
+	qgram = hp.build_engram(query)
+
+	query = query.replace(".", "")
+	query = " " + query + " "
+
 	sval = ""
 	dval = ""
 
@@ -105,11 +110,6 @@ def query(sent_query):
 		print url
 
 		return hp.send_get(url)
-
-	qgram = hp.build_engram(query)
-
-	query = query.replace(".", "")
-	query = " " + query + " "
 
 	for u,l in unis.iteritems():
 		for a in l:
