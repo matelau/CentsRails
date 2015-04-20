@@ -35,7 +35,7 @@ state = {}
 commands = {"compare":"compare","vs.":"compare","vs":"compare","get":"get","find":"get","difference between":"compare"}
 state_catch = {", mt":", montana",", la":", louisiana"}
 common_abbrs = {"sf":"san francisco, california","nyc":"new york, new york","slc":"salt lake city, utah","la":"los angeles, california","ft":"fort","mt":"mount"}
-supers = {"best":"best","worst":"worst","cheapest":"cheapest","least expensive":"cheapest","most expensive":"priciest","priciest":"priciest","random":"random","any","random"}
+supers = {"best":"best","worst":"worst","cheapest":"cheapest","least expensive":"cheapest","most expensive":"priciest","priciest":"priciest","random":"random","any":"random"}
 levels = ["associate","bachelor","master","doctorate","certificate"]
 datasets = {"occupation":"careers","career":"careers","job":"careers","school":"schools","universities":"schools","city":"cost_of_living","town":"cost_of_living","cities":"cost_of_living","major":"degrees","degree":"degrees"}
 dvals = ["cost_of_living","schools","careers","degrees"]
@@ -92,8 +92,8 @@ def query(sent_query):
 			break
 
 	sfault = False
-	if s == "cheapest" or s == "priciest":
-		if d == "careers" or d == "degrees":
+	if sval == "cheapest" or sval == "priciest":
+		if dval == "careers" or dval == "degrees" or dval == "":
 			sfault = True
 
 	if sval == "random" and dval == "":
