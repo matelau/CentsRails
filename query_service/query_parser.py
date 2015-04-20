@@ -112,7 +112,7 @@ def query(sent_query):
 	if dval == "" and sval == "":
 		sfault = True
 
-	if (dval == "university" or dval == "city") and sval == "":
+	if (dval == "schools" or dval == "city") and sval == "":
 		sfault = True
 
 	if sval == "random" and dval == "":
