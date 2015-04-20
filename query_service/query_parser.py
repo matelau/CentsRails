@@ -103,7 +103,7 @@ def query(sent_query):
 			sfault = True
 
 	if sval == "random" and dval == "":
-		idx = randint(0,3)
+		idx = randint(0,1000) % 3
 		print idx
 		dval = dvals[idx]
 
