@@ -139,7 +139,8 @@ function school_api_request(query) {
 				sessionStorage.setItem("query_type", type);
 				sessionStorage.setItem("data_store",JSON.stringify(data));
 				//ok query, save to user
-				$.post("/api/v2/users/" + user_id + "/query", {"url": query_string});
+				if (user_id)
+					$.post("/api/v2/users/" + user_id + "/query?api_key=" + api_key, {"url": query_string});
 
 				$("#error_1").empty();
 				$("#error_2").empty();
