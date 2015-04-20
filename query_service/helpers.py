@@ -18,9 +18,6 @@ def pp(req):
         req.body,
     ))
 
-def get_rand(mn,mx):
-    return randint(mn,mx);
-
 def make_tups(s,n,r):
     for i in xrange(0,len(s)-(n-1)):
         el = ()
