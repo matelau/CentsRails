@@ -1904,7 +1904,7 @@
           "type":"string"
         },
         "value":{  
-          "type":"string"
+          "type":"float"
         }
       }
     },
@@ -1914,7 +1914,7 @@
       ],
       "properties":{  
         "income":{  
-          "type":"float"
+          "type":"integer"
         }
       }
     }
