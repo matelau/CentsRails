@@ -26,7 +26,7 @@ function calculate() {
 	amt = parseFloat(amt).toFixed(2);
 	intr = parseFloat(intr)/100;
 	term = parseFloat(term).toFixed(1);
-	pments = Math.ceil(term*12);
+	pments = term*12;
 
 	var res = amt*(intr + intr/(1-Math.pow((1+intr),(-pments))));
 
