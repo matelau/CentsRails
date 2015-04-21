@@ -25,11 +25,10 @@ function calculate() {
 
 	amt = parseFloat(amt);
 	intr = (parseFloat(intr)/100)/12;
-	console.log(intr)
-	term = parseFloat(term).toFixed(1);
+	term = parseFloat(term);
 	pments = term*12;
 
-	var res = amt*(intr + intr/(1-Math.pow((1+intr),(-pments))));
+	var res = amt*(intr + intr/(1-Math.pow((1+intr),(pments))));
 
 	document.getElementById("payment").value = res.toFixed(2);
 };
