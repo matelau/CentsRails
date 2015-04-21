@@ -1,0 +1,62 @@
+<div class="center">
+<div class="form-horizontal">
+<fieldset>
+<legend>Loan Payoff Calculator</legend>
+<div class="form-group">
+<label for="amount" class="col-lg-2 control-label">Loan Amount</label>
+<div class="col-lg-10"><input class="search_1" placeholder="In dollars..." onkeypress="return isNumberKey(event)" id="amount" type="text"></div></div>
+<div class="form-group">
+<label for="interest" class="col-lg-2 control-label">Loan Interest</label>
+<div class="col-lg-10"><input class="search_1" placeholder="As a percentage..." onkeypress="return isNumberKey(event)" id="interest" value="4.0" type="text"></div></div>
+<div class="form-group">
+<label for="time" class="col-lg-2 control-label">Loan Term</label>
+<div class="col-lg-10"><input class="search_1" placeholder="In years..." onkeypress="return isNumberKey(event)" id="time" type="text"></div></div>
+<div class="form-group">
+<div class="col-lg-10 col-lg-offset-2">
+<button class="btn btn-default" onclick="clearFields();">Clear/button>
+<button class="btn btn-primary" onclick="calculate();">Submit</button>
+</div>
+</div>
+</fieldset>
+</div>
+<div class="form-group">
+<label for="payment" class="col-lg-2 control-label">Monthly Payment</label>
+<div class="col-lg-10"><input class="search_1" readonly id="payment" type="text"/></div></div>
+</div>
+
+<script>
+function isNumberKey(evt)
+{
+  var charCode = (evt.which) ? evt.which : evt.keyCode;
+  if (charCode != 46 && charCode > 31 
+    && (charCode < 48 || charCode > 57))
+     return false;
+
+  return true;
+}
+
+function clearFields() {
+	document.getElementById("amount").value = "";
+	document.getElementById("intr").value = "";
+	document.getElementById("time").value = "";
+}
+
+function calculate() {
+	var amt = document.getElementById("amount").value;
+	var intr = document.getElementById("intr").value;
+	var term = document.getElementById("time").value;
+
+	if(amt == null or intr == null or term == null){
+		return;
+	}
+
+	amt = parseFloat(amt).toFixed(2);
+	intr = parseFloat(intr)/100;
+	term = parseFloat(term).toFixed(1);
+	pments = ceil(term/12);
+
+	var res = amt*(intr/(1-(1+intr)^(-pments)));
+
+	document.getElementById("payment").value = res.toFixed(2);
+}
+</script>

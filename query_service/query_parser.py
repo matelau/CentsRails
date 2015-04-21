@@ -78,6 +78,15 @@ def query(sent_query):
 	command = ""
 	package = {}
 	query = sent_query.lower()
+
+	if query == "loan":
+		package = {
+			"operation":"get",
+			"query":sent_query,
+			"query_type":"loan"
+		}
+		resp = json.dumps(package)
+		return resp
 	
 	#formatting query to cut down on errors
 	if query[len(query)-1:] in punc:
