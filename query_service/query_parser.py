@@ -217,6 +217,10 @@ def query(sent_query):
 			careers.append(ordered_keys[x][0])
 			grams.add(mgrams[ordered_keys[x][0]])
 
+	if len(majors) > 0 and len(careers) > 0:
+		if len(grams[0]) > len(hp.build_ngram(maj_names[0])):
+			majors = []
+
 	#spending breakdown parsing
 	if "spending" in query or "afford" in query:
 		if len(careers) > 0:
