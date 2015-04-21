@@ -28,7 +28,7 @@ function calculate() {
 	term = parseFloat(term).toFixed(1);
 	pments = Math.ceil(term*12);
 
-	var res = amt*(intr/(1-Math.pow((1+intr),(-pments))));
+	var res = amt*(intr + intr/(1-Math.pow((1+intr),(-pments))));
 
 	document.getElementById("payment").value = res.toFixed(2);
 };
