@@ -1,0 +1,26 @@
+<div class="well bs-component" style="margin:0 auto; width:30%;">
+<div class="form-horizontal">
+<fieldset>
+<legend>Loan Payoff Calculator</legend>
+<div class="form-group">
+<label for="amount" class="col-sm-5 control-label">Loan Amount</label>
+<div class="col-lg-6"><div class="input-group"><span class="input-group-addon">$</span><input class="form-control" placeholder="In dollars..." onkeypress="return isNumberKey(event)" id="amount" type="text"></div></div></div>
+<div class="form-group">
+<label for="interest" class="col-sm-5 control-label">Loan Interest</label>
+<div class="col-lg-6"><div class="input-group">
+        <input class="form-control" placeholder="As a percentage..." onkeypress="return isNumberKey(event)" id="interest" value="4.0" type="text"><span class="input-group-addon">%</span></div></div></div>
+<div class="form-group">
+<label for="time" class="col-sm-5 control-label">Loan Term</label>
+<div class="col-lg-6"><input class="form-control" placeholder="In years..." onkeypress="return isNumberKey(event)" id="time" type="text"></div></div>
+<div class="form-group">
+<label for="payment" class="col-sm-5 control-label">Monthly Payment</label>
+<div class="col-lg-6"><input class="form-control" readonly id="payment" type="text"/></div></div>
+<div class="form-group">
+<div class="col-lg-9 col-sm-offset-5" style="margin-left: 132.906px;">
+<button class="btn btn-default" id="clr" onclick="clearFields();">Clear</button>
+<button class="btn btn-primary" id="subm" onclick="calculate();">Submit</button>
+</div>
+</div>
+</fieldset>
+</div>
+</div>

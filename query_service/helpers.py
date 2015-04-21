@@ -31,6 +31,9 @@ def build_ngram(s):
     for a in arr:
         res.append((a,))
 
+    if len(arr) == 1:
+        return res
+
     res.append(tuple(arr,))
 
     for x in xrange(2,len(arr)):

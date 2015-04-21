@@ -78,6 +78,15 @@ def query(sent_query):
 	command = ""
 	package = {}
 	query = sent_query.lower()
+
+	if query == "loan":
+		package = {
+			"operation":"get",
+			"query":sent_query,
+			"query_type":"loan"
+		}
+		resp = json.dumps(package)
+		return resp
 	
 	#formatting query to cut down on errors
 	if query[len(query)-1:] in punc:
@@ -112,7 +121,7 @@ def query(sent_query):
 	if dval == "" and sval == "":
 		sfault = True
 
-	if (dval == "schools" or dval == "city") and sval == "":
+	if (dval == "schools" or dval == "cost_of_living") and sval == "":
 		sfault = True
 
 	if sval == "random" and dval == "":
@@ -158,7 +167,7 @@ def query(sent_query):
 				continue
 		if " " + mname.lower() + " " in query:
 			majors.append({"name":mname,"level":mlev})
-			maj_names.append(m)
+			maj_names.append(mname)
 
 	#city parsing steps
 	for c in cities:
@@ -207,6 +216,13 @@ def query(sent_query):
 					continue
 			careers.append(ordered_keys[x][0])
 			grams.add(mgrams[ordered_keys[x][0]])
+
+		if len(majors) > 0 and len(careers) > 0:
+			maj_names.sort(key=lambda t: len(t), reverse=True)
+			maj_gram = hp.build_ngram(maj_names[0])
+			maj_gram.sort(key=lambda t: len(t), reverse=True)
+			if len(mgrams[ordered_keys[0][0]]) > len(maj_gram[0]):
+				majors = []
 
 	#spending breakdown parsing
 	if "spending" in query or "afford" in query:

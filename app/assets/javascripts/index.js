@@ -28,7 +28,7 @@ function popular_populate(type) {
 	var idx = Math.floor(Math.random() * 5);
 	if (type == "city")
 	{
-		var arr = ["Dallas, TX vs Madison, WI","Las Vegas vs Seattle","slc vs sf","Boston, MA vs Detroit, MI","Omaha, NE vs NYC"];
+		var arr = ["Dallas, TX vs Madison, WI","Las Vegas, NV vs Seattle, WA","slc vs sf","Boston vs Detroit","Omaha, NE vs NYC"];
 		document.getElementById("search").value = arr[idx];
 	}
 	if (type == "major")

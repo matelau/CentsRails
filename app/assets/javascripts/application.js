@@ -18,9 +18,6 @@
 //= require material
 //= require ripples
 
-
-
-
 //forward declaration
 function changeMade(){};
 
@@ -79,14 +76,25 @@ function api_request(query) {
 					window.location = "/info/examples/";
 				}
 				else if(data["query_type"] == "spending"){
+					if (user_id)
+					{
+						$.post("/api/v2/users/" + user_id + "/query?api_key=" + api_key, {"url": query});
+						$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "Use Main Search"});
+					}
 					sessionStorage.setItem("query_type",data["query_type"]);
 					sessionStorage.setItem("income",data["income"]);
 					window.location = "/search/results";
 				}
+				else if(data["query_type"] == "loan"){
+					sessionStorage.setItem("query_type",data["query_type"]);
+					window.location = "/search/results";
+				}
 				else {
-					$.post("/api/v2/users/" + user_id + "/query?api_key=" + api_key, {"url": query});
 					if (user_id)
+					{
+						$.post("/api/v2/users/" + user_id + "/query?api_key=" + api_key, {"url": query});
 						$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "Use Main Search"});
+					}
     				sessionStorage.removeItem("data_store");
 
     				var o1 = null;
