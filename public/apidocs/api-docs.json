@@ -1904,7 +1904,7 @@
           "type":"string"
         },
         "value":{  
-          "type":"float"
+          "type":"integer"
         }
       }
     },
