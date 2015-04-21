@@ -1,54 +1,51 @@
-<div style="position: absolute; height: 80%; width: 80%; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-	<div class="center">
+<div class="center">
 
-		<form>
-			<ul class="error_objects">
-				<li><p id="error_1" class="error_msg" ></p></li>
-				<li><button class="btn btn-default" type="submit" onclick="career_api_request(); return false;">UPDATE CAREERS</button></li>
-				<li><p id="error_2" class="error_msg"></p></li>
-				<!-- errors -->
-			</ul>
-
-			<ul class="search_objects">
-				<li><input type="button" onclick="hide_toggle(1)" id="search_1_button" class="btn btn-default" value="HIDE" style="width:100px"></li>
-				<li><input class="search_1" onchange="changeMade()" id="search_1_name" type="text"></li>
-				<li><p class="versus">vs.</p></li>
-				<li><input class="search_2" onchange="changeMade()" id="search_2_name" type="text"></li>
-				<li><input type="button" onclick="hide_toggle(2)" id="search_2_button" class="btn btn-default" value="HIDE" style="width:100px"></li>
-				<!-- errors -->
-			</ul>
-		</form>
-
-	<!-- ratings -->
-		<div style="height:40px; width:850px;">
-			<div id="rating_1" style="height:40px; width:290px; margin-left:112px; float:left;">
-			<% if current_user %>
-				<a id="rating_1_button" class="btn btn-default" onclick="rate('1')">RATE THIS CAREER</a>
-			<% else %>
-				<a class="btn btn-default" disabled>LOG IN TO RATE</a>
-			<% end %>	
-		</div>
-		<div id="rating_2" style="height:40px; width:290px; margin-left:48px; float:left;">
-			<% if current_user %>
-				<a id="rating_2_button" class="btn btn-default"onclick="rate('2')">RATE THIS CAREER</a>
-			<% else %>
-				<a class="btn btn-default" disabled>LOG IN TO RATE</a>
-			<% end %>	
-		</div>
-
-		<ul class="viz_objects">
-			<li><canvas class="process_viz" id="main_viz" width="655" height="375"></canvas></li>
-			<li><ul style="list-style-type: none">
-				<li><a id="summary_tab" class="btn btn-default" onclick="update_tab(1)">SUMMARY</a></li>
-				<li><a id="salary_tab" class="btn btn-default" onclick="update_tab(2)">SALARY</a></li>
-				<li><a id="demand_tab" class="btn btn-default" onclick="update_tab(3)">DEMAND</a></li>
-				<li><a id="unemploy_tab" class="btn btn-default" onclick="update_tab(4)">UNEMPLOYMENT</a></li>
-			</ul></li>
+	<form>
+		<ul class="error_objects">
+			<li><p id="error_1" class="error_msg" ></p></li>
+			<li><button class="btn btn-default" type="submit" onclick="career_api_request(); return false;">UPDATE CAREERS</button></li>
+			<li><p id="error_2" class="error_msg"></p></li>
+			<!-- errors -->
 		</ul>
-		
-		<br>
 
+		<ul class="search_objects">
+			<li><input type="button" onclick="hide_toggle(1)" id="search_1_button" class="btn btn-default" value="HIDE" style="width:100px"></li>
+			<li><input class="search_1" onchange="changeMade()" id="search_1_name" type="text"></li>
+			<li><p class="versus">vs.</p></li>
+			<li><input class="search_2" onchange="changeMade()" id="search_2_name" type="text"></li>
+			<li><input type="button" onclick="hide_toggle(2)" id="search_2_button" class="btn btn-default" value="HIDE" style="width:100px"></li>
+			<!-- errors -->
+		</ul>
+	</form>
+
+<!-- ratings -->
+	<div style="height:40px; width:850px;">
+		<div id="rating_1" style="height:40px; width:290px; margin-left:112px; float:left;">
+		<% if current_user %>
+			<a id="rating_1_button" class="btn btn-default" onclick="rate('1')">RATE THIS CAREER</a>
+		<% else %>
+			<a class="btn btn-default" disabled>LOG IN TO RATE</a>
+		<% end %>	
 	</div>
+	<div id="rating_2" style="height:40px; width:290px; margin-left:48px; float:left;">
+		<% if current_user %>
+			<a id="rating_2_button" class="btn btn-default"onclick="rate('2')">RATE THIS CAREER</a>
+		<% else %>
+			<a class="btn btn-default" disabled>LOG IN TO RATE</a>
+		<% end %>	
+	</div>
+
+	<ul class="viz_objects">
+		<li><canvas class="process_viz" id="main_viz" width="655" height="375"></canvas></li>
+		<li><ul style="list-style-type: none">
+			<li><a id="summary_tab" class="btn btn-default" onclick="update_tab(1)">SUMMARY</a></li>
+			<li><a id="salary_tab" class="btn btn-default" onclick="update_tab(2)">SALARY</a></li>
+			<li><a id="demand_tab" class="btn btn-default" onclick="update_tab(3)">DEMAND</a></li>
+			<li><a id="unemploy_tab" class="btn btn-default" onclick="update_tab(4)">UNEMPLOYMENT</a></li>
+		</ul></li>
+	</ul>
+	
+	<br>
 
 	  <script>
 	      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
