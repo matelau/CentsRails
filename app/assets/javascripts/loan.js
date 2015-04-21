@@ -19,7 +19,7 @@ function calculate() {
 	var intr = document.getElementById("intr").value;
 	var term = document.getElementById("time").value;
 
-	if(amt == "" or intr == "" or term == ""){
+	if(amt == "" || intr == "" || term == ""){
 		return;
 	}
 
