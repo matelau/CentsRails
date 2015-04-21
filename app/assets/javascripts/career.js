@@ -378,12 +378,17 @@ function sketchProc(processing) {
 		{
 			if (hide_2)
 				offset = 80;
+			var unemp = "";
+			if (data["career_unemploy_1"][0] == null)
+				unemp = "N/A";
+			else
+				unemp = (data["career_unemploy_1"][0]) + "%";
 			processing.textFont(font, 30);
 			processing.fill(main);
 			processing.text("$" + (data["career_salary_1"][10]).toLocaleString(), 400+offset, 60);
 			processing.text("" + (data["career_rating_1"]), 400+offset, 130);
 			processing.text((data["career_demand_1"][0]).toLocaleString(), 400+offset, 215);
-			processing.text((data["career_unemploy_1"][0]) + "%", 400+offset, 300);
+			processing.text(unemp, 400+offset, 300);
 			processing.textFont(font, 12);
 			processing.text("OUT OF 5.0", 400+offset, 150);
 			processing.text("JOBS", 400+offset, 235);
@@ -393,12 +398,17 @@ function sketchProc(processing) {
 		{
 			if (hide_1)
 				offset = -80;
+			var unemp = "";
+			if (data["career_unemploy_2"][0] == null)
+				unemp = "N/A";
+			else
+				unemp = (data["career_unemploy_2"][0]) + "%";
 			processing.textFont(font, 30);
 			processing.fill(gray);
 			processing.text("$" + (data["career_salary_2"][10]).toLocaleString(), 560+offset, 60);
 			processing.text("" + (data["career_rating_2"]), 560+offset, 130);
 			processing.text((data["career_demand_2"][0]).toLocaleString(), 560+offset, 215);
-			processing.text((data["career_unemploy_2"][0]) + "%", 560+offset, 300);
+			processing.text(unemp, 560+offset, 300);
 			processing.textFont(font, 12);
 			processing.text("OUT OF 5.0", 560+offset, 150);
 			processing.text("JOBS", 560+offset, 235);
