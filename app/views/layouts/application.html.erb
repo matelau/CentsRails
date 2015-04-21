@@ -111,8 +111,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" id="sub" class="btn btn-primary">Select</button>
                 <button type="button" id="close" data-dismiss="modal" class="btn btn-default" onclick="closeModal()">Cancel</button>
+                <button type="button" id="sub" class="btn btn-primary">Select</button>
             </div>
         </div>
     </div>
@@ -123,6 +123,7 @@ function closeModal(){
     if(document.getElementById("loading") != null){
         $('#search-bar').removeAttr("hidden");
         $('#loading').attr("hidden", "true");
+        $("#disSelections > tbody").html("");
     }
     $('#disModal').hide();
 }
