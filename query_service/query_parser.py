@@ -167,7 +167,7 @@ def query(sent_query):
 				continue
 		if " " + mname.lower() + " " in query:
 			majors.append({"name":mname,"level":mlev})
-			maj_names.append(m)
+			maj_names.append(mname)
 
 	#city parsing steps
 	for c in cities:
