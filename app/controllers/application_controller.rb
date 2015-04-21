@@ -21,8 +21,22 @@ class ApplicationController < ActionController::Base
 	end
 
 	def api_key_is_valid?
-		user_key = ApiKey.find_by_key(params[:api_key])
-		user_key.present?
+		if ApiKey.find_by_key(params[:api_key]).present?
+			return true
+	elsif params[:api_key].present?
+			id = params[:id].present? ? params[:id] : params[:user]
+			user = User.find(id)
+			if user.api_key == params[:api_key]
+				return true
+			end
+		elsif User.find_by_api_key(session[:api_key]).present?
+			id = params[:id].present? ? params[:id] : params[:user]
+			user = User.find(id)
+			if user.api_key == session[:api_key]
+				return true
+			end
+		else
+			return false
+		end
 	end
-  
 end

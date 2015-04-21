@@ -1403,6 +1403,96 @@
         ]
       }
     },
+    "/users/{id}/spending_breakdown/income":{  
+      "get":{  
+        "tags":[  
+          "users"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Changes were saved."
+          },
+          "400":{  
+            "description":"No user ID was supplied."
+          },
+          "401":{  
+            "description":"Invalid API key."
+          },
+          "404":{  
+            "description":"No such user exists."
+          }
+        },
+        "description":"",
+        "summary":"Gets a user's hypothetical annual income.",
+        "operationId":"Api::V2::SpendingBreakdownController#get_income",
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
+          {  
+            "in":"path",
+            "description":"a user ID",
+            "name":"id",
+            "required":true,
+            "type":"integer"
+          }
+        ]
+      },
+      "put":{  
+        "tags":[  
+          "users"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Changes were saved."
+          },
+          "400":{  
+            "description":"No user ID was supplied."
+          },
+          "401":{  
+            "description":"Invalid API key."
+          },
+          "404":{  
+            "description":"No such user exists."
+          },
+          "500":{  
+            "description":"Server error while saving."
+          }
+        },
+        "description":"",
+        "summary":"Sets a user's hypothetical annual income.",
+        "operationId":"Api::V2::SpendingBreakdownController#update_income",
+        "parameters":[
+          {  
+            "in":"query",
+            "description":"the API key you've been assigned",
+            "name":"api_key",
+            "required":true,
+            "type":"string"
+          },   
+          {  
+            "in":"path",
+            "description":"a user ID",
+            "name":"id",
+            "required":true,
+            "type":"integer"
+          },
+          {  
+            "in":"body",
+            "description":"object with income field",
+            "name":"body",
+            "required":true,
+            "schema":{  
+              "$ref":"#/definitions/SBIncomeBody"
+            }
+          }
+        ]
+      }
+    },
     "/users/{id}/spending_breakdown/{category}/{name}":{  
       "delete":{  
         "tags":[  
@@ -1814,7 +1904,17 @@
           "type":"string"
         },
         "value":{  
-          "type":"string"
+          "type":"integer"
+        }
+      }
+    },
+    "SBIncomeBody":{  
+      "required":[  
+        "income"
+      ],
+      "properties":{  
+        "income":{  
+          "type":"integer"
         }
       }
     }

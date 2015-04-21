@@ -148,6 +148,8 @@ Rails.application.routes.draw do
       patch 'users/:id' => 'users#update'
       get 'users/:id/ratings' => 'users#show_ratings'
      	get 'users/:id/spending_breakdown' => 'spending_breakdown#show'
+     	get 'users/:id/spending_breakdown/income' => 'spending_breakdown#show_income'
+     	put 'users/:id/spending_breakdown/income' => 'spending_breakdown#update_income'
      	get 'users/:id/spending_breakdown/:category' => 'spending_breakdown#show_category'
       put 'users/:id/spending_breakdown/:category' => 'spending_breakdown#update_all'
       patch 'users/:id/spending_breakdown/:category' => 'spending_breakdown#update'

@@ -352,7 +352,7 @@ function applyColor() {
 	sessionStorage.setItem("colors", JSON.stringify(new_colors));
 	//get new colors and save to server
 	$.ajax({
-		url: "/api/v2/users/" + user_id + "?api_key=" + api_key,
+		url: "/api/v2/users/" + user_id+ "?api_key=" + api_key,
 		type: 'PATCH',
 		data: {"fields": { "primary_color": new_colors["p_hex"], "secondary_color": new_colors["s_hex"] } }
 	});
