@@ -18,15 +18,7 @@
 <div class="form-group">
 <div class="col-lg-9 col-sm-offset-5">
 <button class="btn btn-default" id="clr" onclick="clearFields();">Clear</button>
-<button class="btn btn-primary" id="subm" onclick="calculate();">Submit</button>
-<script>
-if (sessionStorage.getItem("colors"))
-{
-    var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
-    $('.subm').css({"background-color":c["p_hex"]});
-    $('.clr').css({"color":c["p_hex"]});
-}
-</script>
+<a class="btn btn-primary" id="subm" style="margin-left: 132.906px;" onclick="calculate();">Submit</a>
 </div>
 </div>
 </fieldset>
