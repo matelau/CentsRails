@@ -112,7 +112,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" id="sub" class="btn btn-primary">Select</button>
-                <button type="button" id="close" data-dismiss="modal" class="btn btn-primary" onclick="closeModal()">Cancel</button>
+                <button type="button" id="close" data-dismiss="modal" class="btn btn-default" onclick="closeModal()">Cancel</button>
             </div>
         </div>
     </div>
@@ -120,10 +120,11 @@
 
 <script>
 function closeModal(){
-    if($('#loading')){
+    if(document.getElementById("loading") != null){
         $('#search-bar').removeAttr("hidden");
         $('#loading').attr("hidden", "true");
     }
+    $('#disModal').hide();
 }
 </script>
 

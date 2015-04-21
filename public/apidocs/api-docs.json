@@ -1403,7 +1403,7 @@
         ]
       }
     },
-    "/users/{id}/spending_breakdown/{category}/income":{  
+    "/users/{id}/spending_breakdown/income":{  
       "get":{  
         "tags":[  
           "users"
@@ -1904,7 +1904,7 @@
           "type":"string"
         },
         "value":{  
-          "type":"string"
+          "type":"integer"
         }
       }
     },
@@ -1914,7 +1914,7 @@
       ],
       "properties":{  
         "income":{  
-          "type":"float"
+          "type":"integer"
         }
       }
     }

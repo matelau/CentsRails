@@ -1,4 +1,4 @@
-<div  class="center">
+<div class="center">
 
 	<form>
 		<ul class="error_objects">
@@ -26,14 +26,14 @@
 		<% else %>
 			<a class="btn btn-default" disabled>LOG IN TO RATE</a>
 		<% end %>	
-		</div>
-		<div id="rating_2" style="height:40px; width:290px; margin-left:48px; float:left;">
+	</div>
+	<div id="rating_2" style="height:40px; width:290px; margin-left:48px; float:left;">
 		<% if current_user %>
 			<a id="rating_2_button" class="btn btn-default"onclick="rate('2')">RATE THIS CAREER</a>
 		<% else %>
 			<a class="btn btn-default" disabled>LOG IN TO RATE</a>
 		<% end %>	
-		</div>
+	</div>
 
 	<ul class="viz_objects">
 		<li><canvas class="process_viz" id="main_viz" width="655" height="375"></canvas></li>
@@ -47,26 +47,26 @@
 	
 	<br>
 
-  <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	  <script>
+	      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-      ga('create', 'UA-61563557-1', 'auto');
-      ga('send', 'pageview');
+	      ga('create', 'UA-61563557-1', 'auto');
+	      ga('send', 'pageview');
 
-  </script>
-	<script>
-    if (sessionStorage.getItem("colors"))
-    {
-        var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
-        $('.error_msg').css({"color":c["p_hex"]});
-        $('.search_1').css({"border-color":c["p_hex"]});
-        $('.search_2').css({"border-color":c["s_hex"]});
-        $('.btn-default').css({"color":c["p_hex"]});
-    }
-	</script>
+	  </script>
+		<script>
+	    if (sessionStorage.getItem("colors"))
+	    {
+	        var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
+	        $('.error_msg').css({"color":c["p_hex"]});
+	        $('.search_1').css({"border-color":c["p_hex"]});
+	        $('.search_2').css({"border-color":c["s_hex"]});
+	        $('.btn-default').css({"color":c["p_hex"]});
+	    }
+		</script>
 <!--errors will go here -->
 	<!-- <form>
 		<ul class="search_objects">
