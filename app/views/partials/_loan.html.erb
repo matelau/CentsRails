@@ -13,7 +13,7 @@
 <div class="col-lg-10"><input class="search_1" placeholder="In years..." onkeypress="return isNumberKey(event)" id="time" type="text"></div></div>
 <div class="form-group">
 <div class="col-lg-10 col-lg-offset-2">
-<button class="btn btn-default" onclick="clearFields();">Clear/button>
+<button class="btn btn-default" onclick="clearFields();">Clear</button>
 <button class="btn btn-primary" onclick="calculate();">Submit</button>
 </div>
 </div>
@@ -34,7 +34,6 @@ function isNumberKey(evt)
 
   return true;
 }
-
 function clearFields() {
 	document.getElementById("amount").value = "";
 	document.getElementById("intr").value = "";
@@ -46,7 +45,7 @@ function calculate() {
 	var intr = document.getElementById("intr").value;
 	var term = document.getElementById("time").value;
 
-	if(amt == null or intr == null or term == null){
+	if(amt == "" or intr == "" or term == ""){
 		return;
 	}
 
