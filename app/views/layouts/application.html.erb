@@ -97,8 +97,35 @@
     </div>
 </div>
 
+<div class="modal" id="disModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="closeModal()">×</button>
+                <h4 class="modal-title">Disambiguation Alert!</h4>
+            </div>
+            <div class="modal-body">
+                <p>Your search has returned more than two results. Please select two from this menu:</p>
+                <div style="max-height: 400px; overflow-y: scroll">
+                    <table id="disSelections"><tbody></tbody></table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="sub" class="btn btn-primary">Select</button>
+                <button type="button" id="close" data-dismiss="modal" class="btn btn-primary" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-
+<script>
+function closeModal(){
+    if($('#loading')){
+        $('#search-bar').removeAttr("hidden");
+        $('#loading').attr("hidden", "true");
+    }
+}
+</script>
 
 
 

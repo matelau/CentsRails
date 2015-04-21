@@ -15,16 +15,16 @@ $(document).ready(function() {
 	//request user data
 	$.get("/api/v2/users/" + user_id + "/query", function(response){  
 		//create set of unrepeated searches
-		var searches = [];
-		var uppers = [];
-		for (var i=0; i<response.length; i++)
-		{
-			if (uppers.indexOf(response[i].toUpperCase()) < 0)
-			{
-				searches[searches.length] = response[i];
-				uppers[uppers.length] = response[i].toUpperCase();
-			}
-		}
+		var searches = response;
+		// var uppers = [];
+		// for (var i=0; i<response.length; i++)
+		// {
+		// 	if (uppers.indexOf(response[i].toUpperCase()) < 0)
+		// 	{
+		// 		searches[searches.length] = response[i];
+		// 		uppers[uppers.length] = response[i].toUpperCase();
+		// 	}
+		// }
 		var a_tags = "";
 		for (var i=0; i<searches.length; i++)
 			a_tags += "<p class='search_info' onclick='api_request(&quot;" + searches[i] + "&quot;)'>" + searches[i] + "</p>";

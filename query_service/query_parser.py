@@ -112,6 +112,9 @@ def query(sent_query):
 	if dval == "" and sval == "":
 		sfault = True
 
+	if (dval == "schools" or dval == "city") and sval == "":
+		sfault = True
+
 	if sval == "random" and dval == "":
 		value = struct.unpack("<L", os.urandom(4))[0] % 4
 		dval = dvals[value]
