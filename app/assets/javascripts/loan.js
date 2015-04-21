@@ -24,7 +24,7 @@ function calculate() {
 	}
 
 	amt = parseFloat(amt).toFixed(2);
-	intr = parseFloat(intr)/100;
+	intr = (parseFloat(intr)/100)/12;
 	term = parseFloat(term).toFixed(1);
 	pments = term*12;
 
