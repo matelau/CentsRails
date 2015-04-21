@@ -198,13 +198,13 @@ function isNumberKey(evt)
      return false;
 
   return true;
-};
+}
 
 function clearFields() {
 	document.getElementById("amount").value = "";
 	document.getElementById("intr").value = "";
 	document.getElementById("time").value = "";
-};
+}
 
 function calculate() {
 	var amt = document.getElementById("amount").value;
@@ -223,5 +223,5 @@ function calculate() {
 	var res = amt*(intr/(1-(1+intr)^(-pments)));
 
 	document.getElementById("payment").value = res.toFixed(2);
-};
+}
 
