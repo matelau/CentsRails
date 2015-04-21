@@ -56,6 +56,24 @@ class Api::V2::SpendingBreakdownController < ApplicationController
 		return render json: result, status: 200
 	end
 
+	# Get a user's estimate annual income for the spending breakdown.
+	def show_income
+		unless api_key_is_valid?
+			return render json: 'Invalid API key.', status: 401
+		end
+
+		unless params[:id].present?
+			return render json: 'You must supply a user ID.', status: 400
+		end
+
+		unless User.exists? params[:id]
+			return render json: 'No such user found.', status: 404
+		end
+
+		user = User.find(params[:id])
+		return render json: user.sb_annual_income, status: 200		
+	end
+
 
 	# Save new spending breakdown data.
 	def update
@@ -139,6 +157,29 @@ class Api::V2::SpendingBreakdownController < ApplicationController
 		end
 
 		return render json: result, status: 200
+	end
+
+	# Change the user's estimated annual income for the spending breakdown.
+	def update_income
+		unless api_key_is_valid?
+			return render json: 'Invalid API key.', status: 401
+		end
+
+		unless params[:id].present?
+			return render json: 'You must supply a user ID.', status: 400
+		end
+
+		unless User.exists? params[:id]
+			return render json: 'No such user found.', status: 404
+		end
+
+		user = User.find(params[:id])
+		user.sb_annual_income = params[:income]
+		if user.save
+			return render json: 'Changes saved.', status: 200
+		else
+			return render json: 'Server error while saving.', status: 500
+		end
 	end
 
 

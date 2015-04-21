@@ -42,8 +42,6 @@
 
 </head>
 <body id="main_body" style="height: 950px">
-
-
 <!--Navigation Bar -->
 
 <div class="navbar navbar-cents">
@@ -99,8 +97,36 @@
     </div>
 </div>
 
+<div class="modal" id="disModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="closeModal()">×</button>
+                <h4 class="modal-title">Disambiguation Alert!</h4>
+            </div>
+            <div class="modal-body">
+                <p>Your search has returned more than two results. Please select two from this menu:</p>
+                <div style="max-height: 400px; overflow-y: scroll">
+                    <table id="disSelections"><tbody></tbody></table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="sub" class="btn btn-primary">Select</button>
+                <button type="button" id="close" data-dismiss="modal" class="btn btn-default" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-
+<script>
+function closeModal(){
+    if(document.getElementById("loading") != null){
+        $('#search-bar').removeAttr("hidden");
+        $('#loading').attr("hidden", "true");
+    }
+    $('#disModal').hide();
+}
+</script>
 
 
 
@@ -119,9 +145,8 @@
     <% if current_user %>
         <script>
             user_id = <%= current_user.id %>;
-            api_key = "re5-fHO6-5CnUSglEAioWg";
-            //api_key = <%= current_user.api_key %>;
 
+				    api_key = "<%= session[:api_key] %>";
         </script>   
     <% end %>
 

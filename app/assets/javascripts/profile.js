@@ -13,18 +13,18 @@ var mods_low = [0, .125, .25, .375, .5, .675, .8];
 
 $(document).ready(function() {
 	//request user data
-	$.get("/api/v2/users/" + user_id + "/query?api_key=" + api_key, function(response){  
+	$.get("/api/v2/users/" + user_id + "/query", function(response){  
 		//create set of unrepeated searches
-		var searches = [];
-		var uppers = [];
-		for (var i=0; i<response.length; i++)
-		{
-			if (uppers.indexOf(response[i].toUpperCase()) < 0)
-			{
-				searches[searches.length] = response[i];
-				uppers[uppers.length] = response[i].toUpperCase();
-			}
-		}
+		var searches = response;
+		// var uppers = [];
+		// for (var i=0; i<response.length; i++)
+		// {
+		// 	if (uppers.indexOf(response[i].toUpperCase()) < 0)
+		// 	{
+		// 		searches[searches.length] = response[i];
+		// 		uppers[uppers.length] = response[i].toUpperCase();
+		// 	}
+		// }
 		var a_tags = "";
 		for (var i=0; i<searches.length; i++)
 			a_tags += "<p class='search_info' onclick='api_request(&quot;" + searches[i] + "&quot;)'>" + searches[i] + "</p>";
@@ -35,7 +35,7 @@ $(document).ready(function() {
 	});
 
 	//request user data
-	$.get("/api/v2/users/" + user_id + "/ratings?api_key=" + api_key, function(response){ 
+	$.get("/api/v2/users/" + user_id + "/ratings", function(response){ 
 		//major ratings
 		degree_rate = JSON.parse(JSON.stringify(response.degree_ratings));
 		//school_rate = response.school_ratings;
@@ -74,7 +74,7 @@ $(document).ready(function() {
 	});
 
 	//user site progress
-	$.get("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, function(response){ 
+	$.get("/api/v2/users/" + user_id + "/completed", function(response){ 
 		var to_do = [];
 		for (var i=0; i<progress_cats.length; i++)
 		{
@@ -128,7 +128,7 @@ $(document).ready(function() {
 	colorScale();
 
 	//request user data
-	$.get("/api/v2/users/" + user_id + "?api_key=" + api_key, function(response){  
+	$.get("/api/v2/users/" + user_id, function(response){  
 		$("#email").text("Email:\t\t\t" + response.email);
 		$("#fname").text("First Name:\t\t" + response.first_name);
 		$("#lname").text("Last Name:\t\t" + response.last_name);
@@ -200,7 +200,7 @@ function updateRating(field, name, num) {
 	if (field == school_rate)
 	{
 		$.ajax({
-    		url: "/api/v2/schools/" + name_prep + "/" + num + "?api_key=" + api_key,
+    		url: "/api/v2/schools/" + name_prep + "/" + num,
     		type: 'PUT',
     		data: {"user": user_id}
 		});
@@ -209,7 +209,7 @@ function updateRating(field, name, num) {
 	{
 		var level_prep = level.replace(/ /g, "%20");
 		$.ajax({
-    		url: "/api/v2/degrees/" + level_prep + "/" + name_prep + "/" + num + "?api_key=" + api_key,
+    		url: "/api/v2/degrees/" + level_prep + "/" + name_prep + "/" + num,
     		type: 'PUT',
     		data: {"user": user_id}
 		});
@@ -217,7 +217,7 @@ function updateRating(field, name, num) {
 	if (field == career_rate)
 	{
 		$.ajax({
-    		url: "/api/v2/careers/" + name_prep + "/" + num + "?api_key=" + api_key,
+    		url: "/api/v2/careers/" + name_prep + "/" + num,
     		type: 'PUT',
     		data: {"user": user_id}
 		});
@@ -303,7 +303,7 @@ function applyColor() {
 	document.getElementById("old_div").style.backgroundColor = document.getElementById("new_div").style.backgroundColor;
 	color_array = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
 	new_colors = {};
-	$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "Create Custom Color"});
+	$.post("/api/v2/users/" + user_id + "/completed", {"section": "Create Custom Color"});
 	if (color_array == null)
 	{
 		//set all hex and rgb for both primary and secondary
@@ -352,7 +352,7 @@ function applyColor() {
 	sessionStorage.setItem("colors", JSON.stringify(new_colors));
 	//get new colors and save to server
 	$.ajax({
-		url: "/api/v2/users/" + user_id + "?api_key=" + api_key,
+		url: "/api/v2/users/" + user_id,
 		type: 'PATCH',
 		data: {"fields": { "primary_color": new_colors["p_hex"], "secondary_color": new_colors["s_hex"] } }
 	});
@@ -400,7 +400,7 @@ function resetColor() {
 	}
 	//get colors and save to server
 	$.ajax({
-		url: "/api/v2/users/" + user_id + "?api_key=" + api_key,
+		url: "/api/v2/users/" + user_id,
 		type: 'PATCH',
 		data: {"fields": { "primary_color": new_colors["p_hex"], "secondary_color": new_colors["s_hex"] } }
 	});

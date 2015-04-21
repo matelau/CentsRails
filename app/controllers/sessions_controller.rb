@@ -22,6 +22,9 @@ class SessionsController < ApplicationController
 				end
 			end
 			if in_list
+				user.api_key = SecureRandom.urlsafe_base64(24)
+				user.save
+				session[:api_key] = user.api_key
 				session[:user_id] = user.id
 				redirect_to '/'
 			else
@@ -34,6 +37,10 @@ class SessionsController < ApplicationController
 	end
 
 	def destroy
+		user = User.find(session[:user_id])
+		user.api_key = nil
+		user.save
+		session[:api_key] = nil
 		session[:user_id] = nil
 		redirect_to '/'
 	end
