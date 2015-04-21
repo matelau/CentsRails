@@ -10,13 +10,13 @@ function isNumberKey(evt)
 
 function clearFields() {
 	document.getElementById("amount").value = "";
-	document.getElementById("intr").value = "";
+	document.getElementById("interest").value = "";
 	document.getElementById("time").value = "";
 };
 
 function calculate() {
 	var amt = document.getElementById("amount").value;
-	var intr = document.getElementById("intr").value;
+	var intr = document.getElementById("interest").value;
 	var term = document.getElementById("time").value;
 
 	if(amt == "" || intr == "" || term == ""){
