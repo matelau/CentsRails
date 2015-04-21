@@ -1,4 +1,4 @@
-<div class="well bs-component" style="margin:0 auto; width:35%;">
+<div class="well bs-component" style="margin:0 auto; width:45%;">
 <div class="form-horizontal">
 <fieldset>
 <legend>Loan Payoff Calculator</legend>
@@ -13,6 +13,9 @@
 <label for="time" class="col-sm-2 control-label">Loan Term</label>
 <div class="col-lg-10"><input class="form-control" placeholder="In years..." onkeypress="return isNumberKey(event)" id="time" type="text"></div></div>
 <div class="form-group">
+<label for="payment" class="col-lg-2 control-label">Monthly Payment</label>
+<div class="col-lg-10"><input class="form-control" readonly id="payment" type="text"/></div></div>
+<div class="form-group">
 <div class="col-lg-10 col-lg-offset-2">
 <button class="btn btn-default" onclick="clearFields();">Clear</button>
 <button class="btn btn-primary" onclick="calculate();">Submit</button>
@@ -20,7 +23,4 @@
 </div>
 </fieldset>
 </div>
-<div class="form-group">
-<label for="payment" class="col-lg-2 control-label">Monthly Payment</label>
-<div class="col-lg-10"><input class="form-control" readonly id="payment" type="text"/></div></div>
 </div>
