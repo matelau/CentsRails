@@ -190,7 +190,8 @@ class Api::V2::UsersController < ApplicationController
 				FROM careers AS d 
 				INNER JOIN rates_careers AS r
 				ON d.id = r.career_id
-				WHERE r.user_id = ?',
+				WHERE r.user_id = ?
+				ORDER BY d.name',
 				params[:id]
 			]
 			records.each do |record|
@@ -206,7 +207,8 @@ class Api::V2::UsersController < ApplicationController
 				FROM degrees AS d 
 				INNER JOIN rates_majors AS r
 				ON d.id = r.degree_id
-				WHERE r.user_id = ?',
+				WHERE r.user_id = ?
+				ORDER BY d.name',
 				params[:id]
 			]
 			records.each do |record|
@@ -221,7 +223,8 @@ class Api::V2::UsersController < ApplicationController
 				FROM universities AS s 
 				INNER JOIN rates_schools AS r
 				ON s.id = r.university_id
-				WHERE r.user_id = ?',
+				WHERE r.user_id = ?
+				ORDER BY s.name',
 				params[:id]
 			]
 			records.each do |record|
