@@ -63,6 +63,7 @@ def send_get(url,qtype):
     s.verify = False
     resp = s.send(prep)
     package = json.loads(resp.text)
+    print package
     package["query_type"] = qtype
     return json.dumps(package)
 
