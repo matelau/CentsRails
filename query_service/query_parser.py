@@ -218,6 +218,8 @@ def query(sent_query):
 			grams.add(mgrams[ordered_keys[x][0]])
 
 		if len(majors) > 0 and len(careers) > 0:
+			print mgrams[ordered_keys[0][0]]
+			print maj_names[0]
 			if len(mgrams[ordered_keys[0][0]]) > len(hp.build_ngram(maj_names[0])):
 				majors = []
 
