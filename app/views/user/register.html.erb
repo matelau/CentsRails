@@ -24,6 +24,15 @@
 		<%= f.password_field :password_confirmation, html: {placeholder: '', class: 'input-xlarge'} %>
 		<label id="user_password_confirmation-error" class="error" for="user_password_confirmation"></label>
 
+		<label>SECURITY QUESTION</label>
+		<%= f.text_field :question, html: {placeholder: '', class: 'input-xlarge'} %>
+		<label id="user_first_name-error" class="error" for="user_first_name"></label>
+
+		<label>ANSWER</label>
+		<%= f.text_field :answer, html: {placeholder: '', class: 'input-xlarge'} %>
+		<label id="user_last_name-error" class="error" for="user_last_name"></label>
+
+
 		<div style="margin:auto; float:left; width: 400px; height:40px;">
 			<!-- Radio buttons that determine what kind of confirmation email to send. -->
 			<label style="width:235px">EMAIL DELIVERY PREFERENCE</label>

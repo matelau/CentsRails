@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150421024301) do
+ActiveRecord::Schema.define(version: 20150421200314) do
 
   create_table "amounts", force: true do |t|
     t.integer  "user_id"
@@ -208,6 +208,8 @@ ActiveRecord::Schema.define(version: 20150421024301) do
     t.boolean  "prefers_autocomplete"
     t.string   "api_key"
     t.float    "sb_annual_income",     limit: 24
+    t.string   "question"
+    t.string   "answer"
   end
 
   create_table "weather_records", force: true do |t|
