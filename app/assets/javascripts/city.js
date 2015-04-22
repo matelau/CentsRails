@@ -6,7 +6,7 @@ $(document).ready(function() {
 	  			var re = $.ui.autocomplete.escapeRegex(req.term);
 	  			var pattern1 = new RegExp("^"+re, "i");
 	  			var a = $.grep(auto_cities, function(item, index){return pattern1.test(item);});
-	  			var b = $.grep(auto_cities, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
+	  			var b = $.grep(auto_cities, function(item, index){return ((item.toLowerCase()).indexOf(req.term.toLowerCase())>0);});
 	  			responseFn(a.concat(b));
 	  		},
 	  		response: function(e, u) {
@@ -33,7 +33,7 @@ $(document).ready(function() {
 	  			var re = $.ui.autocomplete.escapeRegex(req.term);
 	  			var pattern1 = new RegExp("^"+re, "i");
 	  			var a = $.grep(auto_cities, function(item, index){return pattern1.test(item);});
-	  			var b = $.grep(auto_cities, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
+	  			var b = $.grep(auto_cities, function(item, index){return ((item.toLowerCase()).indexOf(req.term.toLowerCase())>0);});
 	  			responseFn(a.concat(b));
 	  		},
 	  		response: function(e, u) {

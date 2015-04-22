@@ -3,14 +3,18 @@ var prefill = {'city':['City 1', 'City 2 (Optional)'], 'major':['Major 1', 'Majo
 				'career':['Career 1', 'Career 2 (Optional)'], 'suggest':['What else would you like to search for?']};
 
 //get all data for the auto completes
-var auto_cities, auto_majors, auto_schools, auto_careers, stillover;
+var auto_cities, auto_majors, auto_schools, auto_careers, stillover, bg_color;
 
 stillover = true;
 
 function showSearch(type) {
 	if (!stillover)
 	{
-		$("#" + type + "_container").css("background-image", "url(/assets/examples/"+ type +"_blur.jpeg)");
+		//$("#" + type + "_container").css("background-image", "url(/assets/examples/"+ type +"_blur.jpeg)");
+		if (type == "spending")
+			$("#" + type + "_container").css("background-image", "url(/assets/examples/"+ type +"_blur.jpeg)");
+		else
+			$("#" + type + "_container").css("background-color", "#EEEEEE");
 		$("#" + type + "_form").removeAttr("hidden");
 		$("#" + type + "_clear").css("visibility", "visible");
 	}
@@ -20,7 +24,7 @@ $(document).ready(function() {
 	
 	//wait to change bg color until image has loaded
 	//first get color from local storage
-	var bg_color;
+	bg_color;
     if (sessionStorage.getItem("colors"))
     {
         var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
@@ -65,27 +69,27 @@ $(document).ready(function() {
 	// });
 	$('<img/>').attr('src', '/assets/examples/city.png').load(function() {
 		$('#city_container').css({"background-color":bg_color});
-		$('<img/>').attr('src', '/assets/examples/city_blur.jpeg').load();
+		//$('<img/>').attr('src', '/assets/examples/city_blur.jpeg').load();
 	});
 	$('<img/>').attr('src', '/assets/examples/career.png').load(function() {
 		$('#career_container').css({"background-color":bg_color});
-		$('<img/>').attr('src', '/assets/examples/career_blur.jpeg').load();
+		//$('<img/>').attr('src', '/assets/examples/career_blur.jpeg').load();
 	});
 	$('<img/>').attr('src', '/assets/examples/school.png').load(function() {
 		$('#school_container').css({"background-color":bg_color});
-		$('<img/>').attr('src', '/assets/examples/school_blur.jpeg').load();
+		//$('<img/>').attr('src', '/assets/examples/school_blur.jpeg').load();
 	});
 	$('<img/>').attr('src', '/assets/examples/major.png').load(function() {
 		$('#major_container').css({"background-color":bg_color});
-		$('<img/>').attr('src', '/assets/examples/major_blur.jpeg').load();
+		//$('<img/>').attr('src', '/assets/examples/major_blur.jpeg').load();
 	});
 	$('<img/>').attr('src', '/assets/examples/spending.png').load(function() {
-		$('#spending_container').css({"background-color":bg_color});
+		//$('#spending_container').css({"background-color":bg_color});
 		$('<img/>').attr('src', '/assets/examples/spending_blur.jpeg').load();
 	});
 	$('<img/>').attr('src', '/assets/examples/suggest.png').load(function() {
 		$('#suggest_container').css({"background-color":bg_color});
-		$('<img/>').attr('src', '/assets/examples/suggest_blur.jpeg').load();
+		//$('<img/>').attr('src', '/assets/examples/suggest_blur.jpeg').load();
 	});
 	// $('<img/>').attr('src', '/assets/examples/career.png').load(function() {
 	// 	$('#career_container').css({"background-color":bg_color});
@@ -138,7 +142,6 @@ $(document).ready(function() {
 		  			var b = $.grep(auto_careers, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
 		  			responseFn(a.concat(b));
 		  	},
-	  		autoFocus: true,
 	  		delay: 0
 		});
 		$( "#search_2_career" ).autocomplete({
@@ -149,7 +152,6 @@ $(document).ready(function() {
 		  			var b = $.grep(auto_careers, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
 		  			responseFn(a.concat(b));
 		  	},
-	  		autoFocus: true,
 	  		delay: 0
 		});
 	});
@@ -165,7 +167,6 @@ $(document).ready(function() {
 		  			var b = $.grep(auto_cities, function(item, index){return ((item.toLowerCase()).indexOf(req.term.toLowerCase())>0);});
 		  			responseFn(a.concat(b));
 		  	},
-	  		autoFocus: true,
 	  		delay: 0
 		});
 		$( "#search_2_city" ).autocomplete({
@@ -176,7 +177,6 @@ $(document).ready(function() {
 		  			var b = $.grep(auto_cities, function(item, index){return ((item.toLowerCase()).indexOf(req.term.toLowerCase())>0);});
 		  			responseFn(a.concat(b));
 		  	},
-	  		autoFocus: true,
 	  		delay: 0
 		});
 	});
@@ -191,7 +191,6 @@ $(document).ready(function() {
 		  			var b = $.grep(auto_majors, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
 		  			responseFn(a.concat(b));
 		  	},
-	  		autoFocus: true,
 	  		delay: 0
 		});
 		$( "#search_2_major" ).autocomplete({
@@ -202,7 +201,6 @@ $(document).ready(function() {
 		  			var b = $.grep(auto_majors, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
 		  			responseFn(a.concat(b));
 		  	},
-	  		autoFocus: true,
 	  		delay: 0
 		});
 	});
@@ -217,7 +215,6 @@ $(document).ready(function() {
 		  			var b = $.grep(auto_schools, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
 		  			responseFn(a.concat(b));
 		  	},
-	  		autoFocus: true,
 	  		delay: 0
 		});
 		$( "#search_2_school" ).autocomplete({
@@ -228,7 +225,6 @@ $(document).ready(function() {
 		  			var b = $.grep(auto_schools, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
 		  			responseFn(a.concat(b));
 		  	},
-	  		autoFocus: true,
 	  		delay: 0
 		});
 	});
@@ -311,7 +307,19 @@ function suggestSubmit() {
 function resort(type) {
 	if (document.getElementById("search_1_" + type).value == "" && (type == "suggest" || type == "spending" || document.getElementById("search_2_" + type).value == ""))
 	{
-		$("#" + type + "_container").css("background-image", "url(/assets/examples/"+ type +".png)");
+		if (type == "spending")
+			$("#" + type + "_container").css("background-image", "url(/assets/examples/"+ type +".png)");
+		else
+		{	
+			if (!sessionStorage.getItem("colors"))
+				$("#" + type + "_container").css("background-color", "#884412");
+			else
+			{
+				//var c = sessionStorage.getItem("colors");
+				$("#" + type + "_container").css("background-color", bg_color);
+			}
+		}
+		//$("#" + type + "_container").css("background-image", "url(/assets/examples/"+ type +".png)");
 		$("#" + type + "_form").attr("hidden", "true");
 		$("#" + type + "_clear").css("visibility", "hidden");
 	}
