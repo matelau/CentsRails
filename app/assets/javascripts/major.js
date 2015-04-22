@@ -60,7 +60,7 @@ $(document).ready(function() {
 		$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "View Major Comparison"});	
 });
 
-var data, hide_1, hide_2, main, gray, font, active_tab, auto_1, auto_2, sent1, sent2, nochanges, old1, old2, canvas, processingInstance, color, ratings;
+var data, hide_1, hide_2, main, gray, font, active_tab, auto_1, auto_2, sent1, sent2, nochanges, old1, old2, canvas, processingInstance, color, ratings, to_split;
 
 canvas = document.getElementById("main_viz");
 if (canvas != null)
@@ -443,7 +443,7 @@ function sketchProc(processing) {
 		//var max_text = processing.max(50, data["jobs_1"][0].length, data["jobs_1"][2].length, data["jobs_1"][4].length, data["jobs_1"][0].length, data["jobs_1"][2].length, data["jobs_1"][4].length)
 
 		var bar_left = 295;
-		var bar_width = 350; 
+		var bar_width = 330; 
 		
 		var min, max;
 		processing.textAlign(processing.CENTER);
@@ -498,7 +498,20 @@ function sketchProc(processing) {
 			processing.fill(0);
 			if (data["jobs_1"][0])
 			{
-				processing.text((data["jobs_1"][0]).toUpperCase(), text_start, 65+move_down);
+				if (data["jobs_1"][0].length < 40)
+					processing.text((data["jobs_1"][0]).toUpperCase(), text_start, 65+move_down);
+				else
+				{
+					//switch to a slightly smaller font
+					processing.textFont(font, 11);
+					var split = String(data["jobs_1"][0]).split(" ");
+					var half = Math.ceil(split.length / 2);
+					var string1 = split.slice(0, half).join(" ");
+					var string2 = split.slice(half).join(" ");
+					processing.text(string1.toUpperCase(), text_start, 65+move_down-6);
+					processing.text(string2.toUpperCase(), text_start, 65+move_down+7);
+					processing.textFont(font, 12);
+				}
 				processing.fill(main);
 				var bar1 = (data["jobs_1"][1]-min)/(max-min);
 				processing.rect(bar_left, 50+move_down, bar_width*bar1, 20);
@@ -516,7 +529,20 @@ function sketchProc(processing) {
 			processing.fill(0);
 			if (data["jobs_1"][2])
 			{
-				processing.text((data["jobs_1"][2]).toUpperCase(), text_start, 103+move_down);
+				if (data["jobs_1"][2].length < 40)
+					processing.text((data["jobs_1"][2]).toUpperCase(), text_start, 103+move_down);
+				else
+				{
+					//switch to a slightly smaller font
+					processing.textFont(font, 11);
+					var split = String(data["jobs_1"][2]).split(" ");
+					var half = Math.ceil(split.length / 2);
+					var string1 = split.slice(0, half).join(" ");
+					var string2 = split.slice(half).join(" ");
+					processing.text(string1.toUpperCase(), text_start, 103+move_down-6);
+					processing.text(string2.toUpperCase(), text_start, 103+move_down+7);
+					processing.textFont(font, 12);
+				}
 				processing.fill(main);
 				var bar1 = (data["jobs_1"][3]-min)/(max-min);
 				processing.rect(bar_left, 88+move_down, bar_width*bar1, 20);
@@ -534,7 +560,20 @@ function sketchProc(processing) {
 			processing.fill(0);
 			if (data["jobs_1"][4])
 			{
-				processing.text((data["jobs_1"][4]).toUpperCase(), text_start, 145+move_down);
+				if (data["jobs_1"][4].length < 40)
+					processing.text((data["jobs_1"][4]).toUpperCase(), text_start, 145+move_down);
+				else
+				{
+					//switch to a slightly smaller font
+					processing.textFont(font, 11);
+					var split = String(data["jobs_1"][4]).split(" ");
+					var half = Math.ceil(split.length / 2);
+					var string1 = split.slice(0, half).join(" ");
+					var string2 = split.slice(half).join(" ");
+					processing.text(string1.toUpperCase(), text_start, 145+move_down-6);
+					processing.text(string2.toUpperCase(), text_start, 145+move_down+7);
+					processing.textFont(font, 12);
+				}
 				processing.fill(main);
 				var bar1 = (data["jobs_1"][5]-min)/(max-min);
 				processing.rect(bar_left, 130+move_down, bar_width*bar1, 20);
@@ -561,15 +600,17 @@ function sketchProc(processing) {
 			{
 				if (data["jobs_2"][0].length < 40)
 					processing.text((data["jobs_2"][0]).toUpperCase(), text_start, 225+move_down);
+				else
 				{
 					//switch to a slightly smaller font
-					processing.textFont(font, 10);
-					var split = name_split(data["jobs_2"]);
-					var half = split.length / 2;
-					window.alert(half);
-					processing.text((data["jobs_2"][0]).toUpperCase(), text_start, 225+move_down-6);
-					processing.text((data["jobs_2"][0]).toUpperCase(), text_start, 225+move_down+7);
 					processing.textFont(font, 11);
+					var split = String(data["jobs_2"][0]).split(" ");
+					var half = Math.ceil(split.length / 2);
+					var string1 = split.slice(0, half).join(" ");
+					var string2 = split.slice(half).join(" ");
+					processing.text(string1.toUpperCase(), text_start, 225+move_down-6);
+					processing.text(string2.toUpperCase(), text_start, 225+move_down+7);
+					processing.textFont(font, 12);
 				}
 				processing.fill(gray);
 				var bar1 = (data["jobs_2"][1]-min)/(max-min);
@@ -588,7 +629,21 @@ function sketchProc(processing) {
 			processing.fill(0);
 			if (data["jobs_2"][2])
 			{
-				processing.text((data["jobs_2"][2]).toUpperCase(), text_start, 263+move_down);
+				if (data["jobs_2"][2].length < 40)
+					processing.text((data["jobs_2"][2]).toUpperCase(), text_start, 263+move_down);
+				else
+				{
+					//switch to a slightly smaller font
+					processing.textFont(font, 11);
+					var split = String(data["jobs_2"][2]).split(" ");
+					var half = Math.ceil(split.length / 2);
+					var string1 = split.slice(0, half).join(" ");
+					var string2 = split.slice(half).join(" ");
+					processing.text(string1.toUpperCase(), text_start, 263+move_down-6);
+					processing.text(string2.toUpperCase(), text_start, 263+move_down+7);
+					processing.textFont(font, 12);
+				}
+
 				processing.fill(gray);
 				var bar1 = (data["jobs_2"][3]-min)/(max-min);
 				processing.rect(bar_left, 248+move_down, bar_width*bar1, 20);
@@ -606,7 +661,21 @@ function sketchProc(processing) {
 			processing.fill(0);
 			if (data["jobs_2"][4])
 			{
-				processing.text((data["jobs_2"][4]).toUpperCase(), text_start, 305+move_down);
+				//processing.text((data["jobs_2"][4]).toUpperCase(), text_start, 305+move_down);
+				if (data["jobs_2"][4].length < 40)
+					processing.text((data["jobs_2"][4]).toUpperCase(), text_start, 305+move_down);
+				else
+				{
+					//switch to a slightly smaller font
+					processing.textFont(font, 11);
+					var split = String(data["jobs_2"][4]).split(" ");
+					var half = Math.ceil(split.length / 2);
+					var string1 = split.slice(0, half).join(" ");
+					var string2 = split.slice(half).join(" ");
+					processing.text(string1.toUpperCase(), text_start, 305+move_down-6);
+					processing.text(string2.toUpperCase(), text_start, 305+move_down+7);
+					processing.textFont(font, 12);
+				}
 				processing.fill(gray);
 				var bar1 = (data["jobs_2"][5]-min)/(max-min);
 				processing.rect(bar_left, 290+move_down, bar_width*bar1, 20);
@@ -644,8 +713,6 @@ function sketchProc(processing) {
 	};
 
 };
-
-
 
 function rate(id) {
 	$("#rating_" + id).fadeTo(500, 0, function() {
