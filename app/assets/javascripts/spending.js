@@ -124,7 +124,7 @@ function sketchProc(processing) {
 						processing.color(96,169,23), processing.color(106,0,255), processing.color(164,196,0), processing.color(216,0,115),
 						processing.color(27,161,226), processing.color(162,0,37), processing.color(130,90,44), processing.color(240,163,10)];
 
-		shuffle(pie_colors);
+		//shuffle(pie_colors);
 
 		//var temp = default_categories["default"];
 
@@ -578,10 +578,19 @@ function updateTemplate(template) {
 	spending_selected = template;
 	//clear out old categories first
 	//add smoother transition
-	$("#category_list").empty();
+	//$(".viz_objects").fadeTo(500, 0, function() {processingInstance.noLoop();});
+	//$("#category_list").empty();
+	
+	//$(".viz_objects").fadeTo(500, 0, function() {processingInstance.loop();});
+	processingInstance.noLoop();
 	if (user_id)
-		serverGet();
-	shuffle(pie_colors);
+			serverGet();
+	$(".viz_objects").fadeTo(400, 0, function() {
+		shuffle(pie_colors);
+		processingInstance.loop(); 
+		$(".viz_objects").fadeTo(700, 1);
+	});
+	
 	//buildCategories();
 	
 };
@@ -641,6 +650,7 @@ function serverGet() {
 	   	spending_income = sessionStorage.getItem("income") * 1.00;
 	    calculateTaxes();
 		rebuildPercentages();
+		$("#category_list").empty();
 		buildCategories();
 		document.getElementById("income_value").value = (spending_income).toFixed(0);
 	});
