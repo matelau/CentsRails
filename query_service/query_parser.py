@@ -34,7 +34,7 @@ state = {}
 #conflicts right now between Louisiana(LA) and Los Angeles(LA) and Indiana(IN) and the word 'in'
 #conflict between mt and montana
 commands = {"compare":"compare","vs.":"compare","vs":"compare","get":"get","find":"get","difference between":"compare"}
-state_catch = {", in":", indiana",", mt":", montana",", la":", louisiana"}
+state_catch = {", de":", delaware",", in":", indiana",", mt":", montana",", la":", louisiana"}
 common_abbrs = {"sf":"san francisco, california","nyc":"new york, new york","slc":"salt lake city, utah","la":"los angeles, california","ft":"fort","mt":"mount","st":"saint"}
 supers = {"best":"best","worst":"worst","cheapest":"cheapest","least expensive":"cheapest","most expensive":"priciest","priciest":"priciest","random":"random","any":"random"}
 levels = ["associate","bachelor","master","doctorate","certificate"]
