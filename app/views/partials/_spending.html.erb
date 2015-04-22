@@ -15,7 +15,7 @@
 	</ul>
 	<br>
 	<br>
-	<p id="income-text" style="display:inline; font-size:16px" >ANNUAL INCOME:  $</p> <input class="main-search" id="income_value" oninput="updateIncome()" type="text" style="margin-left:10px; margin-right:60px; width:280px; height:36px"></input>
+	<p id="income-text" style="display:inline; font-size:16px" >ANNUAL INCOME:  $</p> <input class="main-search" id="income_value" onblur="dbIncome()"oninput="updateIncome()" type="text" style="margin-left:10px; margin-right:60px; width:280px; height:36px"></input>
 		<div class="btn-group" data-toggle="buttons" style="float:right; margin-top:35px">
     		<label id="default-button" class="btn btn-primary active" onclick="updateTemplate('default')">
         		<input type="radio" name="template"> DEFAULT
