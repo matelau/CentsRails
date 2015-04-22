@@ -71,6 +71,10 @@ sent2 = true;
 
 var sketch = new Processing.Sketch();
 
+function name_split(name) {
+	return name.split(" ");
+};
+
 function changeMade() {
 	if (old1 != document.getElementById("search_1_name").value)
 	{
@@ -433,8 +437,14 @@ function sketchProc(processing) {
 	};
 
 	function top_jobs() {
+
+		//set these values dynamically
+		var text_start = 275;
+		//var max_text = processing.max(50, data["jobs_1"][0].length, data["jobs_1"][2].length, data["jobs_1"][4].length, data["jobs_1"][0].length, data["jobs_1"][2].length, data["jobs_1"][4].length)
+
 		var bar_left = 295;
-		var bar_width = 275; 
+		var bar_width = 350; 
+		
 		var min, max;
 		processing.textAlign(processing.CENTER);
 		processing.text("TOP JOBS BY AVERAGE SALARY", 327, 30);
@@ -488,7 +498,7 @@ function sketchProc(processing) {
 			processing.fill(0);
 			if (data["jobs_1"][0])
 			{
-				processing.text((data["jobs_1"][0]).toUpperCase(), 275, 65+move_down);
+				processing.text((data["jobs_1"][0]).toUpperCase(), text_start, 65+move_down);
 				processing.fill(main);
 				var bar1 = (data["jobs_1"][1]-min)/(max-min);
 				processing.rect(bar_left, 50+move_down, bar_width*bar1, 20);
@@ -499,14 +509,14 @@ function sketchProc(processing) {
 			else
 			{
 				//write no job 1 data for ...
-				processing.text("NO TOP JOB #1 DATA.", 275, 65+move_down);
+				processing.text("NO TOP JOB #1 DATA.", text_start, 65+move_down);
 			}
 			processing.textAlign(processing.RIGHT);
 			processing.noStroke();
 			processing.fill(0);
 			if (data["jobs_1"][2])
 			{
-				processing.text((data["jobs_1"][2]).toUpperCase(), 275, 103+move_down);
+				processing.text((data["jobs_1"][2]).toUpperCase(), text_start, 103+move_down);
 				processing.fill(main);
 				var bar1 = (data["jobs_1"][3]-min)/(max-min);
 				processing.rect(bar_left, 88+move_down, bar_width*bar1, 20);
@@ -517,14 +527,14 @@ function sketchProc(processing) {
 			else
 			{
 				//write no job 2 data for ...
-				processing.text("NO TOP JOB #2 DATA.", 275, 103+move_down);
+				processing.text("NO TOP JOB #2 DATA.", text_start, 103+move_down);
 			}
 			processing.textAlign(processing.RIGHT);
 			processing.noStroke();
 			processing.fill(0);
 			if (data["jobs_1"][4])
 			{
-				processing.text((data["jobs_1"][4]).toUpperCase(), 275, 145+move_down);
+				processing.text((data["jobs_1"][4]).toUpperCase(), text_start, 145+move_down);
 				processing.fill(main);
 				var bar1 = (data["jobs_1"][5]-min)/(max-min);
 				processing.rect(bar_left, 130+move_down, bar_width*bar1, 20);
@@ -535,13 +545,13 @@ function sketchProc(processing) {
 			else
 			{
 				//write no job 3 data for ...
-				processing.text("NO TOP JOB #3 DATA.", 275, 145+move_down);
+				processing.text("NO TOP JOB #3 DATA.", text_start, 145+move_down);
 			}
 
 		}
 		processing.stroke(0);
 		processing.strokeWeight(2);
-		processing.line(105, 183+move_down, 275, 183+move_down);
+		processing.line(105, 183+move_down, text_start, 183+move_down);
 		if (!hide_2)
 		{
 			processing.textAlign(processing.RIGHT);
@@ -549,7 +559,18 @@ function sketchProc(processing) {
 			processing.fill(0);
 			if (data["jobs_2"][0])
 			{
-				processing.text((data["jobs_2"][0]).toUpperCase(), 275, 225+move_down);
+				if (data["jobs_2"][0].length < 40)
+					processing.text((data["jobs_2"][0]).toUpperCase(), text_start, 225+move_down);
+				{
+					//switch to a slightly smaller font
+					processing.textFont(font, 10);
+					var split = name_split(data["jobs_2"]);
+					var half = split.length / 2;
+					window.alert(half);
+					processing.text((data["jobs_2"][0]).toUpperCase(), text_start, 225+move_down-6);
+					processing.text((data["jobs_2"][0]).toUpperCase(), text_start, 225+move_down+7);
+					processing.textFont(font, 11);
+				}
 				processing.fill(gray);
 				var bar1 = (data["jobs_2"][1]-min)/(max-min);
 				processing.rect(bar_left, 210+move_down, bar_width*bar1, 20);
@@ -560,14 +581,14 @@ function sketchProc(processing) {
 			else
 			{
 				//write no job 1 data for ...
-				processing.text("NO TOP JOB #1 DATA.", 275, 225+move_down);
+				processing.text("NO TOP JOB #1 DATA.", text_start, 225+move_down);
 			}
 			processing.textAlign(processing.RIGHT);
 			processing.noStroke();
 			processing.fill(0);
 			if (data["jobs_2"][2])
 			{
-				processing.text((data["jobs_2"][2]).toUpperCase(), 275, 263+move_down);
+				processing.text((data["jobs_2"][2]).toUpperCase(), text_start, 263+move_down);
 				processing.fill(gray);
 				var bar1 = (data["jobs_2"][3]-min)/(max-min);
 				processing.rect(bar_left, 248+move_down, bar_width*bar1, 20);
@@ -578,14 +599,14 @@ function sketchProc(processing) {
 			else
 			{
 				//write no job 2 data for ...
-				processing.text("NO TOP JOB #2 DATA.", 275, 263+move_down);
+				processing.text("NO TOP JOB #2 DATA.", text_start, 263+move_down);
 			}
 			processing.textAlign(processing.RIGHT);
 			processing.noStroke();
 			processing.fill(0);
 			if (data["jobs_2"][4])
 			{
-				processing.text((data["jobs_2"][4]).toUpperCase(), 275, 305+move_down);
+				processing.text((data["jobs_2"][4]).toUpperCase(), text_start, 305+move_down);
 				processing.fill(gray);
 				var bar1 = (data["jobs_2"][5]-min)/(max-min);
 				processing.rect(bar_left, 290+move_down, bar_width*bar1, 20);
@@ -596,7 +617,7 @@ function sketchProc(processing) {
 			else
 			{
 				//write no job 2 data for ...
-				processing.text("NO TOP JOB #3 DATA.", 275, 305+move_down);
+				processing.text("NO TOP JOB #3 DATA.", text_start, 305+move_down);
 			}
 			// processing.textAlign(processing.RIGHT);
 			// processing.noStroke();
@@ -623,6 +644,8 @@ function sketchProc(processing) {
 	};
 
 };
+
+
 
 function rate(id) {
 	$("#rating_" + id).fadeTo(500, 0, function() {
