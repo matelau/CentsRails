@@ -18,9 +18,6 @@
 //= require material
 //= require ripples
 
-
-
-
 //forward declaration
 function changeMade(){};
 
@@ -86,6 +83,10 @@ function api_request(query) {
 					}
 					sessionStorage.setItem("query_type",data["query_type"]);
 					sessionStorage.setItem("income",data["income"]);
+					window.location = "/search/results";
+				}
+				else if(data["query_type"] == "loan"){
+					sessionStorage.setItem("query_type",data["query_type"]);
 					window.location = "/search/results";
 				}
 				else {
