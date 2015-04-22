@@ -82,7 +82,8 @@ function api_request(query) {
 						$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "Use Main Search"});
 					}
 					sessionStorage.setItem("query_type",data["query_type"]);
-					sessionStorage.setItem("income",data["income"]);
+					if (data["income"] != undefined)
+						sessionStorage.setItem("income",data["income"]);
 					window.location = "/search/results";
 				}
 				else if(data["query_type"] == "loan"){
