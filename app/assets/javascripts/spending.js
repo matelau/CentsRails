@@ -46,6 +46,77 @@ function sketchProc(processing) {
 								'custom':{"Taxes":0, "Food":17, "Housing":25, "Utilities":6}
 		};
 
+		//check to see if the user has anything saved
+		if (user_id)
+		{
+			serverGet();
+			// $.when(
+			// 	$.get("/api/v2/users/" + user_id + "/spending_breakdown/income?api_key=" + api_key, function(response){ 
+			// 		if ((response == null || response < 0.1) && !sessionStorage.getItem("income"))
+			// 			sessionStorage.setItem("income", 45000);
+			// 		else if (response != null && !sessionStorage.getItem("income"))
+			// 			sessionStorage.setItem("income", response);
+			// 		else
+			// 		{
+			// 			//write to db
+			// 			$.ajax({
+			// 				url: "/api/v2/users/" + user_id + "/spending_breakdown/income?api_key=" + api_key,
+			// 				type: 'PUT',
+			// 				data: {"income": sessionStorage.getItem("income")}
+			// 			});
+			// 		}
+			// 	}),
+			//    $.get("/api/v2/users/" + user_id + "/spending_breakdown?api_key=" + api_key, function(response){ 
+			// 		//console.log(response);
+			// 		if (response.length == 0)
+			// 		{
+			// 			//write all defaults to server
+			// 			for (i in default_categories)
+			// 			{
+			// 				var temp = default_categories[i];
+			// 				delete temp["Taxes"];
+			// 				$.ajax({
+			// 					url: "/api/v2/users/" + user_id + "/spending_breakdown/" + i + "?api_key=" + api_key,
+			// 					type: 'PUT',
+			// 					data: {"fields": temp}
+			// 				});
+			// 			}
+			// 		}
+			// 		else
+			// 		{
+			// 			spending_categories["default"] = {"Taxes":0};
+			// 			spending_categories["student"] = {"Taxes":0};
+			// 			spending_categories["custom"] = {"Taxes":0};
+			// 			//console.log(response);
+			// 			var toDelete = {};
+			// 			for (i in response)
+			// 			{
+			// 				if (response[i].category == "default")
+			// 					spending_categories["default"][response[i].name] = response[i].value;
+			// 				else if (response[i].category == "student")
+			// 					spending_categories["student"][response[i].name] = response[i].value;
+			// 				else if (response[i].category == "custom")
+			// 					spending_categories["custom"][response[i].name] = response[i].value;
+			// 			}	
+			// 		}
+			// 	})
+			// ).then(function() {
+			//    	spending_income = sessionStorage.getItem("income") * 1.00;
+			//     calculateTaxes();
+			// 	rebuildPercentages();
+			// 	buildCategories();
+			// 	document.getElementById("income_value").value = (spending_income).toFixed(0);
+			// });
+		}
+		else
+		{
+			spending_income = 45000;
+			calculateTaxes();
+			rebuildPercentages();
+			buildCategories();
+			document.getElementById("income_value").value = (spending_income).toFixed(0);	
+		}
+
 		pie_colors = new Array();
 		pie_colors = [	processing.color(122,59,63), processing.color(110,118,135), processing.color(0,171,169), processing.color(170,0,255),
 						processing.color(216,193,0), processing.color(229,20,0), processing.color(244,114,208), processing.color(250,104,0),
@@ -53,19 +124,20 @@ function sketchProc(processing) {
 						processing.color(96,169,23), processing.color(106,0,255), processing.color(164,196,0), processing.color(216,0,115),
 						processing.color(27,161,226), processing.color(162,0,37), processing.color(130,90,44), processing.color(240,163,10)];
 
-		shuffle(pie_colors);
+		//shuffle(pie_colors);
 
+		//var temp = default_categories["default"];
 
-		if (sessionStorage.getItem("income") == undefined || sessionStorage.getItem("income") == "" || isNaN(sessionStorage.getItem("income")))
-			spending_income = 45000;
-		else
-			spending_income = sessionStorage.getItem("income") * 1.00;
+		//if (sessionStorage.getItem("income") == undefined || sessionStorage.getItem("income") == "" || isNaN(sessionStorage.getItem("income")))
+		//	spending_income = 45000;
+		//else
+		//	spending_income = sessionStorage.getItem("income") * 1.00;
 
-		calculateTaxes();
-		rebuildPercentages();
-
-		buildCategories();
-		document.getElementById("income_value").value = (spending_income).toFixed(0);
+		//calculateTaxes();
+		//rebuildPercentages();
+		
+		//buildCategories();
+		
 	};
 
 
@@ -170,7 +242,7 @@ function buildCategories() {
 		var add = "<ul id='" + key + "_list_item' style='list-style-type: none; padding: 0; width:280px; height:30px;'>";
 		if (key != "Taxes")
 		{	
-			add += "<li style='display:inline;'><input class='update_spend' id='" + key + "_field' oninput='spendingVal(&quot;" + key +"&quot;)' type='text'/></li>";
+			add += "<li style='display:inline;'><input class='update_spend' id='" + key + "_field' onblur='dbVals()' oninput='spendingVal(&quot;" + key +"&quot;)' type='text'/></li>";
 			//add += "<li style='display:inline;'><a style='padding-left:5px' onclick='deleteCategory(&quot;" + key + "&quot;)'><img src='/assets/svg/x.svg' height='10' width='10'></a></li>";
 			//add += "<li style='display:inline;'><a style='padding-left:5px' onclick='deleteCategory(&quot;" + key + "&quot;)'>";
 			add += "<li style='display:inline;'>";
@@ -336,7 +408,11 @@ function deleteCategory(category) {
 	spending_sum -= spending_categories[spending_selected][category];
 	delete spending_categories[spending_selected][category];
 	document.getElementById("add_cat_button").text = "ADD CATEGORY";
-	$("#add_cat_button").removeAttr("disabled");	
+	$("#add_cat_button").removeAttr("disabled");
+	$.ajax({
+		url: "/api/v2/users/" + user_id + "/spending_breakdown/" + spending_selected + "/" + category +"?api_key=" + api_key,
+		type: 'DELETE'
+	});	
 };
 
 function addCategoryField() {
@@ -421,7 +497,7 @@ function addCategory() {
 
 			//add the new category to the html
 			var add = "<ul id='" + no_space + "_list_item' style='list-style-type: none; padding: 0; width:280px; height:30px;'>";
-			add += "<li style='display:inline;'><input class='update_spend' id='" + no_space + "_field' oninput='spendingVal(&quot;" + no_space +"&quot;)' pattern='[0-9.]+'' type='text'/></li>";
+			add += "<li style='display:inline;'><input class='update_spend' id='" + no_space + "_field' onblur='dbVals()' oninput='spendingVal(&quot;" + no_space +"&quot;)' pattern='[0-9.]+'' type='text'/></li>";
 			add += "<li style='display:inline;'>"//<a style='padding-left:5px' onclick='deleteCategory(&quot;" + no_space + "&quot;)'>";
 			add += "<svg onclick='deleteCategory(&quot;" + no_space + "&quot;)' height='15px' width='15px' style='padding-left:3px; padding-top:3px'>";
 			add += "<path class='fil0' d='M 0.49824641,11.476595 0.25881484,11.239868 C 0.01938328,11.003141 0.13639403,10.645347 0.25476126,10.52563 L 4.8709305,5.8567194 0.20201913,1.2405466 C -0.03741244,1.0038201 0.0795983,0.64602507 0.19796555,0.52630955 L 0.43469208,0.28687796 C 0.67141861,0.04744637 1.0292137,0.16445708 1.1489292,0.28282415 L 5.817841,4.8989948 10.434013,0.23008298 c 0.236727,-0.23943145 0.594522,-0.12242048 0.714237,-0.004058 l 0.239432,0.23672664 c 0.239432,0.23672651 0.122421,0.59452151 0.0041,0.71423711 L 6.7755632,5.8459011 11.444475,10.462074 c 0.239431,0.236726 0.12242,0.594521 0.0041,0.714237 l -0.236731,0.239431 c -0.236727,0.239432 -0.594522,0.122418 -0.714237,0.004 L 5.8286561,6.8036266 1.2124836,11.472538 c -0.23672656,0.239432 -0.59452167,0.122418 -0.71423719,0.004 z'";
@@ -459,10 +535,35 @@ function addCategory() {
 		$('.tax_spend').css({"border-bottom-color":"#884412"});
 		$('.fil0').css({"fill":"#884412"});
 	}
+	dbVals();
+};
+
+function dbVals() {
+	var temp = jQuery.extend(true, {}, spending_categories[spending_selected]);
+	delete temp["Taxes"];
+	var sum = 0.0;
+	//for (i in temp)
+	//	sum += temp[i]; 
+	sum = 100.0 - spending_categories[spending_selected]["Taxes"];
+	for (i in temp)
+		temp[i] = (temp[i]/sum)*100.0;
+	$.ajax({
+		url: "/api/v2/users/" + user_id + "/spending_breakdown/" + spending_selected + "?api_key=" + api_key,
+		type: 'PUT',
+		data: {"fields": temp}
+	});
 };
 
 function cancelCategory() {
 	$("#new_category").remove();		
+};
+
+function dbIncome() {
+	$.ajax({
+		url: "/api/v2/users/" + user_id + "/spending_breakdown/income?api_key=" + api_key,
+		type: 'PUT',
+		data: {"income": spending_income}
+	});
 };
 
 function updateTemplate(template) {
@@ -476,11 +577,85 @@ function updateTemplate(template) {
 	spending_sum = temp_sum;
 	spending_selected = template;
 	//clear out old categories first
-	$("#category_list").empty();
-	shuffle(pie_colors);
-	buildCategories();
+	//add smoother transition
+	//$(".viz_objects").fadeTo(500, 0, function() {processingInstance.noLoop();});
+	//$("#category_list").empty();
+	
+	//$(".viz_objects").fadeTo(500, 0, function() {processingInstance.loop();});
+	processingInstance.noLoop();
+	if (user_id)
+			serverGet();
+	$(".viz_objects").fadeTo(400, 0, function() {
+		shuffle(pie_colors);
+		processingInstance.loop(); 
+		$(".viz_objects").fadeTo(700, 1);
+	});
+	
+	//buildCategories();
 	
 };
+
+function serverGet() {
+	$.when(
+		$.get("/api/v2/users/" + user_id + "/spending_breakdown/income?api_key=" + api_key, function(response){ 
+			if ((response == null || response < 0.1) && !sessionStorage.getItem("income"))
+				sessionStorage.setItem("income", 45000);
+			else if (response != null && !sessionStorage.getItem("income"))
+				sessionStorage.setItem("income", response);
+			else
+			{
+				//write to db
+				$.ajax({
+					url: "/api/v2/users/" + user_id + "/spending_breakdown/income?api_key=" + api_key,
+					type: 'PUT',
+					data: {"income": sessionStorage.getItem("income")}
+				});
+			}
+		}),
+	   $.get("/api/v2/users/" + user_id + "/spending_breakdown?api_key=" + api_key, function(response){ 
+			//console.log(response);
+			if (response.length == 0)
+			{
+				//write all defaults to server
+				for (i in default_categories)
+				{
+					var temp = default_categories[i];
+					delete temp["Taxes"];
+					$.ajax({
+						url: "/api/v2/users/" + user_id + "/spending_breakdown/" + i + "?api_key=" + api_key,
+						type: 'PUT',
+						data: {"fields": temp}
+					});
+				}
+			}
+			else
+			{
+				spending_categories["default"] = {"Taxes":0};
+				spending_categories["student"] = {"Taxes":0};
+				spending_categories["custom"] = {"Taxes":0};
+				//console.log(response);
+				var toDelete = {};
+				for (i in response)
+				{
+					if (response[i].category == "default")
+						spending_categories["default"][response[i].name] = response[i].value;
+					else if (response[i].category == "student")
+						spending_categories["student"][response[i].name] = response[i].value;
+					else if (response[i].category == "custom")
+						spending_categories["custom"][response[i].name] = response[i].value;
+				}	
+			}
+		})
+	).then(function() {
+	   	spending_income = sessionStorage.getItem("income") * 1.00;
+	    calculateTaxes();
+		rebuildPercentages();
+		$("#category_list").empty();
+		buildCategories();
+		document.getElementById("income_value").value = (spending_income).toFixed(0);
+	});
+};
+
 
 function resetCategories() {
 	spending_categories[spending_selected] = {};
@@ -497,6 +672,7 @@ function resetCategories() {
 	calculateTaxes();
 	rebuildPercentages();
 	buildCategories();
+	dbVals();
 };
 
 var canvas = document.getElementById("main_viz");
