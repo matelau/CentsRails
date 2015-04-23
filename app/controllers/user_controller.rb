@@ -33,7 +33,7 @@ class UserController < ApplicationController
 	# User forgot their password.
 	def forgot
 		unless User.exists?(email: params[:email])
-			flash[:error] = 'That email address isn\'t registered with us.'
+			flash[:error] = 'Your credentials couldn\'t could be verified.'
 			redirect_to forgot_password_path and return
 		end
 		user = User.find_by_email(params[:email])
@@ -45,7 +45,7 @@ class UserController < ApplicationController
 				redirect_to forgot_password_path
 			end
 		else
-			flash[:error] = 'That answer isn\'t right.'
+			flash[:error] = 'Your credentials couldn\'t could be verified.'
 			redirect_to forgot_password_path
 		end
 	end
