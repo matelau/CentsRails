@@ -336,25 +336,39 @@ function sketchProc(processing) {
 		
  		data = jQuery.parseJSON(unescape(sessionStorage.getItem("data_store")));
 
- 		if(!data || (!data["school_1"] && !data["school_2"])) {
+ 		if (!data || (!data["school_1"] && !data["school_2"])) 
+ 		{
  			data = new Array();
 	 		data["school_1"] = [8000, 25000, 24, 32000, 40, 4.1];
  			data["school_2"] = [5000, 5000, 50, 29000, 62, 3.8];
 	 		document.getElementById("search_1_name").value = "University of Utah";
 			document.getElementById("search_2_name").value = "Brigham Young University-Provo";
 		}
-		else {
+		else
+		{
 			if (!data["school_2"])
-	  		{
-	  			hide_2 = true;
-	  			document.getElementById("search_2_button").value = "SHOW";
-	  			$("#search_2_button").attr("disabled", "true");
-	  			$("#rating_2_button").attr("disabled", "true");
-	  		}
-			else {		
+			{
+				hide_2 = true;
+				document.getElementById("search_2_button").value = "SHOW";
+				$("#search_2_button").attr("disabled", "true");
+				$("#rating_2_button").attr("disabled", "true");
+			}
+			else 
+			{		
 				document.getElementById("search_2_name").value = data["name_2"];
 			}
-			document.getElementById("search_1_name").value = data["name_1"];
+			//document.getElementById("search_1_name").value = data["name_1"];
+			if (!data["school_1"])
+			{
+				hide_2 = true;
+				document.getElementById("search_1_button").value = "SHOW";
+				$("#search_1_button").attr("disabled", "true");
+				$("#rating_1_button").attr("disabled", "true");
+			}
+			else 
+			{		
+				document.getElementById("search_1_name").value = data["name_1"];
+			}
 		}
 		old1 = document.getElementById("search_1_name").value;
 		old2 = document.getElementById("search_2_name").value;

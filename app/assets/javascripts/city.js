@@ -221,6 +221,7 @@ function city_api_request(query) {
 					data["labor_1"] = null;
 					data["taxes_1"] = null;
 					data["name_1"] = null;
+					console.log(data);
 
 	  			}
 	  			else if (sent1 && !sent2)
@@ -316,7 +317,17 @@ function sketchProc(processing) {
   			document.getElementById("search_2_name").value = data["name_2"];
   		}
 
-		document.getElementById("search_1_name").value = data["name_1"];
+  		if (!data["weather_1"])
+  		{
+  			hide_1 = true;
+  			document.getElementById("search_1_button").value = "SHOW";
+  			$("#search_1_button").attr("disabled", "true");
+  		}
+  		else
+  		{
+  			document.getElementById("search_1_name").value = data["name_1"];
+  		}
+
 		old1 = document.getElementById("search_1_name").value;
 		old2 = document.getElementById("search_2_name").value;
 		nochanges = true;

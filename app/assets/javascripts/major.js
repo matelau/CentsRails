@@ -314,26 +314,28 @@ function sketchProc(processing) {
 			data["name_1"] = "Computer Science";
 			data["name_2"] = "Music";
 		}
-		if (data["jobs_1"].length == 0 && !data["jobs_2"])
-		{
-			//no top jobs for either major, disable that tab
-			$("#job_tab").hide();
-		}
-		else if (data["jobs_2"] && data["jobs_2"].length == 0 && !data["jobs_1"])
-		{
-			//no top jobs for either major, disable that tab
-			$("#job_tab").hide();
-		}
-		else if (data["jobs_1"].length == 0 && data["jobs_2"].length == 0)
-		{
-			//no top jobs for either major, disable that tab
-			$("#job_tab").hide();
-		}
+
 		
-		document.getElementById("search_1_name").value = data["name_1"];
+		// else if (data["jobs_2"] && data["jobs_2"].length == 0 && !data["jobs_1"])
+		// {
+		// 	//no top jobs for either major, disable that tab
+		// 	$("#job_tab").hide();
+		// }
+		// else if (data["jobs_1"].length == 0 && data["jobs_2"].length == 0)
+		// {
+		// 	//no top jobs for either major, disable that tab
+		// 	$("#job_tab").hide();
+		// }
+		
+		//document.getElementById("search_1_name").value = data["name_1"];
 
 		if (!data["degree_2"])
   		{
+  			if (data["jobs_1"].length == 0)
+			{
+				//no top jobs for either major, disable that tab
+				$("#job_tab").hide();
+			}
   			hide_2 = true;
   			document.getElementById("search_2_button").value = "SHOW";
   			$("#search_2_button").attr("disabled", "true");
@@ -343,6 +345,31 @@ function sketchProc(processing) {
   		{
   			document.getElementById("search_2_name").value = data["name_2"];
   		}
+  		if (!data["degree_1"])
+  		{
+  			if (data["jobs_2"].length == 0)
+			{
+				//no top jobs for either major, disable that tab
+				$("#job_tab").hide();
+			}
+  			hide_1 = true;
+  			document.getElementById("search_1_button").value = "SHOW";
+  			$("#search_1_button").attr("disabled", "true");
+  			$("#rating_1_button").attr("disabled", "true");
+  		}
+  		else
+  		{
+  			document.getElementById("search_1_name").value = data["name_1"];
+  		}
+  		if (data["degree_1"] && data["degree_2"])
+  		{
+  			if (data["jobs_1"].length == 0 && data["jobs_2"].length == 0)
+			{
+				//no top jobs for either major, disable that tab
+				$("#job_tab").hide();
+			}
+  		}
+
   		old1 = document.getElementById("search_1_name").value;
 		old2 = document.getElementById("search_2_name").value;
 		nochanges = true;

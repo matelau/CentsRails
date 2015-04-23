@@ -318,7 +318,7 @@ function sketchProc(processing) {
 			data["name_2"] = "Music Teacher";
 		}
 
-		document.getElementById("search_1_name").value = data["name_1"];
+		//document.getElementById("search_1_name").value = data["name_1"];
 
 		if (!data["career_salary_2"])
   		{
@@ -331,6 +331,18 @@ function sketchProc(processing) {
   		{
   			document.getElementById("search_2_name").value = data["name_2"];
   		}
+  		if (!data["career_salary_1"])
+  		{
+  			hide_1 = true;
+  			document.getElementById("search_1_button").value = "SHOW";
+  			$("#search_1_button").attr("disabled", "true");
+  			$("#rating_1_button").attr("disabled", "true");
+  		}
+  		else
+  		{
+  			document.getElementById("search_1_name").value = data["name_1"];
+  		}
+  		
   		old1 = document.getElementById("search_1_name").value;
 		old2 = document.getElementById("search_2_name").value;
 		nochanges = true;
