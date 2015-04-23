@@ -53,7 +53,7 @@ function getPartial(query_type){
 		document.getElementsByTagName("body")[0].appendChild(script);
 		if (query_type == "school" || query_type == "major" || query_type == "career" || query_type == "city")
 		{
-			$("#shadow").css("background-color", "#DEDEDE");
+			$("#shadow").css("background-color", "#DFDFDF");
 			$("#shadow").css("width", "1000px");
 			$("#shadow").css("height", "610px");
 			$("#shadow").css("margin-left", "auto");
@@ -62,7 +62,7 @@ function getPartial(query_type){
 		}
 		else if (query_type == "spending")
 		{
-			$("#shadow").css("background-color", "#DEDEDE");
+			$("#shadow").css("background-color", "#DFDFDF");
 			$("#shadow").css("width", "1100px");
 			$("#shadow").css("height", "560px");
 			$("#shadow").css("margin-left", "auto");
@@ -128,6 +128,14 @@ function api_request(query) {
 				  			}
 
 				  			$('#disModal').show();
+
+			                if (sessionStorage.getItem("colors"))
+			                {
+			                    var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
+			                    console.log($('.sub').css("background-color"));
+			                    $('#sub').css({"background-color":c["p_hex"]});
+			                    $('#close').css({"color":c["p_hex"]});
+			                }
 
 				  			$('#sub').click(function(event){
 				  				var obs = $('input:checkbox:checked.obj').map(function () {

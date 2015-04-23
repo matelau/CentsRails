@@ -114,14 +114,6 @@
                 <button type="button" id="close" data-dismiss="modal" class="btn btn-default" onclick="closeModal()">Cancel</button>
                 <button type="button" id="sub" class="btn btn-primary">Select</button>
 
-                <script>
-                if (sessionStorage.getItem("colors"))
-                {
-                    var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
-                    $('.sub').css({"background-color":c["p_hex"]});
-                    $('.close').css({"color":c["p_hex"]});
-                }
-                </script>
             </div>
         </div>
     </div>
