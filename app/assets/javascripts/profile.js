@@ -159,7 +159,6 @@ function setRatings(ratings) {
 };
 
 function centsRating(field, name, level) {
-	//console.log(field, name, level);
 	var name_new = name.replace(/ /g, "_");
 	name_new = name_new.replace('(', "");
 	name_new = name_new.replace(')', "");
@@ -170,7 +169,6 @@ function centsRating(field, name, level) {
 		name_new += "_" + level;
 		name_new = name_new.replace(/ /g, "_");
 	}
-	console.log(name_new);
 	var rate = "";
 	for (var i=1; i<6; i++)
 	{
