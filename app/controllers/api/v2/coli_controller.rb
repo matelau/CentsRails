@@ -75,8 +75,13 @@ class Api::V2::ColiController < ApplicationController
 
 	def show_random
 		ids = Coli.select(:id)
-		col1 = Coli.find( ids[Random.rand(ids.length)] )
-		col2 = Coli.find( ids[Random.rand(ids.length)] )
+		rand1 = Random.rand(ids.length)
+		col1 = Coli.find( ids[rand1] )
+		rand2 = rand1
+		while(rand2 == rand1)
+			rand2 = Random.rand(ids.length)
+		end
+		col2 = Coli.find( ids[rand2] )
 		cols = [{city: col1[:city], state: col1[:state]},{city: col2[:city], state: col2[:state]}]
 		internal_show_two(cols, "compare")
 	end
