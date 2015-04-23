@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150423191526) do
+ActiveRecord::Schema.define(version: 20150423202656) do
 
   create_table "amounts", force: true do |t|
     t.integer  "user_id"
@@ -224,10 +224,10 @@ ActiveRecord::Schema.define(version: 20150423191526) do
 
   add_index "weather_records", ["coli_id"], name: "index_weather_records_on_coli_id", using: :btree
 
-  add_foreign_key "rates_majors", "degrees", name: "rates_majors_degree_id_fk"
-  add_foreign_key "rates_majors", "users", name: "rates_majors_user_id_fk"
+  add_foreign_key "rates_majors", "degrees", name: "rates_majors_degree_id_fk", dependent: :delete, options: "ON UPDATE CASCADE"
+  add_foreign_key "rates_majors", "users", name: "rates_majors_user_id_fk", dependent: :delete, options: "ON UPDATE CASCADE"
 
   add_foreign_key "rates_schools", "universities", name: "rates_schools_university_id_fk", dependent: :delete, options: "ON UPDATE CASCADE"
-  add_foreign_key "rates_schools", "users", name: "rates_schools_user_id_fk"
+  add_foreign_key "rates_schools", "users", name: "rates_schools_user_id_fk", dependent: :delete, options: "ON UPDATE CASCADE"
 
 end
