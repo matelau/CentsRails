@@ -249,16 +249,19 @@ function major_api_request(query) {
 	  			if (data["jobs_1"] && data["jobs_1"].length == 0 && !data["jobs_2"])
 				{
 					//no top jobs for either major, disable that tab
+					active_tab = 1;
 					$("#job_tab").hide();
 				}
 				else if (data["jobs_2"] && data["jobs_2"].length == 0 && !data["jobs_1"])
 				{
 					//no top jobs for either major, disable that tab
+					active_tab = 1;
 					$("#job_tab").hide();
 				}
 				else if (data["jobs_1"].length == 0 && data["jobs_2"].length == 0)
 				{
 					//no top jobs for either major, disable that tab
+					active_tab = 1;
 					$("#job_tab").hide();
 				}
 				else
