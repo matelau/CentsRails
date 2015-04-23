@@ -21,7 +21,7 @@
 //forward declaration
 function changeMade(){};
 
-var user_id, api_key;
+var user_id, api_key, showSearch;
 
 //determine which js file to load
 var path = window.location.pathname.split('/');

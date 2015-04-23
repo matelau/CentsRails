@@ -32,41 +32,7 @@ $(document).ready(function() {
     }
     else
     	bg_color = "#884412";
- //    $('<img/>').attr('src', '/assets/examples/career_blur.jpeg').load(function() {
- //    	$('<img/>').attr('src', '/assets/examples/career.png').load(function(){
- //    	$('#career_container').css({"background-color":bg_color});
- //    	});
-	// });
 
-	// $('<img/>').attr('src', '/assets/examples/city_blur.jpeg').load(function() {
- //    	$('<img/>').attr('src', '/assets/examples/city.png').load(function(){
- //    	$('#city_container').css({"background-color":bg_color});
- //    	});
-	// });
-
-	// $('<img/>').attr('src', '/assets/examples/major_blur.jpeg').load(function() {
- //    	$('<img/>').attr('src', '/assets/examples/major.png').load(function(){
- //    	$('#major_container').css({"background-color":bg_color});
- //    	});
-	// });
-
-	// $('<img/>').attr('src', '/assets/examples/spending_blur.jpeg').load(function() {
- //    	$('<img/>').attr('src', '/assets/examples/spending.png').load(function(){
- //    	$('#spending_container').css({"background-color":bg_color});
- //    	});
-	// });
-
-	// $('<img/>').attr('src', '/assets/examples/school_blur.jpeg').load(function() {
- //    	$('<img/>').attr('src', '/assets/examples/school.png').load(function(){
- //    	$('#school_container').css({"background-color":bg_color});
- //    	});
-	// });
-
-	// $('<img/>').attr('src', '/assets/examples/suggest_blur.jpeg').load(function() {
- //    	$('<img/>').attr('src', '/assets/examples/suggest.png').load(function(){
- //    	$('#suggest_container').css({"background-color":bg_color});
- //    	});
-	// });
 	$('<img/>').attr('src', '/assets/examples/city.png').load(function() {
 		$('#city_container').css({"background-color":bg_color});
 		//$('<img/>').attr('src', '/assets/examples/city_blur.jpeg').load();
@@ -91,35 +57,7 @@ $(document).ready(function() {
 		$('#suggest_container').css({"background-color":bg_color});
 		//$('<img/>').attr('src', '/assets/examples/suggest_blur.jpeg').load();
 	});
-	// $('<img/>').attr('src', '/assets/examples/career.png').load(function() {
-	// 	$('#career_container').css({"background-color":bg_color});
-	// });
-	// $('<img/>').attr('src', '/assets/examples/school.png').load(function() {
-	// 	$('#school_container').css({"background-color":bg_color});
-	// });
-	// $('<img/>').attr('src', '/assets/examples/major.png').load(function() {
-	// 	$('#major_container').css({"background-color":bg_color});
-	// });
-	// $('<img/>').attr('src', '/assets/examples/spending.png').load(function() {
-	// 	$('#spending_container').css({"background-color":bg_color});
-	// });
-	// $('<img/>').attr('src', '/assets/examples/suggest.png').load(function() {
-	// 	$('#suggest_container').css({"background-color":bg_color});
-	// });
 
-
-	// var blur_1 = new Image(540, 300);
-	// blur_1.src = "/assets/examples/city_blur.jpeg";
-	// var blur_2 = new Image(540, 300);
-	// blur_2.src = "/assets/examples/career_blur.jpeg";
-	// var blur_3 = new Image(540, 300);
-	// blur_3.src = "/assets/examples/school_blur.jpeg";
-	// var blur_4 = new Image(540, 300);
-	// blur_4.src = "/assets/examples/major_blur.jpeg";
-	// var blur_5 = new Image(540, 300);
-	// blur_5.src = "/assets/examples/spending_blur.jpeg";
-	// var blur_6 = new Image(540, 300);
-	// blur_6.src = "/assets/examples/suggest_blur.jpeg";
 
 	//put in placeholders
 	for (category in prefill)
@@ -231,6 +169,27 @@ $(document).ready(function() {
 	stillover = false;
 	if (user_id)
 		$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "Use Examples"});
+
+
+	$("#spending_form").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+             // Allow: Ctrl+A
+            (e.keyCode == 65 && e.ctrlKey === true) ||
+             // Allow: Ctrl+C
+            (e.keyCode == 67 && e.ctrlKey === true) ||
+             // Allow: Ctrl+X
+            (e.keyCode == 88 && e.ctrlKey === true) ||
+             // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+                 // let it happen, don't do anything
+                 return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
 
 });
 
