@@ -1,3 +1,5 @@
+<div id="shadow">
+
 <div  class="center" style="width:980px; padding-top:10px;">
 	<ul class="viz_objects">
 		<canvas class="process_viz" id="main_viz" width="655" height="375"></canvas>
@@ -15,7 +17,7 @@
 	</ul>
 	<br>
 	<br>
-	<p id="income-text" style="display:inline; font-size:16px" >ANNUAL INCOME:  $</p> <input class="main-search" id="income_value" oninput="updateIncome()" type="text" style="margin-left:10px; margin-right:60px; width:280px; height:36px"></input>
+	<p id="income-text" style="display:inline; font-size:16px" >ANNUAL INCOME:  $</p> <input class="main-search" id="income_value" onblur="dbIncome()"oninput="updateIncome()" type="text" style="margin-left:10px; margin-right:60px; width:280px; height:36px"></input>
 		<div class="btn-group" data-toggle="buttons" style="float:right; margin-top:35px">
     		<label id="default-button" class="btn btn-primary active" onclick="updateTemplate('default')">
         		<input type="radio" name="template"> DEFAULT
@@ -30,6 +32,8 @@
 	<!-- <a class="btn btn-default" onclick="addCategoryField()" style="margin-left:40px">ADD CATEGORY</a> -->
 	<br></br> 
 	<br>
+
+</div>
   <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -52,6 +56,7 @@
     }
     else
     {
+        $('.main-search').css({"border-color":"#884412"});
         $('#default-button').css("cssText", "background-color: rgb(" + (138-5) + "," + (68-5) + "," + (18-5) + ") !important");
     }
 	</script>

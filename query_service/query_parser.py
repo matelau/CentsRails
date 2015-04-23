@@ -34,8 +34,8 @@ state = {}
 #conflicts right now between Louisiana(LA) and Los Angeles(LA) and Indiana(IN) and the word 'in'
 #conflict between mt and montana
 commands = {"compare":"compare","vs.":"compare","vs":"compare","get":"get","find":"get","difference between":"compare"}
-state_catch = {", in":", indiana",", mt":", montana",", la":", louisiana"}
-common_abbrs = {"sf":"san francisco, california","nyc":"new york, new york","slc":"salt lake city, utah","la":"los angeles, california","ft":"fort","mt":"mount"}
+state_catch = {", de":", delaware",", in":", indiana",", mt":", montana",", la":", louisiana"}
+common_abbrs = {"sf":"san francisco, california","nyc":"new york, new york","slc":"salt lake city, utah","la":"los angeles, california","ft":"fort","mt":"mount","st":"saint"}
 supers = {"best":"best","worst":"worst","cheapest":"cheapest","least expensive":"cheapest","most expensive":"priciest","priciest":"priciest","random":"random","any":"random"}
 levels = ["associate","bachelor","master","doctorate","certificate"]
 datasets = {"occupation":"careers","occupations":"careers","career":"careers","careers":"careers","job":"careers","jobs":"careers","school":"schools","schools":"schools","universities":"schools","university":"schools","city":"cost_of_living","town":"cost_of_living","towns":"cost_of_living","cities":"cost_of_living","major":"degrees","majors":"degrees","degree":"degrees","degrees":"degrees"}
@@ -121,7 +121,7 @@ def query(sent_query):
 	if dval == "" and sval == "":
 		sfault = True
 
-	if (dval == "schools" or dval == "cost_of_living") and sval == "":
+	if (dval == "schools" or dval == "cost_of_living" or dval == "degrees" or dval == "careers") and sval == "":
 		sfault = True
 
 	if sval == "random" and dval == "":
@@ -134,11 +134,15 @@ def query(sent_query):
 
 		return hp.send_get(url, qtype)
 
+	match_on_st = 0
+
 	#query normalization steps
 	for u,l in unis.iteritems():
 		for a in l:
 			if " " + a.lower() + " " in query:
 				if u not in schools:
+					if a.lower() in state.values():
+						match_on_st += 1
 					schools.append(u)
 	for abbr, st in state_catch.iteritems():
 		if re.search(r"\b" + abbr + r"\b", query):
@@ -271,6 +275,10 @@ def query(sent_query):
 
 			resp = json.dumps(package)
 			return resp
+
+	if len(locations) > 0 and len(schools) > 0:
+		if match_on_st == len(schools):
+			schools = []
 
 	#extracting command structure
 	for s in commands:

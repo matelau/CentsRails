@@ -1,3 +1,4 @@
+<div id="shadow">
 <div  class="center">
 		<form>
 		<ul class="error_objects">
@@ -33,6 +34,8 @@
 			<li><a id="weather_tab" class="btn btn-default" onclick="update_tab(5)">WEATHER</a></li>
 		</ul></li>
 	</ul>
+
+</div>
   <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -51,6 +54,11 @@
         $('.search_1').css({"border-color":c["p_hex"]});
         $('.search_2').css({"border-color":c["s_hex"]});
         $('.btn-default').css({"color":c["p_hex"]});
+    }
+    else
+    {
+        $('.search_1').css({"border-color":"#884412"});
+        $('.search_2').css({"border-color":"#8A8889"});
     }
 </script>
 
