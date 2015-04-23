@@ -342,7 +342,7 @@ function sketchProc(processing) {
   		{
   			document.getElementById("search_1_name").value = data["name_1"];
   		}
-  		
+
   		old1 = document.getElementById("search_1_name").value;
 		old2 = document.getElementById("search_2_name").value;
 		nochanges = true;
@@ -656,76 +656,70 @@ function sketchProc(processing) {
 
 		if (hide_2 && !hide_1)
 		{
-			min_1 = data["career_demand_1"][2] * 0.8;
-			max_1 = data["career_demand_1"][2] * 1.1;
-			min_2 = data["career_demand_1"][1] * 0.8;
-			max_2 = data["career_demand_1"][1] * 1.1;
-			min_3 = data["career_demand_1"][0] * 0.8;
-			max_3 = data["career_demand_1"][0] * 1.1;
+			min_1 = data["career_demand_1"][2];
+			max_1 = data["career_demand_1"][2];
+			min_2 = data["career_demand_1"][1];
+			max_2 = data["career_demand_1"][1];
+			min_3 = data["career_demand_1"][0];
+			max_3 = data["career_demand_1"][0];
 		}
 		else if (hide_1 && !hide_2)
 		{
-			min_1 = data["career_demand_2"][2] * 0.8;
-			max_1 = data["career_demand_2"][2] * 1.1;
-			min_2 = data["career_demand_2"][1] * 0.8;
-			max_2 = data["career_demand_2"][1] * 1.1;
-			min_3 = data["career_demand_2"][0] * 0.8;
-			max_3 = data["career_demand_2"][0] * 1.1;
+			min_1 = data["career_demand_2"][2];
+			max_1 = data["career_demand_2"][2];
+			min_2 = data["career_demand_2"][1];
+			max_2 = data["career_demand_2"][1];
+			min_3 = data["career_demand_2"][0];
+			max_3 = data["career_demand_2"][0];
 		}
 		else
 		{
 			
 			if (data["career_demand_2"])
 			{
-				min_1 = processing.min(data["career_demand_1"][2], data["career_demand_2"][2]) * 0.8;
-				max_1 = processing.max(data["career_demand_1"][2], data["career_demand_2"][2]) * 1.1;
-				min_2 = processing.min(data["career_demand_1"][1], data["career_demand_2"][1]) * 0.8;
-				max_2 = processing.max(data["career_demand_1"][1], data["career_demand_2"][1]) * 1.1;
-				min_3 = processing.min(data["career_demand_1"][0], data["career_demand_2"][0]) * 0.8;
-				max_3 = processing.max(data["career_demand_1"][0], data["career_demand_2"][0]) * 1.1;
+				min_1 = processing.min(data["career_demand_1"][2], data["career_demand_2"][2]);
+				max_1 = processing.max(data["career_demand_1"][2], data["career_demand_2"][2]);
+				min_2 = processing.min(data["career_demand_1"][1], data["career_demand_2"][1]);
+				max_2 = processing.max(data["career_demand_1"][1], data["career_demand_2"][1]);
+				min_3 = processing.min(data["career_demand_1"][0], data["career_demand_2"][0]);
+				max_3 = processing.max(data["career_demand_1"][0], data["career_demand_2"][0]);
 			}
 			else
 			{
-				min_1 = data["career_demand_1"][2] * 0.8;
-				max_1 = data["career_demand_1"][2] * 1.1;
-				min_2 = data["career_demand_1"][1] * 0.8;
-				max_2 = data["career_demand_1"][1] * 1.1;
-				min_3 = data["career_demand_1"][0] * 0.8;
-				max_3 = data["career_demand_1"][0] * 1.1;
+				min_1 = data["career_demand_1"][2];
+				max_1 = data["career_demand_1"][2];
+				min_2 = data["career_demand_1"][1];
+				max_2 = data["career_demand_1"][1];
+				min_3 = data["career_demand_1"][0];
+				max_3 = data["career_demand_1"][0];
 			}
 		}
 
+		if (min_1 < 0)
+			min_1 = min_1 * 1.1;
+		else
+			min_1 = min_1 * 0.8;
+		if (min_2 < 0)
+			min_2 = min_2 * 1.1;
+		else
+			min_2 = min_2 * 0.8;
+		if (min_3 < 0)
+			min_3 = min_3 * 1.1;
+		else
+			min_3 = min_3 * 0.8;
 
-
-		
-		// if (hide_2 && !hide_1)
-		// {
-		// 	min_1 = data["career_demand_1"][2] * 0.8;
-		// 	max_1 = data["career_demand_1"][2] * 1.1;
-		// 	min_2 = data["career_demand_1"][1] * 0.8;
-		// 	max_2 = data["career_demand_1"][1] * 1.1;
-		// 	min_3 = data["career_demand_1"][0] * 0.8;
-		// 	max_3 = data["career_demand_1"][0] * 1.1;
-		// }
-		// else if (!hide_2 && hide_1)
-		// {
-		// 	min_1 = data["career_demand_2"][2] * 0.8;
-		// 	max_1 = data["career_demand_2"][2] * 1.1;
-		// 	min_2 = data["career_demand_2"][1] * 0.8;
-		// 	max_2 = data["career_demand_2"][1] * 1.1;
-		// 	min_3 = data["career_demand_2"][0] * 0.8;
-		// 	max_3 = data["career_demand_2"][0] * 1.1;
-		// }
-		// else
-		// {
-		// 	min_1 = processing.min(data["career_demand_1"][2], data["career_demand_2"][2]) * 0.8;
-		// 	max_1 = processing.max(data["career_demand_1"][2], data["career_demand_2"][2]) * 1.1;
-		// 	min_2 = processing.min(data["career_demand_1"][1], data["career_demand_2"][1]) * 0.8;
-		// 	max_2 = processing.max(data["career_demand_1"][1], data["career_demand_2"][1]) * 1.1;
-		// 	min_3 = processing.min(data["career_demand_1"][0], data["career_demand_2"][0]) * 0.8;
-		// 	max_3 = processing.max(data["career_demand_1"][0], data["career_demand_2"][0]) * 1.1;
-
-		// }
+		if (max_1 < 0)
+			max_1 = max_1 * 0.8;
+		else
+			max_1 = max_1 * 1.1;
+		if (max_2 < 0)
+			max_2 = max_2 * 0.8;
+		else
+			max_2 = max_2 * 1.1;
+		if (max_3 < 0)
+			max_3 = max_3 * 0.8;
+		else
+			max_3 = max_3 * 1.1;
 
 		//draw numerical scales
 		var range_1 = (max_1-min_1)/10;
@@ -745,22 +739,22 @@ function sketchProc(processing) {
 			processing.fill(main);
 			processing.noStroke();
 			if (data["career_demand_1"][2] != null)
-				processing.rect(graph_mid_1-20, graph_bot-1, 30, -1*(graph_bot-graph_top)*(data["career_demand_1"][2]-min_1)/(max_1-min_1));
+				processing.rect(graph_mid_1-20, graph_bot-1, 30, -1*(graph_bot-graph_top)*Math.abs(data["career_demand_1"][2]-min_1)/(max_1-min_1));
 			if (data["career_demand_1"][1] != null)
-				processing.rect(graph_mid_2-20, graph_bot-1, 30, -1*(graph_bot-graph_top)*(data["career_demand_1"][1]-min_2)/(max_2-min_2));
+				processing.rect(graph_mid_2-20, graph_bot-1, 30, -1*(graph_bot-graph_top)*Math.abs(data["career_demand_1"][1]-min_2)/(max_2-min_2));
 			if (data["career_demand_1"][0] != null)
-				processing.rect(graph_mid_3-20, graph_bot-1, 30, -1*(graph_bot-graph_top)*(data["career_demand_1"][0]-min_3)/(max_3-min_3));
+				processing.rect(graph_mid_3-20, graph_bot-1, 30, -1*(graph_bot-graph_top)*Math.abs(data["career_demand_1"][0]-min_3)/(max_3-min_3));
 		}
 		if (!hide_2)
 		{
 			processing.fill(gray);
 			processing.noStroke();
 			if (data["career_demand_2"][2] != null)
-				processing.rect(graph_mid_1+10, graph_bot-1, 30, -1*(graph_bot-graph_top)*(data["career_demand_2"][2]-min_1)/(max_1-min_1));
+				processing.rect(graph_mid_1+10, graph_bot-1, 30, -1*(graph_bot-graph_top)*Math.abs(data["career_demand_2"][2]-min_1)/(max_1-min_1));
 			if (data["career_demand_2"][1] != null)
-				processing.rect(graph_mid_2+10, graph_bot-1, 30, -1*(graph_bot-graph_top)*(data["career_demand_2"][1]-min_2)/(max_2-min_2));
+				processing.rect(graph_mid_2+10, graph_bot-1, 30, -1*(graph_bot-graph_top)*Math.abs(data["career_demand_2"][1]-min_2)/(max_2-min_2));
 			if (data["career_demand_2"][0] != null)
-				processing.rect(graph_mid_3+10, graph_bot-1, 30, -1*(graph_bot-graph_top)*(data["career_demand_2"][0]-min_3)/(max_3-min_3));
+				processing.rect(graph_mid_3+10, graph_bot-1, 30, -1*(graph_bot-graph_top)*Math.abs(data["career_demand_2"][0]-min_3)/(max_3-min_3));
 		}
 
 
