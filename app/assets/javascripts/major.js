@@ -302,32 +302,20 @@ function sketchProc(processing) {
 		data = jQuery.parseJSON(unescape(sessionStorage.getItem("data_store")));
   		//sessionStorage.removeItem("data_store");
 
+
   		if (!data || (!data["degree_1"] && !data["degree_2"]))
   		{
   			data = new Array();
 			//salary, major recommendation, major satisfaction, cents major rating
-			data["degree_1"] = [95000, 89, 77, 4.8];
-			data["degree_2"] = [41000, 45, 72, 2.9];
-			data["jobs_1"] = ["Software Developer", 97500, "Database Administrator", 91000, "System Analyst", 89000];
-			data["jobs_2"] = ["Teacher", 43500, "Disc Jockey", 37000, "Performance Artist", 36500];
+			data["degree_1"] = [81804,88,43,4.3333];
+			data["degree_2"] = [37224,41,53,0];
+			data["jobs_1"] = ["Information Technology (IT) Director",101394,"Senior Software Engineer",100989,"Lead Applications Developer",98389];
+			data["jobs_2"] = ["Worship Pastor",41622,"Administrative Assistant",35872];
 
-			data["name_1"] = "Computer Science";
-			data["name_2"] = "Music";
+			data["name_1"] = "Computer Science (Bachelor Degree)";
+			data["name_2"] = "Music (Bachelor Degree)";
 		}
 
-		
-		// else if (data["jobs_2"] && data["jobs_2"].length == 0 && !data["jobs_1"])
-		// {
-		// 	//no top jobs for either major, disable that tab
-		// 	$("#job_tab").hide();
-		// }
-		// else if (data["jobs_1"].length == 0 && data["jobs_2"].length == 0)
-		// {
-		// 	//no top jobs for either major, disable that tab
-		// 	$("#job_tab").hide();
-		// }
-		
-		//document.getElementById("search_1_name").value = data["name_1"];
 
 		if (!data["degree_2"])
   		{

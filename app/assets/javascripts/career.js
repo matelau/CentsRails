@@ -301,21 +301,21 @@ function sketchProc(processing) {
   		{
 			data = new Array();
 			//career salary data, 1997-2013, min, max
-			data["career_salary_1"] = [52000, 72000, null, 77000, 79000, 81000, null, null, 86000, 86500, 88000, 52000, 88000];
-			data["career_salary_2"] = [12345, null, null, 15000, null, null, null, 17500, null, null, 25750, 12345, 25750];
+			data["career_salary_1"] = [62580,63450,66380,68050,71150,73570,75250,78160,78490,78600,79870,62580,79870];
+			data["career_salary_2"] = [63660,67690,71840,73930,75440,77400,78860,81540,84670,86960,88670,63660,88670];
 			//career satisfaction
-			data["career_rating_1"] = 4.8;
-			data["career_rating_2"] = 2.9;
+			data["career_rating_1"] = 0;
+			data["career_rating_2"] = 4;
 			//demand
-			data["career_demand_1"] = [353200, 22.4, 252700];
-			data["career_demand_2"] = [35500, 16.0, 18300];
+			data["career_demand_1"] = [245200,18.6,133800];
+			data["career_demand_2"] = [10100,26.6,5200];
 			//unemployment
-			data["career_unemploy_1"] = [3.8, 3.2];
-			data["career_unemploy_2"] = [8.1, 8.5];
-			data["career_unemploy_3"] = [6.0, 6.8];
+			data["career_unemploy_1"] = [3.9,4.1];
+			data["career_unemploy_2"] = [4.2,0.4];
+			data["career_unemploy_3"] = [8.9,8.1];
 
-			data["name_1"] = "Software Engineer";
-			data["name_2"] = "Music Teacher";
+			data["name_1"] = "Data Analyst";
+			data["name_2"] = "Biomedical Engineer";
 		}
 
 		//document.getElementById("search_1_name").value = data["name_1"];

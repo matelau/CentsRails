@@ -339,8 +339,8 @@ function sketchProc(processing) {
  		if (!data || (!data["school_1"] && !data["school_2"])) 
  		{
  			data = new Array();
-	 		data["school_1"] = [8000, 25000, 24, 32000, 40, 4.1];
- 			data["school_2"] = [5000, 5000, 50, 29000, 62, 3.8];
+	 		data["school_1"] = [7935,25267,60,32077,129,3.5714];
+ 			data["school_2"] = [5000,5000,77,31123,62,1.3333];
 	 		document.getElementById("search_1_name").value = "University of Utah";
 			document.getElementById("search_2_name").value = "Brigham Young University-Provo";
 		}
