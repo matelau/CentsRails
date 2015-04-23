@@ -123,13 +123,13 @@
 }
 .rating-name {
 	height: 30px;
-  width: 300px;
+  width: 400px;
   float: left;
   box-shadow: none !important;
 }
 .rating-value {
   height: 30px;
-  width: 300px;
+  width: 200px;
   float: left;
   box-shadow: none !important;
 }

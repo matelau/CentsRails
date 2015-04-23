@@ -41,7 +41,7 @@ $(document).ready(function() {
 		//school_rate = response.school_ratings;
 		var a_tags = "";
 		for (var i=0; i<degree_rate.length; i++)
-			a_tags += "<div class='rating-div'><div class='rating-name'><p class='profile_info'>" + degree_rate[i].name + "</p></div><div class='rating-value'>" + centsRating("degree_rate", degree_rate[i].name) + "</div></div>";
+			a_tags += "<div class='rating-div'><div class='rating-name'><p class='profile_info'>" + degree_rate[i].name + "  (" + degree_rate[i].level + ")</p></div><div class='rating-value'>" + centsRating("degree_rate", degree_rate[i].name, degree_rate[i].level) + "</div></div>";
 			//a_tags += "<p class='profile_info'>" + school_rate[i].name + "\t\t\t" + school_rate[i].rating + "</p>";
 		$("#ac-3").attr("onclick", "setHeight('ac-3', '#degree_ratings'," + degree_rate.length + ")");
 		document.getElementById("ac-3").value = "0";
@@ -139,12 +139,18 @@ $(document).ready(function() {
 function setRatings(ratings) {
 	for (var index in ratings)
 	{
+		
 		var obj = ratings[index];
 		var name = obj.name.replace(/ /g, "_");
 		name = name.replace('(', "");
 		name = name.replace(')', "");
 		name = name.replace('\'', "");
 		name = name.replace(',', "");
+		if (ratings == degree_rate)
+		{
+			name += "_" + ratings[index].level;
+			name = name.replace(/ /g, "_");
+		}
 		for (var j=1; j<=obj.rating; j++)
 			$("#" + name + "_" + j).css("fill", color);
 		for (var i=5; i>obj.rating; i--)
@@ -152,12 +158,17 @@ function setRatings(ratings) {
 	}
 };
 
-function centsRating(field, name) {
+function centsRating(field, name, level) {
 	var name_new = name.replace(/ /g, "_");
 	name_new = name_new.replace('(', "");
 	name_new = name_new.replace(')', "");
 	name_new = name_new.replace('\'', "");
 	name_new = name_new.replace(',', "");
+	if (level != undefined)
+	{
+		name_new += "_" + level;
+		name_new = name_new.replace(/ /g, "_");
+	}
 	var rate = "";
 	for (var i=1; i<6; i++)
 	{

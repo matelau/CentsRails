@@ -1,12 +1,3 @@
-$(document).ready(function() {
-	if (sessionStorage.getItem("colors"))
-	{
-	    var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
-	    $('.subm').css({"background-color":c["p_hex"]});
-	    $('.clr').css({"color":c["p_hex"]});
-	}
-};
-
 function isNumberKey(evt)
 {
   var charCode = (evt.which) ? evt.which : evt.keyCode;

@@ -3,14 +3,18 @@ var prefill = {'city':['City 1', 'City 2 (Optional)'], 'major':['Major 1', 'Majo
 				'career':['Career 1', 'Career 2 (Optional)'], 'suggest':['What else would you like to search for?']};
 
 //get all data for the auto completes
-var auto_cities, auto_majors, auto_schools, auto_careers, stillover;
+var auto_cities, auto_majors, auto_schools, auto_careers, stillover, bg_color;
 
 stillover = true;
 
 function showSearch(type) {
 	if (!stillover)
 	{
-		$("#" + type + "_container").css("background-image", "url(/assets/examples/"+ type +"_blur.jpeg)");
+		//$("#" + type + "_container").css("background-image", "url(/assets/examples/"+ type +"_blur.jpeg)");
+		if (type == "spending")
+			$("#" + type + "_container").css("background-image", "url(/assets/examples/"+ type +"_blur.jpeg)");
+		else
+			$("#" + type + "_container").css("background-color", "#EEEEEE");
 		$("#" + type + "_form").removeAttr("hidden");
 		$("#" + type + "_clear").css("visibility", "visible");
 	}
@@ -20,7 +24,7 @@ $(document).ready(function() {
 	
 	//wait to change bg color until image has loaded
 	//first get color from local storage
-	var bg_color;
+	bg_color;
     if (sessionStorage.getItem("colors"))
     {
         var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
@@ -28,94 +32,32 @@ $(document).ready(function() {
     }
     else
     	bg_color = "#884412";
- //    $('<img/>').attr('src', '/assets/examples/career_blur.jpeg').load(function() {
- //    	$('<img/>').attr('src', '/assets/examples/career.png').load(function(){
- //    	$('#career_container').css({"background-color":bg_color});
- //    	});
-	// });
 
-	// $('<img/>').attr('src', '/assets/examples/city_blur.jpeg').load(function() {
- //    	$('<img/>').attr('src', '/assets/examples/city.png').load(function(){
- //    	$('#city_container').css({"background-color":bg_color});
- //    	});
-	// });
-
-	// $('<img/>').attr('src', '/assets/examples/major_blur.jpeg').load(function() {
- //    	$('<img/>').attr('src', '/assets/examples/major.png').load(function(){
- //    	$('#major_container').css({"background-color":bg_color});
- //    	});
-	// });
-
-	// $('<img/>').attr('src', '/assets/examples/spending_blur.jpeg').load(function() {
- //    	$('<img/>').attr('src', '/assets/examples/spending.png').load(function(){
- //    	$('#spending_container').css({"background-color":bg_color});
- //    	});
-	// });
-
-	// $('<img/>').attr('src', '/assets/examples/school_blur.jpeg').load(function() {
- //    	$('<img/>').attr('src', '/assets/examples/school.png').load(function(){
- //    	$('#school_container').css({"background-color":bg_color});
- //    	});
-	// });
-
-	// $('<img/>').attr('src', '/assets/examples/suggest_blur.jpeg').load(function() {
- //    	$('<img/>').attr('src', '/assets/examples/suggest.png').load(function(){
- //    	$('#suggest_container').css({"background-color":bg_color});
- //    	});
-	// });
 	$('<img/>').attr('src', '/assets/examples/city.png').load(function() {
 		$('#city_container').css({"background-color":bg_color});
-		$('<img/>').attr('src', '/assets/examples/city_blur.jpeg').load();
+		//$('<img/>').attr('src', '/assets/examples/city_blur.jpeg').load();
 	});
 	$('<img/>').attr('src', '/assets/examples/career.png').load(function() {
 		$('#career_container').css({"background-color":bg_color});
-		$('<img/>').attr('src', '/assets/examples/career_blur.jpeg').load();
+		//$('<img/>').attr('src', '/assets/examples/career_blur.jpeg').load();
 	});
 	$('<img/>').attr('src', '/assets/examples/school.png').load(function() {
 		$('#school_container').css({"background-color":bg_color});
-		$('<img/>').attr('src', '/assets/examples/school_blur.jpeg').load();
+		//$('<img/>').attr('src', '/assets/examples/school_blur.jpeg').load();
 	});
 	$('<img/>').attr('src', '/assets/examples/major.png').load(function() {
 		$('#major_container').css({"background-color":bg_color});
-		$('<img/>').attr('src', '/assets/examples/major_blur.jpeg').load();
+		//$('<img/>').attr('src', '/assets/examples/major_blur.jpeg').load();
 	});
 	$('<img/>').attr('src', '/assets/examples/spending.png').load(function() {
-		$('#spending_container').css({"background-color":bg_color});
+		//$('#spending_container').css({"background-color":bg_color});
 		$('<img/>').attr('src', '/assets/examples/spending_blur.jpeg').load();
 	});
 	$('<img/>').attr('src', '/assets/examples/suggest.png').load(function() {
 		$('#suggest_container').css({"background-color":bg_color});
-		$('<img/>').attr('src', '/assets/examples/suggest_blur.jpeg').load();
+		//$('<img/>').attr('src', '/assets/examples/suggest_blur.jpeg').load();
 	});
-	// $('<img/>').attr('src', '/assets/examples/career.png').load(function() {
-	// 	$('#career_container').css({"background-color":bg_color});
-	// });
-	// $('<img/>').attr('src', '/assets/examples/school.png').load(function() {
-	// 	$('#school_container').css({"background-color":bg_color});
-	// });
-	// $('<img/>').attr('src', '/assets/examples/major.png').load(function() {
-	// 	$('#major_container').css({"background-color":bg_color});
-	// });
-	// $('<img/>').attr('src', '/assets/examples/spending.png').load(function() {
-	// 	$('#spending_container').css({"background-color":bg_color});
-	// });
-	// $('<img/>').attr('src', '/assets/examples/suggest.png').load(function() {
-	// 	$('#suggest_container').css({"background-color":bg_color});
-	// });
 
-
-	// var blur_1 = new Image(540, 300);
-	// blur_1.src = "/assets/examples/city_blur.jpeg";
-	// var blur_2 = new Image(540, 300);
-	// blur_2.src = "/assets/examples/career_blur.jpeg";
-	// var blur_3 = new Image(540, 300);
-	// blur_3.src = "/assets/examples/school_blur.jpeg";
-	// var blur_4 = new Image(540, 300);
-	// blur_4.src = "/assets/examples/major_blur.jpeg";
-	// var blur_5 = new Image(540, 300);
-	// blur_5.src = "/assets/examples/spending_blur.jpeg";
-	// var blur_6 = new Image(540, 300);
-	// blur_6.src = "/assets/examples/suggest_blur.jpeg";
 
 	//put in placeholders
 	for (category in prefill)
@@ -138,7 +80,6 @@ $(document).ready(function() {
 		  			var b = $.grep(auto_careers, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
 		  			responseFn(a.concat(b));
 		  	},
-	  		autoFocus: true,
 	  		delay: 0
 		});
 		$( "#search_2_career" ).autocomplete({
@@ -149,7 +90,6 @@ $(document).ready(function() {
 		  			var b = $.grep(auto_careers, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
 		  			responseFn(a.concat(b));
 		  	},
-	  		autoFocus: true,
 	  		delay: 0
 		});
 	});
@@ -158,13 +98,13 @@ $(document).ready(function() {
 		auto_cities = response;
 		$( "#search_1_city" ).autocomplete({
 	  		source: function(req, responseFn) {
+
 		  			var re = $.ui.autocomplete.escapeRegex(req.term);
 		  			var pattern1 = new RegExp("^"+re, "i");
 		  			var a = $.grep(auto_cities, function(item, index){return pattern1.test(item);});
-		  			var b = $.grep(auto_cities, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
+		  			var b = $.grep(auto_cities, function(item, index){return ((item.toLowerCase()).indexOf(req.term.toLowerCase())>0);});
 		  			responseFn(a.concat(b));
 		  	},
-	  		autoFocus: true,
 	  		delay: 0
 		});
 		$( "#search_2_city" ).autocomplete({
@@ -172,10 +112,9 @@ $(document).ready(function() {
 		  			var re = $.ui.autocomplete.escapeRegex(req.term);
 		  			var pattern1 = new RegExp("^"+re, "i");
 		  			var a = $.grep(auto_cities, function(item, index){return pattern1.test(item);});
-		  			var b = $.grep(auto_cities, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
+		  			var b = $.grep(auto_cities, function(item, index){return ((item.toLowerCase()).indexOf(req.term.toLowerCase())>0);});
 		  			responseFn(a.concat(b));
 		  	},
-	  		autoFocus: true,
 	  		delay: 0
 		});
 	});
@@ -190,7 +129,6 @@ $(document).ready(function() {
 		  			var b = $.grep(auto_majors, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
 		  			responseFn(a.concat(b));
 		  	},
-	  		autoFocus: true,
 	  		delay: 0
 		});
 		$( "#search_2_major" ).autocomplete({
@@ -201,7 +139,6 @@ $(document).ready(function() {
 		  			var b = $.grep(auto_majors, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
 		  			responseFn(a.concat(b));
 		  	},
-	  		autoFocus: true,
 	  		delay: 0
 		});
 	});
@@ -216,7 +153,6 @@ $(document).ready(function() {
 		  			var b = $.grep(auto_schools, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
 		  			responseFn(a.concat(b));
 		  	},
-	  		autoFocus: true,
 	  		delay: 0
 		});
 		$( "#search_2_school" ).autocomplete({
@@ -227,13 +163,33 @@ $(document).ready(function() {
 		  			var b = $.grep(auto_schools, function(item, index){return ((item.toLowerCase()).indexOf(re.toLowerCase())>0);});
 		  			responseFn(a.concat(b));
 		  	},
-	  		autoFocus: true,
 	  		delay: 0
 		});
 	});
 	stillover = false;
 	if (user_id)
 		$.post("/api/v2/users/" + user_id + "/completed?api_key=" + api_key, {"section": "Use Examples"});
+
+
+	$("#spending_form").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+             // Allow: Ctrl+A
+            (e.keyCode == 65 && e.ctrlKey === true) ||
+             // Allow: Ctrl+C
+            (e.keyCode == 67 && e.ctrlKey === true) ||
+             // Allow: Ctrl+X
+            (e.keyCode == 88 && e.ctrlKey === true) ||
+             // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+                 // let it happen, don't do anything
+                 return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
 
 });
 
@@ -310,7 +266,19 @@ function suggestSubmit() {
 function resort(type) {
 	if (document.getElementById("search_1_" + type).value == "" && (type == "suggest" || type == "spending" || document.getElementById("search_2_" + type).value == ""))
 	{
-		$("#" + type + "_container").css("background-image", "url(/assets/examples/"+ type +".png)");
+		if (type == "spending")
+			$("#" + type + "_container").css("background-image", "url(/assets/examples/"+ type +".png)");
+		else
+		{	
+			if (!sessionStorage.getItem("colors"))
+				$("#" + type + "_container").css("background-color", "#884412");
+			else
+			{
+				//var c = sessionStorage.getItem("colors");
+				$("#" + type + "_container").css("background-color", bg_color);
+			}
+		}
+		//$("#" + type + "_container").css("background-image", "url(/assets/examples/"+ type +".png)");
 		$("#" + type + "_form").attr("hidden", "true");
 		$("#" + type + "_clear").css("visibility", "hidden");
 	}

@@ -1,3 +1,5 @@
+<div id="shadow">
+
 <div class="center">
 
 	<form>
@@ -47,6 +49,8 @@
 	
 	<br>
 
+	</div>
+
 	  <script>
 	      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -57,16 +61,21 @@
 	      ga('send', 'pageview');
 
 	  </script>
-		<script>
-	    if (sessionStorage.getItem("colors"))
-	    {
-	        var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
-	        $('.error_msg').css({"color":c["p_hex"]});
-	        $('.search_1').css({"border-color":c["p_hex"]});
-	        $('.search_2').css({"border-color":c["s_hex"]});
-	        $('.btn-default').css({"color":c["p_hex"]});
-	    }
-		</script>
+	<script>
+    if (sessionStorage.getItem("colors"))
+    {
+        var c = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
+        $('.error_msg').css({"color":c["p_hex"]});
+        $('.search_1').css({"border-color":c["p_hex"]});
+        $('.search_2').css({"border-color":c["s_hex"]});
+        $('.btn-default').css({"color":c["p_hex"]});
+    }
+    else
+    {
+        $('.search_1').css({"border-color":"#884412"});
+        $('.search_2').css({"border-color":"#8A8889"});
+    }
+</script>
 <!--errors will go here -->
 	<!-- <form>
 		<ul class="search_objects">
