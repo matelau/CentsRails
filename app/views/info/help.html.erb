@@ -87,11 +87,7 @@
 		<input id="ac-8" name="accordion-1" type="checkbox" />
 		<label for="ac-8">Where can I learn about your API?</label>
 		<article class="ac-small">
-			<% if current_user %>
-				<p>You can learn how to access our API through our <a href="/api">documentation</a>.</p>
-			<% else %>
-				<p>We have a public API that's open to registered users. Visit this page again after <a href="/register">registering</a> or <a href="/user/login">logging in</a>.</p>
-			<% end %>
+			<p>You can learn how to access our API through our <a href="/swagger-ui/dist/index.html?url=/apidocs/api-docs.json" target="_blank">documentation</a>.</p>
 		</article>
 	</div>
 </section>
