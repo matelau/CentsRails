@@ -38,6 +38,8 @@ else if (path[1] == "search" && path[2] == "results")
 {
 	var query_type = sessionStorage.getItem("query_type");
 	getPartial(query_type);
+
+
 }
 
 
@@ -49,6 +51,24 @@ function getPartial(query_type){
 		script.type = "application/javascript";
 		script.src = "/../assets/" + query_type + ".js";
 		document.getElementsByTagName("body")[0].appendChild(script);
+		if (query_type == "school" || query_type == "major" || query_type == "career" || query_type == "city")
+		{
+			$("#shadow").css("background-color", "#DEDEDE");
+			$("#shadow").css("width", "1000px");
+			$("#shadow").css("height", "610px");
+			$("#shadow").css("margin-left", "auto");
+			$("#shadow").css("margin-right", "auto" );
+			$("#shadow").css("box-shadow", "0 3px 10px rgba(0, 0, 0, 0.23), 0 3px 10px rgba(0, 0, 0, 0.16)");
+		}
+		else if (query_type == "spending")
+		{
+			$("#shadow").css("background-color", "#DEDEDE");
+			$("#shadow").css("width", "1100px");
+			$("#shadow").css("height", "560px");
+			$("#shadow").css("margin-left", "auto");
+			$("#shadow").css("margin-right", "auto" );
+			$("#shadow").css("box-shadow", "0 3px 10px rgba(0, 0, 0, 0.23), 0 3px 10px rgba(0, 0, 0, 0.16)");
+		}
 	});
 };
 
