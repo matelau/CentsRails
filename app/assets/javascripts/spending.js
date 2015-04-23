@@ -50,63 +50,6 @@ function sketchProc(processing) {
 		if (user_id)
 		{
 			serverGet();
-			// $.when(
-			// 	$.get("/api/v2/users/" + user_id + "/spending_breakdown/income?api_key=" + api_key, function(response){ 
-			// 		if ((response == null || response < 0.1) && !sessionStorage.getItem("income"))
-			// 			sessionStorage.setItem("income", 45000);
-			// 		else if (response != null && !sessionStorage.getItem("income"))
-			// 			sessionStorage.setItem("income", response);
-			// 		else
-			// 		{
-			// 			//write to db
-			// 			$.ajax({
-			// 				url: "/api/v2/users/" + user_id + "/spending_breakdown/income?api_key=" + api_key,
-			// 				type: 'PUT',
-			// 				data: {"income": sessionStorage.getItem("income")}
-			// 			});
-			// 		}
-			// 	}),
-			//    $.get("/api/v2/users/" + user_id + "/spending_breakdown?api_key=" + api_key, function(response){ 
-			// 		//console.log(response);
-			// 		if (response.length == 0)
-			// 		{
-			// 			//write all defaults to server
-			// 			for (i in default_categories)
-			// 			{
-			// 				var temp = default_categories[i];
-			// 				delete temp["Taxes"];
-			// 				$.ajax({
-			// 					url: "/api/v2/users/" + user_id + "/spending_breakdown/" + i + "?api_key=" + api_key,
-			// 					type: 'PUT',
-			// 					data: {"fields": temp}
-			// 				});
-			// 			}
-			// 		}
-			// 		else
-			// 		{
-			// 			spending_categories["default"] = {"Taxes":0};
-			// 			spending_categories["student"] = {"Taxes":0};
-			// 			spending_categories["custom"] = {"Taxes":0};
-			// 			//console.log(response);
-			// 			var toDelete = {};
-			// 			for (i in response)
-			// 			{
-			// 				if (response[i].category == "default")
-			// 					spending_categories["default"][response[i].name] = response[i].value;
-			// 				else if (response[i].category == "student")
-			// 					spending_categories["student"][response[i].name] = response[i].value;
-			// 				else if (response[i].category == "custom")
-			// 					spending_categories["custom"][response[i].name] = response[i].value;
-			// 			}	
-			// 		}
-			// 	})
-			// ).then(function() {
-			//    	spending_income = sessionStorage.getItem("income") * 1.00;
-			//     calculateTaxes();
-			// 	rebuildPercentages();
-			// 	buildCategories();
-			// 	document.getElementById("income_value").value = (spending_income).toFixed(0);
-			// });
 		}
 		else
 		{
@@ -585,10 +528,10 @@ function updateTemplate(template) {
 	processingInstance.noLoop();
 	if (user_id)
 			serverGet();
-	$(".viz_objects").fadeTo(400, 0, function() {
+	$(".viz_objects").fadeTo(700, 0, function() {
 		shuffle(pie_colors);
 		processingInstance.loop(); 
-		$(".viz_objects").fadeTo(700, 1);
+		$(".viz_objects").fadeTo(800, 1);
 	});
 	
 	//buildCategories();
