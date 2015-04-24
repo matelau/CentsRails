@@ -166,6 +166,8 @@ function city_api_request(query) {
 	//data = new Object();
 	var xmlHttp = null;
 
+	sessionStorage.removeItem("data_store");
+
     xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "POST", url, true );
     xmlHttp.onreadystatechange = function() {
@@ -221,7 +223,6 @@ function city_api_request(query) {
 					data["labor_1"] = null;
 					data["taxes_1"] = null;
 					data["name_1"] = null;
-					console.log(data);
 
 	  			}
 	  			else if (sent1 && !sent2)
@@ -581,7 +582,7 @@ function sketchProc(processing) {
 			axis_location = 60 + 255 * (1 - ((100 - min) / (max - min)));
 
 
-		//determin how much of scale is above and below the 100 line
+		//determine how much of scale is above and below the 100 line
 		processing.stroke(235);
 		processing.fill(0);
 		processing.textAlign(processing.RIGHT);

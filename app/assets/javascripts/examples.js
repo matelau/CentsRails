@@ -35,27 +35,22 @@ $(document).ready(function() {
 
 	$('<img/>').attr('src', '/assets/examples/city.png').load(function() {
 		$('#city_container').css({"background-color":bg_color});
-		//$('<img/>').attr('src', '/assets/examples/city_blur.jpeg').load();
+
 	});
 	$('<img/>').attr('src', '/assets/examples/career.png').load(function() {
 		$('#career_container').css({"background-color":bg_color});
-		//$('<img/>').attr('src', '/assets/examples/career_blur.jpeg').load();
 	});
 	$('<img/>').attr('src', '/assets/examples/school.png').load(function() {
 		$('#school_container').css({"background-color":bg_color});
-		//$('<img/>').attr('src', '/assets/examples/school_blur.jpeg').load();
 	});
 	$('<img/>').attr('src', '/assets/examples/major.png').load(function() {
 		$('#major_container').css({"background-color":bg_color});
-		//$('<img/>').attr('src', '/assets/examples/major_blur.jpeg').load();
 	});
 	$('<img/>').attr('src', '/assets/examples/spending.png').load(function() {
-		//$('#spending_container').css({"background-color":bg_color});
 		$('<img/>').attr('src', '/assets/examples/spending_blur.jpeg').load();
 	});
 	$('<img/>').attr('src', '/assets/examples/suggest.png').load(function() {
 		$('#suggest_container').css({"background-color":bg_color});
-		//$('<img/>').attr('src', '/assets/examples/suggest_blur.jpeg').load();
 	});
 
 
