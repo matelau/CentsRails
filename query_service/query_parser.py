@@ -206,11 +206,8 @@ def query(sent_query):
 			for st in state.values():
 				if cname in st:
 					cmatch = True
-					if st not in query:
-						if c not in locations:
-							locations.append(c)
-					else:
-						if query.count(cname) > query.count(st):
+					if st in query:
+						if query.count(cname) >= query.count(st):
 							if c not in locations:
 								locations.append(c)
 			if not cmatch:
