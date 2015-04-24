@@ -2,18 +2,18 @@ var slider;
 
 $(document).ready(function() {
 	slider = new IdealImageSlider.Slider('#examples_slider');
-	//set all caption tags
-	//document.getElementById("career").setAttribute("data-caption", "CLICK FOR A POPULAR CAREER COMPARISON");
-	// document.getElementById("city").setAttribute("data-caption", "CLICK FOR A POPULAR CITY COMPARISON");
-	// document.getElementById("spend").setAttribute("data-caption", "CLICK FOR A POPULAR SPENDING BREAKDOWN");
-	// document.getElementById("major").setAttribute("data-caption", "CLICK FOR A POPULAR MAJOR COMPARISON");
-	// document.getElementById("school").setAttribute("data-caption", "CLICK FOR A POPULAR SCHOOL COMPARISON");
-	//slider.addCaptions();
     slider.start();
 });
 
 $(window).focus(function() {
+	//slider = new IdealImageSlider.Slider('#examples_slider');
     slider.start();
+});
+
+$(window).blur(function() {
+	//slider.stop();
+	slider.destroy();
+	slider = new IdealImageSlider.Slider('#examples_slider');
 });
 
 function stopSlider() {

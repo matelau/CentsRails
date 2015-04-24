@@ -116,6 +116,8 @@ function school_api_request(query) {
 		query_string = field1 + " vs " + field2;
 	}
 
+	sessionStorage.removeItem("data_store");
+
 	//var data = new Object();
 	var xmlHttp = null;
 
@@ -125,6 +127,31 @@ function school_api_request(query) {
     xmlHttp.onreadystatechange = function() {
     	if (xmlHttp.readyState === 4) { 
       		if (xmlHttp.status === 200) {
+
+      			$("#error_1").empty();
+				$("#error_2").empty();
+
+      			if (xmlHttp.responseText == "No schools were in the schools array")
+      			{
+      				if (field1 != "")
+      				{
+	      				hide_1 = true;
+						$("#error_1").append("Invalid school.");
+	  					document.getElementById("search_1_button").value = "SHOW";
+		  	 			$("#search_1_button").attr("disabled", "true");
+		  	 			$("#rating_1_button").attr("disabled", "true");
+		  	 		}
+		  	 		if (field2 != "")
+		  	 		{
+		  	 			hide_2 = true;
+						$("#error_2").append("Invalid school.");
+	  					document.getElementById("search_2_button").value = "SHOW";
+		  	 			$("#search_2_button").attr("disabled", "true");
+		  	 			$("#rating_2_button").attr("disabled", "true");
+		  	 		}
+	  	 			return;
+      			}
+
       			data = jQuery.parseJSON(xmlHttp.responseText);
 
       			for(var i = 0; i < data["elements"].length; i++) {
@@ -142,29 +169,29 @@ function school_api_request(query) {
 				if (user_id)
 					$.post("/api/v2/users/" + user_id + "/query?api_key=" + api_key, {"url": query_string});
 
-				$("#error_1").empty();
-				$("#error_2").empty();
+				
 
 				//clear out the ability to rate
-				$("#rating_1").empty();
-				var button = "<a id='rating_1_button' class='btn btn-default' onclick='rate(1)'>RATE THIS SCHOOL</a>";
-				$("#rating_1").html(button);
-				$("#rating_2").empty();
-				button = "<a id='rating_2_button' class='btn btn-default' onclick='rate(2)'>RATE THIS SCHOOL</a>";
-				$("#rating_2").html(button);
-				$('.btn-default').css({"color":color});
+				if (user_id)
+				{
+					$("#rating_1").empty();
+					var button = "<a id='rating_1_button' class='btn btn-default' onclick='rate(1)'>RATE THIS SCHOOL</a>";
+					$("#rating_1").html(button);
+					$("#rating_2").empty();
+					button = "<a id='rating_2_button' class='btn btn-default' onclick='rate(2)'>RATE THIS SCHOOL</a>";
+					$("#rating_2").html(button);
+					$('.btn-default').css({"color":color});
+				}
 				auto_1 = "";
 				auto_2 = "";
 
-				//invalid searches could have been made, check to see what all was sent and returned
-				//both sent
 				if (sent1 && sent2)
 				{
 					//check to see if two results have been returned
-					if (data["name_1"] && data["name_2"])
+					if (data["school_1"] && data["school_2"])
 					{
 						//two results are returned, check to make sure they line up with the right fields
-						if (data["name_1"] != field1)
+						if (data["school_1"] != field1)
 						{
 							//need to swap
 							var tempArray = $.extend(true, [], data["school_1"]);
@@ -184,117 +211,69 @@ function school_api_request(query) {
 			  	 		$("#rating_2_button").removeAttr("disabled");
 
 					}
-					//first search was invalid, write error, disable field and swap arrays
-					else if (data["name_1"] == field2 && !data["name_2"])
+					else if (!data["school_2"])
 					{
-						hide_1 = true;
-						$("#error_1").append("Invalid school.");
-	  					document.getElementById("search_1_button").value = "SHOW";
-		  	 			$("#search_1_button").attr("disabled", "true");
-		  	 			$("#rating_1_button").attr("disabled", "true");
-		  	 			hide_2 = false;
-		  	 			document.getElementById("search_2_button").value = "HIDE";
-			  	 		$("#search_2_button").removeAttr("disabled");
-			  	 		$("#rating_2_button").removeAttr("disabled");
-		  	 			data["school_2"] = $.extend(true, [], data["school_1"]);
-		  	 			data["school_1"] = null;
-		  	 			data["name_2"] = data["name_1"];
-		  	 			data["name_1"] = null;
-					}
-					//second search was invalid, just write error, disable field
-					else if (data["name_1"] == field1 && !data["name_2"])
-					{
-						hide_2 = true;
-						$("#error_2").append("Invalid school.");
-	  					document.getElementById("search_2_button").value = "SHOW";
-		  	 			$("#search_2_button").attr("disabled", "true");
-		  	 			$("#rating_2_button").attr("disabled", "true");
-		  	 			hide_1 = false;
-		  	 			document.getElementById("search_1_button").value = "HIDE";
-			  	 		$("#search_1_button").removeAttr("disabled");
-			  	 		$("#rating_1_button").removeAttr("disabled");
-					}
-					//write both erros
-					else
-					{
-						if (!data["school_1"])
+						//school 1 was the valid city
+						if (data["name_1"] == field1)
 						{
+							hide_2 = true;
+							$("#error_2").append("Invalid school.");
+		  					document.getElementById("search_2_button").value = "SHOW";
+			  	 			$("#search_2_button").attr("disabled", "true");
+			  	 			$("#rating_2_button").attr("disabled", "true");
+			  	 			hide_1 = false;
+			  	 			document.getElementById("search_1_button").value = "HIDE";
+				  	 		$("#search_1_button").removeAttr("disabled");
+				  	 		$("#rating_1_button").removeAttr("disabled");
+						}
+						//school 2 is the valid city
+						else if (data["name_1"] == field2)
+						{
+							//swap arrays
 							hide_1 = true;
 							$("#error_1").append("Invalid school.");
 		  					document.getElementById("search_1_button").value = "SHOW";
 			  	 			$("#search_1_button").attr("disabled", "true");
 			  	 			$("#rating_1_button").attr("disabled", "true");
-			  	 			hide_2 = true;
-							$("#error_2").append("Invalid school.");
-		  					document.getElementById("search_2_button").value = "SHOW";
-			  	 			$("#search_2_button").attr("disabled", "true");
-			  	 			$("#rating_2_button").attr("disabled", "true");
-			  	 		}
-			  	 		else
-			  	 		{
-			  	 			hide_2 = true;
-							$("#error_2").append("Invalid school.");
-		  					document.getElementById("search_2_button").value = "SHOW";
-			  	 			$("#search_2_button").attr("disabled", "true");
-			  	 			$("#rating_2_button").attr("disabled", "true");
-			  	 			document.getElementById("search_2_name").value = "";
-			  	 			document.getElementById("search_1_name").value = data["name_1"];
-
-			  	 		}
+			  	 			hide_2 = false;
+			  	 			document.getElementById("search_2_button").value = "HIDE";
+				  	 		$("#search_2_button").removeAttr("disabled");
+				  	 		$("#rating_2_button").removeAttr("disabled");
+			  	 			data["school_2"] = $.extend(true, [], data["school_1"]);
+			  	 			data["school_1"] = null;
+			  	 			data["name_2"] = data["name_1"];
+			  	 			data["name_1"] = null;
+						}
 					}
-
 				}
 				//just 1 sent
 				else if (sent1 && !sent2)
 				{
-					if (!data["name_1"])
-					{
-						hide_1 = true;
-						$("#error_1").append("Invalid school.");
-	  					document.getElementById("search_1_button").value = "SHOW";
-		  	 			$("#search_1_button").attr("disabled", "true");
-		  	 			$("#rating_1_button").attr("disabled", "true");
-					}
-					else
-					{
-						hide_2 = true;
-	  					document.getElementById("search_2_button").value = "SHOW";
-		  	 			$("#search_2_button").attr("disabled", "true");
-		  	 			$("#rating_2_button").attr("disabled", "true");
-						hide_1 = false;
-		  	 			document.getElementById("search_1_button").value = "HIDE";
-			  	 		$("#search_1_button").removeAttr("disabled");
-			  	 		$("#rating_1_button").removeAttr("disabled");
-					}
-
+					hide_2 = true;
+  					document.getElementById("search_2_button").value = "SHOW";
+	  	 			$("#search_2_button").attr("disabled", "true");
+	  	 			$("#rating_2_button").attr("disabled", "true");
+					hide_1 = false;
+	  	 			document.getElementById("search_1_button").value = "HIDE";
+		  	 		$("#search_1_button").removeAttr("disabled");
+		  	 		$("#rating_1_button").removeAttr("disabled");
 				}
 				//just 2 sent
 				else if (!sent1 && sent2)
 				{
-					if (!data["name_1"])
-					{
-						hide_2 = true;
-						$("#error_2").append("Invalid school.");
-	  					document.getElementById("search_2_button").value = "SHOW";
-		  	 			$("#search_2_button").attr("disabled", "true");
-		  	 			$("#rating_2_button").attr("disabled", "true");
-					}
-					//swap to 2 spot
-					else
-					{
-						hide_1 = true;
-	  					document.getElementById("search_1_button").value = "SHOW";
-		  	 			$("#search_1_button").attr("disabled", "true");
-		  	 			$("#rating_1_button").attr("disabled", "true");
-						hide_2 = false;
-		  	 			document.getElementById("search_2_button").value = "HIDE";
-			  	 		$("#search_2_button").removeAttr("disabled");
-			  	 		$("#rating_2_button").removeAttr("disabled");
-						data["school_2"] = $.extend(true, [], data["school_1"]);
-		  	 			data["school_1"] = null;
-		  	 			data["name_2"] = data["name_1"];
-		  	 			data["name_1"] = null;
-					}
+					hide_1 = true;
+  					document.getElementById("search_1_button").value = "SHOW";
+	  	 			$("#search_1_button").attr("disabled", "true");
+	  	 			$("#rating_1_button").attr("disabled", "true");
+					hide_2 = false;
+	  	 			document.getElementById("search_2_button").value = "HIDE";
+		  	 		$("#search_2_button").removeAttr("disabled");
+		  	 		$("#rating_2_button").removeAttr("disabled");
+					data["school_2"] = $.extend(true, [], data["school_1"]);
+	  	 			data["school_1"] = null;
+	  	 			data["name_2"] = data["name_1"];
+	  	 			data["name_1"] = null;
+
 				}
 				else
 					window.alert("serious logic error here...");
