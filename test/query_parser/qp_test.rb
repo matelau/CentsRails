@@ -20,6 +20,7 @@ class String
   end
 end
 
+=begin
 puts "CITIES TEST"
 used_ids = []
 for x in 0..100
@@ -185,4 +186,68 @@ for x in 0..100
 	end
 
 	puts passed
+end
+=end
+
+puts "CITIES EXAMPLES TEST"
+used_ids = []
+for x in 0..50
+	ids = Coli.select(:id)
+	rand1 = Random.rand(ids.length)
+
+	while used_ids.include? rand1
+		rand1 = Random.rand(ids.length)
+	end
+
+	rand2 = Random.rand(ids.length)
+
+	while used_ids.include? rand2
+		rand2 = Random.rand(ids.length)
+	end
+
+	coli1 = Coli.find(ids[rand1])
+	coli2 = Coli.find(ids[rand2])
+
+	if coli1.city == nil or coli2.city == nil
+		next
+	end
+
+	split = Random.rand(2);
+
+	c1name = "#{coli1.city}, #{coli1.state}"
+	c2name = "#{coli2.city}, #{coli2.state}"
+
+	uri = URI.parse("https://trycents.com:6001/data")
+
+	pkg = {"type" => "city", "option" => [c1name,c2name]}
+
+	http = Net::HTTP.new(uri.host, uri.port)
+	http.use_ssl = true if uri.scheme == 'https'
+
+	request = Net::HTTP::Post.new(uri.request_uri)
+	request.set_form_data(pkg)
+
+	response = http.request(request)
+
+	rbody = JSON.parse(response.body)
+
+	passed = ""
+	if rbody["elements"] != nil
+		rbody["elements"].each do |e|
+			if e["name"] == c1name
+				passed1 = "passed1".green
+			end
+			if e["name"] == c2name
+				passed2 = "passed2".green
+			end
+		end
+		passed1 = "failed on results - #{c1name}".red if passed1 == ""
+		passed2 = "failed on results - #{c2name}".red if passed2 == ""
+	else
+		passed1 = "failed no results - #{c1name}".red
+		passed2 = "failed no results - #{c2name}".red
+	end
+
+	puts passed1
+	puts passed2
 end

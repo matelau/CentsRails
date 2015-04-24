@@ -31,8 +31,11 @@ sys.setdefaultencoding("utf-8")
 
 city = []
 state = {}
+
 #conflicts right now between Louisiana(LA) and Los Angeles(LA) and Indiana(IN) and the word 'in'
 #conflict between mt and montana
+
+#building replacement lists
 commands = {"compare":"compare","vs.":"compare","vs":"compare","get":"get","find":"get","difference between":"compare"}
 state_catch = {", de":", delaware",", in":", indiana",", mt":", montana",", la":", louisiana"}
 common_abbrs = {"sf":"san francisco, california","nyc":"new york, new york","slc":"salt lake city, utah","la":"los angeles, california","ft":"fort","mt":"mount","st":"saint"}
@@ -64,11 +67,19 @@ cars = lb.make_career_list()
 app = Flask(__name__)
 cors = CORS(app)
 
+###########################################################
+#
+#	Flask route for interpreting strings
+#
+#	Author = Austin Hammer
+#
+###########################################################
 @app.route('/query/<string:sent_query>', methods=['GET'])
 def query(sent_query):
 	with open("../data/queries.txt", "a") as logfile:
 		logfile.write(sent_query + "\n")
 
+	#declaring arrays for building
 	ops = []
 	locations = []
 	schools = []
@@ -77,8 +88,11 @@ def query(sent_query):
 	maj_names = []
 	command = ""
 	package = {}
+
+	#making case insensitive
 	query = sent_query.lower()
 
+	#if all they sent in was loan, redirect to loan calculator
 	if query == "loan":
 		package = {
 			"operation":"get",
@@ -95,6 +109,7 @@ def query(sent_query):
 	#build a subset of ngrams from query
 	qgram = hp.build_ngram(query)
 
+	#ditch periods
 	query = query.replace(".", "")
 	query = " " + query + " "
 
@@ -113,6 +128,7 @@ def query(sent_query):
 			dval = v
 			break
 
+	#check for matches without superlatives
 	sfault = False
 	if sval == "cheapest" or sval == "priciest":
 		if dval == "careers" or dval == "degrees" or dval == "":
@@ -128,12 +144,14 @@ def query(sent_query):
 		value = struct.unpack("<L", os.urandom(4))[0] % 4
 		dval = dvals[value]
 
+	#if we have a solid direction, request the superlative
 	if not sfault:
 		url = "https://trycents.com/api/v2/" + dval + "/" + sval
 		qtype = nvals[dval]
 
 		return hp.send_get(url, qtype)
 
+	#disambiguation between college abbrs and city, state combos
 	match_on_st = 0
 
 	#query normalization steps
@@ -276,6 +294,7 @@ def query(sent_query):
 			resp = json.dumps(package)
 			return resp
 
+	#if locations trumps schools, go with locations
 	if len(locations) > 0 and len(schools) > 0:
 		if match_on_st == len(schools):
 			schools = []
