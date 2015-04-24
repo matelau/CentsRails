@@ -6,7 +6,14 @@ $(document).ready(function() {
 });
 
 $(window).focus(function() {
+	//slider = new IdealImageSlider.Slider('#examples_slider');
     slider.start();
+});
+
+$(window).blur(function() {
+	//slider.stop();
+	slider.destroy();
+	slider = new IdealImageSlider.Slider('#examples_slider');
 });
 
 function stopSlider() {
