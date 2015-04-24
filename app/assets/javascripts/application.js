@@ -75,11 +75,7 @@ function getPartial(query_type){
 };
 
 function api_request(query) {
-	console.log(query);
-	query = query.replace(/([<>()|\[\]\/\\])/g, '');
-	//query = query.replace(/</g, '');
-	//query = query.replace(/>/g, '');
-	console.log(query);
+	query = query.replace(/([<>|\[\]\/\\])/g, '');
 	var temp = query.replace(/\s+/g, '');
 	if (temp == "")
 		return;
