@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
 	has_many :amounts, dependent: :destroy
 	has_many :queries, dependent: :destroy
 	has_many :completeds, dependent: :destroy
+	has_many :rates_careers, dependent: :destroy
 	has_many :rates_schools, dependent: :destroy
 	has_many :rates_majors, dependent: :destroy
 

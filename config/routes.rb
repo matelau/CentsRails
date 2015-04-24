@@ -18,10 +18,11 @@ Rails.application.routes.draw do
   get 'user/login' => 'sessions#new', as: 'user_login'
   post 'user/login' => 'sessions#create'
   get 'user/logout' => 'sessions#destroy'
+  get 'user/forgot_password'
+  post 'user/forgot_password' => 'user#forgot', as: 'forgot_password'
   get 'search/results'
   get 'search/getPartial'
   get 'user/terms'
-  #get 'swagger/dist/index.html'
   root 'search#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
