@@ -206,14 +206,14 @@ def query(sent_query):
 		if cname in query:
 			cmatch = False
 			for st in state.values():
-				if cname in st.lower():
+				if cname in " " + st + " ":
 					cmatch = True
-					if st.lower() in query:
-						if query.count(cname) > query.count(st.lower()):
+					if st in query:
+						if query.count(cname) > query.count(" " + st + " "):
 							print "match3" + c
 							if c not in locations:
 								locations.append(c)
-						if cname == st.lower():
+						if cname == " " + st + " ":
 							print "match4" + c
 							if c not in locations:
 								locations.append(c)
