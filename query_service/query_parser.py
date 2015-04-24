@@ -202,7 +202,7 @@ def query(sent_query):
 				locations.append(c)
 		cname = " " + c[:c.index(",")].lower() + " "
 		if cname in query:
-			for st in states.values():
+			for st in state.values():
 				if cname in st:
 					if st not in query:
 						if c not in locations:
