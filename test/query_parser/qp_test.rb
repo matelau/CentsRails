@@ -20,7 +20,6 @@ class String
   end
 end
 
-=begin
 puts "CITIES TEST"
 used_ids = []
 for x in 0..100
@@ -187,7 +186,8 @@ for x in 0..100
 
 	puts passed
 end
-=end
+
+=begin
 
 puts "CITIES EXAMPLES TEST"
 used_ids = []
@@ -251,3 +251,4 @@ for x in 0..50
 	puts passed1
 	puts passed2
 end
+=end
