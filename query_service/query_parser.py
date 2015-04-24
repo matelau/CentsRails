@@ -143,6 +143,9 @@ def query(sent_query):
 	if dval == "" and sval == "":
 		sfault = True
 
+	if sval and dval == "":
+		sfault = True
+
 	if (dval == "schools" or dval == "cost_of_living" or dval == "degrees" or dval == "careers") and sval == "":
 		sfault = True
 
