@@ -29,11 +29,16 @@ except ImportError:
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
-city = []
-state = {}
+###
+# KNOWN ISSUES
+###
 
-#conflicts right now between Louisiana(LA) and Los Angeles(LA) and Indiana(IN) and the word 'in'
-#conflict between mt and montana
+#conflict between careers containing 'lead' and a city named lead
+#conflict with universities containing 'state' and career 'state trooper'
+#conflicts with cities containing university aliases
+#conflicts with cities containing de and la
+#conflicts right now between Louisiana(LA) and Los Angeles(LA) and Indiana(IN) and the word 'in' - resolved some
+#conflict between mt and montana - resolved
 
 #building replacement lists
 commands = {"compare":"compare","vs.":"compare","vs":"compare","get":"get","find":"get","difference between":"compare"}
@@ -54,6 +59,7 @@ for line in open("universities.csv"):
 	unis[arr[0]] = arr
 
 #set up states hash for replacing state codes
+state = {}
 for line in csv.reader(states):
 	state[line[0].lower()] = line[1].lower()
 
