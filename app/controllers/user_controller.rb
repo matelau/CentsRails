@@ -30,6 +30,26 @@ class UserController < ApplicationController
 		end
 	end
 
+	# User forgot their password.
+	def forgot
+		unless User.exists?(email: params[:email])
+			flash[:error] = 'Your credentials couldn\'t could be verified.'
+			redirect_to forgot_password_path and return
+		end
+		user = User.find_by_email(params[:email])
+		if params[:answer] == user.answer
+			user.password = params[:password]
+			user.password_confirmation = params[:password_confirmation]
+			if user.save
+				flash[:notice] = 'Password changed.'
+				redirect_to forgot_password_path
+			end
+		else
+			flash[:error] = 'Your credentials couldn\'t could be verified.'
+			redirect_to forgot_password_path
+		end
+	end
+
 private
 
 	def user_params

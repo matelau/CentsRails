@@ -5,7 +5,11 @@ class Api::V2::SchoolsController < ApplicationController
 		result = Array.new
 
 		if params[:location] and not (params[:only_location_names] == 'true')
-			records = University.select('DISTINCT name').where(['state LIKE ?', "%#{params[:location]}%"])
+			if params[:location].length == 2
+				records = University.select('DISTINCT name').where(['state LIKE ?', "%#{params[:location]}"])
+			else
+				records = University.select('DISTINCT name').where(['state LIKE ?', "%#{params[:location]}%"])
+			end
 			records.each do |record|
 				result << record[:name]
 			end
