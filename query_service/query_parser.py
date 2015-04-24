@@ -202,8 +202,10 @@ def query(sent_query):
 				locations.append(c)
 		cname = " " + c[:c.index(",")].lower() + " "
 		if cname in query:
+			cmatch = False
 			for st in state.values():
 				if cname in st:
+					cmatch = True
 					if st not in query:
 						if c not in locations:
 							locations.append(c)
@@ -211,9 +213,9 @@ def query(sent_query):
 						if query.count(cname) > query.count(st):
 							if c not in locations:
 								locations.append(c)
-				else:
-					if c not in locations:
-						locations.append(c)
+			if not cmatch:
+				if c not in locations:
+					locations.append(c)
 			
 	cgrams = {}
 	mgrams = {}
