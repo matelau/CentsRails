@@ -62,7 +62,6 @@ $(document).ready(function() {
 
 		//career ratings
 		career_rate = JSON.parse(JSON.stringify(response.career_ratings));
-		//school_rate = response.school_ratings;
 		a_tags = "";
 		for (var i=0; i<career_rate.length; i++)
 			a_tags += "<div class='rating-div'><div class='rating-name'><p class='profile_info'>" + career_rate[i].name + "</p></div><div class='rating-value'>" + centsRating("career_rate", career_rate[i].name) + "</div></div>";
@@ -310,7 +309,6 @@ function hex(x) {
 
 function applyColor() {
 	//save to local storage
-	//document.getElementByClass("navbar-cents").style.backgroundColor = document.getElementById("new_div").style.backgroundColor;
 	document.getElementById("old_div").style.backgroundColor = document.getElementById("new_div").style.backgroundColor;
 	color_array = jQuery.parseJSON(unescape(sessionStorage.getItem("colors")));
 	new_colors = {};
