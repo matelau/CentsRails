@@ -195,11 +195,9 @@ def query(sent_query):
 	for c in cities:
 		temp = " " + c.replace(",", "").lower() + " "
 		if(temp in query):
-			print "match1" + c
 			if c not in locations:
 				locations.append(c)
 		if(" " + c.lower() + " " in query):
-			print "match2" + c
 			if c not in locations:
 				locations.append(c)
 		cname = " " + c[:c.index(",")].lower() + " "
@@ -210,15 +208,12 @@ def query(sent_query):
 					if st in query:
 						cmatch = True
 						if query.count(cname) > query.count(" " + st + " "):
-							print "match3" + c
 							if c not in locations:
 								locations.append(c)
-						if cname == " " + st + " ":
-							print "match4" + c
+						if cname == " new york ":
 							if c not in locations:
 								locations.append(c)
 			if not cmatch:
-				print "match5" + c
 				if c not in locations:
 					locations.append(c)
 			
