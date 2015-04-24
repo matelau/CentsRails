@@ -53,7 +53,7 @@ function sketchProc(processing) {
 		}
 		else
 		{
-			if (sessionStorage.getItem("income"))
+			if (sessionStorage.getItem("income") && sessionStorage.getItem("income").length != 0)
 				spending_income = sessionStorage.getItem("income") * 1.00;
 			else
 				spending_income = 45000 * 1.00;
