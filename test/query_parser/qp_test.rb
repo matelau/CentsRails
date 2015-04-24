@@ -70,7 +70,7 @@ for x in 0..100
 
 	puts passed
 end
-
+=begin
 puts "SCHOOLS TEST"
 used_ids = []
 for x in 0..100
