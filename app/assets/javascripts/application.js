@@ -21,7 +21,9 @@
 //forward declaration
 function changeMade(){};
 
-var user_id, api_key, showSearch;
+var user_id, api_key;
+
+var showSearch = function(){};
 
 //determine which js file to load
 var path = window.location.pathname.split('/');
@@ -73,7 +75,7 @@ function getPartial(query_type){
 };
 
 function api_request(query) {
-	query = query.replace('/', '');
+	query = query.replace(/([<>|\[\]\/\\])/g, '');
 	var temp = query.replace(/\s+/g, '');
 	if (temp == "")
 		return;

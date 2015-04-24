@@ -163,6 +163,8 @@ function career_api_request(query) {
 
 	var xmlHttp = null;
 
+	sessionStorage.removeItem("data_store");
+
     xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "POST", url, true );
     xmlHttp.onreadystatechange = function() {
@@ -177,13 +179,16 @@ function career_api_request(query) {
 				auto_2 = undefined;
 
 				//clear out the ability to rate
-				$("#rating_1").empty();
-				var button = "<a id='rating_1_button' class='btn btn-default' onclick='rate(1)'>RATE THIS CAREER</a>";
-				$("#rating_1").html(button);
-				$("#rating_2").empty();
-				button = "<a id='rating_2_button' class='btn btn-default' onclick='rate(2)'>RATE THIS CAREER</a>";
-				$("#rating_2").html(button);
-				$('.btn-default').css({"color":color});
+				if (user_id)
+				{
+					$("#rating_1").empty();
+					var button = "<a id='rating_1_button' class='btn btn-default' onclick='rate(1)'>RATE THIS CAREER</a>";
+					$("#rating_1").html(button);
+					$("#rating_2").empty();
+					button = "<a id='rating_2_button' class='btn btn-default' onclick='rate(2)'>RATE THIS CAREER</a>";
+					$("#rating_2").html(button);
+					$('.btn-default').css({"color":color});
+				}
 
 	  			if (sent1 && sent2)
 	  			{
@@ -219,19 +224,6 @@ function career_api_request(query) {
 		  	 		document.getElementById("search_2_button").value = "HIDE";
 		  	 		$("#search_2_button").removeAttr("disabled");
 		  	 		$("#rating_2_button").removeAttr("disabled");
-		  	 		//need to flip data to _2 arrays
-					// data["career_salary_2"] = $.extend(true, [], data["career_salary_1"]);
-					// data["career_salary_1"] = null;
-					// data["career_rating_2"] = $.extend(true, [], data["career_rating_1"]);
-					// data["career_rating_1"] = null;
-					// data["career_demand_2"] = $.extend(true, [], data["career_demand_1"]);
-					// data["career_demand_1"] = null;
-					// data["career_unemploy_2"] = $.extend(true, [], data["career_unemploy_1"]);
-					// data["career_unemploy_1"] = null;
-	
-					// data["name_2"] = data["name_1"];
-					// data["name_1"] = null;
-
 	  			}
 	  			else if (sent1 && !sent2)
 	  			{
@@ -283,11 +275,6 @@ function sketchProc(processing) {
 		data = new Array();
 
 		data = jQuery.parseJSON(unescape(sessionStorage.getItem("data_store")));
-
-
-		//document.getElementById("search_1_name").value = "software engineer";
-		//document.getElementById("search_2_name").value = "music teacher";
-
 		processing.size(655,375);
 		//always set the initial tab to the first one
 		active_tab = 1;
@@ -493,23 +480,6 @@ function sketchProc(processing) {
 			}
 		}
 
-		// if (!hide_1 && !hide_2)
-		// {
-		// 	min = processing.min(data["career_salary_1"][11], data["career_salary_2"][11]);
-		// 	max = processing.max(data["career_salary_1"][12], data["career_salary_2"][12]);
-		// }
-		// else if (hide_1 && !hide_2)
-		// {
-		// 	min = data["career_salary_2"][11];
-		// 	max = data["career_salary_2"][12];
-		// }
-		// else
-		// {
-
-		// 	min = data["career_salary_1"][11];
-		// 	max = data["career_salary_1"][12];
-		// }
-
 		//draw lines and labels for salary range
 		min = ((processing.round(min/10000))-1)*10000;
 		max = ((processing.round(max/10000))+1)*10000;
@@ -607,12 +577,6 @@ function sketchProc(processing) {
 						}
 					}
 				}
-				// processing.stroke(gray);
-				// var horz_1 = graph_left+i*((graph_right-graph_left)/16);
-				// var horz_2 = graph_left+(i+1)*((graph_right-graph_left)/16);
-				// var vert_1 = graph_top+(1-(data["career_salary_2"][i] - min)/(range))*(graph_bot-graph_top);
-				// var vert_2 = graph_top+(1-(data["career_salary_2"][i+1] - min)/(range))*(graph_bot-graph_top);
-				// processing.line(horz_1, vert_1, horz_2, vert_2);
 			}
 		}
 	};
@@ -651,7 +615,6 @@ function sketchProc(processing) {
 		}
 
 		//calculate min and max for each graph
-		//***************FIX FOR NEGATIVE NUMBERS
 		var min_1, max_1, min_2, max_2, min_3, max_3;
 
 		if (hide_2 && !hide_1)
@@ -819,28 +782,6 @@ function sketchProc(processing) {
 			}
 		}
 
-		// if (hide_2 && !hide_1)
-		// {
-		// 	min = processing.min(data["career_unemploy_1"][0], data["career_unemploy_1"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
-		// 	max = processing.max(data["career_unemploy_1"][0], data["career_unemploy_1"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
-		// 	min = min * 0.9;
-		// 	max = max * 1.05;
-		// }
-		// else if (!hide_2 && hide_1)
-		// {
-		// 	min = processing.min(data["career_unemploy_2"][0], data["career_unemploy_2"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
-		// 	max = processing.max(data["career_unemploy_2"][0], data["career_unemploy_2"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
-		// 	min = min * 0.9;
-		// 	max = max * 1.05;
-		// }
-		// else
-		// {
-		// 	min = processing.min(data["career_unemploy_1"][0], data["career_unemploy_1"][1], data["career_unemploy_2"][0], data["career_unemploy_2"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
-		// 	max = processing.max(data["career_unemploy_1"][0], data["career_unemploy_1"][1], data["career_unemploy_2"][0], data["career_unemploy_2"][1], data["career_unemploy_3"][0], data["career_unemploy_3"][1]);
-		// 	min = min * 0.9;
-		// 	max = max * 1.05;
-		// }
-
 		//draw scales
 		processing.stroke(235);
 		processing.fill(0);
@@ -936,7 +877,6 @@ function reduce(a) {
 
 function rate(id) {
 	$("#rating_" + id).fadeTo(500, 0, function() {
-		//$("#rating_" + id).fadeTo(700, 0, function() {$("#rating_" + id).fadeTo(900, 1);});
 		//remove button
 		$("#rating_" + id).empty();
 		//get users ratings, check to see if already rated
@@ -1036,11 +976,6 @@ function update_tab(name) {
 			document.getElementById("search_2_button").value = "HIDE";
 		}
 	}
-	// active_tab = name;
-	// hide_1 = false;
-	// hide_2 = false;
-	// document.getElementById("search_1_button").value = "HIDE";
-	// document.getElementById("search_2_button").value = "HIDE";
 };
 
 function hide_toggle(num) {
