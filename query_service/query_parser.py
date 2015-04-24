@@ -207,8 +207,8 @@ def query(sent_query):
 			cmatch = False
 			for st in state.values():
 				if cname in " " + st + " ":
-					cmatch = True
 					if st in query:
+						cmatch = True
 						if query.count(cname) > query.count(" " + st + " "):
 							print "match3" + c
 							if c not in locations:
