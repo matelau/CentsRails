@@ -344,8 +344,40 @@ def query(sent_query):
 		return resp
 
 	#api calls and responses
-	
-	if len(majors) >= 1:
+	if len(schools) >= 1:
+		package = {
+			"operation":command,
+			"query":sent_query,
+			"schools":[]
+		}
+		for s in schools:
+			package["schools"].append({"name":s})
+
+		url = "https://trycents.com/api/v2/schools/compare"
+		resp = hp.post_with_response(url,package)
+
+		if(resp.status_code == 400):
+			package = {
+				"operation":"undefined",
+				"query":sent_query
+			}
+			resp = json.dumps(package)
+			return resp
+
+		package = json.loads(resp.text)
+		if(package["operation"] == "undefined"):
+			package = {
+				"operation":"undefined",
+				"query":sent_query
+			}
+			resp = json.dumps(package)
+			return resp
+
+		package["query"] = sent_query
+		package["query_type"] = "school"
+		resp = json.dumps(package)
+		return resp
+	elif len(majors) >= 1:
 		package = {
 			"operation":command,
 			"query":query,
@@ -407,39 +439,6 @@ def query(sent_query):
 			return resp
 		package["query"] = sent_query
 		package["query_type"] = "city"
-		resp = json.dumps(package)
-		return resp
-	elif len(schools) >= 1:
-		package = {
-			"operation":command,
-			"query":sent_query,
-			"schools":[]
-		}
-		for s in schools:
-			package["schools"].append({"name":s})
-
-		url = "https://trycents.com/api/v2/schools/compare"
-		resp = hp.post_with_response(url,package)
-
-		if(resp.status_code == 400):
-			package = {
-				"operation":"undefined",
-				"query":sent_query
-			}
-			resp = json.dumps(package)
-			return resp
-
-		package = json.loads(resp.text)
-		if(package["operation"] == "undefined"):
-			package = {
-				"operation":"undefined",
-				"query":sent_query
-			}
-			resp = json.dumps(package)
-			return resp
-
-		package["query"] = sent_query
-		package["query_type"] = "school"
 		resp = json.dumps(package)
 		return resp
 	elif len(careers) >= 1:
