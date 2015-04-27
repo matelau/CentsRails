@@ -114,6 +114,12 @@
             "description":"Career does not exist."
           }
         },
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "description":"This will insert a new rating if none is present, or update the current rating if there is one.",
         "summary":"Allows a user to rate a career.",
         "operationId":"Api::V2::CareersController#rate",
@@ -137,10 +143,7 @@
             "description":"an integer between 1 and 5 inclusive",
             "name":"rating",
             "required":true,
-            "type":"integer",
-            "enum":[
-              "1", "2", "3", "4", "5"
-            ]
+            "type":"integer"
           },
           {  
             "in":"body",
