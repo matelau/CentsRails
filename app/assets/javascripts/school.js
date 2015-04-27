@@ -216,7 +216,7 @@ function school_api_request(query) {
 				  	 		$("#rating_1_button").removeAttr("disabled");
 						}
 						//school 2 is the valid city
-						else if (data["name_1"] == field2)
+						else //if (data["name_1"] == field2)
 						{
 							//swap arrays
 							hide_1 = true;
