@@ -185,8 +185,10 @@ function school_api_request(query) {
 				auto_1 = "";
 				auto_2 = "";
 
+
 				if (sent1 && sent2)
 				{
+
 					//check to see if two results have been returned
 					if (data["school_1"] && data["school_2"])
 					{
@@ -198,12 +200,14 @@ function school_api_request(query) {
 			  	 		$("#search_2_button").removeAttr("disabled");
 			  	 		$("#rating_1_button").removeAttr("disabled");
 			  	 		$("#rating_2_button").removeAttr("disabled");
+			  	 		document.getElementById("search_1_name").value = data["name_1"];
+			  	 		document.getElementById("search_2_name").value = data["name_2"];
 
 					}
 					else if (!data["school_2"])
 					{
 						//school 1 was the valid city
-						if (data["name_1"] == field1)
+						if (data["query_1"])
 						{
 							hide_2 = true;
 							$("#error_2").append("Invalid school.");
@@ -214,6 +218,7 @@ function school_api_request(query) {
 			  	 			document.getElementById("search_1_button").value = "HIDE";
 				  	 		$("#search_1_button").removeAttr("disabled");
 				  	 		$("#rating_1_button").removeAttr("disabled");
+				  	 		document.getElementById("search_1_name").value = data["name_1"];
 						}
 						//school 2 is the valid city
 						else //if (data["name_1"] == field2)
@@ -232,6 +237,7 @@ function school_api_request(query) {
 			  	 			data["school_1"] = null;
 			  	 			data["name_2"] = data["name_1"];
 			  	 			data["name_1"] = null;
+			  	 			document.getElementById("search_2_name").value = data["name_2"];
 						}
 					}
 				}
