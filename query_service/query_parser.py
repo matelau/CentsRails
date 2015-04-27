@@ -143,6 +143,9 @@ def query(sent_query):
 	if dval == "" and sval == "":
 		sfault = True
 
+	if sval and dval == "":
+		sfault = True
+
 	if (dval == "schools" or dval == "cost_of_living" or dval == "degrees" or dval == "careers") and sval == "":
 		sfault = True
 
@@ -538,7 +541,12 @@ def data():
 
 		url = "https://trycents.com/api/v2/schools/compare"
 
-		return hp.send_request(url,package)
+		resp = json.loads(hp.send_request(url,package))
+
+		for i in xrange(0,len(query['option'])):
+			resp["query_" + str(i+1)] = query['option'][i]
+
+		return json.dumps(resp)
 
 	if(query['type'] == 'major'):
 		package = {

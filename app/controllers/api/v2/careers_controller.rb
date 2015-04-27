@@ -27,12 +27,17 @@ class Api::V2::CareersController < ApplicationController
 		end
 
 		career = Career.where(['name like ?', "#{params[:name]}%"]).first
-		career_rating = RatesCareer.where(user_id: params[:user], career_id: career.id).first
+		#career_rating = RatesCareer.where(user_id: params[:user], career_id: career.id).first
 
-		if career_rating.present?
+		if RatesCareer.exists?(user_id: params[:user], career_id: career.id)
+			career_rating = RatesCareer.where(user_id: params[:user], career_id: career.id).first
+			career_rating.user_id = params[:user]
+			career_rating.career_id = career.id
 			career_rating.rating = params[:rating]
+			puts "rating: #{career_rating.user_id}"
+			puts "valid: #{career_rating.valid?}"
 			if career_rating.save
-				return render json: 'Rating saved.', status: 200
+				return render json: 'Rating saved 1.', status: 200
 			else
 				return render json: career_rating.errors, status: 400
 			end
@@ -41,8 +46,10 @@ class Api::V2::CareersController < ApplicationController
 			career_rating.rating = params[:rating]
 			career_rating.user_id = params[:user]
 			career_rating.career_id = career.id
+			puts "rating: #{career_rating}"
+			puts "valid: #{career_rating.valid?}"
 			if career_rating.save
-				return render json: 'Rating saved.', status: 200
+				return render json: 'Rating saved 2.', status: 200
 			else
 				return render json: career_rating.errors, status: 400
 			end

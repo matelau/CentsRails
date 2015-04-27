@@ -53,7 +53,10 @@ function sketchProc(processing) {
 		}
 		else
 		{
-			spending_income = 45000;
+			if (sessionStorage.getItem("income") && sessionStorage.getItem("income").length != 0)
+				spending_income = sessionStorage.getItem("income") * 1.00;
+			else
+				spending_income = 45000 * 1.00;
 			calculateTaxes();
 			rebuildPercentages();
 			buildCategories();
@@ -560,7 +563,11 @@ function serverGet() {
 			}
 		})
 	).then(function() {
-	   	spending_income = sessionStorage.getItem("income") * 1.00;
+		if (sessionStorage.getItem("income") && sessionStorage.getItem("income").length != 0)
+				spending_income = sessionStorage.getItem("income") * 1.00;
+		else
+			spending_income = 45000 * 1.00;
+	   	//spending_income = sessionStorage.getItem("income") * 1.00;
 	    calculateTaxes();
 		rebuildPercentages();
 		$("#category_list").empty();
