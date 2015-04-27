@@ -161,6 +161,7 @@ function school_api_request(query) {
 		    			data[nKey] = data["elements"][i][key];
 					});
   				}
+
   				delete data["elements"];
       			//make api request here with type included
 				sessionStorage.setItem("query_type", type);
@@ -170,7 +171,6 @@ function school_api_request(query) {
 					$.post("/api/v2/users/" + user_id + "/query?api_key=" + api_key, {"url": query_string});
 
 				
-
 				//clear out the ability to rate
 				if (user_id)
 				{
@@ -190,17 +190,6 @@ function school_api_request(query) {
 					//check to see if two results have been returned
 					if (data["school_1"] && data["school_2"])
 					{
-						//two results are returned, check to make sure they line up with the right fields
-						if (data["school_1"] != field1)
-						{
-							//need to swap
-							var tempArray = $.extend(true, [], data["school_1"]);
-							data["school_1"] = $.extend(true, [], data["school_2"]);
-							data["school_2"] = $.extend(true, [], tempArray);
-							var tempName = data["name_1"];
-							data["name_1"] = data["name_2"];
-							data["name_2"] = tempName;
-						}
 						hide_1 = false;
 						hide_2 = false;
 						document.getElementById("search_1_button").value = "HIDE";
