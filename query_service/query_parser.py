@@ -520,7 +520,7 @@ def data():
 		}
 
 		sarr = []
-		scarr = []
+		scarr = {}
 
 		for s in query['option']:
 			sarr.append(s.lower())
@@ -529,7 +529,7 @@ def data():
 			for a in l:
 				if a.lower() in sarr:
 					package["schools"].append({"name":u, "order":(sarr.index(a.lower())+1)})
-					scarr.append(u)
+					scarr["query_" + str(sarr.index(a.lower())+1)] = a
 
 		if len(package["schools"]) == 1:
 			del package["schools"][0]["order"]
@@ -543,8 +543,8 @@ def data():
 
 		resp = json.loads(hp.send_request(url,package))
 
-		for i in xrange(0,len(query['option'])):
-			resp["query_" + str(i+1)] = query['option'][i]
+		for k,v in scarr.iteritems():
+			resp[k] = v
 
 		return json.dumps(resp)
 
