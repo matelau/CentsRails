@@ -161,6 +161,7 @@ function school_api_request(query) {
 		    			data[nKey] = data["elements"][i][key];
 					});
   				}
+
   				delete data["elements"];
       			//make api request here with type included
 				sessionStorage.setItem("query_type", type);
@@ -170,7 +171,6 @@ function school_api_request(query) {
 					$.post("/api/v2/users/" + user_id + "/query?api_key=" + api_key, {"url": query_string});
 
 				
-
 				//clear out the ability to rate
 				if (user_id)
 				{
@@ -185,22 +185,13 @@ function school_api_request(query) {
 				auto_1 = "";
 				auto_2 = "";
 
+
 				if (sent1 && sent2)
 				{
+
 					//check to see if two results have been returned
 					if (data["school_1"] && data["school_2"])
 					{
-						//two results are returned, check to make sure they line up with the right fields
-						if (data["school_1"] != field1)
-						{
-							//need to swap
-							var tempArray = $.extend(true, [], data["school_1"]);
-							data["school_1"] = $.extend(true, [], data["school_2"]);
-							data["school_2"] = $.extend(true, [], tempArray);
-							var tempName = data["name_1"];
-							data["name_1"] = data["name_2"];
-							data["name_2"] = tempName;
-						}
 						hide_1 = false;
 						hide_2 = false;
 						document.getElementById("search_1_button").value = "HIDE";
@@ -209,12 +200,14 @@ function school_api_request(query) {
 			  	 		$("#search_2_button").removeAttr("disabled");
 			  	 		$("#rating_1_button").removeAttr("disabled");
 			  	 		$("#rating_2_button").removeAttr("disabled");
+			  	 		document.getElementById("search_1_name").value = data["name_1"];
+			  	 		document.getElementById("search_2_name").value = data["name_2"];
 
 					}
 					else if (!data["school_2"])
 					{
 						//school 1 was the valid city
-						if (data["name_1"] == field1)
+						if (data["query_1"])
 						{
 							hide_2 = true;
 							$("#error_2").append("Invalid school.");
@@ -225,9 +218,10 @@ function school_api_request(query) {
 			  	 			document.getElementById("search_1_button").value = "HIDE";
 				  	 		$("#search_1_button").removeAttr("disabled");
 				  	 		$("#rating_1_button").removeAttr("disabled");
+				  	 		document.getElementById("search_1_name").value = data["name_1"];
 						}
 						//school 2 is the valid city
-						else if (data["name_1"] == field2)
+						else //if (data["name_1"] == field2)
 						{
 							//swap arrays
 							hide_1 = true;
@@ -243,6 +237,7 @@ function school_api_request(query) {
 			  	 			data["school_1"] = null;
 			  	 			data["name_2"] = data["name_1"];
 			  	 			data["name_1"] = null;
+			  	 			document.getElementById("search_2_name").value = data["name_2"];
 						}
 					}
 				}
