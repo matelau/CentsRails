@@ -42,7 +42,7 @@ sys.setdefaultencoding("utf-8")
 
 #building replacement lists
 commands = {"compare":"compare","vs.":"compare","vs":"compare","get":"get","find":"get","difference between":"compare"}
-state_catch = {", de":", delaware",", in":", indiana",", mt":", montana",", la":", louisiana"}
+state_catch = {", de":", delaware",", in":", indiana",", mt":", montana",", la":", louisiana",", ut":", utah"}
 common_abbrs = {"sf":"san francisco, california","nyc":"new york, new york","slc":"salt lake city, utah","la":"los angeles, california","ft":"fort","mt":"mount","st":"saint"}
 supers = {"best":"best","worst":"worst","cheapest":"cheapest","least expensive":"cheapest","most expensive":"priciest","priciest":"priciest","random":"random","any":"random"}
 levels = ["associate","bachelor","master","doctorate","certificate"]
