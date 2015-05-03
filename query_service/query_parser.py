@@ -164,6 +164,9 @@ def query(sent_query):
 	match_on_st = 0
 
 	#query normalization steps
+	for abbr, st in state_catch.iteritems():
+		if re.search(r"\b" + abbr + r"\b", query):
+			query = re.sub(r"\b" + abbr + r"\b", st, query)
 	for u,l in unis.iteritems():
 		for a in l:
 			if " " + a.lower() + " " in query:
@@ -171,9 +174,6 @@ def query(sent_query):
 					if a.lower() in state.values():
 						match_on_st += 1
 					schools.append(u)
-	for abbr, st in state_catch.iteritems():
-		if re.search(r"\b" + abbr + r"\b", query):
-			query = re.sub(r"\b" + abbr + r"\b", st, query)
 	for abbr, c in common_abbrs.iteritems():
 		if re.search(r"\b" + abbr + r"\b", query):
 			query = re.sub(r"\b" + abbr + r"\b", c, query)
